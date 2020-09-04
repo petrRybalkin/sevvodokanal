@@ -1,0 +1,5 @@
+.group-hover\:block{display:none}
+.profile.group .group-hover\:block{z-index: 9999}
+.group:hover .group-hover\:block {display: block}
+
+.shadow-text{text-shadow: 0 0 3px #333}
