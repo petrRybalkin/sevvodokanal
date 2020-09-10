@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".
@@ -30,6 +32,18 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function enumCategory($id = null)
+    {
+        static $enum;
+        if (!isset($enum)) {
+            $enum = self::find()
+                ->orderBy('title')
+                ->all();
+            $enum = ArrayHelper::map($enum, 'id', 'title');
+        }
+        return $id === null ? $enum : ArrayHelper::getValue($enum, $id, '');
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,8 +59,8 @@ class Category extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return CategoryQuery the active query used by this AR class.
      */
-    public static function find()
-    {
-        return new CategoryQuery(get_called_class());
-    }
+//    public static function find()
+//    {
+//        return new CategoryQuery(get_called_class());
+//    }
 }
