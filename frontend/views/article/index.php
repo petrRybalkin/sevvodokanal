@@ -14,30 +14,13 @@ $this->title = 'Новини';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
-<!--    --><?//= GridView::widget([
-//        'dataProvider' => $dataProvider,
-//        'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
-//
-//            'id',
-//            'title',
-//            'short_description:ntext',
-//            'description:ntext',
-//            'img',
-//            //'seoTitle',
-//            //'seoDescription',
-//            //'active',
-//
-//            ['class' => 'yii\grid\ActionColumn'],
-//        ],
-//    ]); ?>
 
     <div class="font-sans">
         <h2 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl"><?= Html::encode($this->title) ?></h2>
         <hr class="border-b border-gray-400">
     </div>
     <?php if (!isset($mainNew)): ?>
-    <p>Поки новин немає.</p>
+        <p>Поки новин немає.</p>
     <?php endif; ?>
     <?php if (isset($mainNew)): ?>
         <!--Post Content-->
