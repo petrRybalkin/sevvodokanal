@@ -16,7 +16,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'active')->checkbox() ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?//= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'short_description')->widget(CKEditor::className(),[
         'editorOptions' => [
             'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
@@ -24,7 +23,6 @@ use yii\widgets\ActiveForm;
         ],
     ]);?>
 
-    <?//= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'description')->widget(CKEditor::className(),[
         'editorOptions' => [
             'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
