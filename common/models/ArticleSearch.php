@@ -3,20 +3,12 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use common\models\Article;
 
 /**
- * This is the model class for table "article".
- *
- * @property int $id
- * @property string|null $title
- * @property string|null $short_description
- * @property string|null $description
- * @property string|null $img
- * @property string|null $seoTitle
- * @property string|null $seoDescription
- * @property int|null $active
- * @property string|null $create_utime
- * @property string|null $update_utime
+ * ArticleSearch represents the model behind the search form about `common\models\Article`.
  */
 class ArticleSearch extends \yii\db\ActiveRecord
 {
@@ -58,6 +50,51 @@ class ArticleSearch extends \yii\db\ActiveRecord
             'create_utime' => 'Create Utime',
             'update_utime' => 'Update Utime',
         ];
+    }
+
+    public function frontendSearch($params, $condition = null)
+    {
+        if (isset($condition)) {
+            $query = Article::find()
+                ->orderBy('create_utime DESC')
+                ->where($condition);
+        } else {
+            $query = Article::find()
+                ->orderBy('create_utime DESC');
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+
+        $dataProvider->sort->attributes['title'] = [
+            'asc' => ['title' => SORT_ASC],
+            'desc' => ['title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id'                    => $this->id,
+            'title'                 => $this->title,
+            'active'                => $this->active,
+            'short_description'     => $this->short_description,
+            'create_utime'          => $this->create_utime,
+            'update_utime'          => $this->update_utime,
+            'description'           => $this->description,
+            'img'                   => $this->img,
+            'seoTitle'              => $this->seoTitle,
+            'seoDescription'        => $this->seoDescription,
+
+        ]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
+        return $dataProvider;
     }
 
     /**

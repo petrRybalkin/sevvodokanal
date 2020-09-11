@@ -64,7 +64,7 @@ AppAsset::register($this);
 <div>
     <?=$this->render('header'); ?>
     <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto p-12 py-24 px-6 sm:px-8 lg:px-24" style="background: url('/frontend/web/img/water2.jpg') no-repeat 50% 100%; background-size: cover;">
+        <div class="max-w-7xl mx-auto p-12 py-24 px-6 sm:px-8 lg:px-24" style="background: url('../img/water2.jpg') no-repeat 50% 100%; background-size: cover;">
             <h1 class="text-3xl font-bold leading-tight text-white shadow-text">КОМУНАЛЬНЕ ПІДПРИЄМСТВО "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</h1>
             <h5 class="text-2xl mt-1 font-bold leading-tight text-white shadow-text">Чиста вода в кожен дiм!</h5>
         </div>

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
+use common\models\ArticleSearch;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Article */
@@ -35,7 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl"><?= Html::encode($this->title) ?></h2>
         <hr class="border-b border-gray-400">
     </div>
-
+    <?php if (!isset($mainNew)): ?>
+    <p>Поки новин немає.</p>
+    <?php endif; ?>
     <?php if (isset($mainNew)): ?>
         <!--Post Content-->
         <!--Lead Para-->
