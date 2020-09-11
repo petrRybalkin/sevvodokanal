@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'short_description:ntext',
+            'short_description:html',
             //'description:ntext',
             //'img',
             //'seoTitle',

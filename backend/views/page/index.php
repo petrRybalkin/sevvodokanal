@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'create_utime',
-            'short_description:ntext',
+            'short_description:html',
             [
                 'label' => 'Есть в меню',
                 'attribute' => 'main_menu',
