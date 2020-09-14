@@ -1,5 +1,9 @@
 .group-hover\:block{display:none}
-.profile.group .group-hover\:block{z-index: 9999}
-.group:hover .group-hover\:block {display: block}
+.profile.group .group-hover\:block{z-index:9999}
+.group:hover .group-hover\:block {display:block}
 
-.shadow-text{text-shadow: 0 0 3px #333}
+.shadow-text{text-shadow:0 0 3px #333}
+.page-view ul{padding-left:20px}
+.page-view ul li{list-style:disc}
+.page-view table,
+.page-view table tr, .page-view table td{border-width: 1px;border-color: #e2e8f0;}

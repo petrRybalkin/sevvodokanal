@@ -92,13 +92,6 @@ use yii\helpers\Html;
                                     </div>
                                 </a>
                             <?php endforeach; ?>
-                                <a href="/zagalna-info.php" class="-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
-                                    <div class="space-y-1">
-                                        <p class="text-base leading-6 font-medium text-gray-900  text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
-                                            Загальна інформація
-                                        </p>
-                                    </div>
-                                </a>
                             </div>
                         </div>
                     </div>
