@@ -32,7 +32,7 @@ use yii\helpers\Html;
                         <div class="rounded-lg shadow-xs overflow-hidden">
                             <div class="z-20 relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             <?php foreach ($infos as $info): ?>
-                                <a href="<?= Url::to(['/page/'.$info->id]) ?>" class="-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
+                                <a href="<?= Url::to(['/page/'.$info->id]) ?>" class="-m-3 p-2 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
                                     <div class="space-y-1">
                                         <p class="text-base leading-6 font-medium">
                                             <?= $info->title ?>
@@ -84,7 +84,7 @@ use yii\helpers\Html;
                         <div class="rounded-lg shadow-xs overflow-hidden">
                             <div class="z-20 relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             <?php foreach ($abouts as $about): ?>
-                                <a href="<?= Url::to(['/page/'.$about->id]) ?>" class="-m-3 p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
+                                <a href="<?= Url::to(['/page/'.$about->id]) ?>" class="-m-3 p-2 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
                                     <div class="space-y-1">
                                         <p class="text-base leading-6 font-medium">
                                             <?= $about->title ?>
