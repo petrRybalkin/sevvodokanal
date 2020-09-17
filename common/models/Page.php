@@ -23,6 +23,7 @@ use yii\helpers\ArrayHelper;
  * @property int $active
  * @property int|null $sidebar
  * @property int|null $main_menu
+ * @property int|null $footer
  * @property int|null $parent_page
  * @property int|null $create_utime
  * @property int|null $update_utime
@@ -35,6 +36,10 @@ class Page extends \yii\db\ActiveRecord
     const STATUS_MENU_ACTIVE = 1;
     const STATUS_SIDEBAR_INACTIVE = 0;
     const STATUS_SIDEBAR_ACTIVE = 1;
+    const STATUS_FOOTER_INACTIVE = 0;
+    const STATUS_FOOTER_ACTIVE = 1;
+    const STATUS_FOOTER_ACTIVE2 = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -50,7 +55,7 @@ class Page extends \yii\db\ActiveRecord
     {
         return [
             [['short_description', 'description'], 'string'],
-            [['active', 'sidebar', 'main_menu'], 'integer'],
+            [['active', 'sidebar', 'main_menu', 'footer'], 'integer'],
             [['parent_page'], 'integer'],
             [['title', 'img', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
             [['create_utime', 'update_utime'], 'safe'],
@@ -71,7 +76,8 @@ class Page extends \yii\db\ActiveRecord
             'seoTitle' => 'Seo Title',
             'active' => 'Активная',
             'main_menu' => 'Показывать в главном меню',
-            'sidebar' => 'Отображать в сайдбаре',
+            'sidebar' => 'Показывать в сайдбаре',
+            'footer' => 'Показать в футере',
             'parent_page' => 'Родительская',
             'seoDescription' => 'Seo Description',
         ];
@@ -121,6 +127,24 @@ class Page extends \yii\db\ActiveRecord
         return [
             self::STATUS_SIDEBAR_INACTIVE => 'danger',
             self::STATUS_SIDEBAR_ACTIVE => 'success',
+        ];
+    }
+
+    public static function statusFooterList()
+    {
+        return [
+            self::STATUS_FOOTER_ACTIVE => 'Да',
+            self::STATUS_FOOTER_ACTIVE2 => 'Да',
+            self::STATUS_FOOTER_INACTIVE => 'Hет',
+        ];
+    }
+
+    public static function statusFooterColorList()
+    {
+        return [
+            self::STATUS_FOOTER_INACTIVE => 'danger',
+            self::STATUS_FOOTER_ACTIVE => 'success',
+            self::STATUS_FOOTER_ACTIVE2 => 'success',
         ];
     }
 
@@ -225,6 +249,41 @@ class Page extends \yii\db\ActiveRecord
         }
         return Html::tag('span', $this->getStatusSidebarLabel(), $options);
     }
+
+    /**
+     * @param string $default
+     * @param null $footer
+     * @return string
+     * @throws \Exception
+     */
+    public function getStatusFooterLabel($default = '-', $footer = null)
+    {
+        return ArrayHelper::getValue(self::statusFooterList(), $footer ?: $this->footer, $default);
+    }
+
+    /**
+     * @param string $default
+     * @param null $footer
+     * @return string
+     * @throws \Exception
+     */
+    public function getStatusFooterColor($default = 'default', $footer = null)
+    {
+        return ArrayHelper::getValue(self::statusFooterColorList(), $footer ?: $this->footer, $default);
+    }
+
+    /**
+     * @param array $options
+     * @return string
+     * @throws \Exception
+     */
+    public function getStatusFooterTag($options = [])
+    {
+        if (!array_key_exists('class', $options)) {
+            $options['class'] = 'label label-' . $this->getStatusFooterColor();
+        }
+        return Html::tag('span', $this->getStatusFooterLabel(), $options);
+    }
     
     public static function getParents()
     {
@@ -296,6 +355,22 @@ class Page extends \yii\db\ActiveRecord
     public static function getAbout()
     {
         return self::find()->where(['parent_page' => 2, 'active' => 1, 'main_menu' => 1]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public static function getFooterLeft()
+    {
+        return self::find()->where(['active' => 1, 'footer' => 1]);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public static function getFooterRight()
+    {
+        return self::find()->where(['active' => 1, 'footer' => 2]);
     }
 
     /**

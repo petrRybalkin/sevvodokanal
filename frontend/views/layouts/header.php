@@ -102,7 +102,7 @@ use frontend\widgets\MenuSiteWidget;
                 <div class="pt-5 pb-6 px-5 space-y-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-2xl font-bold text-left text-black-400">КОМУНАЛЬНЕ ПІДПРИЄМСТВО "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"<h3>
+                            <h3 class="text-2xl font-bold text-left text-black-400">КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"<h3>
                         </div>
                         <div class="-mr-2">
                             <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" onclick="close()">
