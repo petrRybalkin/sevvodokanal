@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SignupAdminForm;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
@@ -64,10 +65,16 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $models = new User();
+        $model = new SignupAdminForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -87,7 +94,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [

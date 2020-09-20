@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "roles".
@@ -50,6 +51,18 @@ class Roles extends \yii\db\ActiveRecord
             'access_users' => 'Редактирование пользователей',
             'access_abonents' => 'Редактирование абонентов',
         ];
+    }
+
+    public static function enumCategory($id = null)
+    {
+        static $enum;
+        if (!isset($enum)) {
+            $enum = self::find()
+                ->orderBy('name')
+                ->all();
+            $enum = ArrayHelper::map($enum, 'id', 'name');
+        }
+        return $id === null ? $enum : ArrayHelper::getValue($enum, $id, '');
     }
 
     public static function statusList()

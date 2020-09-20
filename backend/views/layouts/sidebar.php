@@ -1,3 +1,11 @@
+<?php
+
+use yii\helpers\Html;
+use backend\models\Roles;
+
+/* @var $this yii\web\View */
+?>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home()?>" class="brand-link">
