@@ -7,7 +7,7 @@ use common\models\User;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Администраторы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php if(!Yii::$app->user->isGuest) { ?>
