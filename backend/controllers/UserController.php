@@ -74,7 +74,7 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->redirect(['index', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $models->id]);
         }
 
         return $this->render('create', [
