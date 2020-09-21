@@ -23,7 +23,6 @@ use backend\models\Roles;
     <?= $form->field($model, 'email') ?>
 
     <?= $form->field($model, 'role_id')->dropDownList(Roles::enumCategory()) ?>
-    <?//= $form->field($model, 'role_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
