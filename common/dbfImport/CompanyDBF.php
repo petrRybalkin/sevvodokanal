@@ -48,7 +48,7 @@ class CompanyDBF extends BaseDBF
     public function save()
     {
 
-        foreach ($this->parser(10) as $item) {
+        foreach ($this->parser() as $item) {
             $company = Company::find()->where(['num_contract' => $item['kod_p']])->one();
 
             $arr =  array_combine($this->tableFaild() ,$item);
