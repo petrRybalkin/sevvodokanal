@@ -27,28 +27,11 @@ GridView::widget([
     'formatter' => ['class' => 'yii\i18n\Formatter', 'nullDisplay' => ''],
     'summary' => false,
     'columns' => [
-        'lic_schet',
-        'regn',
-        'nh1',
-        'nh2',
-        'np',
-        'ph1',
-        'ph2',
-        'pp',
-        [
-            'attribute' => 'dppp',
-            'format' => ['date', 'dd.MM.Y'],
-        ],
-        'namh1',
-        'namh2',
-        'namp',
-        [
-            'attribute' => 'datgos',
-            'format' => ['date', 'dd.MM.Y'],
-        ],
-        'srkub',
-        'khvsrn'
+        'kod_p',
+        'nomer',
+        'datgosp',
+        'pred',
     ]
 ]); ?>
 
-<button onclick="$.get('/dbf-import/save?fileName=<?= $model->fileName ?>&class=InfoDBF&action=<?= Yii::$app->controller->action->id ?>')">Сохранить в базу данных</button>
+<button onclick="$.get('/dbf-import/save?fileName=<?= $model->fileName ?>&class=CompanyDBF&action=<?=Yii::$app->controller->action->id?>')">Сохранить в базу данных</button>

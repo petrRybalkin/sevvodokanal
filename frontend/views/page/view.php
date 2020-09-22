@@ -13,32 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title',
-            'short_description:ntext',
-            'description:ntext',
-            'img',
-            'seoTitle',
-            'seoDescription',
-            'parent_page',
-            'active',
-        ],
-    ]) ?>
-
+        <!--Title-->
+        <div class="font-sans">
+            <h2 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl"><?= Html::encode($this->title) ?></h2>
+            <hr class="border-b border-gray-400">
+        </div>
+        <!--Post Content-->
+        <!--Lead Para-->
+        <?= $model->description ?>
+    
 </div>

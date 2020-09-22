@@ -1,3 +1,17 @@
+<?php
+
+use yii\helpers\Html;
+use frontend\assets\AppAsset;
+use common\widgets\Alert;
+use yii\helpers\Url;
+use common\models\Page;
+use frontend\widgets\FooterMenuLeftWidget;
+use frontend\widgets\FooterMenuRightWidget;
+
+/* @var $this \yii\web\View */
+/* @var $model \common\models\Page */
+/* @var $content string */
+?>
 <!-- <div class="container bg-blue-800 p-12"> -->
 <div class="bg-blue-800 p-12">
     <div class="sm:flex mb-4">
@@ -9,21 +23,15 @@
         </div>
         <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
             <ul class="list-reset leading-normal">
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Допомога</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Iнвестицiйна програма</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Тендери</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Корисна iнформацiя</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Новини</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Законодавча i нормативна база</a></li>
+                <?= FooterMenuLeftWidget::widget(); ?>
+                <li class="text-grey-darker"><a href="<?= Url::to(['/article/index']) ?>" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Новини</a></li>
             </ul>
         </div>
         <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
             <ul class="list-reset leading-normal">
                 <li class="text-grey-darker"><a href="/" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Головна</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Про нас</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Послуги та тарифи</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Iнформацiя</a></li>
-                <li class="text-grey-darker"><a href="#" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Контакти</a></li>
+                <?= FooterMenuRightWidget::widget(); ?>
+                <li class="text-grey-darker"><a href="<?//= Url::to(['/site/contact']) ?>" class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Контакти</a></li>
             </ul>
         </div>
         <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">

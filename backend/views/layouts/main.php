@@ -26,6 +26,7 @@ $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/admi
 <?php $this->beginBody() ?>
 
 <div class="wrapper">
+
     <!-- Navbar -->
     <?php if(!Yii::$app->user->isGuest) { ?>
     <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>

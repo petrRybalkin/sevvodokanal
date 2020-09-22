@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'create_utime',
-            'short_description:ntext',
+            'short_description:html',
             [
-                'label' => 'Есть в меню',
+                'label' => 'Меню',
                 'attribute' => 'main_menu',
                 'filter' => Page::statusMenuList(),
                 'format' => 'raw',
@@ -40,12 +40,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'label' => 'Есть в сайдбаре',
+                'label' => 'Сайдбар',
                 'attribute' => 'sidebar',
                 'filter' => Page::statusSidebarList(),
                 'format' => 'raw',
                 'value' => function (Page $model) {
                     return Html::a($model->getStatusSidebarTag(), ['update', 'id' => $model->id]);
+                }
+            ],
+            [
+                'label' => 'Футер (подвал)',
+                'attribute' => 'footer',
+                'filter' => Page::statusFooterList(),
+                'format' => 'raw',
+                'value' => function (Page $model) {
+                    return Html::a($model->getStatusFooterTag(), ['update', 'id' => $model->id]);
                 }
             ],
             [

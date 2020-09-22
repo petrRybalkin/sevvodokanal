@@ -20,6 +20,7 @@ use yii\bootstrap4\Breadcrumbs;
 <!--                    </h1>-->
 <!--                </div>--><!-- /.col -->
                 <div class="col-sm-12">
+                    <?= \common\widgets\Alert::widget();?>
                     <?php
                     echo Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -36,6 +37,7 @@ use yii\bootstrap4\Breadcrumbs;
 
     <!-- Main content -->
     <div class="content">
+
         <?= $content ?><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
