@@ -1,6 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use common\models\User;
+
+/* @var $this yii\web\View */
+/* @var $model \common\models\User */
 
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -156,7 +160,10 @@ use yii\helpers\Html;
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
-                <span class="d-none d-md-inline">Супер Админ</span>
+
+                    <span class="d-none d-md-inline"><?=Yii::$app->user->identity->username; ?></span>
+
+
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->

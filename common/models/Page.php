@@ -80,6 +80,8 @@ class Page extends \yii\db\ActiveRecord
             'footer' => 'Показать в футере',
             'parent_page' => 'Родительская',
             'seoDescription' => 'Seo Description',
+            'create_utime' => 'Создано',
+            'update_utime' => 'Обновлено',
         ];
     }
     public static function statusList()

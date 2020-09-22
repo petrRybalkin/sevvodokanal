@@ -2,9 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\models\Roles;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $models common\models\User */
+/* @var $model \backend\models\SignupAdminForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -14,8 +16,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput() ?>
 
+    <?= $form->field($model, 'username')->textInput() ?>
+
+    <?= $form->field($model, 'password')->passwordInput() ?>
+
+    <?= $form->field($model, 'email') ?>
+
+    <?= $form->field($model, 'role_id')->dropDownList(Roles::enumCategory()) ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
