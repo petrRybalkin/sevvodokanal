@@ -2,19 +2,23 @@
 
 namespace common\dbfImport;
 
+use common\models\DbfImport;
 use XBase\Table;
 
 abstract class BaseDBF
 {
     const TYPE_NUMERIC = 1;
     const TYPE_DATE = 2;
+    const TYPE_STRING = 3;
+    const TYPE_FLOAT = 4;
 
     public $table;
     public $dbfFile;
 
-    public function __construct($path)
+    public function __construct($path, $code = 'windows-1251')
     {
-        $this->table = new Table($path, null, 'windows-1251');
+        $this->table = new Table($path, null, DbfImport::getCodeLabel($code,'windows-1251'));
+//        $this->table = new Table($path, null, 'windows-1251');
     }
 
     public function parser($limit = 0)

@@ -77,8 +77,10 @@
                         ]
                     ],
                     ['label' => 'Импорт данных', 'header' => true],
-                    ['label' => 'Загрузить .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far'],
-
+                    ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far'],
+                    ['label' => 'Загрузить счета .DBF', 'url' => ['dbf-import/score'], 'iconStyle' => 'far'],
+                    ['label' => 'Загрузить платежи .DBF', 'url' => ['dbf-import/payment'], 'iconStyle' => 'far'],
+                    ['label' => 'Загрузить компании .DBF', 'url' => ['dbf-import/company'], 'iconStyle' => 'far'],
 
 //                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
 //                    ['label' => 'Level1'],
