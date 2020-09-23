@@ -36,6 +36,6 @@ class PaymentDBF extends BaseDBF
     public function save()
     {
         Yii::$app->db->createCommand()->batchInsert('payment', [
-            'account_number', 'sum', 'payment_date', 'pr'], $this->parser(5))->execute();
+            'account_number', 'sum', 'payment_date', 'pr'], $this->parser())->execute();
     }
 }
