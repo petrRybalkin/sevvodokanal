@@ -1,47 +1,44 @@
 <?php
+
 namespace common\models;
 
-use backend\models\Roles;
 use Yii;
+use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 use yii\helpers\ArrayHelper;
 
 /**
- * User model
+ * This is the model class for table "client".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $verification_token
- * @property string $email
  * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property integer $role_id
+ * @property string $password_hash
+ * @property string $verification_token
+ * @property string|null $password_reset_token
+ * @property string $phone
+ * @property string $email
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
  * @property string $password write-only password
  *
- *  @property Roles[] $roles
  */
-class User extends ActiveRecord implements IdentityInterface
+class Client extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
     public $password;
-
-
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%client}}';
     }
 
     /**
@@ -60,11 +57,46 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+//            [['username', 'auth_key', 'password_hash', 'phone', 'email', 'created_at', 'updated_at'], 'required'],
+//            [['status', 'created_at', 'updated_at'], 'integer'],
+//            [['username', 'password_hash', 'password_reset_token', 'phone', 'email'], 'string', 'max' => 255],
+//            [['auth_key'], 'string', 'max' => 32],
+//            [['username'], 'unique'],
+//            [['phone'], 'unique'],
+//            [['email'], 'unique'],
+//            [['password_reset_token'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['role_id', 'integer'],
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'phone' => 'Phone',
+            'email' => 'Email',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+
+//    /**
+//     * {@inheritdoc}
+//     * @return ClientQuery the active query used by this AR class.
+//     */
+//    public static function find()
+//    {
+//        return new ClientQuery(get_called_class());
+//    }
 
     /**
      * {@inheritdoc}
@@ -217,11 +249,4 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
-    public function getRoleOption()
-    {
-        return $this->hasOne(Roles::class, ['id' => 'role_id'])->from(Roles::tableName())
-            ->where(['id'=>Yii::$app->user->identity->role_id]);
-    }
-
 }

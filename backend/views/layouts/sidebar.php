@@ -44,7 +44,7 @@ use common\models\User;
                     [
                         'label' => 'Абоненты','iconClass' => 'nav-icon far fa-circle text-warning',
                         'items' => [
-                            ['label' => 'Список абенентов', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
+                            ['label' => 'Список абенентов', 'url' => ['client/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
                             ['label' => 'еще что-то с абонентами', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ],
