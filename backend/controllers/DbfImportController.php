@@ -190,6 +190,7 @@ class DbfImportController extends Controller
 
         ]));
 
+
         $startTime = time();
         while(!Yii::$app->queue->isDone($idJob)){
             sleep(1);
