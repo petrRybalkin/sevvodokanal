@@ -1,11 +1,13 @@
 <?php
 namespace common\models;
 
+use backend\models\Roles;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\helpers\ArrayHelper;
 
 /**
  * User model
@@ -22,6 +24,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property integer $role_id
  * @property string $password write-only password
+ *
+ *  @property Roles[] $roles
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -213,4 +217,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function getRoleOption()
+    {
+        return $this->hasOne(Roles::class, ['id' => 'role_id'])->from(Roles::tableName())
+            ->where(['id'=>Yii::$app->user->identity->role_id]);;
+        //return $this->hasOne(Roles::class, ['id' => 'role_id']);
+    }
+
 }
