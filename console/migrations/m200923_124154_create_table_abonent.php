@@ -1,6 +1,6 @@
 <?php
 
-//namespace yii\queue\db\migrations;
+namespace yii\queue\db\migrations;
 
 use yii\db\Migration;
 
