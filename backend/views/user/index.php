@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
             //'verification_token',
 
             //['class' => 'yii\grid\ActionColumn'],
-
             [
 
                 'class' => 'yii\grid\ActionColumn',
@@ -63,10 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => [
                     'width' => 100,
                 ],
-
-                      ],
-
-
+            ],
         ],
     ]); ?>
 

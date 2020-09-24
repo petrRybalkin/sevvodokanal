@@ -7,7 +7,7 @@ use common\models\Client;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Clients';
+$this->title = 'Абоненты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-index">
@@ -26,16 +26,41 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
             'phone',
-            //'email:email',
-            //'status',
-            //'created_at',
+            'email:email',
+            'status',
+            'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+            [
+
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, Client $model) {
+                        return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/client/update', 'id' => $model->id], [
+                            'title' => 'Update',
+                        ]);
+                    },
+                    'delete' => function ($url, Client $model) {
+                        return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/client/delete', 'id' => $model->id], [
+                            'title' => 'Delete',
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => 'Вы уверены что хотите удалить этого абонента?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+                ],
+                'options' => [
+                    'width' => 100,
+                ],
+            ],
         ],
     ]); ?>
 
