@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\models\User;
+use common\models\Admin;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -43,12 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'buttons' => [
-                    'update' => function ($url, User $model) {
+                    'update' => function ($url, Admin $model) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/user/update', 'id' => $model->id], [
                             'title' => 'Update',
                         ]);
                     },
-                    'delete' => function ($url, User $model) {
+                    'delete' => function ($url, Admin $model) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/user/delete', 'id' => $model->id], [
                             'title' => 'Delete',
                             'class' => 'btn btn-danger',

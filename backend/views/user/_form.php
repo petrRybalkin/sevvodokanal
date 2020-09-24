@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use backend\models\Roles;
 
 /* @var $this yii\web\View */
-/* @var $models common\models\User */
+/* @var $models common\models\Admin */
 /* @var $model \backend\models\SignupAdminForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>

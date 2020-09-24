@@ -3,7 +3,7 @@ namespace frontend\models;
 
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
-use common\models\Client;
+use common\models\User;
 
 /**
  * Password reset form
@@ -13,7 +13,7 @@ class ResetPasswordForm extends Model
     public $password;
 
     /**
-     * @var \common\models\Client
+     * @var \common\models\User
      */
     private $_user;
 
@@ -30,7 +30,7 @@ class ResetPasswordForm extends Model
         if (empty($token) || !is_string($token)) {
             throw new InvalidArgumentException('Password reset token cannot be blank.');
         }
-        $this->_user = Client::findByPasswordResetToken($token);
+        $this->_user = User::findByPasswordResetToken($token);
         if (!$this->_user) {
             throw new InvalidArgumentException('Wrong password reset token.');
         }

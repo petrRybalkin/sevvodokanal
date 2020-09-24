@@ -1,7 +1,7 @@
 <?php
 namespace frontend\models;
 
-use common\models\Client;
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -24,7 +24,7 @@ class PasswordResetRequestForm extends Model
             ['email', 'email'],
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => Client::STATUS_ACTIVE],
+                'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with this email address.'
             ],
         ];
@@ -37,9 +37,9 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        /* @var $user Client */
-        $user = Client::findOne([
-            'status' => Client::STATUS_ACTIVE,
+        /* @var $user User */
+        $user = User::findOne([
+            'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
 
@@ -47,7 +47,7 @@ class PasswordResetRequestForm extends Model
             return false;
         }
         
-        if (!Client::isPasswordResetTokenValid($user->password_reset_token)) {
+        if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
             if (!$user->save()) {
                 return false;

@@ -3,7 +3,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
-use common\models\Client;
+use common\models\User;
 
 /**
  * Signup form
@@ -23,18 +23,22 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\Client', 'message' => 'This username has already been taken.'],
+            //['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\Client', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 12],
+
+            ['phone', 'required'],
+            ['phone', 'string', 'min' => 12],
+            ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This phone has already been taken.'],
         ];
     }
 
@@ -49,7 +53,7 @@ class SignupForm extends Model
             return null;
         }
         
-        $client = new Client();
+        $client = new User();
         $client->username = $this->username;
         $client->email = $this->email;
         $client->phone = $this->phone;
@@ -62,7 +66,7 @@ class SignupForm extends Model
 
     /**
      * Sends confirmation email to user
-     * @param Client $client user model to with email should be send
+     * @param User $client user model to with email should be send
      * @return bool whether the email was sent
      */
     protected function sendEmail($client)

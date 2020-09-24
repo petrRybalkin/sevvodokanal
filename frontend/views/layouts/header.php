@@ -9,13 +9,12 @@ use common\widgets\Alert;
 use yii\helpers\Url;
 use common\models\Page;
 use frontend\widgets\MenuSiteWidget;
-use common\models\Client;
+use common\models\User;
 
 /* @var $this \yii\web\View */
 /* @var $model \common\models\Page */
-/* @var $client \common\models\Client */
+/* @var $client \common\models\User */
 /* @var $content string */
-$user = new Client();
 ?>
 <div class="bg-blue-800">
     <div class="max-w-9xl mx-auto px-4 sm:px-3 lg:px-3">
@@ -32,44 +31,43 @@ $user = new Client();
             </div>
             <!-- Profile dropdown -->
             <?php if(Yii::$app->user->isGuest): ?>
-            <div class="relative profile group w-1/4">
-                <div class="flex justify-end">
-                    <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                        <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                    </button>
-                    <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                        <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                    </button>
-                </div>
-            </div>
-            <?php else: ?>
-            <div class="relative profile group w-1/4">
-                <div class="flex justify-end">
-                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid" id="user-menu" aria-label="User menu" aria-haspopup="true">
-                            <?php Yii::$app->user->identity->username ?>&nbsp;<img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                <div class="relative profile group w-1/4">
+                    <div class="flex justify-end">
+                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </button>
-
-                </div>
-                <!--
-                  Profile dropdown panel, show/hide based on dropdown state.
-
-                  Entering: "transition ease-out duration-100"
-                    From: "transform opacity-0 scale-95"
-                    To: "transform opacity-100 scale-100"
-                  Leaving: "transition ease-in duration-75"
-                    From: "transform opacity-100 scale-100"
-                    To: "transform opacity-0 scale-95"
-                -->
-                <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
-                    <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="<?= Url::to(['/profile/index']);?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Личный кабинет
-                        </a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Налаштування
-                        </a>
-                        <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        </button>
                     </div>
                 </div>
-            </div>
+            <?php else: ?>
+                <div class="relative profile group w-1/4">
+                    <div class="flex justify-end">
+                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid" id="user-menu" aria-label="User menu" aria-haspopup="true">
+                            <?= Yii::$app->user->identity->username ?>&nbsp;<img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                        </button>
+                    </div>
+                    <!--
+                      Profile dropdown panel, show/hide based on dropdown state.
+
+                      Entering: "transition ease-out duration-100"
+                        From: "transform opacity-0 scale-95"
+                        To: "transform opacity-100 scale-100"
+                      Leaving: "transition ease-in duration-75"
+                        From: "transform opacity-100 scale-100"
+                        To: "transform opacity-0 scale-95"
+                    -->
+                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
+                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                            <a href="<?= Url::to(['/profile/index']);?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Личный кабинет
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Налаштування
+                            </a>
+                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                        </div>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
     </div>

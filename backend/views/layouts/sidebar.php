@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use backend\models\Roles;
-use common\models\User;
+use common\models\Admin;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model common\models\Admin */
 /* @var $role2 backend\models\Roles */
 ?>
 

@@ -18,14 +18,13 @@ use yii\helpers\ArrayHelper;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string $phone
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $role_id
  * @property string $password write-only password
- *
- *  @property Roles[] $roles
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -41,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%client}}';
     }
 
     /**
@@ -62,7 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['role_id', 'integer'],
+            //['role_id', 'integer'],
         ];
     }
 
@@ -91,6 +90,17 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByUsername($username)
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
+     * Finds user by email
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -218,10 +228,10 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    public function getRoleOption()
-    {
-        return $this->hasOne(Roles::class, ['id' => 'role_id'])->from(Roles::tableName())
-            ->where(['id'=>Yii::$app->user->identity->role_id]);
-    }
+//    public function getRoleOption()
+//    {
+//        return $this->hasOne(Roles::class, ['id' => 'role_id'])->from(Roles::tableName())
+//            ->where(['id'=>Yii::$app->user->identity->role_id]);
+//    }
 
 }

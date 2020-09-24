@@ -4,14 +4,14 @@ namespace backend\controllers;
 
 use backend\models\SignupAdminForm;
 use Yii;
-use common\models\User;
+use common\models\Admin;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * UserController implements the CRUD actions for Admin model.
  */
 class UserController extends Controller
 {
@@ -37,7 +37,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
+            'query' => Admin::find(),
         ]);
 
         return $this->render('index', [
@@ -59,13 +59,13 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Admin model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $models = new User();
+        $models = new Admin();
         $model = new SignupAdminForm();
 
 //        if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Admin model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -103,7 +103,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Admin model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,12 +120,12 @@ class UserController extends Controller
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Admin the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Admin::findOne($id)) !== null) {
             return $model;
         }
 
