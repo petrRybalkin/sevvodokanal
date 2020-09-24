@@ -11,11 +11,6 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-<!--                <div style="color:#999;margin:1em 0">-->
-<!--                    If you forgot your password you can --><?//= Html::a('reset it', ['site/request-password-reset']) ?><!--.-->
-<!--                    <br>-->
-<!--                    Need new verification email? --><?//= Html::a('Resend', ['site/resend-verification-email']) ?>
-<!--                </div>-->
     <div class="min-h-screen flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
@@ -31,12 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <input type="hidden" name="remember" value="true">
                 <div class="rounded-md shadow-sm">
                     <div>
-                        <?= $form->field($model, 'username')
-                            ->textInput(['type'=>'name', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
+                        <?= $form->field($model, 'email')
+                            ->textInput(['type'=>'email', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
                             ->label('Email', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
-<!--                        --><?//= $form->field($model, 'email')
-//                            ->textInput(['type'=>'email', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
-//                            ->label('Email', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
                     </div>
                     <div class="-mt-px">
                         <?= $form->field($model, 'password')->passwordInput(['class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Enter Your password'])
@@ -58,15 +50,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="mt-6">
                     <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-            </svg>
-          </span>
-                        Sign in
+                      <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                      </span>Sign in
                     </button>
                 </div>
             <?php ActiveForm::end(); ?>
+            <div class="text-sm mt-3 leading-5">
+                Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email'], ['class' => 'font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150']) ?>
+            </div>
         </div>
     </div>
 

@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
-<!--            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Workflow">-->
+            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Workflow">
             <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
                 <?= Html::encode($this->title) ?>
             </h2>
@@ -27,8 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <input type="hidden" name="remember" value="true">
             <div class="rounded-md shadow-sm">
                 <div>
-                    <?//= $form->field($model, 'username')->textInput()->hiddenInput(['autofocus' => true, 'value' => 'Абонент№'.date('d-m-Y H:i:s')])->label('') ?>
-                    <?= $form->field($model, 'username')->textInput()->hiddenInput(['autofocus' => true, 'value' => 'usertest19'])->label('') ?>
+                    <?= $form->field($model, 'username')->textInput()->hiddenInput(['autofocus' => true, 'value' => 'Абонент№'.date('d-m-Y H:i:s')])->label('') ?>
                 </div>
 
                 <div>
@@ -46,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div>
                     <?= $form->field($model, 'password')->passwordInput(['class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Enter Your password'])
                         ->label('Пароль',['class'=>'block text-grey-darker text-sm font-bold mb-2 mt-3'])  ?>
-                    <p class="text-grey text-xs mt-1">At least 8 characters</p>
+                    <p class="text-grey text-xs mt-1">At least 10 characters</p>
                 </div>
             </div>
 
