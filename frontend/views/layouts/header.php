@@ -9,10 +9,13 @@ use common\widgets\Alert;
 use yii\helpers\Url;
 use common\models\Page;
 use frontend\widgets\MenuSiteWidget;
+use common\models\Client;
 
 /* @var $this \yii\web\View */
 /* @var $model \common\models\Page */
+/* @var $client \common\models\Client */
 /* @var $content string */
+$user = new Client();
 ?>
 <div class="bg-blue-800">
     <div class="max-w-9xl mx-auto px-4 sm:px-3 lg:px-3">
@@ -63,7 +66,7 @@ use frontend\widgets\MenuSiteWidget;
                         </a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Налаштування
                         </a>
-                        <?= Html::a('Вийти2', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                        <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
                     </div>
                 </div>
             </div>
