@@ -21,6 +21,8 @@ use Yii;
  */
 class ScoreMetering extends \yii\db\ActiveRecord
 {
+    public $sum;
+
     /**
      * {@inheritdoc}
      */
@@ -36,9 +38,14 @@ class ScoreMetering extends \yii\db\ActiveRecord
     {
         return [
             [['act_number', 'registered_persons'], 'integer'],
-            [['tariff_for_water', 'tariff_for_stocks', 'total_tariff'], 'number'],
+            [['tariff_for_water', 'tariff_for_stocks', 'total_tariff', 'sum'], 'number'],
             [['account_number'], 'string', 'max' => 13],
             [['name_of_the_tenant', 'address', 'norm', 'type_of_housing'], 'string', 'max' => 255],
+            [['account_number'], 'exist', 'targetClass' => ScoreMetering::class,
+                'targetAttribute' => ['account_number' =>'account_number'], 'message' =>'Немає такого особового рахунку 
+                - швидше за все, Ви вводите некоректно номер особового рахунку.'],
+            [['account_number'], 'required']
+
         ];
     }
 
@@ -49,8 +56,8 @@ class ScoreMetering extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'account_number' => 'Account Number',
-            'act_number' => 'Act Number',
+            'account_number' => 'Особовий рахунок',
+            'act_number' => 'Pеєстраційний номер акту',
             'name_of_the_tenant' => 'Name Of The Tenant',
             'address' => 'Address',
             'norm' => 'Norm',
