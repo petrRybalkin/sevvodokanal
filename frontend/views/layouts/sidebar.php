@@ -1,5 +1,6 @@
 <?php
 
+use frontend\widgets\SidebarProfileWidget;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -31,6 +32,8 @@ use frontend\widgets\SidebarMenuWidget;
 <!--                </a>-->
 <!--            </li>-->
             <?= SidebarMenuWidget::widget(); ?>
+
+            <?= SidebarProfileWidget::widget(); ?>
             <li class="py-2 md:my-0 hover:bg-purple-100 lg:hover:bg-transparent">
                 <a href="<?= Url::to(['/article/index']) ?>" class="block pl-4 align-middle text-gray-700 no-underline hover:text-purple-500 border-l-4 border-transparent lg:hover:border-gray-400">
                     <span class="pb-1 md:pb-0 text-sm">Новини</span>

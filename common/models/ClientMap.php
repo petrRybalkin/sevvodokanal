@@ -28,6 +28,8 @@ class ClientMap extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'score_id'], 'integer'],
+            [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['client_id' => 'id']],
+            [['score_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScoreMetering::className(), 'targetAttribute' => ['score_id' => 'id']],
         ];
     }
 
@@ -43,15 +45,15 @@ class ClientMap extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function addClientMap($client_id, $score_id){
-
-        $client_map = new ClientMap();
-        $client_map->client_id = $client_id;
-        $client_map->score_id = $score_id;
-        $client_map->save();
+    public static function addClientMap($client_id, $score_id)
+    {
+        if (!self::find()->where(['client_id' => $client_id, 'score_id' => $score_id])->one()){
+            $client_map = new ClientMap();
+            $client_map->client_id = $client_id;
+            $client_map->score_id = $score_id;
+            $client_map->save();
+        }
     }
 
-    public function getScore(){
 
-    }
 }

@@ -38,13 +38,26 @@ class ScoreMetering extends \yii\db\ActiveRecord
     {
         return [
             [['act_number', 'registered_persons'], 'integer'],
-            [['tariff_for_water', 'tariff_for_stocks', 'total_tariff', 'sum'], 'number'],
+            [['tariff_for_water', 'tariff_for_stocks', 'total_tariff'], 'number'],
             [['account_number'], 'string', 'max' => 13],
-            [['name_of_the_tenant', 'address', 'norm', 'type_of_housing'], 'string', 'max' => 255],
+            [['name_of_the_tenant', 'address', 'norm', 'type_of_housing', 'sum'], 'string', 'max' => 255],
             [['account_number'], 'exist', 'targetClass' => ScoreMetering::class,
-                'targetAttribute' => ['account_number' =>'account_number'], 'message' =>'Немає такого особового рахунку 
+                'targetAttribute' => ['account_number' => 'account_number'], 'message' => 'Немає такого особового рахунку 
                 - швидше за все, Ви вводите некоректно номер особового рахунку.'],
-            [['account_number'], 'required']
+            [['act_number'], 'exist', 'targetClass' => ScoreMetering::class,
+                'targetAttribute' => ['act_number' => 'act_number'], 'message' => '"Немає такого номера акта» - швидше за все, Ви вводите некоректно номер акта.'],
+            [['account_number'], 'required'],
+            [['act_number'], 'required', 'when' => function ($model) {
+                return $model->sum == '';
+            }, 'whenClient' => "function (attribute, value) {
+        return $('#scoremetering-sum').val() == '';
+    }"],
+            [['sum'], 'required', 'when' => function ($model) {
+                return $model->act_number == '';
+            }, 'whenClient' => "function (attribute, value) {
+        return $('#scoremetering-act_number').val() == '';
+    }"],
+
 
         ];
     }
@@ -67,5 +80,10 @@ class ScoreMetering extends \yii\db\ActiveRecord
             'tariff_for_stocks' => 'Tariff For Stocks',
             'total_tariff' => 'Total Tariff',
         ];
+    }
+
+    public function getVodomers()
+    {
+        return $this->hasMany(WaterMetering::class, ['account_number' => 'account_number']);
     }
 }

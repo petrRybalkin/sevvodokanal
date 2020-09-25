@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\dbfImport\CompanyDBF;
+use common\dbfImport\IndicationsAndChargesDBF;
 use common\dbfImport\InfoDBF;
 use common\dbfImport\PaymentDBF;
 use common\dbfImport\ScoreDBF;
@@ -152,6 +153,41 @@ class DbfImportController extends Controller
         ]);
 
         return $this->render('company', [
+            'dataProvider' => $dataProvider,
+            'total' => $total,
+            'model' => $model
+        ]);
+    }
+
+    public function actionIndications($model = null)
+    {
+        if (!empty($model)) {
+            $fileName = $model->fileName;
+            $path = Yii::getAlias('@backend/web/' . $fileName);
+            $parser = new IndicationsAndChargesDBF($path, $model->code);
+            $dataArray = $parser->parser(5);
+            $total = $parser->getRecordCount();
+        } else {
+            $total = 0;
+            $dataArray = [];
+        }
+
+        if (empty($model)) {
+            $model = new DbfImport();
+        }
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $dataArray,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'attributes' => [
+                    'lic_schet', 'mes', 'lgo', 'kol','hsal',
+                ],
+            ],
+        ]);
+
+        return $this->render('indications', [
             'dataProvider' => $dataProvider,
             'total' => $total,
             'model' => $model
