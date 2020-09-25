@@ -30,6 +30,7 @@ use common\models\User;
                 </div>
             </div>
             <!-- Profile dropdown -->
+            <?php if($client->visible): ?>
             <?php if(Yii::$app->user->isGuest): ?>
                 <div class="relative profile group w-1/4">
                     <div class="flex justify-end">
@@ -68,6 +69,7 @@ use common\models\User;
                         </div>
                     </div>
                 </div>
+            <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
