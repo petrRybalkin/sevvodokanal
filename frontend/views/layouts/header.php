@@ -18,18 +18,19 @@ use common\models\User;
 ?>
 <div class="bg-blue-800">
     <div class="max-w-9xl mx-auto px-4 sm:px-3 lg:px-3">
-        <div class="flex mr-5 items-center justify-between h-16">
+        <div class="flex mr-5 items-center justify-between h-12">
             <div class="md:block w-3/4">
                 <div class="flex items-baseline justify-start">
                     <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">м. Северодонецк, вул. Богдана Лiщини, 13
                     </p>
                     <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
                     </p>
-                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерская: 4-32-91
+                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: 4-32-91
                     </p>
                 </div>
             </div>
             <!-- Profile dropdown -->
+            <?php $client = false; if($client): ?>
             <?php if(Yii::$app->user->isGuest): ?>
                 <div class="relative profile group w-1/4">
                     <div class="flex justify-end">
@@ -69,6 +70,7 @@ use common\models\User;
                     </div>
                 </div>
             <?php endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -78,7 +80,7 @@ use common\models\User;
 
 <!-- My test -->
 <div class="relative bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-3">
         <div class="flex justify-between items-center py-2 md:justify-start md:space-x-10">
             <div class="lg:w-0 lg:flex-1">
                 <a href="/" class="flex">

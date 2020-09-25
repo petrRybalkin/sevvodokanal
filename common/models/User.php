@@ -25,6 +25,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $updated_at
  * @property integer $role_id
  * @property string $password write-only password
+ * @property boolean $visible
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -33,6 +34,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
     public $password;
+    public $visible = false;
 
 
     /**
@@ -61,7 +63,6 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            //['role_id', 'integer'],
         ];
     }
 
