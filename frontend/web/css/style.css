@@ -8,6 +8,6 @@
 .page-view table,
 .page-view table tr, .page-view table td{border-width: 1px;border-color: #e2e8f0;}
 #menu-toggle{display: none}
-@media (max-width: 639px) {
-header.bg-white.shadow{display: none}
-}
+/*@media (max-width: 639px) {*/
+/*header.bg-white.shadow{display: none}*/
+/*}*/

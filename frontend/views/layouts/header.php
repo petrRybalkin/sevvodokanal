@@ -17,15 +17,15 @@ use common\models\User;
 /* @var $content string */
 ?>
 <div class="bg-blue-800">
-    <div class="max-w-9xl mx-auto px-4 sm:px-3 lg:px-3">
+    <div class="max-w-9xl mx-auto px-4 sm:px-1 lg:px-3">
         <div class="flex mr-5 items-center justify-between md:h-12 sm:h-18">
-            <div class="md:block md:w-3/4">
-                <div class="flex items-baseline justify-start">
-                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">м.&nbsp;Северодонецк, вул.&nbsp;Богдана&nbsp;Лiщини,&nbsp;13
+            <div class="md:block md:w-3/4 sm:w-4/4">
+                <div class="md:flex items-baseline justify-start">
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">м.&nbsp;Северодонецк, вул.&nbsp;Богдана&nbsp;Лiщини,&nbsp;13
                     </p>
-                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
                     </p>
-                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: 4-32-91
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: 4-32-91
                     </p>
                 </div>
             </div>
@@ -84,7 +84,7 @@ use common\models\User;
         <div class="flex justify-between items-center py-2 md:justify-start md:space-x-10">
             <div class="lg:w-0 lg:flex-1" id="home">
                 <a href="/" class="flex">
-                    <h3 class="text-2xl font-bold text-left text-black-400"><!--КОМУНАЛЬНЕ ПІДПРИЄМСТВО-->КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</h3>
+                    <h3 class="md:text-2xl font-bold text-left text-black-400 sm:text-base"><!--КОМУНАЛЬНЕ ПІДПРИЄМСТВО-->КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</h3>
                 </a>
             </div>
             <div class="-mr-2 -my-2 md:hidden" id="burger">
@@ -118,7 +118,7 @@ use common\models\User;
                 <div class="pt-5 pb-6 px-5 space-y-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-2xl font-bold text-left text-black-400">КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"<h3>
+                            <h3 class="md:text-2xl font-bold text-left text-black-400 sm:text-base">КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"<h3>
                         </div>
                         <div class="-mr-2">
                             <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" id="burger2">
