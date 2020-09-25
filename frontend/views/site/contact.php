@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr class="border-b border-gray-400 mt-4">
 </div>
 
-<?php if($client->visible): ?>
+<?php $client = false; if($client): ?>
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>

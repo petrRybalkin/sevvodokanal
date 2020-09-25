@@ -36,7 +36,7 @@ use frontend\widgets\FooterMenuRightWidget;
             </ul>
         </div>
         <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
-            <?php if($client->visible): ?>
+            <?php $client = false; if($client): ?>
             <p class="text-white leading-normal">Пiдписатись на новини:</p>
             <div class="mt-4 flex">
                 <input type="text" class="p-2 border border-grey-light round text-grey-dark text-sm h-auto" placeholder="Your email address">
