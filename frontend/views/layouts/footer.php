@@ -19,7 +19,7 @@ use frontend\widgets\FooterMenuRightWidget;
         <div class="sm:w-1/4 h-auto">
             <ul class="list-reset leading-normal">
                 <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">КОМУНАЛЬНЕ ПІДПРИЄМСТВО "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</li>
-                <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">ЧИСТА ВОДА в КОЖЕН ДIМ!</li>
+                <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">ЧИСТА ВОДА В КОЖЕН ДIМ!</li>
             </ul>
         </div>
         <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">

@@ -25,7 +25,7 @@ use common\models\User;
                     </p>
                     <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
                     </p>
-                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерская: 4-32-91
+                    <p class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: 4-32-91
                     </p>
                 </div>
             </div>

@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <span style="background-color:transparent;font-size:12pt"><strong>Приймальня:</strong> 4-01-33</span>
     </p>
     <p class="mt-3">
-        <span style="background-color:transparent;font-size:12pt"><strong>Диспетчерская:</strong> 4-32-91</span>
+        <span style="background-color:transparent;font-size:12pt"><strong>Диспетчерська:</strong> 4-32-91</span>
     </p>
     <hr class="border-b border-gray-400 mt-4">
 </div>
