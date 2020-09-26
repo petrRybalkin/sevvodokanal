@@ -118,10 +118,13 @@ class PageController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Page::findOne($id)) !== null) {
+
+        if (($model = Page::findOne($id)) !== null && $model->active !== Page::STATUS_INACTIVE) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('Указанная страница не существует.');
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        //throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
