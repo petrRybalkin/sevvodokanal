@@ -27,7 +27,7 @@ use yii\helpers\Html;
                     From: "opacity-100 translate-y-0"
                     To: "opacity-0 translate-y-1"
                 -->
-                <div class="absolute pin-r -ml-4 pt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2 group-hover:block hidden">
+                <div class="second-item absolute pin-r -ml-4 pt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2 group-hover:block hidden">
                     <div class="rounded-lg shadow-lg">
                         <div class="rounded-lg shadow-xs overflow-hidden">
                             <div class="z-20 relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
@@ -79,7 +79,7 @@ use yii\helpers\Html;
                     From: "opacity-100 translate-y-0"
                     To: "opacity-0 translate-y-1"
                 -->
-                <div class="absolute left-1/2 transform -translate-x-1/2 pt-3 px-2 w-screen max-w-md sm:px-0 group-hover:block hidden">
+                <div class="second-item absolute pin-r -ml-4 pt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2 group-hover:block hidden">
                     <div class="rounded-lg shadow-lg">
                         <div class="rounded-lg shadow-xs overflow-hidden">
                             <div class="z-20 relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">

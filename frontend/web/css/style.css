@@ -8,6 +8,7 @@
 .page-view table,
 .page-view table tr, .page-view table td{border-width: 1px;border-color: #e2e8f0;}
 #menu-toggle{display: none}
+.second-item.absolute{z-index: 10}
 /*@media (max-width: 639px) {*/
 /*header.bg-white.shadow{display: none}*/
 /*}*/
