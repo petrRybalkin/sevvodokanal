@@ -2,7 +2,7 @@
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'senderEmail' => 'noreply@severvoda.lg.ua',
+    'senderName' => 'КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"',
     'user.passwordResetTokenExpire' => 3600,
 ];

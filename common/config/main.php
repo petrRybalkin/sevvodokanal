@@ -35,5 +35,17 @@ return [
             'channel' => 'default', // Выбранный для очереди канал
             'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp-pulse.com',
+                'username' => 'slava.rudnev+severvoda@gmail.com',
+                'password' => 'Yc2cmoCj8p',
+                'port' => '2525',
+                'encryption' => false,
+            ],
+        ],
     ],
 ];
