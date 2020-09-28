@@ -32,7 +32,8 @@ class m200925_124705_create_indications_and_charges_table extends Migration
             'privilege_unpaid' => $this->integer(10),
             'correction' => $this->integer(10),
             'debt_end_month' => $this->integer(10),
-            'medium_cubes' => $this->char(1)
+            'medium_cubes' => $this->char(1),
+            'synchronization' => $this->integer(1)
         ]);
     }
 

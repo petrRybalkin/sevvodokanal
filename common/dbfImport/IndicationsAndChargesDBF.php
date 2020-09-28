@@ -104,6 +104,10 @@ class IndicationsAndChargesDBF extends BaseDBF
                 'field' => 'medium_cubes',
                 'type' => static::TYPE_FLOAT,
                 'title' => 'Ознака середніх кубов',
+            ] ,
+            'synchronization' => [
+                'field' => 'synchronization',
+                'type' => static::TYPE_NUMERIC,
             ]
         ];
     }
@@ -130,6 +134,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             'correction',
             'debt_end_month',
             'medium_cubes',
+            'synchronization'
         ];
     }
 
@@ -155,7 +160,8 @@ class IndicationsAndChargesDBF extends BaseDBF
             'correction',
             'debt_end_month',
             'medium_cubes',
-        ], $this->parser(5))->execute();
+            'synchronization'
+        ], $this->parser(10))->execute();
     }
 
 

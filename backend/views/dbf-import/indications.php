@@ -7,9 +7,13 @@
 
 use common\models\DbfImport;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 ?>
+
+<button onclick="$.get('/dbf-import/download?class=IndicationsAndChargesDBF&action=<?= Yii::$app->controller->action->id ?>')">Скачать в dbf</button>
+
 
 <?php $form = ActiveForm::begin(['action' => '/dbf-import/upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 
