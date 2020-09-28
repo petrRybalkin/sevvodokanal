@@ -219,7 +219,6 @@ class DbfImportController extends Controller
         $modelName = 'common\dbfImport\\' . $class;
 //        $parser = new $modelName($path);
 //        $parser->save();
-
     $idJob =  \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
             'model'=> $modelName

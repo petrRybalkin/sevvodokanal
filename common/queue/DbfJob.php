@@ -2,6 +2,7 @@
 
 namespace common\queue;
 
+use Yii;
 use yii\queue\JobInterface;
 
 class DbfJob extends BaseJob implements JobInterface
@@ -12,7 +13,7 @@ class DbfJob extends BaseJob implements JobInterface
 
     public function execute($queue)
     {
-        $filename = '@backend/web/dbfLog.php';
+        $filename = Yii::getAlias('@backend/web/dbfLog.php');
         $handle =  fopen($filename, 'w');
         $this->log($handle, "Началась обработка файла");
         $parser = new $this->model ($this->file);

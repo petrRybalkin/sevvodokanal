@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\ClientMap;
+use common\models\IndicationsAndCharges;
 use common\models\Payment;
 use common\models\ScoreMetering;
 use common\models\WaterMetering;
@@ -70,8 +71,6 @@ class ProfileController extends Controller
         }
         $clientScore = ClientMap::find()->select('score_id')->where(['client_id' => Yii::$app->user->getId()])->column();
 
-//        \yii\helpers\VarDumper::dump($score->clientScore,10,1);exit;
-
         return $this->render('index', [
             'model' => $model,
             'clientScore' => ScoreMetering::find()->where(['id'=> $clientScore])->all()
@@ -90,8 +89,27 @@ class ProfileController extends Controller
     public function actionWaterMetering($id)
     {
         $number = ScoreMetering::find()->where(['id' => $id])->one();
+        $model = new \frontend\models\IndicationForm();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->post('add-meter-button')) {
+                $indication = new  IndicationsAndCharges();
+                $indication->account_number = $number->account_number;
+                $indication->month_year = Yii::$app->formatter->asDate(('NOW'), 'php:Ym');
+
+
+                Yii::$app->session->setFlash('success', 'Особовий рахунок додано.');
+                return $this->redirect(Yii::$app->request->referrer);
+            } else {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+
+        }
+
         return $this->render('water-metering', [
-            'number' => $number
+            'number' => $number,
+            'model'=> $model
     ]);
 
     }
@@ -111,9 +129,14 @@ class ProfileController extends Controller
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
+
+
         return $this->render('history', [
             'metering' => $metering,
-            'score'=> $score
+            'score'=> $score,
+            'indication'=> $indication,
+
     ]);
 
     }
