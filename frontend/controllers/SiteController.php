@@ -74,15 +74,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-       $m = Yii::$app->mailer->compose()
-            ->setTo('anyuta.serik@gmail.com')
-            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo(['anyuta.serik@gmail.com'])
-            ->setSubject('54455')
-            ->setTextBody('8888888')
-            ->send();
-
-        \yii\helpers\VarDumper::dump($m,10,1);exit;
         return $this->render('index');
     }
 
