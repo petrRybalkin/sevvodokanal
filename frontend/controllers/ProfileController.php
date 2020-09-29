@@ -20,6 +20,7 @@ use yii\web\Response;
  */
 class ProfileController extends Controller
 {
+    public $layout = 'main-profile';
     /**
      * {@inheritdoc}
      */
