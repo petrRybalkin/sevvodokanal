@@ -70,4 +70,9 @@ class WaterMetering extends \yii\db\ActiveRecord
             'khvsrn' => 'Khvsrn',
         ];
     }
+
+    public static function getWaterMeteringInAccNum($account_number){
+
+        return WaterMetering::find()->where(['account_number' => $account_number])->all();
+    }
 }
