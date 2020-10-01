@@ -1,10 +1,14 @@
 <?php
 /** @var \common\models\ScoreMetering $number */
 /** @var \common\models\WaterMetering $vodomer */
-$vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
+
 
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html; ?>
+use yii\helpers\Html;
+
+$vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
+if($vodomers):
+?>
 Розділ “Передача показань”:
 1. Номер реєстраційного акту. <?= $number->act_number ? :'-' ?>
 <?php foreach ($vodomers as $vodomer) :?>
@@ -36,15 +40,23 @@ use yii\helpers\Html; ?>
         <p>- строк наступної повірки засоба обліку <?= $vodomer->verification_date ?></p>
     <?php endif; ?>
 
-<?php endforeach; ?>
+<?php endforeach;
 
-<p>5. Дата попередніх показань.  <?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php: d.m.Y') ?></p>
+
+?>
+
+<p>5. Дата попередніх показань.  <?= $vodomer->date_previous_readings ? Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php: d.m.Y'): '' ?></p>
 <p>7. Враховувати кількість засобів обліку води, які обліковуються на особовому рахунку споживача.
     <?= ($vodomer->water_metering_first ? 1: 0) + ($vodomer->water_metering_second ? 1 : 0) + ($vodomer->watering_number ? 1: 0)?></p>
 <p>8. Врахувати можливість передачі  показників до підприємства.</p>
 
 
-<?php $form = ActiveForm::begin([
+<?php
+endif;?>
+
+<h4>Передача показаний счетчика </h4>
+<?php
+$form = ActiveForm::begin([
     'enableAjaxValidation' => true,
 ]);
 
@@ -58,5 +70,8 @@ use yii\helpers\Html; ?>
     <?= Html::submitButton('Передати', ['class' => 'btn btn-primary', 'name' => 'add-meter-button', 'value' => 1]) ?>
 </div>
 
-<?php ActiveForm::end(); ?>
+<?php ActiveForm::end();
+
+
+ ?>
 

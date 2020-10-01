@@ -1,7 +1,10 @@
 <?php
 use yii\helpers\Url;
 
+
+if($number):
 ?>
+
 <ul class="list-reset">
     <li class="py-2 md:my-0 hover:bg-purple-100 lg:hover:bg-transparent">
         <a href="<?= Url::to(['/profile/water-metering', 'id'=> $number]) ?>"
@@ -38,3 +41,4 @@ use yii\helpers\Url;
         </a>
     </li>
 </ul>
+<?php endif; ?>

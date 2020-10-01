@@ -38,7 +38,7 @@ AppAsset::register($this);
     </header>
     <main>
         <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-8 mt-1">
-            <?=$this->render('sidebar-profile'); ?>
+            <?= $this->render('sidebar-profile'); ?>
             <div class="w-full lg:w-3/4 pl-8 pr-8 pb-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white">
                 <?= Alert::widget() ?>
                 <?= $content ?>
