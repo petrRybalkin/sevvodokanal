@@ -95,5 +95,7 @@ class InfoDBF extends BaseDBF
             'date_previous_readings', 'type_first', 'type_second', 'type_watering', 'verification_date',
             'medium_cubes', 'number_medium_cubes',
         ], $this->parser())->execute();
+
+        return true;
     }
 }

@@ -83,18 +83,29 @@ class ScoreDBF extends BaseDBF
 
     public function save()
     {
+
+
         foreach ($this->parser() as $item) {
-           $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
-            $arr =  array_combine($this->tableFaild() ,$item);
-            if($scoreExist){
+            $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+
+            $arr = array_combine($this->tableFaild(), $item);
+            if ($scoreExist) {
                 $scoreExist->updateAttributes($arr);
-            }else{
+            } else {
                 $score = new ScoreMetering();
                 $score->setAttributes($arr);
-                $score->save();
+                if (!$score->save()) {
+                    print_r($score);
+                    print_r($score->getErrors());
+//                    exit;
+                    return false;
+                } else {
+                    Yii::$app->queue->status(1);
+                    print_r('ok');
+                }
             }
         }
-
+        return true;
     }
 
 

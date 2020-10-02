@@ -35,7 +35,8 @@ class ScoreMetering extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['act_number', 'registered_persons'], 'integer'],
+            [['registered_persons'], 'integer'],
+            [['act_number'], 'safe'],
             [['tariff_for_water', 'tariff_for_stocks', 'total_tariff'], 'number'],
             [['account_number'], 'string', 'max' => 13],
             [['name_of_the_tenant', 'address', 'norm', 'type_of_housing'], 'string', 'max' => 255],

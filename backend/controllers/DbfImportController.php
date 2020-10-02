@@ -87,6 +87,7 @@ class DbfImportController extends Controller
             'model' => $model
         ]);
     }
+
     public function actionPayment($model = null)
     {
         if (!empty($model)) {
@@ -184,18 +185,17 @@ class DbfImportController extends Controller
 //        $parser = new $modelName($path);
 //        $parser->save();
 
-    $idJob =  \Yii::$app->queue->push(new DbfJob([
+        $idJob = \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
-            'model'=> $modelName
+            'model' => $modelName
 
         ]));
 
-
         $startTime = time();
-        while(!Yii::$app->queue->isDone($idJob)){
+        while (!Yii::$app->queue->isDone($idJob)) {
             sleep(1);
-            if (time() - $startTime > 30) {
-                  Yii::$app->session->setFlash('danger', 'Не удалось сохранить данные');
+            if (time() - $startTime > 100) {
+                Yii::$app->session->setFlash('danger', 'Не удалось сохранить данные');
                 return $this->redirect($action);
             }
         }
@@ -203,6 +203,16 @@ class DbfImportController extends Controller
         Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
         return $this->redirect($action);
 
+
+    }
+
+
+    public function actiondDel($table)
+    {
+
+        Yii::$app->db->createCommand()->truncateTable($table)->execute();
+
+        \yii\helpers\VarDumper::dump(555,10,1);exit;
 
     }
 }
