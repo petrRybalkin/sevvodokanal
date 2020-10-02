@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "company".
  *
  * @property int $id
- * @property int $num_contract
- * @property int  $accounting_number
+ * @property string $num_contract
+ * @property string  $accounting_number
  * @property string|null $verification_date
  * @property float|null $previous_readings
  */
@@ -29,8 +29,9 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['accounting_number', 'num_contract', 'previous_readings'], 'number'],
+            [[ 'previous_readings'], 'number', 'skipOnEmpty' => true],
             [['verification_date'], 'safe'],
+            [[ 'accounting_number','num_contract'], 'string']
         ];
     }
 
