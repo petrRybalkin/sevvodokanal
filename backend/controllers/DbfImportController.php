@@ -3,11 +3,14 @@
 namespace backend\controllers;
 
 use common\dbfImport\CompanyDBF;
+use common\dbfImport\IndicationsAndChargesDBF;
 use common\dbfImport\InfoDBF;
 use common\dbfImport\PaymentDBF;
 use common\dbfImport\ScoreDBF;
 use common\models\DbfImport;
+use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
+use XBase\WritableTable;
 use Yii;
 use yii\web\Controller;
 use yii\web\UploadedFile;
@@ -159,6 +162,41 @@ class DbfImportController extends Controller
         ]);
     }
 
+    public function actionIndications($model = null)
+    {
+        if (!empty($model)) {
+            $fileName = $model->fileName;
+            $path = Yii::getAlias('@backend/web/' . $fileName);
+            $parser = new IndicationsAndChargesDBF($path, $model->code);
+            $dataArray = $parser->parser(5);
+            $total = $parser->getRecordCount();
+        } else {
+            $total = 0;
+            $dataArray = [];
+        }
+
+        if (empty($model)) {
+            $model = new DbfImport();
+        }
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $dataArray,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'attributes' => [
+                    'lic_schet', 'mes', 'lgo', 'kol','hsal',
+                ],
+            ],
+        ]);
+
+        return $this->render('indications', [
+            'dataProvider' => $dataProvider,
+            'total' => $total,
+            'model' => $model
+        ]);
+    }
+
     public function actionUpload()
     {
         $model = new DbfImport();
@@ -175,6 +213,27 @@ class DbfImportController extends Controller
         return $this->runAction(Yii::$app->request->post('action'), [
             'model' => $model
         ]);
+    }
+
+    public function actionDownload( $class, $action)
+    {
+        $model = IndicationsAndCharges::find();
+//        $path = Yii::getAlias('@backend/web/upload/test.dbf');
+        $table = new WritableTable(dirname(__FILE__).'/test.dbf');
+        $table->openWrite();
+
+        foreach ($model->each() as $item) {
+\yii\helpers\VarDumper::dump($item,10,1);exit;
+            $record = $table->nextRecord();
+            $record->field = $item;
+            $table->writeRecord();
+        }
+
+        $table->close();
+
+
+        \yii\helpers\VarDumper::dump(5555,10,1);exit;
+
     }
 
     public function actionSave($fileName, $class, $action)

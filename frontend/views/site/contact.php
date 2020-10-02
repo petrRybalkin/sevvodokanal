@@ -34,11 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr class="border-b border-gray-400 mt-4">
 </div>
 
-<?php $client = false; if($client): ?>
+<?php $client = true; if($client): ?>
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
-<!--            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-on-white.svg" alt="Workflow">-->
             <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
                 Форма зворотнього зв'язку
             </h2>

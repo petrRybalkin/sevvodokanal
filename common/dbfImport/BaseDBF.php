@@ -32,15 +32,21 @@ abstract class BaseDBF
             if ($limit !== 0 && $i >= $limit) {
                 return $retTable;
             }
+
             foreach ($this->fieldList() as $column => $settings) {
                 if ($settings['type'] == self::TYPE_DATE) {
                     $item[$column] = date('Y-m-d', strtotime($record->$column));
                 } else {
-                    if (in_array($column, $columns)) {
-                        $item[$column] = $record->$column;
-                    } else {
-                        $item[$column] = null;
+                    if($column === 'synchronization'){
+                        $item[$column] = 1;
+                    }else{
+                        if (in_array($column, $columns)) {
+                            $item[$column] = $record->$column;
+                        } else {
+                            $item[$column] = null;
+                        }
                     }
+
                 }
             }
             $retTable[] = $item;
