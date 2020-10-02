@@ -12,12 +12,12 @@ class CompanyDBF extends BaseDBF
         return [
             'kod_p' => [
                 'field' => 'num_contract',
-                'type' => static::TYPE_NUMERIC,
+                'type' => static::TYPE_STRING,
                 'title' => 'Номер договору',
             ],
             'nomer' => [
                 'field' => 'accounting_number',
-                'type' => static::TYPE_NUMERIC,
+                'type' => static::TYPE_STRING,
                 'title' => 'Номер засобу обліку',
             ],
             'datgosp' => [
@@ -48,18 +48,34 @@ class CompanyDBF extends BaseDBF
     public function save()
     {
 
-        foreach ($this->parser() as $item) {
-            $company = Company::find()->where(['num_contract' => $item['kod_p']])->one();
+//        foreach ($this->parser() as $item) {
+//            $company = Company::find()->where(['num_contract' => $item['kod_p']])->one();
+//
+//            $arr =  array_combine($this->tableFaild() ,$item);
+//            if($company){
+//                $company->updateAttributes($arr);
+//            }else{
+//                $newCompany = new Company();
+//                $newCompany->setAttributes($arr);
+//                if (!$newCompany->save()) {
+//                    print_r($newCompany);
+//                    print_r($newCompany->getErrors());
+////                    exit;
+//                    return false;
+//                } else {
+//                    print_r('ok');
+//                }
+//            }
+//        }
 
-            $arr =  array_combine($this->tableFaild() ,$item);
-            if($company){
-                $company->updateAttributes($arr);
-            }else{
-                $newCompany = new Company();
-                $newCompany->setAttributes($arr);
-                $newCompany->save();
-            }
-        }
+        Yii::$app->db->createCommand()->batchInsert('company', [
+            'num_contract',
+            'accounting_number',
+            'verification_date',
+            'previous_readings',
+        ], $this->parser())->execute();
 
+
+        return true;
     }
 }
