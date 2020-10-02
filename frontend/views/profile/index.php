@@ -20,7 +20,7 @@ use yii\helpers\Url;
 /** @var \common\models\ScoreMetering $item */
 foreach ($clientScore as $item):
     ?>
-    <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id])?>"><b>особовий рахунок:  </b><?= $item->account_number ?></a>
+    <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id])?>"><b>особовий рахунок:  </b><?= $item->account_number ?></a><br>
 <?php endforeach; ?>
 
 
@@ -47,7 +47,7 @@ foreach ($clientScore as $item):
 <!---->
 <?php //ActiveForm::end(); ?>
 
-<div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
             <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Додати особовий рахунок</h2>
