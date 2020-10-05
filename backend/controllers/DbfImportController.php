@@ -12,6 +12,7 @@ use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
 use XBase\WritableTable;
 use Yii;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ArrayDataProvider;
@@ -217,8 +218,43 @@ class DbfImportController extends Controller
 
     public function actionDownload( $class, $action)
     {
+//        phpinfo();
         $model = IndicationsAndCharges::find();
-//        $path = Yii::getAlias('@backend/web/upload/test.dbf');
+        $path = Yii::getAlias('@backend/web/test.dbf');
+
+        $def = [
+            ['account_number',  "C"],
+            ['month_year',  "N"],
+            ['privilege',"C"],
+            ['count',  "N"],
+            ['debt_begin_month',  "N"],
+            ['previous_readings_first',  "N"],
+            ['current_readings_first',  "N"],
+            ['previous_readings_second',  "N"],
+            ['current_readings_second',  "N"],
+            ['previous_readings_watering',  "N"],
+            ['current_readings_watering',  "N"],
+            ['water_consumption',  "N"],
+            ['watering_consumption',  "N"],
+            ['total_tariff',  "N"],
+            ['accruals',  "N"],
+            ['privilege_unpaid',  "N"],
+            ['correction',  "N"],
+            ['debt_end_month',  "N"],
+            ['medium_cubes',  "C"],
+            ['synchronization',  "N"]
+
+
+        ];
+
+// создаем
+        if (!dbase_create($path, $def,['type' => 'DBASE_TYPE_DBASE' ])) {
+            echo "Ошибка, не получается создать базу данных\n";
+        }
+
+        \yii\helpers\VarDumper::dump(1111,10,1);exit;
+
+
         $table = new WritableTable(dirname(__FILE__).'/test.dbf');
         $table->openWrite();
 
