@@ -12,21 +12,22 @@ use Yii;
  * @property int|null $month_year
  * @property string|null $privilege
  * @property int|null $count
- * @property int|null $debt_begin_month
+ * @property float|null $debt_begin_month
  * @property int|null $previous_readings_first
  * @property int|null $current_readings_first
  * @property int|null $previous_readings_second
  * @property int|null $current_readings_second
  * @property int|null $previous_readings_watering
  * @property int|null $current_readings_watering
- * @property int|null $water_consumption
- * @property int|null $watering_consumption
+ * @property float|null $water_consumption
+ * @property float|null $watering_consumption
  * @property int|null $total_tariff
- * @property int|null $accruals
- * @property int|null $privilege_unpaid
+ * @property float|null $accruals
+ * @property float|null $privilege_unpaid
  * @property int|null $correction
- * @property int|null $debt_end_month
+ * @property float|null $debt_end_month
  * @property string|null $medium_cubes
+ * @property int|null $synchronization
  */
 class IndicationsAndCharges extends \yii\db\ActiveRecord
 {
@@ -44,10 +45,19 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first', 'previous_readings_second', 'current_readings_second', 'previous_readings_watering', 'current_readings_watering', 'water_consumption', 'watering_consumption', 'total_tariff', 'accruals', 'privilege_unpaid', 'correction', 'debt_end_month'], 'integer'],
+//            [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
+//                'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
+//                'current_readings_watering', 'water_consumption', 'watering_consumption', 'total_tariff', 'accruals',
+//                'privilege_unpaid', 'correction', 'debt_end_month'], 'integer', 'skipOnEmpty' => true],
+            [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
+                'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
+                'current_readings_watering',  'total_tariff',
+                'privilege_unpaid', 'correction'], 'default'],
             [['account_number'], 'string', 'max' => 13],
             [['privilege'], 'string', 'max' => 2],
             [['medium_cubes'], 'string', 'max' => 1],
+           [['synchronization'],'integer'],
+           [[ 'debt_end_month','accruals','lgota','water_consumption', 'watering_consumption'],'number']
         ];
     }
 

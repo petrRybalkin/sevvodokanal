@@ -3,6 +3,7 @@
 namespace common\dbfImport;
 
 
+use common\models\IndicationsAndCharges;
 use Yii;
 
 class IndicationsAndChargesDBF extends BaseDBF
@@ -140,7 +141,8 @@ class IndicationsAndChargesDBF extends BaseDBF
 
     public function save()
     {
-      Yii::$app->db->createCommand()->batchInsert('indications_and_charges',[
+
+    if(  Yii::$app->db->createCommand()->batchInsert('indications_and_charges',[
             'account_number',
             'month_year',
             'privilege',
@@ -161,7 +163,13 @@ class IndicationsAndChargesDBF extends BaseDBF
             'debt_end_month',
             'medium_cubes',
             'synchronization'
-        ], $this->parser(10))->execute();
+        ], $this->parser(20))->execute()){
+        return true;
+    }else{
+        return false;
+    }
+
+
     }
 
 

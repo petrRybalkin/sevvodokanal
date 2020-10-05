@@ -24,18 +24,6 @@ class DbfJob extends BaseJob implements JobInterface
         }else{
             return false;
         }
-
-//        try {
-//            $parser->save();
-//
-//        } catch (\Exception $e) {
-//            $this->log($e->getMessage());
-//            $this->log($e->getTraceAsString());
-//            return false;
-//        }
-//        $this->log($handle, "Файл сохранен");
-//        fclose($handle);
-//        return '444444';
     }
 
 
