@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<button onclick="$.get('/dbf-import/download')">Скачать в dbf</button>
-
 
 <?php $form = ActiveForm::begin(['action' => '/dbf-import/upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 

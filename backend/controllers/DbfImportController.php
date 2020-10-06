@@ -218,8 +218,9 @@ class DbfImportController extends Controller
 
     public function actionDownload()
     {
-        $model = IndicationsAndCharges::find()->where(['synchronization' => 1]);
-        $path = Yii::getAlias('@backend/web/test.dbf');
+        $model = IndicationsAndCharges::find();
+//            ->where(['synchronization' => 1]);
+        $path = Yii::getAlias('@backend/web/Показання.dbf');
 
         $def = [
             ['lic_schet', "C", 13],
@@ -271,17 +272,7 @@ class DbfImportController extends Controller
         $table->close();
 
         if (file_exists($path)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($path));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($path));
-
-            Yii::$app->response->sendFile($path);
-            return Yii::$app->response->send();
+            return  \Yii::$app->response->sendFile($path);
         }
         Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
     }
