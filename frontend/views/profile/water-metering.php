@@ -55,14 +55,14 @@ if($vodomers): ?>
             <div>
                 <?= $form->field($model, 'number')
                     ->textInput(['type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
-                    ->label('Особовий рахунок', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
+                    ->label('Номер засобу обліку води', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'meter')
                     ->textInput(['type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
-                    ->label('Pеєстраційний номер акту', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
+                    ->label('Показники лiчильника', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
         </div>
