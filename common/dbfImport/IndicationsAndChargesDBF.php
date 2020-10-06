@@ -106,7 +106,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                 'type' => static::TYPE_FLOAT,
                 'title' => 'Ознака середніх кубов',
             ] ,
-            'synchronization' => [
+            'synch' => [
                 'field' => 'synchronization',
                 'type' => static::TYPE_NUMERIC,
             ]

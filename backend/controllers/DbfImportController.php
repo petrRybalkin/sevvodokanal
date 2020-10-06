@@ -216,60 +216,74 @@ class DbfImportController extends Controller
         ]);
     }
 
-    public function actionDownload( $class, $action)
+    public function actionDownload()
     {
-//        phpinfo();
-        $model = IndicationsAndCharges::find();
+        $model = IndicationsAndCharges::find()->where(['synchronization' => 1]);
         $path = Yii::getAlias('@backend/web/test.dbf');
 
         $def = [
-            ['account_number',  "C"],
-            ['month_year',  "N"],
-            ['privilege',"C"],
-            ['count',  "N"],
-            ['debt_begin_month',  "N"],
-            ['previous_readings_first',  "N"],
-            ['current_readings_first',  "N"],
-            ['previous_readings_second',  "N"],
-            ['current_readings_second',  "N"],
-            ['previous_readings_watering',  "N"],
-            ['current_readings_watering',  "N"],
-            ['water_consumption',  "N"],
-            ['watering_consumption',  "N"],
-            ['total_tariff',  "N"],
-            ['accruals',  "N"],
-            ['privilege_unpaid',  "N"],
-            ['correction',  "N"],
-            ['debt_end_month',  "N"],
-            ['medium_cubes',  "C"],
-            ['synchronization',  "N"]
-
+            ['lic_schet', "C", 13],
+            ['regn', "N", 5, 0],
+            ['fp', "C", 20],
+            ['nh1', "C", 10, 0],
+            ['nh2', "C", 10, 2],
+            ['np', "C", 10, 0],
+            ['th1', "N", 6, 0],
+            ['th2', "N", 6, 0],
+            ['tp', "N", 6, 0],
+            ['ph1', "N", 6, 0],
+            ['ph2', "N", 6, 0],
+            ['pp', "N", 6, 0],
+            ['dpp', "D", 8],
 
         ];
 
-// создаем
-        if (!dbase_create($path, $def,['type' => 'DBASE_TYPE_DBASE' ])) {
-            echo "Ошибка, не получается создать базу данных\n";
+        if (!dbase_create($path, $def)) {
+            Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
         }
 
-        \yii\helpers\VarDumper::dump(1111,10,1);exit;
 
-
-        $table = new WritableTable(dirname(__FILE__).'/test.dbf');
+        $table = new WritableTable($path);
         $table->openWrite();
-
         foreach ($model->each() as $item) {
-\yii\helpers\VarDumper::dump($item,10,1);exit;
-            $record = $table->nextRecord();
-            $record->field = $item;
+
+            $record = $table->appendRecord();
+            if(!$item){
+                continue;
+            }
+            $record->lic_schet = $item->account_number;
+            $record->regn = $item->score ? $item->score->act_number : 0;
+            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
+            $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
+            $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
+            $record->np = $item->water ? $item->water->watering_number : 0;
+            $record->th1 = $item->current_readings_first;
+            $record->th2 = $item->current_readings_second;
+            $record->tp = $item->previous_readings_watering;
+            $record->ph1 = $item->previous_readings_first;
+            $record->ph2 = $item->previous_readings_second;
+            $record->pp = $item->previous_readings_watering;
+            $record->dpp = $item->month_year;
             $table->writeRecord();
+            $item->updateAttributes(['synchronization' => 0]);
         }
 
         $table->close();
 
+        if (file_exists($path)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($path));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($path));
 
-        \yii\helpers\VarDumper::dump(5555,10,1);exit;
-
+            Yii::$app->response->sendFile($path);
+            return Yii::$app->response->send();
+        }
+        Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
     }
 
     public function actionSave($fileName, $class, $action)

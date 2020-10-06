@@ -89,4 +89,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             'medium_cubes' => 'Medium Cubes',
         ];
     }
+
+    public function getScore(){
+        return  $this->hasOne(ScoreMetering::class, ['account_number' => 'account_number']);
+    }
+
+    public function getWater(){
+        return  $this->hasOne(WaterMetering::class, ['account_number' => 'account_number']);
+    }
 }
