@@ -24,29 +24,6 @@ foreach ($clientScore as $item):
 <?php endforeach; ?>
 
 
-<!--    <h3> Додати особовий рахунок</h3>-->
-<!--    <div>-->
-<!--        Як вводити дані? Що робити якщо я не знаю номер особового рахунку?-->
-<!--        Для уточнення правильного номера особового рахунку звертайтеся до відділу збуту КОМУНАЛЬНОГО ПІДПРИЄМСТВА-->
-<!--        "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ".-->
-<!--        Копійки в сумі оплати вводяться через кому без слів "грн" і т.ін. наприклад 65,54-->
-<!--    </div>-->
-
-<?php //$form = ActiveForm::begin([
-//    'enableAjaxValidation' => true,
-//]); ?>
-<!---->
-<?//= $form->field($model, 'account_number')->textInput(['type' => 'number', 'autofocus' => true]) ?>
-<?//= $form->field($model, 'act_number')->textInput(['type' => 'number']) ?>
-<?//= $form->field($model, 'sum')->textInput() ?>
-<!---->
-<!---->
-<!--    <div class="form-group">-->
-<!--        --><?//= Html::submitButton('Додати', ['class' => 'btn btn-primary', 'name' => 'add-score-button', 'value' => 1]) ?>
-<!--    </div>-->
-<!---->
-<?php //ActiveForm::end(); ?>
-
 <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
