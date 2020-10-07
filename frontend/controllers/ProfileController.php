@@ -163,7 +163,7 @@ class ProfileController extends Controller
         return $this->render('score', [
             'score' => $score,
             'indication'=> $indication,
-            'metering' => $metering
+            'metering' => $metering,
         ]);
 
     }

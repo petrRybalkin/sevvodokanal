@@ -3,13 +3,12 @@
 /** @var \common\models\ScoreMetering $score */
 /** @var \common\models\IndicationsAndCharges $indication */
 /** @var \common\models\WaterMetering $metering */
+/** @var Payment $payment */
 
 
-//\yii\helpers\VarDumper::dump($indication->water_consumption,10,1);exit;
-?>
+
+use common\models\Payment; ?>
 Розділ “Рахунок”:
-1. Передбачити формування рахунку та його друк. Вид рахунку додається.(Додаток №Б)
-2. Врахувати можливість переходу на інші розділи особистого кабінету (дані особового рахунку, передача показань, нарахування та передані показаня, оплата).
 
 
 <style>
@@ -38,6 +37,9 @@
     }
 </style>
 
+<?php if($score && $indication && $metering):?>
+
+    <input TYPE="button" onClick="window.print()">gtxfnm
 <table class="iksweb">
     <tbody>
     <tr>
@@ -72,31 +74,33 @@
         <td>Дата наступної повірки засобу(ів) обліку води: <?= Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y')  ?></td>
     </tr>
     <tr>
-        <td>Наявність пільги: <?= $indication->privilege ?></td>
+        <td>Наявність пільги: <?= $indication->privilege == 0 ? 'Нi' : "Так"?></td>
     </tr>
     <tr>
         <td>Заборгованість станом на <?= Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y') ?> р.: <?= $indication->debt_end_month?></td>
     </tr>
     <tr>
-        <td>Нараховано:</td>
+        <td>Нараховано: <?= $indication->accruals ?></td>
     </tr>
     <tr>
-        <td>Пільга:</td>
+        <td>Пільга: <?=  $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota( $score->account_number, 2) ?></td>
     </tr>
     <tr>
-        <td>Субсидія:</td>
+        <td>Субсидія: <?= Payment::getLgota( $score->account_number, 3)?: '-'?></td>
     </tr>
     <tr>
-        <td>Поточна оплата:</td>
+        <td>Поточна оплата: <?= '---'?></td>
     </tr>
     <tr>
-        <td>Перерахунок:</td>
+        <td>Перерахунок: <?= '---'?></td>
     </tr>
     <tr>
-        <td>До оплати на ___._____.202_р. : ____________</td>
+        <td>До оплати на ___._____.202_р. : ____________ грн. </td>
     </tr>
     <tr>
-        <td>Всього до оплати:</td>
+        <td>Всього до оплати: ___ грн. </td>
     </tr>
     </tbody>
 </table>
+
+<?php endif; ?>
