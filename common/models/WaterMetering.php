@@ -40,9 +40,9 @@ class WaterMetering extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['regn', 'ph1', 'ph2', 'pp', 'khvsrn'], 'integer'],
-            [['dppp', 'datgos'], 'safe'],
-            [['lic_schet', 'nh1', 'nh2', 'np', 'namh1', 'namh2', 'namp', 'srkub'], 'string', 'max' => 1],
+            [['act_number', 'previous_readings_first', 'previous_readings_second', 'previous_watering_readings', 'number_medium_cubes'], 'integer'],
+            [['date_previous_readings', 'verification_date'], 'safe'],
+            [['account_number', 'type_first', 'type_second', 'type_watering', 'water_metering_first', 'water_metering_second', 'watering_number', 'medium_cubes'], 'string', 'max' => 1],
         ];
     }
 
@@ -71,7 +71,8 @@ class WaterMetering extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getWaterMeteringInAccNum($account_number){
+    public static function getWaterMeteringInAccNum($account_number)
+    {
 
         return WaterMetering::find()->where(['account_number' => $account_number])->all();
     }

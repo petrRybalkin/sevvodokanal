@@ -45,19 +45,15 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
-//                'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
-//                'current_readings_watering', 'water_consumption', 'watering_consumption', 'total_tariff', 'accruals',
-//                'privilege_unpaid', 'correction', 'debt_end_month'], 'integer', 'skipOnEmpty' => true],
             [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
                 'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
-                'current_readings_watering',  'total_tariff',
+                'current_readings_watering', 'total_tariff',
                 'privilege_unpaid', 'correction'], 'default'],
             [['account_number'], 'string', 'max' => 13],
             [['privilege'], 'string', 'max' => 2],
             [['medium_cubes'], 'string', 'max' => 1],
-           [['synchronization'],'integer'],
-           [[ 'debt_end_month','accruals','lgota','water_consumption', 'watering_consumption'],'number']
+            [['synchronization'], 'integer'],
+            [['debt_end_month', 'accruals', 'water_consumption', 'watering_consumption'], 'number', 'skipOnEmpty' => true]
         ];
     }
 
@@ -90,11 +86,13 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getScore(){
-        return  $this->hasOne(ScoreMetering::class, ['account_number' => 'account_number']);
+    public function getScore()
+    {
+        return $this->hasOne(ScoreMetering::class, ['account_number' => 'account_number']);
     }
 
-    public function getWater(){
-        return  $this->hasOne(WaterMetering::class, ['account_number' => 'account_number']);
+    public function getWater()
+    {
+        return $this->hasOne(WaterMetering::class, ['account_number' => 'account_number']);
     }
 }

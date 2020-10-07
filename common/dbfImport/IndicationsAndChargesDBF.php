@@ -6,6 +6,12 @@ namespace common\dbfImport;
 use common\models\IndicationsAndCharges;
 use Yii;
 
+//Довідник нарахувань та показань для фізичних осіб
+//При первинній загрузці файлу по нарахуванням та показанням для фізичних осіб буде містити всю інформацію по
+// нарахуванням та показанням за 3 роки.
+//При подальшому завантаженні файл буде містити дані по нарахуванню та показанню тільки за поточний місяць.
+
+
 class IndicationsAndChargesDBF extends BaseDBF
 {
     public function fieldList()

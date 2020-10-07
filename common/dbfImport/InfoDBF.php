@@ -2,6 +2,7 @@
 
 namespace common\dbfImport;
 
+use common\models\WaterMetering;
 use Yii;
 
 class InfoDBF extends BaseDBF
@@ -87,15 +88,66 @@ class InfoDBF extends BaseDBF
         ];
     }
 
+    public function tableFaild()
+    {
+
+        return [
+            'account_number',
+            'act_number',
+            'water_metering_first',
+            'water_metering_second',
+            'watering_number',
+            'previous_readings_first',
+            'previous_readings_second',
+            'previous_watering_readings',
+            'date_previous_readings',
+            'type_first',
+            'type_second',
+            'type_watering',
+            'verification_date',
+            'medium_cubes',
+            'number_medium_cubes',
+        ];
+
+    }
+
     public function save()
     {
-        Yii::$app->db->createCommand()->batchInsert('water_metering', [
-            'account_number', 'act_number', 'water_metering_first', 'water_metering_second',
-            'watering_number', 'previous_readings_first', 'previous_readings_second', 'previous_watering_readings',
-            'date_previous_readings', 'type_first', 'type_second', 'type_watering', 'verification_date',
-            'medium_cubes', 'number_medium_cubes',
-        ], $this->parser())->execute();
 
+
+        foreach ($this->parser() as $item) {
+            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+            if ($item['ph1'] < $scoreExist->previous_readings_first) {
+                continue;
+            }
+            $arr = array_combine($this->tableFaild(), $item);
+            if ($scoreExist) {
+                $scoreExist->updateAttributes($arr);
+            } else {
+                $score = new WaterMetering();
+                $score->setAttributes($arr);
+                if (!$score->save()) {
+                    print_r($score);
+                    print_r($score->getErrors());
+//                    exit;
+                    return false;
+                } else {
+//                    Yii::$app->queue->status(1);
+                    print_r('ok');
+                }
+            }
+        }
         return true;
+
+//
+//
+//        Yii::$app->db->createCommand()->batchInsert('water_metering', [
+//            'account_number', 'act_number', 'water_metering_first', 'water_metering_second',
+//            'watering_number', 'previous_readings_first', 'previous_readings_second', 'previous_watering_readings',
+//            'date_previous_readings', 'type_first', 'type_second', 'type_watering', 'verification_date',
+//            'medium_cubes', 'number_medium_cubes',
+//        ], $this->parser())->execute();
+//
+//        return true;
     }
 }
