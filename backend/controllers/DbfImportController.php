@@ -200,7 +200,7 @@ class DbfImportController extends Controller
     public function actionUpload()
     {
         $model = new DbfImport();
-\yii\helpers\VarDumper::dump(3333,10,1);exit;
+
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $model->dbfFile = UploadedFile::getInstance($model, 'dbfFile');
 
