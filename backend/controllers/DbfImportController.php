@@ -199,6 +199,7 @@ class DbfImportController extends Controller
 
     public function actionUpload()
     {
+        ini_set( 'post_max_size', '200M');
         $model = new DbfImport();
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
