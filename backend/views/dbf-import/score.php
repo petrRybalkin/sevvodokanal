@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<?php $form = ActiveForm::begin(['action' => 'dbf-import/upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
+<?php $form = ActiveForm::begin(['action' => '/backend/dbf-import/upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 
 <?= $form->field($model, 'dbfFile')->fileInput(['accept' => '.dbf'])->label('Выберите файл для загрузки') ?>
 <?= $form->field($model, 'code')->dropDownList(DbfImport::codeList())->label('Выберите кодировку файла загрузки') ?>
