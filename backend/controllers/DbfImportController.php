@@ -12,7 +12,6 @@ use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
 use XBase\WritableTable;
 use Yii;
-use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ArrayDataProvider;
