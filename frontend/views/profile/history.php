@@ -1,4 +1,9 @@
 <?php
+
+/** @var \common\models\WaterMetering $metering */
+/** @var \common\models\ScoreMetering $score */
+/** @var \common\models\IndicationsAndCharges $indication */
+
 ?>
 
 Розділ “ Нарахування та передані показання”:
@@ -30,7 +35,7 @@
     }
 </style>
 
-
+<?php if($score && $indication && $metering):?>
 <table class="iksweb">
     <thead>
     <tr>
@@ -68,9 +73,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php /** @var \common\models\WaterMetering $metering */
-    /** @var \common\models\ScoreMetering $score */
-    /** @var \common\models\IndicationsAndCharges $indication */
+    <?php
     foreach ($indication as $item):
         $str = substr($item->month_year,0,4) .'-'.substr($item->month_year,4,6).'-01';
         ?>
@@ -98,3 +101,10 @@
 <?php endforeach; ?>
     </tbody>
 </table>
+
+<?php else: ?>
+    <p style="color: red">
+        Нема даних.
+    </p>
+
+<?php endif; ?>

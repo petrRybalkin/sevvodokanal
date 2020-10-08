@@ -111,6 +111,7 @@ endif; ?>
                     ->label('Показники лiчильника №3', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
+            <?= $form->field($model, 'acc')->hiddenInput(['value' => $number->account_number])->label(false) ?>
         </div>
 
         <div class="mt-6">

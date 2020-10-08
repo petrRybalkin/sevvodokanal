@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use common\models\IndicationsAndCharges;
 use common\models\WaterMetering;
 use Yii;
 use yii\base\Model;
@@ -27,6 +26,18 @@ class IndicationForm extends Model
     public function rules()
     {
         return [
+            [['number1'], 'exist',  'targetClass' => WaterMetering::class,
+                'targetAttribute' => 'water_metering_first',
+                'message' => 'Немає такого номеру засобу обліку води №1 
+                - швидше за все, Ви вводите некоректно номер засобу обліку води №1 .'],
+            [['number2'],'exist',  'targetClass' => WaterMetering::class,
+                'targetAttribute' => ['number2' => 'water_metering_second'],
+                'message' => 'Немає такого номеру засобу обліку води №2
+                - швидше за все, Ви вводите некоректно номер засобу обліку води №2 .'],
+            [['number3'],'exist',  'targetClass' => WaterMetering::class,
+                'targetAttribute' => ['number3' => 'watering_number'],
+                'message' => 'Немає такого номеру засобу обліку води №3
+                - швидше за все, Ви вводите некоректно номер засобу обліку води №3 .'],
             [['number1', 'number2', 'number3', 'meter1', 'meter2', 'meter3'], 'integer'],
             [['meter1'], 'validationMeterFirst'],
             [['meter2'], 'validationMeterSecond'],
@@ -38,25 +49,36 @@ class IndicationForm extends Model
 
     public function validationMeterFirst($attribute, $params)
     {
-        $acc = WaterMetering::find()->where(['water_metering_first' => $this->number1])->one();
-        if ($acc->previous_readings_first > (int)$this->$attribute) {
-            $this->addError('meter1', 'Попереднi показання бiльше нiж теперiшнi.');
+        if (!$acc = WaterMetering::find()->where(['water_metering_first' => $this->number1])->one()) {
+            $this->addError('meter1', 'Заповнiть номер засобу обліку води №1.');
+        } else {
+            if ($acc->previous_readings_first > (int)$this->$attribute) {
+                $this->addError('meter1', 'Попереднi показання бiльше нiж теперiшнi.');
+            }
         }
+
+
     }
 
     public function validationMeterSecond($attribute, $params)
     {
-        $acc = WaterMetering::find()->where(['water_metering_second' => $this->number1])->one();
-        if ($acc->previous_readings_first > (int)$this->$attribute) {
-            $this->addError('meter2', 'Попереднi показання бiльше нiж теперiшнi.');
+        if(!$acc = WaterMetering::find()->where(['water_metering_second' => $this->number1])->one()){
+            $this->addError('meter2', 'Заповнiть номер засобу обліку води №2.');
+        }else{
+            if ($acc->previous_readings_first > (int)$this->$attribute) {
+                $this->addError('meter2', 'Попереднi показання бiльше нiж теперiшнi.');
+            }
         }
     }
 
     public function validationMeterWatering($attribute, $params)
     {
-        $acc = WaterMetering::find()->where(['watering_number' => $this->number1])->one();
-        if ($acc->previous_readings_first > (int)$this->$attribute) {
-            $this->addError('meter3', 'Попереднi показання бiльше нiж теперiшнi.');
+        if(!$acc = WaterMetering::find()->where(['watering_number' => $this->number1])->one()){
+            $this->addError('meter3', 'Заповнiть номер засобу обліку води №3.');
+        }else{
+            if ($acc->previous_readings_first > (int)$this->$attribute) {
+                $this->addError('meter3', 'Попереднi показання бiльше нiж теперiшнi.');
+            }
         }
     }
 

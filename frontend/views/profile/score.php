@@ -43,7 +43,6 @@ $calcSum = Payment::calcAllPayments( $score->account_number);
 
 <?php if($score && $indication && $metering):?>
 
-    <input TYPE="button" onClick="window.print()">gtxfnm
 <table class="iksweb">
     <tbody>
     <tr>
