@@ -40,4 +40,4 @@ GridView::widget([
     ]
 ]); ?>
 
-<button onclick="$.get('dbf-import/save?fileName=<?= $model->fileName ?>&class=ScoreDBF&action=<?= Yii::$app->controller->action->id ?>')">Сохранить в базу данных</button>
+<button onclick="$.get('save?fileName=<?= $model->fileName ?>&class=ScoreDBF&action=<?= Yii::$app->controller->action->id ?>')">Сохранить в базу данных</button>
