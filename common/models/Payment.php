@@ -54,4 +54,9 @@ class Payment extends \yii\db\ActiveRecord
     public static function getLgota($account_number, $pr){
       return   Payment::find()->where(['account_number' => $account_number, 'pr' => $pr])->orderBy(['id' => SORT_DESC])->one();
     }
+
+
+    public static function calcAllPayments($account_number){
+       return  Payment::find()->where(['account_number' => $account_number, 'pr' => 1])->sum('sum');
+    }
 }

@@ -7,7 +7,11 @@
 
 
 
-use common\models\Payment; ?>
+use common\models\Payment;
+
+$calcSum = Payment::calcAllPayments( $score->account_number);
+//\yii\helpers\VarDumper::dump($payment,10,1);exit;
+?>
 Розділ “Рахунок”:
 
 
@@ -89,18 +93,28 @@ use common\models\Payment; ?>
         <td>Субсидія: <?= Payment::getLgota( $score->account_number, 3)?: '-'?></td>
     </tr>
     <tr>
-        <td>Поточна оплата: <?= '---'?></td>
+        <td>Поточна оплата: <?= Yii::$app->formatter->asDecimal($calcSum,2) ?> грн.</td>
     </tr>
     <tr>
         <td>Перерахунок: <?= '---'?></td>
     </tr>
     <tr>
-        <td>До оплати на ___._____.202_р. : ____________ грн. </td>
+        <td>До оплати на <?= Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y') ?> р. :
+            <?=
+            $indication->accruals-
+            $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota( $score->account_number, 2)-
+                Payment::getLgota( $score->account_number, 3)
+            ?>
+            грн. </td>
     </tr>
     <tr>
         <td>Всього до оплати: ___ грн. </td>
     </tr>
     </tbody>
 </table>
+<?php else: ?>
+<p style="color: red">
+    Нема можливостi сформувати рахунок.
+</p>
 
 <?php endif; ?>

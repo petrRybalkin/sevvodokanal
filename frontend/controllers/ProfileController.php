@@ -159,11 +159,13 @@ class ProfileController extends Controller
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+        $payment = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
 
         return $this->render('score', [
             'score' => $score,
             'indication'=> $indication,
             'metering' => $metering,
+            'payment'=> $payment
         ]);
 
     }

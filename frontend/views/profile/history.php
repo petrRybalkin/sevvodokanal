@@ -78,7 +78,7 @@
 
         <td><?= Yii::$app->formatter->asDate($str,'php:m.Y')?></td>
         <td><?= $item->count ?></td>
-        <td> - </td>
+        <td> <?= $item->debt_begin_month?> </td>
         <td> <?= $item->previous_readings_first?></td>
         <td> <?= $item->current_readings_first?></td>
         <td> <?= $item->previous_readings_second?></td>
