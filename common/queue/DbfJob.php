@@ -13,10 +13,10 @@ class DbfJob extends BaseJob implements JobInterface
 
     public function execute($queue)
     {
-        $filename = Yii::getAlias('@backend/web/dbfLog.php');
-        $handle =  fopen($filename, 'w');
-        $this->log($handle, "Началась обработка файла  - ". \Yii::$app->formatter->asDate(('NOW'))
-            . "Админ - ". \Yii::$app->user->identity->username);
+//        $filename = Yii::getAlias('@backend/web/dbfLog.php');
+//        $handle =  fopen($filename, 'w');
+//        $this->log($handle, "Началась обработка файла  - ". \Yii::$app->formatter->asDate(('NOW'))
+//            . "Админ - ". \Yii::$app->user->identity->username);
         $parser = new $this->model ($this->file);
 
         if($parser->save()){

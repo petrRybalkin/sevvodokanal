@@ -42,7 +42,7 @@ class WaterMetering extends \yii\db\ActiveRecord
         return [
             [['act_number', 'previous_readings_first', 'previous_readings_second', 'previous_watering_readings', 'number_medium_cubes'], 'integer'],
             [['date_previous_readings', 'verification_date'], 'safe'],
-            [['account_number', 'type_first', 'type_second', 'type_watering', 'water_metering_first', 'water_metering_second', 'watering_number', 'medium_cubes'], 'string', 'max' => 1],
+            [['account_number', 'type_first', 'type_second', 'type_watering', 'water_metering_first', 'water_metering_second', 'watering_number', 'medium_cubes'], 'string'],
         ];
     }
 

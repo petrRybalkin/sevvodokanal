@@ -21,7 +21,8 @@
         "hail812/yii2-adminlte3": "*",
         "mihaildev/yii2-ckeditor": "*",
         "hisamu/php-xbase": "^1.2",
-        "yiisoft/yii2-queue": "^2.3"
+        "yiisoft/yii2-queue": "^2.3",
+        "phpoffice/phpword": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

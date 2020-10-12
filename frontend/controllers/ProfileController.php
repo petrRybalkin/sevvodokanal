@@ -2,15 +2,19 @@
 
 namespace frontend\controllers;
 
+use common\components\Helper;
 use common\models\ClientMap;
 use common\models\IndicationsAndCharges;
 use common\models\Payment;
 use common\models\ScoreMetering;
 use common\models\WaterMetering;
+use common\queue\PhpWordJob;
 use frontend\models\IndicationForm;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -193,4 +197,79 @@ class ProfileController extends Controller
 
     }
 
+
+    public function actionWord($id)
+    {
+        $score = ScoreMetering::find()->where(['id' => $id])->one();
+        $metering =  WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
+        $date = Yii::$app->formatter->asDate(('NOW'), 'php:Ymd');
+        $name = 'Нарахування та показання' . ($score->name_of_the_tenant ?: '_') . '_' . $date . '.docx';
+        $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
+        $calcSum = Payment::calcAllPayments( $score->account_number);
+        if($score && $metering && $indication) {
+            $id = Yii::$app->queue->push(new PhpWordJob([
+                'template' => $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx",
+                'path' => $fullName,
+                'search' => [
+                    'account_number',
+                    'act_number',
+                    'fio',
+                    'address',
+                    'norm',
+                    'total_tarif',
+                    'water',
+                    'watering',
+                    'verification_date',
+                    'exist_lgota',
+                    'date_debt',
+                    'debt',
+                    'accruals',
+                    'privelege_unpaid',
+                    'lgota',
+                    'current_pay',
+                    'perescore',
+                    'date_pay',
+                    'payment',
+                    'total_payment'
+
+                ],
+                'replace' => [
+                    $score->account_number,
+                    $score->act_number,
+                    $score->name_of_the_tenant,
+                    $score->address,
+                    'norm',
+                    $score->total_tariff,
+                    $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
+                    $indication->current_readings_watering - $indication->previous_readings_watering,
+                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
+                    $indication->privilege == 0 ? 'Нi' : "Так",
+                    Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
+                    $indication->debt_end_month,
+                    $indication->accruals,
+                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
+                    Payment::getLgota($score->account_number, 3) ?: '-',
+                    Yii::$app->formatter->asDecimal($calcSum, 2),
+                    'perescore',
+                    Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
+                    $indication->accruals -
+                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
+                        Payment::getLgota($score->account_number, 3),
+                    'total_payment'
+
+                ],
+            ]));
+        }
+        $startTime = time();
+        while(!Yii::$app->queue->isDone($id)){
+            sleep(1);
+            if (time() - $startTime > 30) {
+                return Yii::$app->session->setFlash('danger', 'Не вдалося сформувати документ');
+            }
+        }
+        Yii::$app->response->sendFile($fullName);
+        return Yii::$app->response->send();
+    }
 }
