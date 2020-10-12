@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\components\Helper;
 use common\models\ClientMap;
 use common\models\IndicationsAndCharges;
 use common\models\Payment;
@@ -10,13 +9,11 @@ use common\models\ScoreMetering;
 use common\models\WaterMetering;
 use common\queue\PhpWordJob;
 use frontend\models\IndicationForm;
+use frontend\models\ScoreForm;
 use Yii;
 use yii\bootstrap\ActiveForm;
-use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
@@ -48,7 +45,7 @@ class ProfileController extends Controller
      */
     public function actionIndex()
     {
-        $model = new ScoreMetering();
+        $model = new ScoreForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-score-button')) {
                 if (ClientMap::find()->where(['client_id' => Yii::$app->user->getId()])->count() == 5) {

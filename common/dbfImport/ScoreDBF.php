@@ -95,12 +95,11 @@ class ScoreDBF extends BaseDBF
                 $score = new ScoreMetering();
                 $score->setAttributes($arr);
                 if (!$score->save()) {
-                    print_r($score);
                     print_r($score->getErrors());
 //                    exit;
                     return false;
                 } else {
-                    Yii::$app->queue->status(1);
+//                    Yii::$app->queue->status(1);
                     print_r('ok');
                 }
             }

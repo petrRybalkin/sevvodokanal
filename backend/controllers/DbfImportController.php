@@ -9,10 +9,12 @@ use common\dbfImport\PaymentDBF;
 use common\dbfImport\ScoreDBF;
 use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
+use common\models\WaterMetering;
 use common\queue\DbfJob;
 use phpDocumentor\Reflection\Types\Expression;
 use XBase\WritableTable;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ArrayDataProvider;
@@ -320,12 +322,13 @@ class DbfImportController extends Controller
     }
 
 
-    public function actionDel($table= null)
+    public function actionDel($table)
     {
 
-        Yii::$app->db->createCommand()->truncateTable('water_metering')->execute();
+        Yii::$app->db->createCommand()->truncateTable($table)->execute();
 
         \yii\helpers\VarDumper::dump(555,10,1);exit;
 
     }
+
 }
