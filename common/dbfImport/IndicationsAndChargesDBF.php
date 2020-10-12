@@ -169,7 +169,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             'debt_end_month',
             'medium_cubes',
             'synchronization'
-        ], $this->parser(20))->execute()){
+        ], $this->parser())->execute()){
         return true;
     }else{
         return false;
