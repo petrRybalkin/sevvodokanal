@@ -87,4 +87,8 @@ class ScoreMetering extends \yii\db\ActiveRecord
     {
         return $this->hasMany(WaterMetering::class, ['account_number' => 'account_number']);
     }
+    public function getIndications()
+    {
+        return $this->hasMany(IndicationsAndCharges::class, ['account_number' => 'account_number']);
+    }
 }

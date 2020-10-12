@@ -56,7 +56,7 @@ use common\models\Admin;
                     ['label' => 'Довідник нарахувань та показань .DBF',
                         'items' => [
                             ['label' => 'Загрузить Довідник нарахувань та показань .DBF', 'url' => ['dbf-import/indications'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
-                            ['label' => 'Скачать покзания в dbf', 'url' => '/dbf-import/download', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
+                            ['label' => 'Скачать покзания в dbf', 'url' => ['dbf-import/download'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ]
 

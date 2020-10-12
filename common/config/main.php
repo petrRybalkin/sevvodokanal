@@ -1,4 +1,8 @@
 <?php
+
+Yii::setAlias('@runtimeFront', dirname(dirname(__DIR__)) . '/frontend/runtime/');
+
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',

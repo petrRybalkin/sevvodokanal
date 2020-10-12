@@ -55,5 +55,8 @@ class ClientMap extends \yii\db\ActiveRecord
         }
     }
 
-
+    public function getScore()
+    {
+        return $this->hasOne(ScoreMetering::class, ['id' => 'score_id']);
+    }
 }
