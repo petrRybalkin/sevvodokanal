@@ -10,6 +10,7 @@ use common\dbfImport\ScoreDBF;
 use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
+use phpDocumentor\Reflection\Types\Expression;
 use XBase\WritableTable;
 use Yii;
 use yii\helpers\FileHelper;
@@ -277,6 +278,13 @@ class DbfImportController extends Controller
         Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
     }
 
+    /**
+     * @param $fileName
+     * @param $class
+     * @param $action
+     * @return \yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionSave($fileName, $class, $action)
     {
 
@@ -284,6 +292,12 @@ class DbfImportController extends Controller
         $modelName = 'common\dbfImport\\' . $class;
 //        $parser = new $modelName($path);
 //        $parser->save();
+
+//        $messageLog[] = [
+//            'status' => "Началась обработка файла  - ". \Yii::$app->formatter->asDate('NOW')
+//                . "Админ - ". \Yii::$app->user->identity->username,
+//        ];
+
 
         $idJob = \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
@@ -299,7 +313,6 @@ class DbfImportController extends Controller
                 return $this->redirect($action);
             }
         }
-
         Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
         return $this->redirect($action);
 
@@ -307,10 +320,10 @@ class DbfImportController extends Controller
     }
 
 
-    public function actiondDel($table)
+    public function actionDel($table= null)
     {
 
-        Yii::$app->db->createCommand()->truncateTable($table)->execute();
+        Yii::$app->db->createCommand()->truncateTable('water_metering')->execute();
 
         \yii\helpers\VarDumper::dump(555,10,1);exit;
 

@@ -10,11 +10,10 @@
 use common\models\Payment;
 
 $calcSum = Payment::calcAllPayments( $score->account_number);
-//\yii\helpers\VarDumper::dump($payment,10,1);exit;
 ?>
 Розділ “Рахунок”:
 
-
+    <a href="<?= \yii\helpers\Url::to(['/profile/word','id'=> Yii::$app->request->get('id')])?>">Скачать в ворд</a>
 <style>
     table.iksweb {
         width: 100%;

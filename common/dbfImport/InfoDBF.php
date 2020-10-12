@@ -114,18 +114,20 @@ class InfoDBF extends BaseDBF
     public function save()
     {
 
-
         foreach ($this->parser() as $item) {
-            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
-            if ($item['ph1'] < $scoreExist->previous_readings_first) {
-                continue;
-            }
             $arr = array_combine($this->tableFaild(), $item);
+
+            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+
             if ($scoreExist) {
+                if ($item['ph1'] < $scoreExist->previous_readings_first) {
+                    continue;
+                }
+
                 $scoreExist->updateAttributes($arr);
             } else {
                 $score = new WaterMetering();
-                $score->setAttributes($arr);
+                $score->setAttributes($arr, false);
                 if (!$score->save()) {
                     print_r($score);
                     print_r($score->getErrors());
@@ -139,7 +141,7 @@ class InfoDBF extends BaseDBF
         }
         return true;
 
-//
+
 //
 //        Yii::$app->db->createCommand()->batchInsert('water_metering', [
 //            'account_number', 'act_number', 'water_metering_first', 'water_metering_second',
