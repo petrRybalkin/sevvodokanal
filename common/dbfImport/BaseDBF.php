@@ -34,10 +34,11 @@ abstract class BaseDBF
             }
 
             foreach ($this->fieldList() as $column => $settings) {
+
                 if ($settings['type'] == self::TYPE_DATE) {
                     $item[$column] = date('Y-m-d', strtotime($record->$column));
                 } else {
-                    if($column === 'synchronization'){
+                    if($column === 'synch'){
                         $item[$column] = 1;
                     }else{
                         if (in_array($column, $columns)) {
@@ -48,6 +49,7 @@ abstract class BaseDBF
                     }
 
                 }
+
             }
             $retTable[] = $item;
             $i++;

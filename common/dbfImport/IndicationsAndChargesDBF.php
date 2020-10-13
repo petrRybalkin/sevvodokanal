@@ -147,34 +147,46 @@ class IndicationsAndChargesDBF extends BaseDBF
 
     public function save()
     {
+        foreach ($this->parser() as $item) {
+            $arr = array_combine($this->tableFaild(), $item);
 
-    if(  Yii::$app->db->createCommand()->batchInsert('indications_and_charges',[
-            'account_number',
-            'month_year',
-            'privilege',
-            'count',
-            'debt_begin_month',
-            'previous_readings_first',
-            'current_readings_first',
-            'previous_readings_second',
-            'current_readings_second',
-            'previous_readings_watering',
-            'current_readings_watering',
-            'water_consumption',
-            'watering_consumption',
-            'total_tariff',
-            'accruals',
-            'privilege_unpaid',
-            'correction',
-            'debt_end_month',
-            'medium_cubes',
-            'synchronization'
-        ], $this->parser())->execute()){
+            $score = new IndicationsAndCharges();
+            $score->setAttributes($arr, false);
+            $score->setAttributes(['synchronization' => 1]);
+
+            if (!$score->save()) {
+                print_r($score->getErrors());
+                return false;
+            } else {
+                print_r('ok');
+            }
+
+        }
         return true;
-    }else{
-        return false;
-    }
-
+//        Yii::$app->db->createCommand()->batchInsert('indications_and_charges', [
+//            'account_number',
+//            'month_year',
+//            'privilege',
+//            'count',
+//            'debt_begin_month',
+//            'previous_readings_first',
+//            'current_readings_first',
+//            'previous_readings_second',
+//            'current_readings_second',
+//            'previous_readings_watering',
+//            'current_readings_watering',
+//            'water_consumption',
+//            'watering_consumption',
+//            'total_tariff',
+//            'accruals',
+//            'privilege_unpaid',
+//            'correction',
+//            'debt_end_month',
+//            'medium_cubes',
+//            'synch'
+//        ], $this->parser())->execute();
+//        print_r('ok');
+//        return true;
 
     }
 
