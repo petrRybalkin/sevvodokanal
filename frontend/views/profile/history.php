@@ -88,10 +88,24 @@
         <td><?= $item->current_readings_second?></td>
         <td> <?= $item->previous_readings_watering ?></td>
         <td><?= $item->current_readings_watering?></td>
-        <td> <?= $item->current_readings_first + $item->current_readings_second - $item->previous_readings_first - $item->previous_readings_second?></td>
+        <td> <?= $item->current_readings_first + $item->current_readings_second
+            - $item->previous_readings_first - $item->previous_readings_second?> </td>
         <td> <?= $item->total_tariff?></td>
-        <td><?= $item->accruals?> </td>
-        <td><?= $item->correction?></td>
+        <td><?= $item->accruals?>
+<!--            --><?//= (($item->current_readings_first +
+//                    $item->current_readings_second +
+//                    $item->current_readings_watering -
+//                    $item->previous_readings_first -
+//                    $item->previous_readings_second -
+//                    $item->previous_readings_watering) * $score->tariff_for_water) +
+//            (($item->current_readings_first +
+//                    $item->current_readings_second -
+//                    $item->previous_readings_first -
+//                    $item->previous_readings_second) * $score->tariff_for_stocks)
+//            ?>
+
+        </td>
+        <td><?= $item->correction ?></td>
         <td><?= $item->total_tariff?></td>
         <td><?= $item->total_tariff?></td>
         <td><?= $item->total_tariff?></td>

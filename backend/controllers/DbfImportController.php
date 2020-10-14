@@ -202,7 +202,6 @@ class DbfImportController extends Controller
 
     public function actionUpload()
     {
-        ini_set( 'post_max_size', '200M');
         $model = new DbfImport();
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
@@ -292,14 +291,6 @@ class DbfImportController extends Controller
 
         $path = Yii::getAlias('@backend/web/' . $fileName);
         $modelName = 'common\dbfImport\\' . $class;
-//        $parser = new $modelName($path);
-//        $parser->save();
-
-//        $messageLog[] = [
-//            'status' => "Началась обработка файла  - ". \Yii::$app->formatter->asDate('NOW')
-//                . "Админ - ". \Yii::$app->user->identity->username,
-//        ];
-
 
         $idJob = \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
@@ -307,15 +298,15 @@ class DbfImportController extends Controller
 
         ]));
 
-        $startTime = time();
-        while (!Yii::$app->queue->isDone($idJob)) {
-            sleep(1);
-            if (time() - $startTime > 100) {
-                Yii::$app->session->setFlash('danger', 'Не удалось сохранить данные');
-                return $this->redirect($action);
-            }
-        }
-        Yii::$app->session->setFlash('success', 'Данные успешно сохранены');
+//        $startTime = time();
+//        while (!Yii::$app->queue->isDone($idJob)) {
+//            sleep(1);
+//            if (time() - $startTime > 100) {
+//                Yii::$app->session->setFlash('danger', 'Не удалось сохранить данные');
+//                return $this->redirect($action);
+//            }
+//        }
+        Yii::$app->session->setFlash('success', 'Началась загрузка файла. Файл будет загружен через несколько минут.');
         return $this->redirect($action);
 
 
