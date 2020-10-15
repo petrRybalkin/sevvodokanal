@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $seoDescription
  * @property int $active
  * @property int|null $sidebar
+ * @property int|null $sort_sidebar
  * @property int|null $main_menu
  * @property int|null $footer
  * @property int|null $parent_page
@@ -56,7 +57,7 @@ class Page extends \yii\db\ActiveRecord
         return [
             [['short_description', 'description'], 'string'],
             [['active', 'sidebar', 'main_menu', 'footer'], 'integer'],
-            [['parent_page'], 'integer'],
+            [['parent_page', 'sort_sidebar'], 'integer'],
             [['title', 'img', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
             [['create_utime', 'update_utime'], 'safe'],
         ];
@@ -77,6 +78,7 @@ class Page extends \yii\db\ActiveRecord
             'active' => 'Активная',
             'main_menu' => 'Показывать в главном меню',
             'sidebar' => 'Показывать в сайдбаре',
+            'sort_sidebar' => 'Приоритет',
             'footer' => 'Показать в футере',
             'parent_page' => 'Родительская',
             'seoDescription' => 'Seo Description',
@@ -381,7 +383,8 @@ class Page extends \yii\db\ActiveRecord
     public static function getSidebars()
     {
         return self::find()
-            ->where(['active' => 1, 'sidebar' => 1]);
+            ->where(['active' => 1, 'sidebar' => 1])
+            ->orderBy('sort_sidebar DESC');
     }
 
     /**

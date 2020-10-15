@@ -17,6 +17,7 @@ use common\models\Category;
     <?= $form->field($model, 'active')->checkbox() ?>
     <?= $form->field($model, 'main_menu')->checkbox() ?>
     <?= $form->field($model, 'sidebar')->checkbox() ?>
+    <?= $form->field($model, 'sort_sidebar')->textInput()->label('Приоритет(от 0 до 10) (чем больше значение тем выше страница)') ?>
     <?= $form->field($model, 'footer')->radioList($items=['Не показывать ','В левой колонке ','В правой колонке ']) ?>
 
     <?= $form->field($model, 'parent_page')->dropDownList(Category::enumCategory()); ?>
