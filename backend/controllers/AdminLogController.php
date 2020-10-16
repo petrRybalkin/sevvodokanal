@@ -2,18 +2,17 @@
 
 namespace backend\controllers;
 
-use backend\models\AdminLog;
 use Yii;
-use common\models\Page;
-use yii\data\ActiveDataProvider;
+use backend\models\AdminLog;
+use backend\models\AdminLogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PageController implements the CRUD actions for Page model.
+ * AdminLogController implements the CRUD actions for AdminLog model.
  */
-class PageController extends Controller
+class AdminLogController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,22 +30,22 @@ class PageController extends Controller
     }
 
     /**
-     * Lists all Page models.
+     * Lists all AdminLog models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Page::find(),
-        ]);
+        $searchModel = new AdminLogSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Page model.
+     * Displays a single AdminLog model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,17 +58,16 @@ class PageController extends Controller
     }
 
     /**
-     * Creates a new Page model.
+     * Creates a new AdminLog model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Page();
+        $model = new AdminLog();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction( $model->id, "Создание страницы $model->title");
-            return $this->redirect(['index', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -78,7 +76,7 @@ class PageController extends Controller
     }
 
     /**
-     * Updates an existing Page model.
+     * Updates an existing AdminLog model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -89,8 +87,7 @@ class PageController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction($model->id, "Изменение страницы $model->title");
-            return $this->redirect(['index', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -99,7 +96,7 @@ class PageController extends Controller
     }
 
     /**
-     * Deletes an existing Page model.
+     * Deletes an existing AdminLog model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,23 +104,21 @@ class PageController extends Controller
      */
     public function actionDelete($id)
     {
-        $model =$this->findModel($id);
-        AdminLog::addAdminAction( $model->id, "Удаление страницы $model->title");
-        $model->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Page model based on its primary key value.
+     * Finds the AdminLog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Page the loaded model
+     * @return AdminLog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Page::findOne($id)) !== null) {
+        if (($model = AdminLog::findOne($id)) !== null) {
             return $model;
         }
 

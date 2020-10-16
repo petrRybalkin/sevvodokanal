@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use Yii;
 use backend\models\Roles;
 use yii\data\ActiveDataProvider;
@@ -67,6 +68,7 @@ class RolesController extends Controller
         $model = new Roles();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( $model->id, "Создание роли $model->name");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -87,6 +89,7 @@ class RolesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( $model->id, "Изменение роли $model->name");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -104,8 +107,9 @@ class RolesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model =   $this->findModel($id);
+        AdminLog::addAdminAction( $model->id, "Удаление роли $model->name");
+        $model->delete();
         return $this->redirect(['index']);
     }
 

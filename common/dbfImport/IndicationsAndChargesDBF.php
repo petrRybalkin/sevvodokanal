@@ -5,6 +5,7 @@ namespace common\dbfImport;
 
 use common\models\IndicationsAndCharges;
 use Yii;
+use yii\helpers\Json;
 
 //Довідник нарахувань та показань для фізичних осіб
 //При первинній загрузці файлу по нарахуванням та показанням для фізичних осіб буде містити всю інформацію по
@@ -19,7 +20,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         return [
             'lic_schet' => [
                 'field' => 'account_number',
-                'type' => static::TYPE_NUMERIC,
+                'type' => static::TYPE_STRING,
                 'title' => 'Номер особового рахунку',
             ],
             'mes' => [
@@ -29,22 +30,22 @@ class IndicationsAndChargesDBF extends BaseDBF
             ],
             'lgo' => [
                 'field' => 'privilege',
-                'type' => static::TYPE_STRING,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Наявність пільги',
             ],
             'kol' => [
                 'field' => 'count',
-                'type' => static::TYPE_STRING,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Кількість зареєстрованих осіб',
             ],
             'hsal' => [
                 'field' => 'debt_begin_month',
-                'type' => static::TYPE_STRING,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Заборгованість на початок місяця',
             ],
             'ph1' => [
                 'field' => 'previous_readings_first',
-                'type' => static::TYPE_STRING,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Попередні показання засобу обліку № 1',
             ],
             'th1' => [
@@ -54,22 +55,22 @@ class IndicationsAndChargesDBF extends BaseDBF
             ],
             'ph2' => [
                 'field' => 'previous_readings_second',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Попередні показання засобу обліку № 2',
             ],
             'th2' => [
                 'field' => 'current_readings_second',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Поточні показання засобу обліку № 2',
             ],
             'pp' => [
                 'field' => 'previous_readings_watering',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Попередні показання засобу обліку для поливу',
             ],
             'tp' => [
                 'field' => 'current_readings_watering',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Поточні показання засобу обліку для поливу',
             ],
             'khv' => [
@@ -99,7 +100,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             ],
             'korek' => [
                 'field' => 'correction',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Корекція',
             ],
             'hsumma' => [
@@ -109,7 +110,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             ],
             'srkub' => [
                 'field' => 'medium_cubes',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_STRING,
                 'title' => 'Ознака середніх кубов',
             ] ,
             'synch' => [
@@ -145,9 +146,13 @@ class IndicationsAndChargesDBF extends BaseDBF
         ];
     }
 
-    public function save()
+    public function save($admin_id ,$fileName)
     {
-        foreach ($this->parser() as $item) {
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
+
+        foreach ($this->parser(5) as $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
             $score = new IndicationsAndCharges();
@@ -155,38 +160,15 @@ class IndicationsAndChargesDBF extends BaseDBF
             $score->setAttributes(['synchronization' => 1]);
 
             if (!$score->save()) {
-                print_r($score->getErrors());
-                return false;
+                $error .= Json::encode($score->getErrors());
+                continue;
             } else {
                 print_r('ok');
             }
 
         }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ".$error :" Запись файла $fileName окончена." );
         return true;
-//        Yii::$app->db->createCommand()->batchInsert('indications_and_charges', [
-//            'account_number',
-//            'month_year',
-//            'privilege',
-//            'count',
-//            'debt_begin_month',
-//            'previous_readings_first',
-//            'current_readings_first',
-//            'previous_readings_second',
-//            'current_readings_second',
-//            'previous_readings_watering',
-//            'current_readings_watering',
-//            'water_consumption',
-//            'watering_consumption',
-//            'total_tariff',
-//            'accruals',
-//            'privilege_unpaid',
-//            'correction',
-//            'debt_end_month',
-//            'medium_cubes',
-//            'synch'
-//        ], $this->parser())->execute();
-//        print_r('ok');
-//        return true;
 
     }
 

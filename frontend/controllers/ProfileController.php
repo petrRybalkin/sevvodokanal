@@ -114,32 +114,63 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
                 $indication = IndicationsAndCharges::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
-                if (!$indication || strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
+                $score = ScoreMetering::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
+//                if ($indication && strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
+                    $indication->id = null;
+                    $indication->isNewRecord = true;
+                    $indication->updateAttributes([
+                        'previous_readings_first' => $indication->current_readings_first,
+                        'previous_readings_second' => $indication->current_readings_second,
+                        'previous_readings_watering' => $indication->current_readings_watering,
+
+                    ]);
+//                }
+
+                if (!$indication) {
                     $indication = new  IndicationsAndCharges();
                 }
 
                 if ($model->meter1 && $model->number1) {
                     $wm = WaterMetering::find()->where(['water_metering_first' => $model->number1])->one();
-                    $indication->updateAttributes(['current_readings_first' => $model->meter1]);
+                    $indication->updateAttributes([
+                        'current_readings_first' => $model->meter1,
+                    ]);
                     $wm->updateAttributes(['previous_readings_first' => (int)$model->meter1]);
                 }
+
                 if ($model->meter2 && $model->number2) {
                     $wm = WaterMetering::find()->where(['water_metering_second' => $model->number2])->one();
-                    $indication->updateAttributes(['current_readings_second' => $model->meter2]);
+                    $indication->updateAttributes([
+                        'current_readings_second' => $model->meter2,
+
+                    ]);
                     $wm->updateAttributes(['previous_readings_second' => (int)$model->meter2]);
                 }
                 if ($model->number3 && $model->meter3) {
                     $wm = WaterMetering::find()->where(['watering_number' => $model->number3])->one();
-                    $indication->updateAttributes(['current_readings_watering' => $model->meter3]);
+                    $indication->updateAttributes(['current_readings_watering' => $model->meter3,
+
+                    ]);
                     $wm->updateAttributes(['previous_watering_readings' => (int)$model->meter3]);
                 }
+                $wc = ((int)$model->meter1 -(int)$indication->previous_readings_first)
+                    + ((int)$model->meter2-(int)$indication->previous_readings_second );
+                $watc = (int)$model->meter3 - (int)$indication->previous_readings_watering ;
                 $indication->updateAttributes([
                     'account_number' => $wm->account_number,
                     'month_year' => Yii::$app->formatter->asDate(('NOW'), 'php:Ym'),
-                    'synchronization' => 1
+                    'synchronization' => 1,
+                    'water_consumption' =>$wc ,
+                    'watering_consumption' =>$watc,
+                    'accruals' => ($wc + $watc) *$indication->total_tariff
                 ]);
                 $wm->updateAttributes(['date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d')]);
-                Yii::$app->session->setFlash('success', 'Показання переданi.');
+                if (!$indication->save() || !$wm->save()) {
+                    Yii::$app->session->setFlash('danger', 'Показання не збереженi. Виникла помилка.');
+                } else {
+                    Yii::$app->session->setFlash('success', 'Показання переданi.');
+                }
+
                 return $this->redirect(Yii::$app->request->referrer);
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -164,9 +195,9 @@ class ProfileController extends Controller
 
         return $this->render('score', [
             'score' => $score,
-            'indication'=> $indication,
+            'indication' => $indication,
             'metering' => $metering,
-            'payment'=> $payment
+            'payment' => $payment
         ]);
 
     }
@@ -198,14 +229,14 @@ class ProfileController extends Controller
     public function actionWord($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
-        $metering =  WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+        $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
-         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
+        FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:Ymd');
         $name = 'Нарахування та показання' . ($score->name_of_the_tenant ?: '_') . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
-        $calcSum = Payment::calcAllPayments( $score->account_number);
-        if($score && $metering && $indication) {
+        $calcSum = Payment::calcAllPayments($score->account_number);
+        if ($score && $metering && $indication) {
             $id = Yii::$app->queue->push(new PhpWordJob([
                 'template' => $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx",
                 'path' => $fullName,
@@ -260,7 +291,7 @@ class ProfileController extends Controller
             ]));
         }
         $startTime = time();
-        while(!Yii::$app->queue->isDone($id)){
+        while (!Yii::$app->queue->isDone($id)) {
             sleep(1);
             if (time() - $startTime > 30) {
                 return Yii::$app->session->setFlash('danger', 'Не вдалося сформувати документ');

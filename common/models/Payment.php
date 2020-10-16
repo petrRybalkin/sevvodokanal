@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "payment".
@@ -51,12 +52,20 @@ class Payment extends \yii\db\ActiveRecord
     }
 
 
-    public static function getLgota($account_number, $pr){
-      return   Payment::find()->where(['account_number' => $account_number, 'pr' => $pr])->orderBy(['id' => SORT_DESC])->one();
+    public static function getLgota($account_number, $pr)
+    {
+        return Payment::find()
+            ->where([
+            'account_number' => $account_number,
+            'pr' => $pr,
+        ])
+            ->andWhere(new Expression('payment_date <= NOW() - INTERVAL 1 MONTH'))
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
     }
 
 
-    public static function calcAllPayments($account_number){
-       return  Payment::find()->where(['account_number' => $account_number, 'pr' => 1])->sum('sum');
-    }
+//    public static function calcPayments($account_number){
+//       return  Payment::find()->where(['account_number' => $account_number, 'pr' => 1])->sum('sum');
+//    }
 }

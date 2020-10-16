@@ -2,6 +2,7 @@
 
 namespace common\dbfImport;
 
+use backend\models\FilesLog;
 use common\models\DbfImport;
 use XBase\Table;
 
@@ -64,5 +65,18 @@ abstract class BaseDBF
 
     abstract public function fieldList();
 
-    abstract public function save();
+    abstract public function save($admin_id, $fileName);
+
+     public function log($admin_id,  $message){
+
+         $adminLog = new FilesLog();
+         $adminLog->message = $message ;
+         $adminLog->admin_id = $admin_id;
+         $adminLog->created_at = date('Y-m-d H:i:s');
+
+         $adminLog->save(false);
+         return true;
+     }
+
+
 }

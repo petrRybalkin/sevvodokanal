@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use backend\models\AdminLog;
 use backend\models\Roles;
 use Yii;
 use yii\base\NotSupportedException;
@@ -227,5 +228,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getAdminLog()
+    {
+        return $this->hasMany(AdminLog::className(), ['admin_id' => 'id']);
     }
 }

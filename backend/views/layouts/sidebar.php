@@ -37,9 +37,11 @@ use common\models\Admin;
                         'label' => 'Администраторы','iconStyle' => 'far', 'iconClassAdded' => 'text-danger',
                         'items' => [
                             ['label' => 'Список админов', 'url' => ['user/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
-                            ['label' => 'Права доступа', 'url' => ['roles/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1]
+                            ['label' => 'Права доступа', 'url' => ['roles/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
+                            ['label' => 'Лог', 'url' => ['admin-log/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
                         ]
                     ],
+
                     //['label' => 'Управление абонентами', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
                     [
                         'label' => 'Абоненты','iconClass' => 'nav-icon far fa-circle text-warning',
@@ -48,6 +50,10 @@ use common\models\Admin;
                             ['label' => 'еще что-то с абонентами', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ],
+
+
+
+
                     ['label' => 'Импорт данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
                     ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
                     ['label' => 'Загрузить счета .DBF', 'url' => ['dbf-import/score'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
@@ -58,7 +64,9 @@ use common\models\Admin;
                             ['label' => 'Загрузить Довідник нарахувань та показань .DBF', 'url' => ['dbf-import/indications'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1],
                             ['label' => 'Скачать покзания в dbf', 'url' => ['dbf-import/download'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
-                    ]
+                    ],
+                    ['label' => 'Лог', 'url' => ['files-log/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
+
 
 
 

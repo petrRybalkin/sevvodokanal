@@ -6,6 +6,7 @@ use common\models\ScoreMetering;
 use Yii;
 use yii\db\Command;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 class ScoreDBF extends BaseDBF
 {
@@ -81,9 +82,12 @@ class ScoreDBF extends BaseDBF
         ];
     }
 
-    public function save()
+    public function save($admin_id, $fileName)
     {
 
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         foreach ($this->parser() as $item) {
             $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
@@ -95,15 +99,14 @@ class ScoreDBF extends BaseDBF
                 $score = new ScoreMetering();
                 $score->setAttributes($arr);
                 if (!$score->save()) {
-                    print_r($score->getErrors());
-//                    exit;
-                    return false;
+                    $error .= Json::encode($score->getErrors());
+                    continue;
                 } else {
-//                    Yii::$app->queue->status(1);
                     print_r('ok');
                 }
             }
         }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
         return true;
     }
 

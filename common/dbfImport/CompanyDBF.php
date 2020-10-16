@@ -2,8 +2,10 @@
 
 namespace common\dbfImport;
 
+use backend\models\FilesLog;
 use common\models\Company;
 use Yii;
+use yii\helpers\Json;
 
 class CompanyDBF extends BaseDBF
 {
@@ -45,37 +47,24 @@ class CompanyDBF extends BaseDBF
         ];
     }
 
-    public function save()
+    public function save($admin_id, $fileName)
     {
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
 
-//        foreach ($this->parser() as $item) {
-//            $company = Company::find()->where(['num_contract' => $item['kod_p']])->one();
-//
-//            $arr =  array_combine($this->tableFaild() ,$item);
-//            if($company){
-//                $company->updateAttributes($arr);
-//            }else{
-//                $newCompany = new Company();
-//                $newCompany->setAttributes($arr);
-//                if (!$newCompany->save()) {
-//                    print_r($newCompany);
-//                    print_r($newCompany->getErrors());
-////                    exit;
-//                    return false;
-//                } else {
-//                    print_r('ok');
-//                }
-//            }
-//        }
-
-        Yii::$app->db->createCommand()->batchInsert('company', [
-            'num_contract',
-            'accounting_number',
-            'verification_date',
-            'previous_readings',
-        ], $this->parser())->execute();
-
-
+        foreach ($this->parser() as $item) {
+            $arr =  array_combine($this->tableFaild() ,$item);
+                $newCompany = new Company();
+                $newCompany->setAttributes($arr);
+                if (!$newCompany->save()) {
+                    $error .= Json::encode($newCompany->getErrors());
+                    continue;
+                } else {
+                    print_r('ok');
+                }
+        }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
         return true;
     }
 }
