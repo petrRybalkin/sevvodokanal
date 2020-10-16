@@ -29,9 +29,9 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'previous_readings'], 'number', 'skipOnEmpty' => true],
-            [['verification_date'], 'safe'],
-            [[ 'accounting_number','num_contract'], 'string']
+//            [['previous_readings'], 'number', 'skipOnEmpty' => true],
+            [['verification_date','previous_readings','accounting_number','num_contract'], 'safe'],
+//            [[ 'accounting_number','num_contract'], 'string']
         ];
     }
 

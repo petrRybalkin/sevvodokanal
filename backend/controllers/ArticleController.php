@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use Yii;
 use common\models\Article;
 use yii\data\ActiveDataProvider;
@@ -67,6 +68,9 @@ class ArticleController extends Controller
         $model = new Article();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            AdminLog::addAdminAction( $model->id, "Создание новости $model->title");
+
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -87,6 +91,7 @@ class ArticleController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( $model->id, "Изменение новости $model->title");
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -104,8 +109,9 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        AdminLog::addAdminAction( $id, "Удаление новости $model->title");
+        $model->delete();
         return $this->redirect(['index']);
     }
 

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use common\dbfImport\CompanyDBF;
 use common\dbfImport\IndicationsAndChargesDBF;
 use common\dbfImport\InfoDBF;
@@ -9,12 +10,9 @@ use common\dbfImport\PaymentDBF;
 use common\dbfImport\ScoreDBF;
 use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
-use common\models\WaterMetering;
 use common\queue\DbfJob;
-use phpDocumentor\Reflection\Types\Expression;
 use XBase\WritableTable;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ArrayDataProvider;
@@ -29,6 +27,7 @@ class DbfImportController extends Controller
             $parser = new InfoDBF($path);
             $dataArray = $parser->parser(5);
             $total = $parser->getRecordCount();
+            AdminLog::addAdminAction( null, "Загрузка файла Показания водомеров");
         } else {
             $total = 0;
             $dataArray = [];
@@ -66,6 +65,7 @@ class DbfImportController extends Controller
             $parser = new ScoreDBF($path, $model->code);
             $dataArray = $parser->parser(5);
             $total = $parser->getRecordCount();
+            AdminLog::addAdminAction( null, "Загрузка файла Счета");
         } else {
             $total = 0;
             $dataArray = [];
@@ -102,6 +102,7 @@ class DbfImportController extends Controller
             $parser = new PaymentDBF($path, $model->code);
             $dataArray = $parser->parser(5);
             $total = $parser->getRecordCount();
+            AdminLog::addAdminAction( null, "Загрузка файла Оплата");
         } else {
             $total = 0;
             $dataArray = [];
@@ -137,6 +138,7 @@ class DbfImportController extends Controller
             $parser = new CompanyDBF($path, $model->code);
             $dataArray = $parser->parser(5);
             $total = $parser->getRecordCount();
+            AdminLog::addAdminAction( null, "Загрузка файла Компании");
         } else {
             $total = 0;
             $dataArray = [];
@@ -173,6 +175,7 @@ class DbfImportController extends Controller
             $parser = new IndicationsAndChargesDBF($path, $model->code);
             $dataArray = $parser->parser(5);
             $total = $parser->getRecordCount();
+            AdminLog::addAdminAction( null, "Загрузка файла Нарахування и показання");
         } else {
             $total = 0;
             $dataArray = [];
@@ -212,7 +215,6 @@ class DbfImportController extends Controller
                 $model->dbfFile->saveAs($model->fileName);
             }
         }
-
         return $this->runAction(Yii::$app->request->post('action'), [
             'model' => $model
         ]);
@@ -272,10 +274,11 @@ class DbfImportController extends Controller
         }
 
         $table->close();
-
+        AdminLog::addAdminAction( null, "Скачивание  файла  Показання.dbf");
         if (file_exists($path)) {
             return  \Yii::$app->response->sendFile($path);
         }
+
         Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
     }
 
@@ -292,12 +295,38 @@ class DbfImportController extends Controller
         $path = Yii::getAlias('@backend/web/' . $fileName);
         $modelName = 'common\dbfImport\\' . $class;
 
+        switch ($class) {
+            case 'CompanyDBF':
+                $file = 'Компании';
+                break;
+            case 'InfoDBF':
+                $file = 'Показания водомеров';
+                break;
+            case 'IndicationsAndChargesDBF':
+                $file = 'Нарахувань та показань';
+                break;
+            case 'PaymentDBF':
+                $file = 'Оплати';
+                break;
+            case 'ScoreDBF':
+                $file = 'Счета';
+                break;
+            default:
+                $file = $fileName;
+                break;
+        }
+
         $idJob = \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
-            'model' => $modelName
+            'model' => $modelName,
+            'admin_id' => Yii::$app->user->getId(),
+            'fileName' => $file
 
         ]));
 
+
+
+        AdminLog::addAdminAction( null, "Запуск записи в БД  файла  $file");
 //        $startTime = time();
 //        while (!Yii::$app->queue->isDone($idJob)) {
 //            sleep(1);
@@ -317,7 +346,7 @@ class DbfImportController extends Controller
     {
 
         Yii::$app->db->createCommand()->truncateTable($table)->execute();
-
+        AdminLog::addAdminAction( null, "Очистка БД $table");
         \yii\helpers\VarDumper::dump(555,10,1);exit;
 
     }

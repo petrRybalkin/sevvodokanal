@@ -5,6 +5,7 @@ namespace common\dbfImport;
 
 use common\models\IndicationsAndCharges;
 use Yii;
+use yii\helpers\Json;
 
 //Довідник нарахувань та показань для фізичних осіб
 //При первинній загрузці файлу по нарахуванням та показанням для фізичних осіб буде містити всю інформацію по
@@ -145,9 +146,13 @@ class IndicationsAndChargesDBF extends BaseDBF
         ];
     }
 
-    public function save()
+    public function save($admin_id ,$fileName)
     {
-        foreach ($this->parser() as $item) {
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
+
+        foreach ($this->parser(5) as $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
             $score = new IndicationsAndCharges();
@@ -155,13 +160,14 @@ class IndicationsAndChargesDBF extends BaseDBF
             $score->setAttributes(['synchronization' => 1]);
 
             if (!$score->save()) {
-                print_r($score->getErrors());
-                return false;
+                $error .= Json::encode($score->getErrors());
+                continue;
             } else {
                 print_r('ok');
             }
 
         }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ".$error :" Запись файла $fileName окончена." );
         return true;
 
     }

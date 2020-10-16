@@ -2,8 +2,11 @@
 
 namespace common\dbfImport;
 
+use backend\models\AdminLog;
+use backend\models\FilesLog;
 use common\models\WaterMetering;
 use Yii;
+use yii\helpers\Json;
 
 class InfoDBF extends BaseDBF
 {
@@ -111,8 +114,11 @@ class InfoDBF extends BaseDBF
 
     }
 
-    public function save()
+    public function save($admin_id, $fileName)
     {
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         foreach ($this->parser() as $item) {
             $arr = array_combine($this->tableFaild(), $item);
@@ -129,16 +135,14 @@ class InfoDBF extends BaseDBF
                 $score = new WaterMetering();
                 $score->setAttributes($arr, false);
                 if (!$score->save()) {
-                    print_r($score);
-                    print_r($score->getErrors());
-//                    exit;
-                    return false;
+                    $error .= Json::encode($score->getErrors());
+                    continue;
                 } else {
-//                    Yii::$app->queue->status(1);
                     print_r('ok');
                 }
             }
         }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена ." );
         return true;
 
 

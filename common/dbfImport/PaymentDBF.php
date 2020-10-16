@@ -2,7 +2,10 @@
 
 namespace common\dbfImport;
 
+use common\models\Company;
+use common\models\Payment;
 use Yii;
+use yii\helpers\Json;
 
 class PaymentDBF extends BaseDBF
 {
@@ -33,11 +36,35 @@ class PaymentDBF extends BaseDBF
         ];
     }
 
-    public function save()
+    public function tableFaild()
     {
-        Yii::$app->db->createCommand()->batchInsert('payment', [
-            'account_number', 'sum', 'payment_date', 'pr'], $this->parser())->execute();
+        return [
+            'account_number', 'sum', 'payment_date', 'pr'];
+    }
 
+
+    public function save($admin_id, $fileName)
+    {
+
+        $error = '';
+        $str = $this->getRecordCount();
+        $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
+
+        foreach ($this->parser() as $item) {
+            $arr =  array_combine($this->tableFaild() ,$item);
+            $pay = new Payment();
+            $pay->setAttributes($arr);
+            if (!$pay->save()) {
+                $error .= Json::encode($pay->getErrors());
+                continue;
+            } else {
+                print_r('ok');
+            }
+        }
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
         return true;
+
+
+
     }
 }
