@@ -235,7 +235,6 @@ class ProfileController extends Controller
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:Ymd');
         $name = 'Нарахування та показання' . ($score->name_of_the_tenant ?: '_') . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
-        $calcSum = Payment::calcAllPayments($score->account_number);
         if ($score && $metering && $indication) {
             $id = Yii::$app->queue->push(new PhpWordJob([
                 'template' => $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx",
@@ -279,7 +278,7 @@ class ProfileController extends Controller
                     $indication->accruals,
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
                     Payment::getLgota($score->account_number, 3) ?: '-',
-                    Yii::$app->formatter->asDecimal($calcSum, 2),
+                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ,
                     'perescore',
                     Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
                     $indication->accruals -
