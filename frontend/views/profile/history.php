@@ -111,7 +111,7 @@
 
 <?php endif; ?>
 
-<!--            --><?//= (($item->current_readings_first +
+<!--            --><?php //(($item->current_readings_first +
 //                    $item->current_readings_second +
 //                    $item->current_readings_watering -
 //                    $item->previous_readings_first -
