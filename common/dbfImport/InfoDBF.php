@@ -123,15 +123,15 @@ class InfoDBF extends BaseDBF
         foreach ($this->parser() as $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
-            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
-
-            if ($scoreExist) {
-                if ($item['ph1'] < $scoreExist->previous_readings_first) {
-                    continue;
-                }
-
-                $scoreExist->updateAttributes($arr);
-            } else {
+//            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+//
+//            if ($scoreExist) {
+//                if ($item['ph1'] < $scoreExist->previous_readings_first) {
+//                    continue;
+//                }
+//
+//                $scoreExist->updateAttributes($arr);
+//            } else {
                 $score = new WaterMetering();
                 $score->setAttributes($arr, false);
                 if (!$score->save()) {
@@ -140,7 +140,7 @@ class InfoDBF extends BaseDBF
                 } else {
                     print_r('ok');
                 }
-            }
+//            }
         }
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена ." );
         return true;
