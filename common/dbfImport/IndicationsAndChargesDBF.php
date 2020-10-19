@@ -157,7 +157,7 @@ class IndicationsAndChargesDBF extends BaseDBF
 
             $score = new IndicationsAndCharges();
             $score->setAttributes($arr, false);
-            $score->setAttributes(['synchronization' => 1]);
+            $score->setAttributes(['synchronization' => 0]);
 
             if (!$score->save()) {
                 $error .= Json::encode($score->getErrors());
