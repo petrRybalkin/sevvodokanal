@@ -96,7 +96,7 @@ use common\models\Payment; ?>
         <td><?= $item->correction ?></td>
         <td><?= Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ?></td>
         <td><?= Payment::getLgota($score->account_number, 3) ?: '0 ' ?></td>
-        <td><?= $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) ?></td>
+        <td><?= $item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2) ?></td>
         <td><?= $item->debt_end_month?></td>
         <td><?= $item->medium_cubes?></td>
     </tr>
