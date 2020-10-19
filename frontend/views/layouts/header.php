@@ -32,7 +32,7 @@ use common\models\User;
             <!-- Profile dropdown -->
             <?php $client = true; if($client): ?>
             <?php if(Yii::$app->user->isGuest): ?>
-                <div class="relative profile group w-1/4">
+                <div class="relative profile group w-1/4 sm:invisible md:visible">
                     <div class="flex justify-end">
                         <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
@@ -43,10 +43,16 @@ use common\models\User;
                     </div>
                 </div>
             <?php else: ?>
-                <div class="relative profile group w-1/4">
+                <div class="relative profile group w-1/4 sm:invisible md:visible">
                     <div class="flex justify-end">
-                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid" id="user-menu" aria-label="User menu" aria-haspopup="true">
-                            <?= Yii::$app->user->identity->username ?>&nbsp;<img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+<!--                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid" id="user-menu" aria-label="User menu" aria-haspopup="true">-->
+<!--                            --><?//= Yii::$app->user->identity->username ?><!--&nbsp;<img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />-->
+<!--                        </button>-->
+                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Личный кабинет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        </button>
+                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </button>
                     </div>
                     <!--
@@ -59,13 +65,13 @@ use common\models\User;
                         From: "transform opacity-100 scale-100"
                         To: "transform opacity-0 scale-95"
                     -->
-                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
-                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                            <a href="<?= Url::to(['/profile/index']);?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Личный кабинет
-                            </a>
-                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
-                        </div>
-                    </div>
+<!--                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">-->
+<!--                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">-->
+<!--                            <a href="--><?//= Url::to(['/profile/index']);?><!--" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Личный кабинет-->
+<!--                            </a>-->
+<!--                            --><?//= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             <?php endif; ?>
             <?php endif; ?>
@@ -132,21 +138,28 @@ use common\models\User;
                         </nav>
                     </div>
                 </div>
-<!--                <div class="py-6 px-5 space-y-6">-->
-<!--                    <div class="space-y-6">-->
-<!--                        <span class="w-full flex rounded-md shadow-sm">-->
-<!--                          <a href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">-->
-<!--                            Sign up-->
-<!--                          </a>-->
-<!--                        </span>-->
-<!--                        <p class="text-center text-base leading-6 font-medium text-gray-500">-->
-<!--                            Existing customer?-->
-<!--                            <a href="#" class="text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150">-->
-<!--                                Sign in-->
-<!--                            </a>-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                </div>-->
+
+                <div class="py-6 px-5 space-y-6">
+                    <div class="space-y-6">
+                        <?php if(Yii::$app->user->isGuest): ?>
+                        <span class="w-full flex rounded-md shadow-sm">
+                          <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'w-full flex items-center justify-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150']) ?>
+                        </span>
+                        <p class="text-center text-base leading-6 font-medium text-gray-500">
+                            У вас вже є обліковий запис?
+                            <?= Html::a('Увійти', ['/site/login'], ['class'=>'text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150']) ?>
+                        </p>
+                        <?php else: ?>
+                        <span class="w-full flex rounded-md shadow-sm">
+                            <?= Html::a('Личный кабинет', ['/profile/index'], ['class'=>'w-full flex items-center justify-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150']) ?>
+                        </span>
+                        <p class="text-center text-base leading-6 font-medium text-gray-500">
+                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150']) ?>
+                        </p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
