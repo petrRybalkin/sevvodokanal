@@ -69,7 +69,7 @@ use common\models\User;
 <!--                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">-->
 <!--                            <a href="--><?//= Url::to(['/profile/index']);?><!--" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Личный кабинет-->
 <!--                            </a>-->
-<!--                            --><?//= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+<!--                            --><?// Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
 <!--                        </div>-->
 <!--                    </div>-->
                 </div>
