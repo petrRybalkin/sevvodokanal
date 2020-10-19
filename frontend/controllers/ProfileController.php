@@ -162,7 +162,17 @@ class ProfileController extends Controller
                     'synchronization' => 1,
                     'water_consumption' =>$wc ,
                     'watering_consumption' =>$watc,
-                    'accruals' => ($wc + $watc) *$indication->total_tariff
+                    'accruals' => ($wc + $watc) *$indication->total_tariff,
+                    'debt_end_month'=> (($indication->current_readings_first +
+                                $indication->current_readings_second +
+                                $indication->current_readings_watering -
+                                $indication->previous_readings_first -
+                                $indication->previous_readings_second -
+                                $indication->previous_readings_watering) * $score->tariff_for_water) +
+            (($indication->current_readings_first +
+                    $indication->current_readings_second -
+                    $indication->previous_readings_first -
+                    $indication->previous_readings_second) * $score->tariff_for_stocks)
                 ]);
                 $wm->updateAttributes(['date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d')]);
                 if (!$indication->save() || !$wm->save()) {
