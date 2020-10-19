@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Payment;
 use frontend\widgets\SidebarProfileWidget;
 use yii\helpers\Url; ?>
 
@@ -8,13 +9,17 @@ use yii\helpers\Url; ?>
 <p>Дані особового рахунку</p>
 <?php
 /** @var \common\models\ScoreMetering $number */
+$ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])->orderBy(['id' => SORT_DESC])->one();
+$sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
   ?>
     <p><b>особовий рахунок:  </b><?= $number->account_number ?></p>
     <p><b> П.І.Б. власника:  </b><?= $number->name_of_the_tenant ?></p>
     <p><b>Адреса:  </b><?= $number->address ?></p>
     <p><b> Постачальник послуг:  </b> КП СЄВЄРОДОНЕЦЬКВОДОКАНАЛ</p>
-    <p><b>Поточна заборгованість (переплата позначена зеленим кольором, а заборгованість червоним
-            кольором): ---- </b></p>
+    <p><b>Поточна заборгованість:<?= $ind->debt_end_month ?
+                "<i style='color: red'> $ind->debt_end_month</i>":
+                "<i style='color: green'> $sum </i>"
+            ?></b></p>
     <p> Дані засобів обліку води: </p>
     <?php
     /** @var \common\models\WaterMetering $vodomer */
@@ -52,6 +57,6 @@ use yii\helpers\Url; ?>
 <p> <b> - кількість зареєстрованих осіб.</b> <?= $number->registered_persons ?></p>
 <p> <b>Тариф:</b></p>
 <p> <b>- вода + стоки; </b><?= $number->tariff_for_stocks + $number->tariff_for_water?></p>
-<p> <b>- тариф на водоспоживання; </b>---</p>
-<p> <b>- тариф на водовідведення;</b> ---</p>
+<p> <b>- тариф на водоспоживання; </b><?= $number->tariff_for_water ?> </p>
+<p> <b>- тариф на водовідведення;</b> <?= $number->tariff_for_stocks ?></p>
 <p> <b>- сумарний тариф. </b><?= $number->total_tariff ?></p>
