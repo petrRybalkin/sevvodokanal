@@ -4,7 +4,7 @@
 /** @var \common\models\ScoreMetering $score */
 /** @var \common\models\IndicationsAndCharges $indication */
 
-?>
+use common\models\Payment; ?>
 
 Розділ “Нарахування та передані показання”:
 1. Номер особового рахунку. <?= $score->account_number?>
@@ -94,9 +94,9 @@
         <td><?= $item->accruals?>
         </td>
         <td><?= $item->correction ?></td>
-        <td><?= $item->total_tariff?></td>
-        <td><?= $item->total_tariff?></td>
-        <td><?= $item->total_tariff?></td>
+        <td><?= Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ?></td>
+        <td><?= Payment::getLgota($score->account_number, 3) ?: '0 ' ?></td>
+        <td><?= $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) ?></td>
         <td><?= $item->debt_end_month?></td>
         <td><?= $item->medium_cubes?></td>
     </tr>
