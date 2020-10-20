@@ -222,6 +222,7 @@ class DbfImportController extends Controller
 
     public function actionDownload()
     {
+        set_time_limit(0);
         $model = IndicationsAndCharges::find()
             ->where(['synchronization' => 1]);
         $path = Yii::getAlias('@runtimeBack/Показання.dbf');
