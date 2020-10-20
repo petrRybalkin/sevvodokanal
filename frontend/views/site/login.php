@@ -57,9 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     </button>
                 </div>
             <?php ActiveForm::end(); ?>
-<!--            <div class="text-sm mt-3 leading-5">-->
-<!--                Потрібна нова електронна адреса для підтвердження? --><?//= Html::a('Повторно відправити', ['site/resend-verification-email'], ['class' => 'font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150']) ?>
-<!--            </div>-->
         </div>
     </div>
 
