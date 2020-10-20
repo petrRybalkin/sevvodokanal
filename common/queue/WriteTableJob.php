@@ -2,6 +2,7 @@
 
 namespace common\queue;
 
+use common\models\IndicationsAndCharges;
 use XBase\WritableTable;
 use Yii;
 use yii\queue\JobInterface;
@@ -10,14 +11,39 @@ class WriteTableJob extends BaseJob implements JobInterface
 {
 
     public $file;
-    public $model;
 
     public function execute($queue)
     {
+        $model = IndicationsAndCharges::find()
+            ->where(['synchronization' => 1]);
+        print_r('kk');
+
+        $def = [
+            ['lic_schet', "C", 13],
+            ['regn', "N", 5, 0],
+            ['fp', "C", 20],
+            ['nh1', "C", 10, 0],
+            ['nh2', "C", 10, 2],
+            ['np', "C", 10, 0],
+            ['th1', "N", 6, 0],
+            ['th2', "N", 6, 0],
+            ['tp', "N", 6, 0],
+            ['ph1', "N", 6, 0],
+            ['ph2', "N", 6, 0],
+            ['pp', "N", 6, 0],
+            ['dpp', "D", 8],
+
+        ];
+
+        if (!dbase_create($this->file, $def)) {
+            return false;
+            Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
+        }
+
+        print_r("ok1\n");
         $table = new WritableTable($this->file);
         $table->openWrite();
-        foreach ($this->model->each() as $item) {
-
+        foreach ($model->each() as $item) {
             $record = $table->appendRecord();
             if(!$item){
                 continue;

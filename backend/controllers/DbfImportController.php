@@ -223,10 +223,15 @@ class DbfImportController extends Controller
 
     public function actionDownload()
     {
-        set_time_limit(0);
+        $path = Yii::getAlias('@runtimeBack/Показання_'.date('Y-m-dH:i:s') .'.dbf');
+
+//        $idJob = \Yii::$app->queue->push(new WriteTableJob([
+//            'file' => $path,
+//
+//        ]));
+
         $model = IndicationsAndCharges::find()
             ->where(['synchronization' => 1]);
-        $path = Yii::getAlias('@runtimeBack/Показання.dbf');
 
         $def = [
             ['lic_schet', "C", 13],
@@ -249,53 +254,47 @@ class DbfImportController extends Controller
             Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
         }
 
-print_r("ok1\n");
-        $idJob = \Yii::$app->queue->push(new WriteTableJob([
-            'file' => $path,
-            'model' => $model,
 
-        ]));
 
-//        $table = new WritableTable($path);
-//        $table->openWrite();
-//        foreach ($model->each() as $item) {
-//
-//            $record = $table->appendRecord();
-//            if(!$item){
-//                continue;
-//            }
-//            $record->lic_schet = $item->account_number;
-//            $record->regn = $item->score ? $item->score->act_number : 0;
-//            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
-//            $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
-//            $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
-//            $record->np = $item->water ? $item->water->watering_number : 0;
-//            $record->th1 = $item->current_readings_first;
-//            $record->th2 = $item->current_readings_second;
-//            $record->tp = $item->previous_readings_watering;
-//            $record->ph1 = $item->previous_readings_first;
-//            $record->ph2 = $item->previous_readings_second;
-//            $record->pp = $item->previous_readings_watering;
-//            $record->dpp = $item->month_year;
-//            $table->writeRecord();
-//            $item->updateAttributes(['synchronization' => 0]);
-//        }
-//
-//        $table->close();
-
-        print_r("ok2\n");
-        $startTime = time();
-        while (!Yii::$app->queue->isDone($idJob)) {
-            sleep(1);
-            if (time() - $startTime > 100) {
-                Yii::$app->session->setFlash('danger', 'Не удалось сформировать  данные');
-                return $this->redirect('index');
+        $table = new WritableTable($path);
+        $table->openWrite();
+        foreach ($model->each() as $item) {
+            set_time_limit(50);
+            $record = $table->appendRecord();
+            if(!$item){
+                continue;
             }
+            $record->lic_schet = $item->account_number;
+            $record->regn = $item->score ? $item->score->act_number : 0;
+            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
+            $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
+            $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
+            $record->np = $item->water ? $item->water->watering_number : 0;
+            $record->th1 = $item->current_readings_first;
+            $record->th2 = $item->current_readings_second;
+            $record->tp = $item->previous_readings_watering;
+            $record->ph1 = $item->previous_readings_first;
+            $record->ph2 = $item->previous_readings_second;
+            $record->pp = $item->previous_readings_watering;
+            $record->dpp = $item->month_year;
+            $table->writeRecord();
+            $item->updateAttributes(['synchronization' => 0]);
         }
+
+        $table->close();
+
+//        print_r("ok2");
+//        $startTime = time();
+//        while (!Yii::$app->queue->isDone($idJob)) {
+//            sleep(1);
+//            if (time() - $startTime > 100) {
+//                Yii::$app->session->setFlash('danger', 'Не удалось сформировать  данные');
+//                return $this->redirect('index');
+//            }
+//        }
 
         AdminLog::addAdminAction( null, "Скачивание  файла  Показання.dbf");
         if (file_exists($path)) {
-            print_r("ok3\n");
             return  \Yii::$app->response->sendFile($path);
         }
 
