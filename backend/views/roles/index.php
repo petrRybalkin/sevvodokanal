@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\models\Roles;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -30,7 +31,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'access_users',
             'access_abonents',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, Roles $model) {
+                        return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/roles/update', 'id' => $model->id], [
+                            'title' => 'Update',
+                        ]);
+                    },
+                    'delete' => function ($url, Roles $model) {
+                        return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/roles/delete', 'id' => $model->id], [
+                            'title' => 'Delete',
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => 'Вы уверены что хотите удалить эту страницу?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+                ],
+                'options' => [
+                    'width' => 100,
+                ],
+            ],
         ],
     ]); ?>
 

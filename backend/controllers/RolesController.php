@@ -90,7 +90,7 @@ class RolesController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             AdminLog::addAdminAction( $model->id, "Изменение роли $model->name");
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [
