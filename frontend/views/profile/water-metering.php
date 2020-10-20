@@ -59,7 +59,7 @@ endif; ?>
 <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
-            <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показаний счетчика </h2>
+            <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань лічильника</h2>
         </div>
         <?php $form = ActiveForm::begin([
                 'id' => 'water-metering-form',
