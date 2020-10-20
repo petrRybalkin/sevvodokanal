@@ -50,32 +50,32 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="rounded-md shadow-sm">
             <div>
                 <?= $form->field($model, 'name')
-                    ->textInput(['type'=>'text', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
-                    ->label('Имя', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
+                    ->textInput(['type'=>'text', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Введіть ваше ім\'я'])
+                    ->label('Ім\'я', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'email')
-                    ->textInput(['type'=>'email', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
+                    ->textInput(['type'=>'email', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Введіть ваш email'])
                     ->label('Email', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'subject')
-                    ->textInput(['type'=>'text', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
+                    ->textInput(['type'=>'text', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Тема повідомлення'])
                     ->label('Тема', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'body')
-                    ->textarea(['rows' => 6, 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder'=>'Email address'])
-                    ->label('Сообщение', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
+                    ->textarea(['rows' => 6, 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                    ->label('Повідомлення', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
+                ])->label('Код перевірки', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])  ?>
             </div>
         </div>
 

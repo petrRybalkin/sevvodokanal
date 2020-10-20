@@ -3,7 +3,7 @@ use yii\helpers\Html;
 ?>
 <div class="card">
     <div class="card-body login-card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Увійдіть, щоб розпочати сеанс</p>
 
         <?php $form = \yii\bootstrap4\ActiveForm::begin(['id' => 'login-form']) ?>
 
@@ -14,7 +14,7 @@ use yii\helpers\Html;
             'wrapperOptions' => ['class' => 'input-group mb-3']
         ])
             ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            ->textInput(['placeholder' => 'Введіть ваш логiн']) ?>
 
         <?= $form->field($model, 'password', [
             'options' => ['class' => 'form-group has-feedback'],
@@ -23,16 +23,16 @@ use yii\helpers\Html;
             'wrapperOptions' => ['class' => 'input-group mb-3']
         ])
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+            ->passwordInput(['placeholder' => 'Введіть ваш пароль']) ?>
 
         <div class="row">
             <div class="col-8">
                 <div class="icheck-primary">
-                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                    <?= $form->field($model, 'rememberMe')->checkbox()->label('Запам\'ятати мене') ?>
                 </div>
             </div>
             <div class="col-4">
-                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block']) ?>
+                <?= Html::submitButton('Увійти', ['class' => 'btn btn-primary btn-block']) ?>
             </div>
         </div>
 
@@ -49,12 +49,12 @@ use yii\helpers\Html;
 <!--        </div>-->
         <!-- /.social-auth-links -->
 
-        <p class="mb-1">
+        <!--<p class="mb-1">
             <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
+        </p>-->
+<!--        <p class="mb-0">
             <a href="register.html" class="text-center">Register a new membership</a>
-        </p>
+        </p>-->
     </div>
     <!-- /.login-card-body -->
 </div>
