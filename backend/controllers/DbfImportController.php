@@ -11,6 +11,7 @@ use common\dbfImport\ScoreDBF;
 use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
+use common\queue\WriteTableJob;
 use XBase\WritableTable;
 use Yii;
 use yii\web\Controller;
@@ -249,36 +250,54 @@ class DbfImportController extends Controller
         }
 
 
-        $table = new WritableTable($path);
-        $table->openWrite();
-        foreach ($model->each() as $item) {
+        $idJob = \Yii::$app->queue->push(new WriteTableJob([
+            'file' => $path,
+            'model' => $model,
 
-            $record = $table->appendRecord();
-            if(!$item){
-                continue;
+        ]));
+
+//        $table = new WritableTable($path);
+//        $table->openWrite();
+//        foreach ($model->each() as $item) {
+//
+//            $record = $table->appendRecord();
+//            if(!$item){
+//                continue;
+//            }
+//            $record->lic_schet = $item->account_number;
+//            $record->regn = $item->score ? $item->score->act_number : 0;
+//            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
+//            $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
+//            $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
+//            $record->np = $item->water ? $item->water->watering_number : 0;
+//            $record->th1 = $item->current_readings_first;
+//            $record->th2 = $item->current_readings_second;
+//            $record->tp = $item->previous_readings_watering;
+//            $record->ph1 = $item->previous_readings_first;
+//            $record->ph2 = $item->previous_readings_second;
+//            $record->pp = $item->previous_readings_watering;
+//            $record->dpp = $item->month_year;
+//            $table->writeRecord();
+//            $item->updateAttributes(['synchronization' => 0]);
+//        }
+//
+//        $table->close();
+
+
+        $startTime = time();
+        while (!Yii::$app->queue->isDone($idJob)) {
+            sleep(1);
+            if (time() - $startTime > 100) {
+                Yii::$app->session->setFlash('danger', 'Не удалось сформировать  данные');
+                return $this->redirect('index');
             }
-            $record->lic_schet = $item->account_number;
-            $record->regn = $item->score ? $item->score->act_number : 0;
-            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
-            $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
-            $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
-            $record->np = $item->water ? $item->water->watering_number : 0;
-            $record->th1 = $item->current_readings_first;
-            $record->th2 = $item->current_readings_second;
-            $record->tp = $item->previous_readings_watering;
-            $record->ph1 = $item->previous_readings_first;
-            $record->ph2 = $item->previous_readings_second;
-            $record->pp = $item->previous_readings_watering;
-            $record->dpp = $item->month_year;
-            $table->writeRecord();
-            $item->updateAttributes(['synchronization' => 0]);
         }
 
-        $table->close();
         AdminLog::addAdminAction( null, "Скачивание  файла  Показання.dbf");
         if (file_exists($path)) {
             return  \Yii::$app->response->sendFile($path);
         }
+
 
         Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
     }
