@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use backend\models\SignupAdminForm;
 use Yii;
 use common\models\Admin;
@@ -73,6 +74,7 @@ class UserController extends Controller
 //        }
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            AdminLog::addAdminAction( null, "Добавлен новый администратор $model->username");
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->redirect(['index', 'id' => $models->id]);
         }
@@ -94,6 +96,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( null, "Редактирование  администратора $model->username");
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -111,7 +114,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        AdminLog::addAdminAction( null, "Удален администратор $model->username");
+        $model->delete();
 
         return $this->redirect(['index']);
     }

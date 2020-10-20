@@ -224,7 +224,7 @@ class DbfImportController extends Controller
     {
         $model = IndicationsAndCharges::find()
             ->where(['synchronization' => 1]);
-        $path = Yii::getAlias('@backend/web/Показання.dbf');
+        $path = Yii::getAlias('@runtimeBack/Показання.dbf');
 
         $def = [
             ['lic_schet', "C", 13],

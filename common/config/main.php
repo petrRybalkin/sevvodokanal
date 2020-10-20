@@ -1,6 +1,7 @@
 <?php
 
 Yii::setAlias('@runtimeFront', dirname(dirname(__DIR__)) . '/frontend/runtime/');
+Yii::setAlias('@runtimeBack', dirname(dirname(__DIR__)) . '/backend/runtime/');
 
 
 return [
