@@ -249,7 +249,7 @@ class DbfImportController extends Controller
             Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
         }
 
-
+print_r("ok1\n");
         $idJob = \Yii::$app->queue->push(new WriteTableJob([
             'file' => $path,
             'model' => $model,
@@ -283,7 +283,7 @@ class DbfImportController extends Controller
 //
 //        $table->close();
 
-
+        print_r("ok2\n");
         $startTime = time();
         while (!Yii::$app->queue->isDone($idJob)) {
             sleep(1);
@@ -295,6 +295,7 @@ class DbfImportController extends Controller
 
         AdminLog::addAdminAction( null, "Скачивание  файла  Показання.dbf");
         if (file_exists($path)) {
+            print_r("ok3\n");
             return  \Yii::$app->response->sendFile($path);
         }
 
