@@ -24,21 +24,21 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             //['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей псевдонім вже зайнятий.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей емейл все заянятий.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 10],
 
             ['phone', 'required'],
             ['phone', 'string', 'min' => 12],
-            ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This phone has already been taken.'],
+            ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон все зайнятий.'],
         ];
     }
 
@@ -79,7 +79,7 @@ class SignupForm extends Model
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Реєстрація аккаунту ' . Yii::$app->name)
             ->send();
     }
 }
