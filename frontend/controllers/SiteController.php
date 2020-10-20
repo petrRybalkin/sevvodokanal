@@ -178,7 +178,7 @@ class SiteController extends Controller
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Неправірний емейл або пароль.');
+                Yii::$app->session->setFlash('error', 'Неправильний email або пароль.');
             }
         }
 
@@ -229,7 +229,7 @@ class SiteController extends Controller
         }
         if ($user = $model->verifyEmail()) {
             if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success', 'Ваш емейл педтверджено!');
+                Yii::$app->session->setFlash('success', 'Ваш емейл підтверджений!');
                 return $this->goHome();
             }
         }
