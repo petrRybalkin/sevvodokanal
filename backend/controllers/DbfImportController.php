@@ -225,14 +225,13 @@ class DbfImportController extends Controller
     {
         $path = Yii::getAlias('@runtimeBack/Показання_'.date('Y-m-dH:i:s') .'.dbf');
 
-//        $idJob = \Yii::$app->queue->push(new WriteTableJob([
-//            'file' => $path,
-//
-//        ]));
-
         $model = IndicationsAndCharges::find()
             ->where(['synchronization' => 1]);
 
+        if(!$model){
+            Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         $def = [
             ['lic_schet', "C", 13],
             ['regn', "N", 5, 0],
@@ -254,12 +253,11 @@ class DbfImportController extends Controller
             Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
         }
 
-
-
         $table = new WritableTable($path);
         $table->openWrite();
-        foreach ($model->each() as $item) {
-            set_time_limit(50);
+
+        foreach ($model->each(1000) as $item) {
+            set_time_limit(500);
             $record = $table->appendRecord();
             if(!$item){
                 continue;
@@ -280,18 +278,7 @@ class DbfImportController extends Controller
             $table->writeRecord();
             $item->updateAttributes(['synchronization' => 0]);
         }
-
         $table->close();
-
-//        print_r("ok2");
-//        $startTime = time();
-//        while (!Yii::$app->queue->isDone($idJob)) {
-//            sleep(1);
-//            if (time() - $startTime > 100) {
-//                Yii::$app->session->setFlash('danger', 'Не удалось сформировать  данные');
-//                return $this->redirect('index');
-//            }
-//        }
 
         AdminLog::addAdminAction( null, "Скачивание  файла  Показання.dbf");
         if (file_exists($path)) {
