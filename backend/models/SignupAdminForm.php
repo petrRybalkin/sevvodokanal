@@ -45,7 +45,7 @@ class SignupAdminForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 12],
 
-            //['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['role_id', 'integer'],
         ];
