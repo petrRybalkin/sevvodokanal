@@ -25,7 +25,7 @@ class PasswordResetRequestForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => 'Користувача з цією електронною адресою немає.'
             ],
         ];
     }
@@ -62,7 +62,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom(Yii::$app->params['senderEmail'] )
             ->setTo($this->email)
-            ->setSubject('Восстановление пароля ' . Yii::$app->name)
+            ->setSubject('Відновлення паролю ' . Yii::$app->name)
             ->send();
     }
 }

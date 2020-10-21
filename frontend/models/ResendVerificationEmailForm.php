@@ -27,7 +27,7 @@ class ResendVerificationEmailForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_INACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => 'Користувача з цією електронною адресою немає.'
             ],
         ];
     }
@@ -56,7 +56,7 @@ class ResendVerificationEmailForm extends Model
             )
             ->setFrom(Yii::$app->params['senderEmail'] )
             ->setTo($this->email)
-            ->setSubject('Реэстрацыя аккаунту ' . Yii::$app->name)
+            ->setSubject('Реєстрація аккаунту ' . Yii::$app->name)
             ->send();
     }
 }
