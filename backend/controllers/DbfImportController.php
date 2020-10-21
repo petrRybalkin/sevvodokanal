@@ -259,9 +259,6 @@ class DbfImportController extends Controller
         foreach ($model->each(1000) as $item) {
             set_time_limit(500);
             $record = $table->appendRecord();
-            if(!$item){
-                continue;
-            }
             $record->lic_schet = $item->account_number;
             $record->regn = $item->score ? $item->score->act_number : 0;
             $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
