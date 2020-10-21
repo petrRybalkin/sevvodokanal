@@ -152,7 +152,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $item) {
+        foreach ($this->parser() as $k => $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
             $score = new IndicationsAndCharges();
@@ -160,14 +160,14 @@ class IndicationsAndChargesDBF extends BaseDBF
             $score->setAttributes(['synchronization' => 0]);
 
             if (!$score->save()) {
-                $error .= Json::encode($score->getErrors());
+                $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
                 continue;
             } else {
                 print_r('ok');
             }
 
         }
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ".$error :" Запись файла $fileName окончена." );
+        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
         return true;
 
     }

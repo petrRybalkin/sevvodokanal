@@ -267,7 +267,7 @@ class DbfImportController extends Controller
             $record = $table->appendRecord();
             $record->lic_schet = $item->account_number;
             $record->regn = $item->score ? $item->score->act_number : 0;
-            $record->fp = $item->score ? iconv('Windows-1251','UTF',$item->score->name_of_the_tenant) : '';
+            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
             $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
             $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
             $record->np = $item->water ? $item->water->watering_number : 0;
