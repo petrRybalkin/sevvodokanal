@@ -257,7 +257,8 @@ class DbfImportController extends Controller
         $table = new WritableTable($path);
         $table->openWrite();
 
-        foreach ($model->each(1000) as $item) {
+        foreach ($model->each(10) as $item) {
+
             if(!$item){
                 Yii::$app->session->setFlash('danger', "Нема даних для утворення файлу\n") ;
                 return $this->redirect(Yii::$app->request->referrer);
@@ -277,7 +278,7 @@ class DbfImportController extends Controller
             $record->ph1 = $item->previous_readings_first;
             $record->ph2 = $item->previous_readings_second;
             $record->pp = $item->previous_readings_watering;
-            $record->dpp =  Yii::$app->formatter->asDate($str,'php:m.Y');
+            $record->dpp =  Yii::$app->formatter->asDate($str,'php:mY');
             $table->writeRecord();
             $item->updateAttributes(['synchronization' => 0]);
         }

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use Yii;
 use common\models\User;
 use yii\filters\AccessControl;
@@ -79,6 +80,7 @@ class ClientController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( null, "Добавление абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -99,6 +101,7 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            AdminLog::addAdminAction( null, "Редактирование абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -116,8 +119,9 @@ class ClientController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+       $model =  $this->findModel($id);
+        AdminLog::addAdminAction( null, "Удаление абонента $model->username");
+        $model->delete();
         return $this->redirect(['index']);
     }
 

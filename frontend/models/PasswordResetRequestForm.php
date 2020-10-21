@@ -62,7 +62,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom(Yii::$app->params['senderEmail'] )
             ->setTo($this->email)
-            ->setSubject('Відновлення паролю ' . Yii::$app->name)
+            ->setSubject('Відновлення паролю ' . Yii::$app->params['senderName'])
             ->send();
     }
 }
