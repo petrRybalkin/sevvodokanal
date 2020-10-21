@@ -14,6 +14,7 @@ use common\queue\DbfJob;
 use common\queue\WriteTableJob;
 use XBase\WritableTable;
 use Yii;
+use yii\base\Theme;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ArrayDataProvider;
@@ -223,7 +224,7 @@ class DbfImportController extends Controller
 
     public function actionDownload()
     {
-        $path = Yii::getAlias('@runtimeBack/Показання_'.date('Y-m-dH:i:s') .'.dbf');
+        $path = Yii::getAlias('@runtimeBack/Показання_'.date('Y-m-d H:i:s') .'.dbf');
 
         $model = IndicationsAndCharges::find()
             ->where(['synchronization' => 1]);
@@ -257,11 +258,16 @@ class DbfImportController extends Controller
         $table->openWrite();
 
         foreach ($model->each(1000) as $item) {
+            if(!$item){
+                Yii::$app->session->setFlash('danger', "Нема даних для утворення файлу\n") ;
+                return $this->redirect(Yii::$app->request->referrer);
+            }
             set_time_limit(500);
+            $str = substr($item->month_year,0,4) .'-'.substr($item->month_year,4,6).'-01';
             $record = $table->appendRecord();
             $record->lic_schet = $item->account_number;
             $record->regn = $item->score ? $item->score->act_number : 0;
-            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
+            $record->fp = $item->score ? iconv('Windows-1251','UTF',$item->score->name_of_the_tenant) : '';
             $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
             $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
             $record->np = $item->water ? $item->water->watering_number : 0;
@@ -271,7 +277,7 @@ class DbfImportController extends Controller
             $record->ph1 = $item->previous_readings_first;
             $record->ph2 = $item->previous_readings_second;
             $record->pp = $item->previous_readings_watering;
-            $record->dpp = $item->month_year;
+            $record->dpp =  Yii::$app->formatter->asDate($str,'php:m.Y');
             $table->writeRecord();
             $item->updateAttributes(['synchronization' => 0]);
         }
