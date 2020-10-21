@@ -152,7 +152,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser(5) as $item) {
+        foreach ($this->parser() as $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
             $score = new IndicationsAndCharges();
