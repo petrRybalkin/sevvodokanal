@@ -39,14 +39,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-                [
-                    'class' => 'yii\log\FileTarget', //в файл
-                    'levels' => ['info'],
-                    'categories' => ['dbf'], //категория логов
-                    'logFile' => '@runtime/logs/dbf.log', //куда сохранять
-                    'logVars' => [] //не добавлять в лог глобальные переменные ($_SERVER, $_SESSION...)
+                    'levels' => ['error', 'warning','info'],
                 ],
             ],
         ],
