@@ -36,7 +36,7 @@ class ProfileController extends Controller
                 'only' => ['index', 'account-number', 'payment', 'score', 'history', 'word', 'water-metering'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'accountNumber', 'payment', 'score', 'history', 'word', 'waterMetering'],
+                        'actions' => ['index', 'account-number', 'payment', 'score', 'history', 'word', 'water-metering'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
