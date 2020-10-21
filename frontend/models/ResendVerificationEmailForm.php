@@ -56,7 +56,7 @@ class ResendVerificationEmailForm extends Model
             )
             ->setFrom(Yii::$app->params['senderEmail'] )
             ->setTo($this->email)
-            ->setSubject('Реєстрація аккаунту ' . Yii::$app->name)
+            ->setSubject('Реєстрація аккаунту ' . Yii::$app->params['senderName'])
             ->send();
     }
 }
