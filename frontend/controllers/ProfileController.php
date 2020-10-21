@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\ClientMap;
+use yii\filters\AccessControl;
 use common\models\IndicationsAndCharges;
 use common\models\Payment;
 use common\models\ScoreMetering;
@@ -30,6 +31,17 @@ class ProfileController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'account-number', 'payment', 'score', 'history', 'word', 'water-metering'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'accountNumber', 'payment', 'score', 'history', 'word', 'waterMetering'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -85,7 +97,6 @@ class ProfileController extends Controller
         ]);
     }
 
-
     public function actionAccountNumber($id)
     {
         $number = ScoreMetering::find()->where(['id' => $id])->one();
@@ -106,7 +117,6 @@ class ProfileController extends Controller
         ]);
 
     }
-
 
     public function actionMeter()
     {
@@ -195,7 +205,6 @@ class ProfileController extends Controller
 
     }
 
-
     public function actionScore($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
@@ -234,7 +243,6 @@ class ProfileController extends Controller
         ]);
 
     }
-
 
     public function actionWord($id)
     {
