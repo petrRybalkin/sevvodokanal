@@ -119,9 +119,10 @@ class ClientController extends Controller
      */
     public function actionDelete($id)
     {
-       $model =  $this->findModel($id);
-        AdminLog::addAdminAction( null, "Удаление абонента $model->username");
-        $model->delete();
+        $model = $this->findModel($id);
+        $model->status = User::STATUS_DELETED;
+        $model->save();
+        AdminLog::addAdminAction(null, "Удаление абонента $model->username");
         return $this->redirect(['index']);
     }
 

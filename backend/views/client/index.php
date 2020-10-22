@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Client', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Додати абонента', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -24,15 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'username',
             //'auth_key',
             //'password_hash',
             //'password_reset_token',
             'phone',
             'email:email',
-            'status',
-            'created_at',
+            [
+                'attribute' => 'status',
+                'content' => function ($data) {
+                    return $data->statusLabel;
+                }
+            ],
+            [
+                'attribute' => 'created_at',
+                'content' => function ($data) {
+                    return Yii::$app->formatter->asDate($data->created_at, 'php:d.m.Y H:i');
+                }
+            ],
+//            'created_at:datetime',
             //'updated_at',
 
             //['class' => 'yii\grid\ActionColumn'],
@@ -47,14 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                     'delete' => function ($url, User $model) {
-                        return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/client/delete', 'id' => $model->id], [
-                            'title' => 'Delete',
-                            'class' => 'btn btn-danger',
-                            'data' => [
-                                'confirm' => 'Вы уверены что хотите удалить этого абонента?',
-                                'method' => 'post',
-                            ],
-                        ]);
+                        if ($model->status !== User::STATUS_DELETED) {
+                            return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/client/delete', 'id' => $model->id], [
+                                'title' => 'Delete',
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => 'Вы уверены что хотите удалить этого абонента?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        }
+
                     }
                 ],
                 'options' => [

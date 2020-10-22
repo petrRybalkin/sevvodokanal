@@ -67,6 +67,37 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'status' => 'Статус',
+            'username' => "Ім'я",
+            'email' => 'Емейл',
+            'phone' => 'Телефон',
+            'created_at' => 'Дата',
+            'role' => 'Роль',
+        ];
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function statusList()
+    {
+        return [
+            static::STATUS_DELETED => 'Видалений',
+            static::STATUS_INACTIVE => 'Не активний',
+            static::STATUS_ACTIVE => 'Активний',
+        ];
+    }
+
+    public function getStatusLabel($default = 'Не активний')
+    {
+        return ArrayHelper::getValue(self::statusList(), $this->status, $default);
+    }
+
     /**
      * {@inheritdoc}
      */
