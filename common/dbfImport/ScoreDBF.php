@@ -89,17 +89,18 @@ class ScoreDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $item) {
+        foreach ($this->parser() as $k => $item) {
             $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
 
             $arr = array_combine($this->tableFaild(), $item);
             if ($scoreExist) {
                 $scoreExist->updateAttributes($arr);
+                print_r('update');
             } else {
                 $score = new ScoreMetering();
                 $score->setAttributes($arr);
                 if (!$score->save()) {
-                    $error .= Json::encode($score->getErrors());
+                    $error .= 'строка - ' . $k. Json::encode($score->getErrors());
                     continue;
                 } else {
                     print_r('ok');

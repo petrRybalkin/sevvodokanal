@@ -60,11 +60,19 @@ class ProfileController extends Controller
         $model = new ScoreForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-score-button')) {
-                if (ClientMap::find()->where(['client_id' => Yii::$app->user->getId()])->count() == 5) {
+                $clientMap = ClientMap::find()->where(['client_id' => Yii::$app->user->getId()]);
+                if ($clientMap->count() == 5) {
                     Yii::$app->session->setFlash('danger', 'Можна додати не бiльш 5 особових рахункiв.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
+
                 $score = ScoreMetering::find()->where(['account_number' => $model->account_number]);
+
+                if($clientMap->andWhere(['score_id' => $score->one()->id])->exists()){
+                    Yii::$app->session->setFlash('danger', 'Цей рахунок вже додано.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+
                 if ($model->act_number) {
                     $score->andWhere(['act_number' => $model->act_number]);
                 } else {
@@ -72,8 +80,8 @@ class ProfileController extends Controller
                 }
                 if ($model->sum) {
                     $sum = Payment::find()->where(['account_number' => $model->account_number])->one();
-                    if (str_replace(',', '.', $model->sum) + 0 !== $sum->sum) {
-                        Yii::$app->session->setFlash('success', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
+                    if (!$sum || str_replace(',', '.', $model->sum) + 0 !== $sum->sum) {
+                        $model->addError('sum', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
                     }
                 } else {
                     $model->addError('sum', 'Заполните поле');

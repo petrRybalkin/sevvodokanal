@@ -12,7 +12,7 @@ use yii\db\Expression;
  * @property string|null $account_number
  * @property float|null $sum
  * @property string|null $payment_date
- * @property string|null $pr
+ * @property int|null $pr
  */
 class Payment extends \yii\db\ActiveRecord
 {
@@ -30,10 +30,10 @@ class Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sum'], 'number'],
-            [['payment_date'], 'safe'],
-            [['account_number'], 'string', 'max' => 13],
-            [['pr'], 'string', 'max' => 10],
+            [['sum'], 'safe'],
+            [['payment_date', 'account_number'], 'safe'],
+//            [['account_number'], 'string', 'max' => 13],
+            [['pr'], 'safe'],
         ];
     }
 

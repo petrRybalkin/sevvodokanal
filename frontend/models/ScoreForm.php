@@ -46,4 +46,15 @@ class ScoreForm extends Model
     }
 
 
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'sum'     => 'Сума',
+            'account_number'  => 'Особовий рахунок',
+            'act_number'     => 'Номер акту',
+        ];
+    }
 }

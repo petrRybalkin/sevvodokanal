@@ -14,7 +14,7 @@ class PaymentDBF extends BaseDBF
         return [
             'lic_schet' => [
                 'field' => 'account_number',
-                'type' => static::TYPE_NUMERIC,
+                'type' => static::TYPE_STRING,
                 'title' => 'Номер особового рахунку',
             ],
             'summa' => [
@@ -29,7 +29,7 @@ class PaymentDBF extends BaseDBF
             ],
             'pr' => [
                 'field' => 'pr',
-                'type' => static::TYPE_NUMERIC,
+                'type' => static::TYPE_STRING,
                 'title' => '',
             ],
 
@@ -50,12 +50,12 @@ class PaymentDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $item) {
+        foreach ($this->parser() as $k => $item) {
             $arr =  array_combine($this->tableFaild() ,$item);
             $pay = new Payment();
             $pay->setAttributes($arr);
-            if (!$pay->save()) {
-                $error .= Json::encode($pay->getErrors());
+            if (!$pay->save(false)) {
+                $error .= 'строка - '.$k.Json::encode($pay->getErrors());
                 continue;
             } else {
                 print_r('ok');

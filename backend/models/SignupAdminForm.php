@@ -69,9 +69,9 @@ class SignupAdminForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-        //return $user->save() && $this->sendEmail($user);
+        return $user->save() && $this->sendEmail($user);
 
-        return $user->save();
+//        return $user->save();
     }
 
     /**
@@ -87,9 +87,9 @@ class SignupAdminForm extends Model
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom(Yii::$app->params['senderEmail'] )
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Регистраця администратора ' . Yii::$app->params['senderName'])
             ->send();
     }
 }

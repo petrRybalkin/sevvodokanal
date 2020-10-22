@@ -42,23 +42,7 @@ class ScoreMetering extends \yii\db\ActiveRecord
             [['tariff_for_water', 'tariff_for_stocks', 'total_tariff'], 'number'],
             [['account_number'], 'string', 'max' => 13],
             [['name_of_the_tenant', 'address', 'norm', 'type_of_housing', 'sum'], 'string', 'max' => 255],
-//            [['account_number'], 'exist', 'targetClass' => ScoreMetering::class,
-//                'targetAttribute' => ['account_number' => 'account_number'], 'message' => 'Немає такого особового рахунку
-//                - швидше за все, Ви вводите некоректно номер особового рахунку.'],
-//            [['act_number'], 'exist', 'targetClass' => ScoreMetering::class,
-//                'targetAttribute' => ['act_number' => 'act_number'], 'message' => '"Немає такого номера акта» - швидше за все, Ви вводите некоректно номер акта.'],
             [['account_number'], 'required'],
-//            [['act_number'], 'required', 'when' => function ($model) {
-//                return $model->sum == '';
-//            }, 'whenClient' => "function (attribute, value) {
-//        return $('#scoremetering-sum').val() == '';
-//    }"],
-//            [['sum'], 'required', 'when' => function ($model) {
-//                return $model->act_number == '';
-//            }, 'whenClient' => "function (attribute, value) {
-//        return $('#scoremetering-act_number').val() == '';
-//    }"],
-
 
         ];
     }
