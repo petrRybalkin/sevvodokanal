@@ -75,17 +75,15 @@ class ProfileController extends Controller
 
                 if ($model->act_number) {
                     $score->andWhere(['act_number' => $model->act_number]);
-                } else {
-                    $model->addError('act_number', 'Заполните поле');
                 }
                 if ($model->sum) {
-                    $sum = Payment::find()->where(['account_number' => $model->account_number])->one();
+                    $sum = Payment::find()->where(['account_number' => $model->account_number])->orderBy(['id' => SORT_DESC])->one();
                     if (!$sum || str_replace(',', '.', $model->sum) + 0 !== $sum->sum) {
-                        $model->addError('sum', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
+                        Yii::$app->session->setFlash('danger', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
+                        return $this->redirect(Yii::$app->request->referrer);
                     }
-                } else {
-                    $model->addError('sum', 'Заполните поле');
                 }
+
                 if ($score = $score->one()) {
                     ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
                 }
