@@ -27,24 +27,36 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'id',
             [
                 'attribute' => 'admin_id',
-//                'format' => 'raw',
                 'value' => function (FilesLog $model) {
-                    return $model->admin ? $model->admin->username: '';
+                    return $model->admin ? $model->admin->username : '';
                 }
             ],
 //            'file',
 //            'action',
-            'message:ntext',
+            [
+                'attribute' => 'message',
+                'format' => 'raw',
+                'value' => function (FilesLog $model) {
+                    return \yii\helpers\StringHelper::truncate($model->message, 500, '...');
+                }
+            ],
             [
                 'attribute' => 'created_at',
-//                'format' => 'raw',
                 'value' => function (FilesLog $model) {
                     return Yii::$app->formatter->asDate($model->created_at, 'php: d.m.Y H:i:s');
                 }
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('Просмотр', ['/files-log/view', 'id' => $model->id], [
+                            'title' => 'view',
+                        ]);
+                    },
+                ],
+            ]]
     ]); ?>
 
 
