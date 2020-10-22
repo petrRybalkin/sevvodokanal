@@ -25,16 +25,34 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'username',
             //'auth_key',
             //'password_hash',
             //'password_reset_token',
             'email:email',
             'status',
-            'role_id',
-            'created_at',
-            'updated_at',
+//            'role_id',
+//            [
+//                'attribute' => 'role_id',
+//                'content' => function ($data) {
+//                    return  \yii\helpers\ArrayHelper::getValue(\backend\models\Roles::enumCategory(), $data->role_id,'-');
+//                }
+//            ],
+            [
+                'attribute' => 'created_at',
+                'content' => function ($data) {
+                    return Yii::$app->formatter->asDate($data->created_at, 'php:d.m.Y H:i');
+                }
+            ],
+            [
+                'attribute' => 'updated_at',
+                'content' => function ($data) {
+                    return Yii::$app->formatter->asDate($data->updated_at, 'php:d.m.Y H:i');
+                }
+            ],
+//            'created_at',
+//            'updated_at',
             //'verification_token',
 
             //['class' => 'yii\grid\ActionColumn'],

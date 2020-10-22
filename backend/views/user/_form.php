@@ -14,7 +14,7 @@ use backend\models\Roles;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(\common\models\Admin::statusList())?>
 
     <?= $form->field($model, 'username')->textInput() ?>
 
