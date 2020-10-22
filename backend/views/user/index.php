@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password_hash',
             //'password_reset_token',
             'email:email',
-            'status',
+            [
+                'attribute' => 'status',
+                'content' => function ($data) {
+                    return $data->statusLabel;
+                }
+            ],
 //            'role_id',
 //            [
 //                'attribute' => 'role_id',
