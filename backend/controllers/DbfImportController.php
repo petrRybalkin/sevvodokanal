@@ -12,6 +12,7 @@ use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
 use common\queue\WriteTableJob;
+use XBase\Table;
 use XBase\WritableTable;
 use Yii;
 use yii\base\Theme;
@@ -254,7 +255,7 @@ class DbfImportController extends Controller
             Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
         }
 
-        $table = new WritableTable($path);
+        $table = new WritableTable($path, null, 'CP1251');
         $table->openWrite();
 
         foreach ($model->each(10) as $item) {
@@ -268,7 +269,7 @@ class DbfImportController extends Controller
             $record = $table->appendRecord();
             $record->lic_schet = $item->account_number;
             $record->regn = $item->score ? $item->score->act_number : 0;
-            $record->fp = $item->score ? $item->score->name_of_the_tenant : '';
+            $record->fp = $item->score ?  $item->score->name_of_the_tenant: '';
             $record->nh1 = $item->water ? $item->water->water_metering_first : 0;
             $record->nh2 = $item->water ? $item->water->water_metering_second : 0;
             $record->np = $item->water ? $item->water->watering_number : 0;
