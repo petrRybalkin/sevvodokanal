@@ -126,9 +126,6 @@ use common\models\User;
 <!--                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>-->
 <!--            </div>-->
 <!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--            --><?//= Html::a('<i class="fas fa-sign-out-alt"></i>', ['site/logout'], ['data-method' => 'post', 'class' => 'nav-link']) ?>
-<!--        </li>-->
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
