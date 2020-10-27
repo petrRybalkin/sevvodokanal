@@ -122,7 +122,7 @@ class PageController extends Controller
         if (($model = Page::findOne($id)) !== null && $model->active !== Page::STATUS_INACTIVE) {
             return $model;
         } else {
-            throw new NotFoundHttpException('Указанная страница не существует.');
+            throw new NotFoundHttpException('Зазначена сторінка не існує.');
         }
 
         //throw new NotFoundHttpException('The requested page does not exist.');

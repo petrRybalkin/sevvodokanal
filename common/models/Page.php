@@ -23,6 +23,8 @@ use yii\helpers\ArrayHelper;
  * @property int $active
  * @property int|null $sidebar
  * @property int|null $sort_sidebar
+ * @property int|null $sort_footer
+ * @property int|null $sort_main_menu
  * @property int|null $main_menu
  * @property int|null $footer
  * @property int|null $parent_page
@@ -57,7 +59,7 @@ class Page extends \yii\db\ActiveRecord
         return [
             [['short_description', 'description'], 'string'],
             [['active', 'sidebar', 'main_menu', 'footer'], 'integer'],
-            [['parent_page', 'sort_sidebar'], 'integer'],
+            [['parent_page', 'sort_sidebar', 'sort_footer', 'sort_main_menu'], 'integer'],
             [['title', 'img', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
             [['create_utime', 'update_utime'], 'safe'],
         ];
@@ -78,7 +80,9 @@ class Page extends \yii\db\ActiveRecord
             'active' => 'Активная',
             'main_menu' => 'Показывать в главном меню',
             'sidebar' => 'Показывать в сайдбаре',
-            'sort_sidebar' => 'Приоритет',
+            'sort_sidebar' => 'Приоритет в сайдбаре',
+            'sort_footer' => 'Приоритет в подвале',
+            'sort_main_menu' => 'Приоритет в главном меню',
             'footer' => 'Показать в футере',
             'parent_page' => 'Родительская',
             'seoDescription' => 'Seo Description',
@@ -342,7 +346,8 @@ class Page extends \yii\db\ActiveRecord
     public static function getMenus()
     {
         return self::find()
-            ->where(['active' => 1, 'main_menu' => 1]);
+            ->where(['active' => 1, 'main_menu' => 1])
+            ->orderBy('sort_main_menu ASC');
     }
 
     /**
@@ -350,7 +355,9 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function getInfo()
     {
-        return self::find()->where(['parent_page' => 1, 'active' => 1, 'main_menu' => 1]);
+        return self::find()
+            ->where(['parent_page' => 1, 'active' => 1, 'main_menu' => 1])
+            ->orderBy('sort_main_menu ASC');
     }
 
     /**
@@ -358,7 +365,9 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function getAbout()
     {
-        return self::find()->where(['parent_page' => 2, 'active' => 1, 'main_menu' => 1]);
+        return self::find()
+            ->where(['parent_page' => 2, 'active' => 1, 'main_menu' => 1])
+            ->orderBy('sort_main_menu ASC');
     }
 
     /**
@@ -366,7 +375,9 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function getFooterLeft()
     {
-        return self::find()->where(['active' => 1, 'footer' => 1]);
+        return self::find()
+            ->where(['active' => 1, 'footer' => 1])
+            ->orderBy('sort_footer ASC');
     }
 
     /**
@@ -374,7 +385,9 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function getFooterRight()
     {
-        return self::find()->where(['active' => 1, 'footer' => 2]);
+        return self::find()
+            ->where(['active' => 1, 'footer' => 2])
+            ->orderBy('sort_footer ASC');
     }
 
     /**
@@ -384,7 +397,7 @@ class Page extends \yii\db\ActiveRecord
     {
         return self::find()
             ->where(['active' => 1, 'sidebar' => 1])
-            ->orderBy('sort_sidebar DESC');
+            ->orderBy('sort_sidebar ASC');
     }
 
     /**
