@@ -42,7 +42,7 @@ use common\models\Category;
     <hr>
     <div class="row">
         <div class="col-md-4 col-sm-12">
-            <?= $form->field($model, 'footer')->radioList($items=['В левой колонке','В правой колонке','Не показывать']) ?>
+            <?= $form->field($model, 'footer')->radioList($items=['Не показывать','В левой колонке','В правой колонке']) ?>
         </div>
         <div class="col-md-8 col-sm-12">
             <?= $form->field($model, 'sort_footer')->textInput()->label('Приоритет (0 - выше, 0< - ниже)') ?>
