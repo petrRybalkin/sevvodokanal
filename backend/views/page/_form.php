@@ -27,7 +27,7 @@ use common\models\Category;
         </div>
         <div class="col-md-8 col-sm-12">
             <?= $form->field($model, 'parent_page')->dropDownList(Category::enumCategory()); ?>
-            <?= $form->field($model, 'sort_main_menu')->textInput()->label('Приоритет (0 - выше, 0< - ниже)') ?>
+            <?= $form->field($model, 'sort_main_menu')->textInput()->label('Приоритет (0 - выше(левее), 0< - ниже(правее))') ?>
         </div>
     </div>
     <hr>
