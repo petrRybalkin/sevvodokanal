@@ -12,7 +12,9 @@ use yii\helpers\Url; ?>
 $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])->orderBy(['id' => SORT_DESC])->one();
 $sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
   ?>
-    <p><b>особовий рахунок:  </b><?= $number->account_number ?></p>
+    <p><b>особовий рахунок:  </b><?= $number->account_number ?>
+
+    </p>
     <p><b> П.І.Б. власника:  </b><?= $number->name_of_the_tenant ?></p>
     <p><b>Адреса:  </b><?= $number->address ?></p>
     <p><b> Постачальник послуг:  </b> КП СЄВЄРОДОНЕЦЬКВОДОКАНАЛ</p>
