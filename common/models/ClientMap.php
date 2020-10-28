@@ -30,6 +30,7 @@ class ClientMap extends \yii\db\ActiveRecord
             [['client_id', 'score_id'], 'integer'],
             [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['client_id' => 'id']],
             [['score_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScoreMetering::className(), 'targetAttribute' => ['score_id' => 'id']],
+            [['score_id'], 'unique', 'message' => 'Цей рахунок вже використовується іншим абонентом.'],
         ];
     }
 
@@ -51,7 +52,10 @@ class ClientMap extends \yii\db\ActiveRecord
             $client_map = new ClientMap();
             $client_map->client_id = $client_id;
             $client_map->score_id = $score_id;
-            $client_map->save();
+            if(!$client_map->save()){
+                return $client_map->getErrors('score_id');
+            }
+            return true;
         }
     }
 

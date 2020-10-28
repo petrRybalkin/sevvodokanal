@@ -68,11 +68,14 @@ class ProfileController extends Controller
 
                 $score = ScoreMetering::find()->where(['account_number' => $model->account_number]);
 
-                if($clientMap->andWhere(['score_id' => $score->one()->id])->exists()){
+                if ($clientMap->andWhere(['score_id' => $score->one()->id])->exists()) {
                     Yii::$app->session->setFlash('danger', 'Цей рахунок вже додано.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
-
+                if (empty($model->act_number) && empty($model->sum)) {
+                    Yii::$app->session->setFlash('danger', 'Треба заповнити хоча б одне з полів "Номер акту" або "Сума".');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
                 if ($model->act_number) {
                     $score->andWhere(['act_number' => $model->act_number]);
                 }
@@ -85,7 +88,11 @@ class ProfileController extends Controller
                 }
 
                 if ($score = $score->one()) {
-                    ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
+                    $add = ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
+                    if ($add !== true) {
+                        Yii::$app->session->setFlash('danger', $add[0]);
+                        return $this->redirect(Yii::$app->request->referrer);
+                    }
                 }
                 Yii::$app->session->setFlash('success', 'Особовий рахунок додано.');
                 return $this->redirect(Yii::$app->request->referrer);
@@ -103,6 +110,22 @@ class ProfileController extends Controller
         ]);
     }
 
+
+    public function actionDeleteNumber($id)
+    {
+        $n = ClientMap::find()->where(['client_id' => Yii::$app->user->getId(), 'score_id' => $id])->one();
+        if (!$n->delete()) {
+            Yii::$app->session->setFlash('danger', 'Не вдалося видалити рахунок.');
+        }
+        Yii::$app->session->setFlash('success', 'Рахунок видалено.');
+        return $this->redirect(Yii::$app->request->referrer);
+
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionAccountNumber($id)
     {
         $number = ScoreMetering::find()->where(['id' => $id])->one();
@@ -112,6 +135,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionWaterMetering($id)
     {
         $number = ScoreMetering::find()->where(['id' => $id])->one();
@@ -124,6 +151,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @return array|string|Response
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionMeter()
     {
         $model = new IndicationForm();
@@ -132,14 +163,14 @@ class ProfileController extends Controller
                 $indication = IndicationsAndCharges::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
                 $score = ScoreMetering::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
 //                if ($indication && strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
-                    $indication->id = null;
-                    $indication->isNewRecord = true;
-                    $indication->updateAttributes([
-                        'previous_readings_first' => $indication->current_readings_first,
-                        'previous_readings_second' => $indication->current_readings_second,
-                        'previous_readings_watering' => $indication->current_readings_watering,
+                $indication->id = null;
+                $indication->isNewRecord = true;
+                $indication->updateAttributes([
+                    'previous_readings_first' => $indication->current_readings_first,
+                    'previous_readings_second' => $indication->current_readings_second,
+                    'previous_readings_watering' => $indication->current_readings_watering,
 
-                    ]);
+                ]);
 //                }
 
                 if (!$indication) {
@@ -169,26 +200,26 @@ class ProfileController extends Controller
                     ]);
                     $wm->updateAttributes(['previous_watering_readings' => (int)$model->meter3]);
                 }
-                $wc = ((int)$model->meter1 -(int)$indication->previous_readings_first)
-                    + ((int)$model->meter2-(int)$indication->previous_readings_second );
-                $watc = (int)$model->meter3 - (int)$indication->previous_readings_watering ;
+                $wc = ((int)$model->meter1 - (int)$indication->previous_readings_first)
+                    + ((int)$model->meter2 - (int)$indication->previous_readings_second);
+                $watc = (int)$model->meter3 - (int)$indication->previous_readings_watering;
                 $indication->updateAttributes([
                     'account_number' => $wm->account_number,
                     'month_year' => Yii::$app->formatter->asDate(('NOW'), 'php:Ym'),
                     'synchronization' => 1,
-                    'water_consumption' =>$wc ,
-                    'watering_consumption' =>$watc,
-                    'accruals' => ($wc + $watc) *$indication->total_tariff,
-                    'debt_end_month'=> (($indication->current_readings_first +
+                    'water_consumption' => $wc,
+                    'watering_consumption' => $watc,
+                    'accruals' => ($wc + $watc) * $indication->total_tariff,
+                    'debt_end_month' => (($indication->current_readings_first +
                                 $indication->current_readings_second +
                                 $indication->current_readings_watering -
                                 $indication->previous_readings_first -
                                 $indication->previous_readings_second -
                                 $indication->previous_readings_watering) * $score->tariff_for_water) +
-            (($indication->current_readings_first +
-                    $indication->current_readings_second -
-                    $indication->previous_readings_first -
-                    $indication->previous_readings_second) * $score->tariff_for_stocks)
+                        (($indication->current_readings_first +
+                                $indication->current_readings_second -
+                                $indication->previous_readings_first -
+                                $indication->previous_readings_second) * $score->tariff_for_stocks)
                 ]);
                 $wm->updateAttributes(['date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d')]);
                 if (!$indication->save() || !$wm->save()) {
@@ -211,6 +242,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionScore($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
@@ -227,6 +262,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionPayment($id)
     {
         return $this->render('payment', [
@@ -234,6 +273,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionHistory($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
@@ -250,6 +293,11 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionWord($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
@@ -302,7 +350,7 @@ class ProfileController extends Controller
                     $indication->accruals,
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
                     Payment::getLgota($score->account_number, 3) ?: '-',
-                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ,
+                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
                     'perescore',
                     Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
                     $indication->accruals -
