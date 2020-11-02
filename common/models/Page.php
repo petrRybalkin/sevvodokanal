@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\Category;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -398,6 +399,55 @@ class Page extends \yii\db\ActiveRecord
         return self::find()
             ->where(['active' => 1, 'sidebar' => 1])
             ->orderBy('sort_sidebar ASC');
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function backendSearch($params, $condition = null)
+    {
+        if (isset($condition)) {
+            $query = $this::find()
+                ->orderBy('create_utime DESC')
+                ->where($condition);
+        } else {
+            $query = $this::find()
+                ->orderBy('create_utime DESC');
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $dataProvider->sort->attributes['title'] = [
+            'asc' => ['title' => SORT_ASC],
+            'desc' => ['title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id'                    => $this->id,
+            'title'                 => $this->title,
+            'active'                => $this->active,
+            'short_description'     => $this->short_description,
+            'create_utime'          => $this->create_utime,
+            'update_utime'          => $this->update_utime,
+            'description'           => $this->description,
+            'img'                   => $this->img,
+            'seoTitle'              => $this->seoTitle,
+            'seoDescription'        => $this->seoDescription,
+
+        ]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
+        return $dataProvider;
     }
 
     /**

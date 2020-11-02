@@ -10,7 +10,7 @@ use common\models\Article;
 /**
  * ArticleSearch represents the model behind the search form about `common\models\Article`.
  */
-class ArticleSearch extends \yii\db\ActiveRecord
+class ArticleSearch extends Article
 {
     /**
      * {@inheritdoc}
@@ -50,6 +50,55 @@ class ArticleSearch extends \yii\db\ActiveRecord
             'create_utime' => 'Create Utime',
             'update_utime' => 'Update Utime',
         ];
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function backendSearch($params, $condition = null)
+    {
+        if (isset($condition)) {
+            $query = Article::find()
+                ->orderBy('create_utime DESC')
+                ->where($condition);
+        } else {
+            $query = Article::find()
+                ->orderBy('create_utime DESC');
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $dataProvider->sort->attributes['title'] = [
+            'asc' => ['title' => SORT_ASC],
+            'desc' => ['title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id'                    => $this->id,
+            'title'                 => $this->title,
+            'active'                => $this->active,
+            'short_description'     => $this->short_description,
+            'create_utime'          => $this->create_utime,
+            'update_utime'          => $this->update_utime,
+            'description'           => $this->description,
+            'img'                   => $this->img,
+            'seoTitle'              => $this->seoTitle,
+            'seoDescription'        => $this->seoDescription,
+
+        ]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
+        return $dataProvider;
     }
 
     public function frontendSearch($params, $condition = null)

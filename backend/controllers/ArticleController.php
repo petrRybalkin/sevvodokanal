@@ -6,6 +6,7 @@ use backend\models\AdminLog;
 use yii\filters\AccessControl;
 use Yii;
 use common\models\Article;
+use common\models\ArticleSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -48,11 +49,19 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Article::find(),
-        ]);
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Article::find(),
+//        ]);
+//
+//        return $this->render('index', [
+//            'dataProvider' => $dataProvider,
+//        ]);
+
+        $searchModel = new ArticleSearch();
+        $dataProvider = $searchModel->backendSearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
