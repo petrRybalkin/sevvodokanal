@@ -18,11 +18,12 @@ use yii\helpers\Url;
 
 <?php
 /** @var \common\models\ScoreMetering $item */
-foreach ($clientScore as $item):
+
+foreach ($clientScore as $key => $item):
     ?>
-    <p>
+    <p class="flex">
         <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id]) ?>"><b>особовий
-                рахунок: </b><?= $item->account_number ?></a><br>
+                рахунок <?= $key + 1 ?>: </b><?= $item->account_number ?></a>&nbsp;
         <a href="<?= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>">
             <img src="/img/close.jpeg" alt="" width="20">
         </a>
@@ -30,7 +31,7 @@ foreach ($clientScore as $item):
     </p>
 <?php endforeach; ?>
 
-
+<?php if(count($clientScore) < 5) { ?>
 <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
@@ -75,11 +76,11 @@ foreach ($clientScore as $item):
         </div>
 
         <div class="mt-6">
-            <button type="submit" name="add-score-button" value="1"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+            <button type="submit" name="add-score-button" value="1" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
                 Додати
             </button>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php } ?>
