@@ -28,7 +28,7 @@ use yii\helpers\Url;
 <!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
 <!--                        <dt class="text-sm leading-5 font-medium text-gray-500">особовий рахунок --><?//= $key + 1 ?><!--:</dt>-->
 <!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1 flex">-->
-<!--                            <a href="<?//= Url::to(['/profile/account-number', 'id' => $item->id]) ?>">--><?//= $item->account_number ?><!--</a>-->
+<!--                            <a href="<?//= Url::to(['/profile/account-number', 'id' => $item->id]) ?>"><?//= $item->account_number ?></a>-->
 <!--                            <a href="<?//= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>"><img src="/img/close.jpeg" alt="" width="20"></a>-->
 <!--                        </dd>-->
 <!--                    </div>-->
@@ -83,7 +83,7 @@ use yii\helpers\Url;
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
-<!--                                    <div class="text-sm leading-5 text-gray-900">--><?//= $item->account_number ?><!--</div>-->
+<!--                                    <div class="text-sm leading-5 text-gray-900"><?//= $item->account_number ?></div>-->
                                     <div class="text-sm leading-5 text-gray-500"><?= $item->account_number ?></div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
