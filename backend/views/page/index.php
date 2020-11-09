@@ -28,8 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'create_utime',
-            'short_description:html',
+            //'short_description:html',
             [
                 'label' => 'Меню',
                 'attribute' => 'main_menu',
@@ -65,8 +64,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->getStatusTag(), ['update', 'id' => $model->id]);
                 }
             ],
-            'update_utime',
-
+            'create_utime',
+            //'update_utime',
 
             //['class' => 'yii\grid\ActionColumn'],
             [

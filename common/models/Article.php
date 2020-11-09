@@ -7,6 +7,8 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use common\components\ImageUploadBehavior;
+use DateTimeZone;
+use DateTime;
 
 /**
  * This is the model class for table "article".
@@ -143,13 +145,23 @@ class Article extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $time = date('Y-m-d H:i:s');
+        $currentTime = time();
+        $time = $this->timestampToDate($currentTime);
         if ($this->isNewRecord) {
             $this->create_utime = $time;
         }
 
         $this->update_utime = $time;
         return parent::beforeSave($insert);
+    }
+
+    protected function timestampToDate($timestamp, $format = 'Y-m-d H:i:s')
+    {
+        $tz = new DateTimeZone("Europe/Kiev");
+
+        $date = DateTime::createFromFormat('U', $timestamp)->setTimezone($tz)->format($format);
+
+        return $date;
     }
 
     /**

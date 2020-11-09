@@ -21,6 +21,9 @@ $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/admi
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <?php $this->beginBody() ?>

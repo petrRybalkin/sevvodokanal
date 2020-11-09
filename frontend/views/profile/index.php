@@ -7,30 +7,110 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Вашi особовi рахунки:</h3>
+        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+            В одному особистому кабінеті можливе додавання до п`яти особових рахунків.
+            Кожен особовий рахунок може містити до трьох лічильників.
+        </p>
+    </div>
+<!--    <div>-->
+<!--        <dl>-->
+<!--            --><?php
+//            /** @var \common\models\ScoreMetering $item */
+//            if(empty($clientScore)) { ?>
+<!--                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">-->
+<!--                    <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">немає даних</p>-->
+<!--                </div>-->
+<!--            --><?php //} else {
+//                foreach ($clientScore as $key => $item): ?>
+<!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
+<!--                        <dt class="text-sm leading-5 font-medium text-gray-500">особовий рахунок --><?//= $key + 1 ?><!--:</dt>-->
+<!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1 flex">-->
+<!--                            <a href="<?//= Url::to(['/profile/account-number', 'id' => $item->id]) ?>"><?//= $item->account_number ?></a>-->
+<!--                            <a href="<?//= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>"><img src="/img/close.jpeg" alt="" width="20"></a>-->
+<!--                        </dd>-->
+<!--                    </div>-->
+<!--                --><?php //endforeach; } ?>
+<!--        </dl>-->
+<!--    </div>-->
+</div>
+<br>
 
+<div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                Номер
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                Статус
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                            <th class="px-6 py-3 bg-gray-50"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
 
-<p>В одному особистому кабінеті можливе додавання до п`яти особових рахунків.
-    Кожен особовий рахунок може містити до трьох лічильників. </p>
+                    <?php
+                    /** @var \common\models\ScoreMetering $item */
+                    if(empty($clientScore)) { ?>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap">
+                                <div class="flex items-center">
+                                    <div class="ml-4">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">немає даних</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } else {
+                        foreach ($clientScore as $key => $item): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-no-wrap">
+                                    <div class="flex items-center">
+                                        <div class="ml-4">
+                                            <div class="text-sm leading-5 font-medium text-gray-900">
+                                                Особовий рахунок #<?= $key + 1 ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap">
+<!--                                    <div class="text-sm leading-5 text-gray-900"><?//= $item->account_number ?></div>-->
+                                    <div class="text-sm leading-5 text-gray-500"><?= $item->account_number ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              Активный
+                            </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                    <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id]) ?>" class="text-indigo-600 hover:text-indigo-900">Смотреть</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<p>
-    Вашi особовi рахунки:
-</p>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                    <!--                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>-->
+                                    <a href="<?= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>" class="text-indigo-600 hover:text-indigo-900"><img src="/img/close.jpeg" alt="" width="20"></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; } ?>
 
-<?php
-/** @var \common\models\ScoreMetering $item */
-foreach ($clientScore as $item):
-    ?>
-    <p>
-        <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id]) ?>"><b>особовий
-                рахунок: </b><?= $item->account_number ?></a><br>
-        <a href="<?= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>">
-            <img src="/img/close.jpeg" alt="" width="20">
-        </a>
+                    <!-- More rows... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-    </p>
-<?php endforeach; ?>
-
-
+<?php if(count($clientScore) < 5) { ?>
 <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
@@ -75,11 +155,11 @@ foreach ($clientScore as $item):
         </div>
 
         <div class="mt-6">
-            <button type="submit" name="add-score-button" value="1"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+            <button type="submit" name="add-score-button" value="1" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
                 Додати
             </button>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php } ?>

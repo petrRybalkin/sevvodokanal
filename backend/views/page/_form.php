@@ -9,19 +9,46 @@ use common\models\Category;
 /* @var $model common\models\Page */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    #page-footer label{display:block}
+</style>
 <div class="page-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'active')->checkbox() ?>
-    <?= $form->field($model, 'main_menu')->checkbox() ?>
-    <?= $form->field($model, 'sidebar')->checkbox() ?>
-    <?= $form->field($model, 'sort_sidebar')->textInput()->label('Приоритет(от 0 до 10) (чем больше значение тем выше страница)') ?>
-    <?= $form->field($model, 'footer')->radioList($items=['Не показывать ','В левой колонке ','В правой колонке ']) ?>
 
-    <?= $form->field($model, 'parent_page')->dropDownList(Category::enumCategory()); ?>
 
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <?= $form->field($model, 'main_menu')->checkbox() ?>
+
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <?= $form->field($model, 'parent_page')->dropDownList(Category::enumCategory()); ?>
+            <?= $form->field($model, 'sort_main_menu')->textInput()->label('Приоритет (0 - выше(левее), 0< - ниже(правее))') ?>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <?= $form->field($model, 'sidebar')->checkbox() ?>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <?= $form->field($model, 'sort_sidebar')->textInput()->label('Приоритет (0 - выше, 0< - ниже)') ?>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <?= $form->field($model, 'footer')->radioList($items=['Не показывать','В левой колонке','В правой колонке']) ?>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <?= $form->field($model, 'sort_footer')->textInput()->label('Приоритет (0 - выше, 0< - ниже)') ?>
+        </div>
+    </div>
+    <hr>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'short_description')->widget(CKEditor::className(),[

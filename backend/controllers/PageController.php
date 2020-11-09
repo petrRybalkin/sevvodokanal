@@ -48,11 +48,19 @@ class PageController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Page::find(),
-        ]);
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Page::find(),
+//        ]);
+//
+//        return $this->render('index', [
+//            'dataProvider' => $dataProvider,
+//        ]);
+
+        $searchModel = new Page();
+        $dataProvider = $searchModel->backendSearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
