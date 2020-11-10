@@ -6,6 +6,9 @@ use frontend\models\IndicationForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+$this->title = 'Передача показань - Особистий кабінет';
+$this->params['breadcrumbs'][] = $this->title;
+
 $vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
 if ($vodomers): ?>
 <!--    Розділ “Передача показань”:-->

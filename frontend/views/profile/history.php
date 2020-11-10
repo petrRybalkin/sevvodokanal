@@ -4,7 +4,11 @@
 /** @var \common\models\ScoreMetering $score */
 /** @var \common\models\IndicationsAndCharges $indication */
 
-use common\models\Payment; ?>
+use common\models\Payment;
+
+$this->title = 'Нарахування та передані показання - Особистий кабінет';
+$this->params['breadcrumbs'][] = $this->title;
+?>
 
 Розділ “Нарахування та передані показання”:
 1. Номер особового рахунку. <?= $score->account_number?>
