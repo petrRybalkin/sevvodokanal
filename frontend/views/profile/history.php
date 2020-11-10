@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    $item->previous_readings_second) * $score->tariff_for_stocks)
 //            ?>
 <div>
-    <h3 class="mt-2 text-center text-2xl leading-4 font-extrabold text-gray-900">Таблиця нарахувань</h3>
+    <h3 class="mt-2 mb-4 text-center text-2xl leading-4 font-extrabold text-gray-900">Таблиця нарахувань</h3>
 <!--    <h3 class="text-lg leading-6 font-medium text-gray-900">Таблиця нарахувань</h3>-->
 </div>
 <div class="flex flex-col">
