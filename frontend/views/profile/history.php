@@ -39,8 +39,7 @@ use common\models\Payment; ?>
 <table class="iksweb">
     <thead>
     <tr>
-        <td rowspan="2">Місяць,
-            рік</td>
+        <td rowspan="2">Місяць, рік</td>
         <td rowspan="2">Кіл.
             осіб</td>
         <td rowspan="2">Сальдо на початок місяця,
