@@ -37,6 +37,19 @@ class User extends ActiveRecord implements IdentityInterface
     public $password;
     public $visible = false;
 
+    public static function enumStatus($status = null)
+    {
+        static $enum;
+        if (!isset($enum)) {
+            $enum = [
+                self::STATUS_DELETED => 'Видалений',
+                self::STATUS_INACTIVE => 'Не активний',
+                self::STATUS_ACTIVE => 'Активний',
+            ];
+            asort($enum);
+        }
+        return $status === null ? $enum : ArrayHelper::getValue($enum, $status, '');
+    }
 
     /**
      * {@inheritdoc}
@@ -76,7 +89,7 @@ class User extends ActiveRecord implements IdentityInterface
             'email' => 'Емейл',
             'phone' => 'Телефон',
             'created_at' => 'Дата',
-            'role' => 'Роль',
+            //'role' => 'Роль',
         ];
     }
 
