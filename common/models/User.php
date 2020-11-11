@@ -278,4 +278,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(AdminLog::className(), ['admin_id' => 'id']);
     }
+
+    public function getClientMap()
+    {
+        return $this->hasMany(ClientMap::className(), ['client_id' => 'id']);
+    }
 }

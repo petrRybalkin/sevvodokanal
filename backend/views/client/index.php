@@ -81,9 +81,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     },
                     'score' => function ($url, User $model) {
-                        return Html::a('Рахунки', ['/client/score', 'id' => $model->id], [
-                            'title' => 'Рахунки',
-                        ]);
+                        if ($model->clientMap) {
+                            return Html::a('Рахунки', ['/client/score', 'id' => $model->id], [
+                                'title' => 'Рахунки',
+                            ]);
+                        }
+
                     }
                 ],
                 'options' => [
