@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use common\components\ImageUploadBehavior;
 use DateTimeZone;
 use DateTime;
 
@@ -19,6 +20,7 @@ use DateTime;
  * @property string|null $img
  * @property string|null $seoTitle
  * @property string|null $seoDescription
+ * @property string|null $pdf
  * @property int|null $active
  * @property int|null $create_utime
  * @property int|null $update_utime
@@ -35,6 +37,29 @@ class Article extends \yii\db\ActiveRecord
         return 'article';
     }
 
+    public function behaviors()
+    {
+        return [
+            'thumb' => [
+                'class' => ImageUploadBehavior::class,
+                'attribute' => 'img',
+                'thumbs' => [
+                    'thumb' => ['width' => 300, 'height' => 200],
+                ],
+                'filePath' => '@webroot/news/img/[[pk]].[[extension]]',
+                'fileUrl' => '/news/img/[[pk]].[[extension]]',
+                'thumbPath' => '@webroot/news/img/[[profile]]_[[pk]].[[extension]]',
+                'thumbUrl' => '/news/img/[[profile]]_[[pk]].[[extension]]',
+            ],
+            [
+                'class' => ImageUploadBehavior::class,
+                'attribute' => 'pdf',
+                'filePath' => '@webroot/news/pdf/[[pk]].[[extension]]',
+                'fileUrl' => '/news/pdf/[[pk]].[[extension]]',
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -43,8 +68,10 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['short_description', 'description'], 'string'],
             [['active'], 'integer'],
-            [['title', 'img', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
+            [['title', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
             [['create_utime', 'update_utime'], 'safe'],
+            [['img'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
+            [['pdf'], 'file', 'extensions' => 'pdf']
         ];
     }
 
@@ -58,7 +85,8 @@ class Article extends \yii\db\ActiveRecord
             'title' => 'Заголовок',
             'short_description' => 'Короткое описание',
             'description' => 'Полный текст',
-            'img' => 'Img',
+            'img' => 'Фото',
+            'pdf' => 'Pdf файл',
             'seoTitle' => 'Seo Title',
             'seoDescription' => 'Seo Description',
             'active' => 'Активная',

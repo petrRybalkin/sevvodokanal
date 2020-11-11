@@ -86,16 +86,19 @@ class ProfileController extends Controller
                         return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
-
-                if ($score = $score->one()) {
-                    $add = ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
-                    if ($add !== true) {
-                        Yii::$app->session->setFlash('danger', $add[0]);
-                        return $this->redirect(Yii::$app->request->referrer);
-                    }
+                if (!$score = $score->one()) {
+                    Yii::$app->session->setFlash('danger', 'Перевірте введені дані.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+                $add = ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
+                if ($add !== true) {
+                    Yii::$app->session->setFlash('danger', $add[0]);
+                    return $this->redirect(Yii::$app->request->referrer);
                 }
                 Yii::$app->session->setFlash('success', 'Особовий рахунок додано.');
                 return $this->redirect(Yii::$app->request->referrer);
+
+
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($model);
@@ -266,22 +269,11 @@ class ProfileController extends Controller
      * @param $id
      * @return string
      */
-    public function actionPayment($id)
-    {
-        return $this->render('payment', [
-        ]);
-
-    }
-
-    /**
-     * @param $id
-     * @return string
-     */
     public function actionHistory($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
 
 
         return $this->render('history', [
@@ -339,7 +331,7 @@ class ProfileController extends Controller
                     $score->act_number,
                     $score->name_of_the_tenant,
                     $score->address,
-                    'norm',
+                    $score->norm,
                     $score->total_tariff,
                     $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
                     $indication->current_readings_watering - $indication->previous_readings_watering,
@@ -351,12 +343,12 @@ class ProfileController extends Controller
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
                     Payment::getLgota($score->account_number, 3) ?: '-',
                     Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
-                    'perescore',
+                    $indication->correction,
                     Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
                     $indication->accruals -
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
                         Payment::getLgota($score->account_number, 3),
-                    'total_payment'
+                    $indication->debt_end_month
 
                 ],
             ]));
@@ -364,11 +356,61 @@ class ProfileController extends Controller
         $startTime = time();
         while (!Yii::$app->queue->isDone($id)) {
             sleep(1);
-            if (time() - $startTime > 30) {
+            if (time() - $startTime > 100) {
                 return Yii::$app->session->setFlash('danger', 'Не вдалося сформувати документ');
             }
         }
         Yii::$app->response->sendFile($fullName);
         return Yii::$app->response->send();
+    }
+
+
+    /**
+     * @param $id
+     * @param ProfileController $profileController
+     * @return string
+     */
+    public function actionPayment($id)
+    {
+
+        $xml =
+            '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Transfer xmlns="http://debt.privatbank.ua/Transfer" interface="Debt" action="Presearch">
+	<Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Payer">
+		<Unit name="ls" value="0914102110970" />
+	</Data>
+</Transfer>';
+
+
+        $url = "https://next.privat24.ua/payments/form/";
+//        $url = "https://api.privatbank.ua/p24api/rest_fiz";form/{'token':'85d7538541314874e34920bd9d5abfedawkh6xft','personalAccount':'0914102110970'}
+
+        $post = [
+            'argstr' => "token:85d7538541314874e34920bd9d5abfedawkh6xft,personalAccount:0914102110970",
+        ];
+        $headers = array(
+            "Content-type: text/xml",
+            "Content-length: " . strlen($xml),
+            "Connection: close",
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, http_build_query($post));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+
+        $data = curl_exec($ch);
+        if (curl_errno($ch))
+            print curl_error($ch);
+        else
+            curl_close($ch);
+
+        return $this->render('payment', [
+        ]);
+
     }
 }

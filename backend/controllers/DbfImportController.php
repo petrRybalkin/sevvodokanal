@@ -84,7 +84,7 @@ class DbfImportController extends Controller
             ],
             'sort' => [
                 'attributes' => [
-                    'lic_schet', 'regn', 'fp', 'adres', 'norma', 'type', 'kol', 'tarif', 'tarifst',
+                    'lic_schet', 'regn', 'fp', 'adres', 'norma', 'type', 'kol', 'tarifv', 'tarifst',
                     'sumtarif'
                 ],
             ],

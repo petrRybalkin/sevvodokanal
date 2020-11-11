@@ -48,7 +48,7 @@ class ScoreDBF extends BaseDBF
                 'type' => static::TYPE_NUMERIC,
                 'title' => 'Кількість зареєстрованих осіб',
             ],
-            'tarif' => [
+            'tarifv' => [
                 'field' => 'tariff_for_water',
                 'type' => static::TYPE_FLOAT,
                 'title' => 'Тариф по воді',

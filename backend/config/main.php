@@ -14,6 +14,17 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'controllerMap' => [
+        'elfinder' => [
+            'class' => 'mihaildev\elfinder\PathController',
+            'access' => ['@'],
+            'root' => [
+                'path' => 'uploads/files',
+                'name' => 'Files',
+            ],
+
+        ]
+    ],
     'components' => [
 //        'view' => [
 //            'theme' => [

@@ -74,6 +74,6 @@ class WaterMetering extends \yii\db\ActiveRecord
     public static function getWaterMeteringInAccNum($account_number)
     {
 
-        return WaterMetering::find()->where(['account_number' => $account_number])->all();
+        return WaterMetering::find()->where(['account_number' => $account_number])->orderBy(['id'=>SORT_DESC])->one();
     }
 }

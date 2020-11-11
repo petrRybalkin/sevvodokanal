@@ -21,7 +21,7 @@ use common\models\User;
         <div class="flex mr-5 items-center justify-between md:h-12 sm:h-18">
             <div class="md:block md:w-3/4 sm:w-4/4">
                 <div class="md:flex items-baseline justify-start">
-                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">м.&nbsp;Северодонецк, вул.&nbsp;Богдана&nbsp;Лiщини,&nbsp;13
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"> м.&nbsp; Сєвєродонецк, вул.&nbsp; Богдана&nbsp; Лiщини, &nbsp;13
                     </p>
                     <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
                     </p>
