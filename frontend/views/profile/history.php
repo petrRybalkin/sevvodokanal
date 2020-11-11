@@ -122,8 +122,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->current_readings_watering?></td>
                             <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->current_readings_first + $item->current_readings_second
                                 - $item->previous_readings_first - $item->previous_readings_second?> </td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->total_tariff?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->accruals?></td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= str_replace(',', '.',Yii::$app->formatter->asDecimal( $item->total_tariff , 2) ) ?></td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->accruals ?></td>
                             <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->correction ?></td>
                             <td class="px-6 py-4 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ?></td>
                             <td class="px-6 py-4 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 3) ?: '0 ' ?></td>

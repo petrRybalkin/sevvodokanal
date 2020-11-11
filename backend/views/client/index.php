@@ -39,10 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => [
                     'width' => 170,
                 ],
-                'content' => function($model) {
-                    if($model->status == User::STATUS_ACTIVE) return '<span class="label label-danger">' . User::enumStatus($model->status) . '</span>';
-                    if($model->status ==  User::STATUS_INACTIVE) return '<span class="label label-warning">' . User::enumStatus($model->status) . '</span>';
-                    if($model->status == User::STATUS_DELETED) return '<span class="label label-primary">' . User::enumStatus($model->status) . '</span>';
+                'content' => function ($model) {
+                    if ($model->status == User::STATUS_ACTIVE) return '<span class="label label-danger">' . User::enumStatus($model->status) . '</span>';
+                    if ($model->status == User::STATUS_INACTIVE) return '<span class="label label-warning">' . User::enumStatus($model->status) . '</span>';
+                    if ($model->status == User::STATUS_DELETED) return '<span class="label label-primary">' . User::enumStatus($model->status) . '</span>';
                 },
             ],
             [
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{score} {update} {delete}',
                 'buttons' => [
                     'update' => function ($url, User $model) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/client/update', 'id' => $model->id], [
@@ -79,7 +79,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]);
                         }
-
+                    },
+                    'score' => function ($url, User $model) {
+                        return Html::a('Рахунки', ['/client/score', 'id' => $model->id], [
+                            'title' => 'Рахунки',
+                        ]);
                     }
                 ],
                 'options' => [

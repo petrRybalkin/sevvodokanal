@@ -113,7 +113,12 @@ class ProfileController extends Controller
         ]);
     }
 
-
+    /**
+     * @param $id
+     * @return Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDeleteNumber($id)
     {
         $n = ClientMap::find()->where(['client_id' => Yii::$app->user->getId(), 'score_id' => $id])->one();
@@ -337,14 +342,14 @@ class ProfileController extends Controller
                     $indication->current_readings_watering - $indication->previous_readings_watering,
                     Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
                     $indication->privilege == 0 ? 'Нi' : "Так",
-                    Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
+                    date("m.Y", strtotime(substr($indication->month_year, 0, 4) . "-" . substr($indication->month_year, 4, 6) . '-01  first day of last month')),
                     $indication->debt_end_month,
                     $indication->accruals,
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
                     Payment::getLgota($score->account_number, 3) ?: '-',
                     Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
                     $indication->correction,
-                    Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
+                    date('01.m.Y') ,
                     $indication->accruals -
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
                         Payment::getLgota($score->account_number, 3),

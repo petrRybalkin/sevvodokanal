@@ -46,9 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <br>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Дані засобів обліку води:</h3>
-    </div>
+<!--    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">-->
+<!--        <h3 class="text-lg leading-6 font-medium text-gray-900">Дані засобів обліку води:</h3>-->
+<!--    </div>-->
     <div>
         <dl>
         <?php
@@ -123,11 +123,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <dl>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- норма водоспоживання:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">0,250 м3/добу/1 особу,  18,30 грн/м3</dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"> <?= $number->norm ?> </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- вид житла:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?=$number->type_of_housing ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $number->type_of_housing ?></dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- кількість зареєстрованих осіб:</dt>

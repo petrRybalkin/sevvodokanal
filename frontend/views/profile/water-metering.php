@@ -107,7 +107,7 @@ if ($vodomers): ?>
         </div>
     </div>
     <br>
-<?php endif; ?>
+
 
 <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
@@ -184,3 +184,8 @@ if ($vodomers): ?>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php else: ?>
+    <p style="color: red">
+        На цйому рахунку не зареєстровано лічильників.
+    </p>
+<?php endif; ?>

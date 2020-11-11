@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use backend\models\AdminLog;
 use common\models\ClientMap;
+use common\models\ScoreMetering;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
+use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -60,6 +62,45 @@ class ClientController extends Controller
     }
 
     /**
+     * @param $id
+     * @return string
+     */
+    public function actionScore($id)
+    {
+        $clientScore = ClientMap::find()->select('score_id')->where(['client_id' => $id])->column();
+
+        $model = new ActiveDataProvider([
+            'query' => ScoreMetering::find()->where(['id' => $clientScore]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('score', [
+            'model' => $model
+
+
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @param $score_id
+     * @return \yii\web\Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDeleteNumber($id,$score_id)
+    {
+        $n = ClientMap::find()->where(['client_id' => $id, 'score_id' => $score_id])->one();
+        if (!$n->delete()) {
+            Yii::$app->session->setFlash('danger', 'Не вдалося видалити рахунок.');
+        }
+        Yii::$app->session->setFlash('success', 'Рахунок видалено.');
+        return $this->redirect(['score', 'id' => $id]);
+    }
+
+    /**
      * Displays a single Client model.
      * @param integer $id
      * @return mixed
@@ -82,7 +123,7 @@ class ClientController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction( null, "Добавление абонента $model->username");
+            AdminLog::addAdminAction(null, "Добавление абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -103,7 +144,7 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction( null, "Редактирование абонента $model->username");
+            AdminLog::addAdminAction(null, "Редактирование абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
