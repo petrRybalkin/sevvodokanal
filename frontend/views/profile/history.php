@@ -13,15 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div>
         <dl>
-            <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Номер особового рахунку:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->account_number?></dd>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">П.І.Б.:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->name_of_the_tenant?></dd>
             </div>
-            <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Адреса:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->address?></dd>
             </div>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    $item->previous_readings_second) * $score->tariff_for_stocks)
 //            ?>
 <div>
-    <h3 class="mt-2 mb-4 text-center text-2xl leading-4 font-extrabold text-gray-900">Таблиця нарахувань</h3>
+    <h3 class="mt-2 mb-4 text-center text-1xl leading-3 font-bold text-gray-800">Таблиця нарахувань</h3>
 <!--    <h3 class="text-lg leading-6 font-medium text-gray-900">Таблиця нарахувань</h3>-->
 </div>
 <div class="flex flex-col">
@@ -81,29 +81,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="min-w-full divide-y divide-gray-200 history-table">
                     <thead>
                     <tr>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400" rowspan="2">Місяць, рік</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Кіл. осіб</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №1</td>
-                        <td class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №2</td>
-                        <td class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Обсяг водоспоживання, м³</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Тариф, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Нараховано, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Корекція, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сплачено, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;субсидій, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;пільг, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на кінець&nbsp;місяця, грн</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400" rowspan="2">Місяць, рік</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Кіл. осіб</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №1</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №2</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="2">Лічильник №3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Обсяг водоспоживання, м³</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Тариф, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Нараховано, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Корекція, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сплачено, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;субсидій, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;пільг, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на кінець&nbsp;місяця, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³</td>
                     </tr>
                     <tr>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попер. показання, м3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
-                        <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попер. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -111,25 +111,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach ($indication as $item):
                         $str = substr($item->month_year,0,4) .'-'.substr($item->month_year,4,6).'-01'; ?>
                         <tr>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDate($str,'php:m.Y')?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->count ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->debt_begin_month?> </td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->previous_readings_first?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->current_readings_first?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->previous_readings_second?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->current_readings_second?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->current_readings_watering?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->current_readings_first + $item->current_readings_second
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDate($str,'php:m.Y')?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->count ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->debt_begin_month?> </td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first + $item->current_readings_second
                                 - $item->previous_readings_first - $item->previous_readings_second?> </td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"> <?= $item->total_tariff?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->accruals?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->correction ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 3) ?: '0 ' ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2) ?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->debt_end_month?></td>
-                            <td class="px-6 py-4 whitespace-no-wrap text-center"><?= $item->medium_cubes?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->total_tariff?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->accruals?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->correction ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0' ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 3) ?: '0 ' ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2) ?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->debt_end_month?></td>
+                            <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes?></td>
                         </tr>
                         <?php endforeach; ?>
                     <!-- More rows... -->
