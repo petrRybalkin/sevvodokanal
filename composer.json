@@ -24,7 +24,8 @@
         "yiisoft/yii2-queue": "^2.3",
         "phpoffice/phpword": "dev-master",
         "mihaildev/yii2-elfinder": "*",
-        "yii-dream-team/yii2-upload-behavior": "*"
+        "yii-dream-team/yii2-upload-behavior": "*",
+        "lavrentiev/yii2-toastr": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

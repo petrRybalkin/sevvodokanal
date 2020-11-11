@@ -62,18 +62,18 @@ class ProfileController extends Controller
             if (Yii::$app->request->post('add-score-button')) {
                 $clientMap = ClientMap::find()->where(['client_id' => Yii::$app->user->getId()]);
                 if ($clientMap->count() == 5) {
-                    Yii::$app->session->setFlash('danger', 'Можна додати не бiльш 5 особових рахункiв.');
+                    Yii::$app->session->setFlash('error', 'Можна додати не бiльш 5 особових рахункiв.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
 
                 $score = ScoreMetering::find()->where(['account_number' => $model->account_number]);
 
                 if ($clientMap->andWhere(['score_id' => $score->one()->id])->exists()) {
-                    Yii::$app->session->setFlash('danger', 'Цей рахунок вже додано.');
+                    Yii::$app->session->setFlash('error', 'Цей рахунок вже додано.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 if (empty($model->act_number) && empty($model->sum)) {
-                    Yii::$app->session->setFlash('danger', 'Треба заповнити хоча б одне з полів "Номер акту" або "Сума".');
+                    Yii::$app->session->setFlash('error', 'Треба заповнити хоча б одне з полів "Номер акту" або "Сума".');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 if ($model->act_number) {
@@ -82,17 +82,17 @@ class ProfileController extends Controller
                 if ($model->sum) {
                     $sum = Payment::find()->where(['account_number' => $model->account_number])->orderBy(['id' => SORT_DESC])->one();
                     if (!$sum || str_replace(',', '.', $model->sum) + 0 !== $sum->sum) {
-                        Yii::$app->session->setFlash('danger', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
+                        Yii::$app->session->setFlash('error', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
                         return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
                 if (!$score = $score->one()) {
-                    Yii::$app->session->setFlash('danger', 'Перевірте введені дані.');
+                    Yii::$app->session->setFlash('error', 'Перевірте введені дані.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 $add = ClientMap::addClientMap(Yii::$app->user->getId(), $score->id);
                 if ($add !== true) {
-                    Yii::$app->session->setFlash('danger', $add[0]);
+                    Yii::$app->session->setFlash('error', $add[0]);
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 Yii::$app->session->setFlash('success', 'Особовий рахунок додано.');
@@ -123,7 +123,7 @@ class ProfileController extends Controller
     {
         $n = ClientMap::find()->where(['client_id' => Yii::$app->user->getId(), 'score_id' => $id])->one();
         if (!$n->delete()) {
-            Yii::$app->session->setFlash('danger', 'Не вдалося видалити рахунок.');
+            Yii::$app->session->setFlash('error', 'Не вдалося видалити рахунок.');
         }
         Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         return $this->redirect(Yii::$app->request->referrer);
@@ -231,7 +231,7 @@ class ProfileController extends Controller
                 ]);
                 $wm->updateAttributes(['date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d')]);
                 if (!$indication->save() || !$wm->save()) {
-                    Yii::$app->session->setFlash('danger', 'Показання не збереженi. Виникла помилка.');
+                    Yii::$app->session->setFlash('error', 'Показання не збереженi. Виникла помилка.');
                 } else {
                     Yii::$app->session->setFlash('success', 'Показання переданi.');
                 }
@@ -362,7 +362,7 @@ class ProfileController extends Controller
         while (!Yii::$app->queue->isDone($id)) {
             sleep(1);
             if (time() - $startTime > 100) {
-                return Yii::$app->session->setFlash('danger', 'Не вдалося сформувати документ');
+                return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
             }
         }
         Yii::$app->response->sendFile($fullName);
