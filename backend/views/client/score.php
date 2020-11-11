@@ -1,11 +1,7 @@
 <?php
 
 
-use common\models\User;
 use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\DetailView;
 
 ?>
     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">

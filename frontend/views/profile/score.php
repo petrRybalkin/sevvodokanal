@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div>
             <dl>
-            <?php if ($score && $indication && $metering): ?>
+            <?php if ($score && $indication ): ?>
                 <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Особовий рахунок №</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->account_number ?></dd>
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Дата наступної повірки засобу(ів) обліку води: </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y') ?></dd>
+                        <?= $metering ? Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'): '' ?></dd>
                 </div>
                 <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Наявність пільги:</dt>
