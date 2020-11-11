@@ -129,7 +129,7 @@ if ($vodomers): ?>
             if (ArrayHelper::getValue($vodomers, 'water_metering_first') !== null): ?>
                 <div>
                     <?= $form->field($model, 'number1')
-                        ->textInput(['value'=>$vodomers[0]['water_metering_first'] ? $vodomers[0]['water_metering_first'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                        ->textInput(['value'=>$vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                         ->label('Номер засобу обліку води №1 ', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                     ?>
                 </div>
@@ -145,7 +145,7 @@ if ($vodomers): ?>
 
                 <div>
                     <?= $form->field($model, 'number2')
-                        ->textInput(['value'=>$vodomers[0]['water_metering_second'] ? $vodomers[0]['water_metering_second'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                        ->textInput(['value'=>$vodomers['water_metering_second'] ? $vodomers['water_metering_second'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                         ->label('Номер засобу обліку води №2', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                     ?>
                 </div>
@@ -160,7 +160,7 @@ if ($vodomers): ?>
             if (ArrayHelper::getValue($vodomers, 'watering_number') !== null): ?>
                 <div>
                     <?= $form->field($model, 'number3')
-                        ->textInput(['value'=>$vodomers[0]['watering_number'] ? $vodomers[0]['watering_number'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                        ->textInput(['value'=>$vodomers['watering_number'] ? $vodomers['watering_number'] : '','type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                         ->label('Номер засобу обліку води №3', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                     ?>
                 </div>
