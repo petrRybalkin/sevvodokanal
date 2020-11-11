@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use common\models\User;
 
 /* @var $this yii\web\View */
+/* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Абоненты';
@@ -21,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -33,14 +35,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
-                'content' => function ($data) {
-                    return $data->statusLabel;
-                }
+                'filter' => User::enumStatus(),
+                'options' => [
+                    'width' => 170,
+                ],
+                'content' => function($model) {
+                    if($model->status == User::STATUS_ACTIVE) return '<span class="label label-danger">' . User::enumStatus($model->status) . '</span>';
+                    if($model->status ==  User::STATUS_INACTIVE) return '<span class="label label-warning">' . User::enumStatus($model->status) . '</span>';
+                    if($model->status == User::STATUS_DELETED) return '<span class="label label-primary">' . User::enumStatus($model->status) . '</span>';
+                },
             ],
             [
                 'attribute' => 'created_at',
+                'options' => [
+                    'width' => 150,
+                ],
                 'content' => function ($data) {
-                    return Yii::$app->formatter->asDate($data->created_at, 'php:d.m.Y H:i');
+                    return Yii::$app->formatter->asDate($data->created_at, 'php:d.m.Y');
                 }
             ],
 //            'created_at:datetime',

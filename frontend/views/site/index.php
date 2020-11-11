@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 
-$this->title = '';
+$this->title = 'КП «СЄВЄРОДОНЕЦЬКВОДОКАНАЛ»';
 ?>
 <?= MainPageNewsWidget::widget(); ?>
 

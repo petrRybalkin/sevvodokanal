@@ -6,6 +6,7 @@ use backend\models\AdminLog;
 use common\models\ClientMap;
 use Yii;
 use common\models\User;
+use common\models\UserSearch;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -49,11 +50,11 @@ class ClientController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
-        ]);
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -81,7 +82,7 @@ class ClientController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction(null, "Добавление абонента $model->username");
+            AdminLog::addAdminAction( null, "Добавление абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -102,7 +103,7 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction(null, "Редактирование абонента $model->username");
+            AdminLog::addAdminAction( null, "Редактирование абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
