@@ -2,9 +2,10 @@
 
 namespace backend\controllers;
 
-use backend\models\AdminLog;
 use Yii;
 use common\models\User;
+use common\models\UserSearch;
+use backend\models\AdminLog;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -48,11 +49,11 @@ class ClientController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
-        ]);
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

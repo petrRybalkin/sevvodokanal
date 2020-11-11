@@ -2,12 +2,12 @@
 
 use common\models\Payment;
 use frontend\widgets\SidebarProfileWidget;
-use yii\helpers\Url; ?>
+use yii\helpers\Url;
 
-<!--
-  Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
-  Read the documentation to get started: https://tailwindui.com/documentation
--->
+$this->title = 'Дані особового рахунку - Особистий кабінет';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">Дані особового рахунку:</h3>

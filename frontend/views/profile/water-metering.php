@@ -6,6 +6,9 @@ use frontend\models\IndicationForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+$this->title = 'Передача показань - Особистий кабінет';
+$this->params['breadcrumbs'][] = $this->title;
+
 $vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
 if ($vodomers): ?>
 <!--    Розділ “Передача показань”:-->
@@ -18,6 +21,7 @@ if ($vodomers): ?>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $number->act_number ?: '-' ?></dd>
                 </div>
                 <?php foreach ($vodomers as $vodomer) : ?>
+
                     <?php if ($vodomer->water_metering_first): ?>
                         <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                             <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1:</dt>
@@ -33,7 +37,7 @@ if ($vodomers): ?>
                         </div>
                         <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                             <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба обліку:</dt>
-                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ?></dd>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ? Yii::$app->formatter->asDate($vodomer->verification_date, 'php: d.m.Y') : '' ?></dd>
                         </div>
                     <?php endif; ?>
                     <?php if ($vodomer->water_metering_second): ?>
@@ -51,7 +55,7 @@ if ($vodomers): ?>
                         </div>
                         <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                             <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба обліку:</dt>
-                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ?></dd>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ? Yii::$app->formatter->asDate($vodomer->verification_date, 'php: d.m.Y') : '' ?></dd>
                         </div>
                     <?php endif; ?>
                     <?php if ($vodomer->watering_number): ?>
@@ -69,7 +73,7 @@ if ($vodomers): ?>
                         </div>
                         <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                             <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба обліку:</dt>
-                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ?></dd>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomer->verification_date ? Yii::$app->formatter->asDate($vodomer->verification_date, 'php: d.m.Y') : '' ?></dd>
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -104,7 +108,7 @@ if ($vodomers): ?>
         <div class="rounded-md shadow-sm">
             <div>
                 <?= $form->field($model, 'number1')
-                    ->textInput(['type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                    ->textInput(['value'=>$vodomers[0]['water_metering_first'] ? $vodomers[0]['water_metering_first'] : '', 'type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                     ->label('Номер засобу обліку води №1 ', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
@@ -117,7 +121,7 @@ if ($vodomers): ?>
             </div>
             <div>
                 <?= $form->field($model, 'number2')
-                    ->textInput(['type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                    ->textInput(['value'=>$vodomers[0]['water_metering_second'] ? $vodomers[0]['water_metering_second'] : '', 'type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                     ->label('Номер засобу обліку води №2', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
@@ -130,7 +134,7 @@ if ($vodomers): ?>
             </div>
             <div>
                 <?= $form->field($model, 'number3')
-                    ->textInput(['type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                    ->textInput(['value'=>$vodomers[0]['watering_number'] ? $vodomers[0]['watering_number'] : '', 'type'=>'number', 'class'=>'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                     ->label('Номер засобу обліку води №3', ['class'=>'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>

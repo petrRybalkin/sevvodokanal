@@ -6,6 +6,8 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = 'Особистий кабінет';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
