@@ -40,7 +40,7 @@ class AdminLogSearch extends AdminLog
      */
     public function search($params)
     {
-        $query = AdminLog::find();
+        $query = AdminLog::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

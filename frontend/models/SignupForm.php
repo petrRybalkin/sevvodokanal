@@ -31,14 +31,14 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей емейл все заянятий.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей емейл вже зайнятий.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 10],
 
             ['phone', 'required'],
             ['phone', 'string', 'min' => 12],
-            ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон все зайнятий.'],
+            ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон вже зайнятий.'],
         ];
     }
 
@@ -64,14 +64,16 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
-        $client = new User();
-        $client->username = $this->username;
-        $client->email = $this->email;
-        $client->phone = $this->phone;
-        $client->setPassword($this->password);
-        $client->generateAuthKey();
-        $client->generateEmailVerificationToken();
+
+            $client = new User();
+            $client->username = $this->username;
+            $client->email = $this->email;
+            $client->phone = $this->phone;
+            $client->setPassword($this->password);
+            $client->generateAuthKey();
+            $client->generateEmailVerificationToken();
+
+
         return $client->save() && $this->sendEmail($client);
 
     }

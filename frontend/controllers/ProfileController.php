@@ -273,7 +273,7 @@ class ProfileController extends Controller
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
 
 
         return $this->render('history', [
@@ -331,7 +331,7 @@ class ProfileController extends Controller
                     $score->act_number,
                     $score->name_of_the_tenant,
                     $score->address,
-                    'norm',
+                    $score->norm,
                     $score->total_tariff,
                     $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
                     $indication->current_readings_watering - $indication->previous_readings_watering,
@@ -343,12 +343,12 @@ class ProfileController extends Controller
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
                     Payment::getLgota($score->account_number, 3) ?: '-',
                     Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
-                    'perescore',
+                    $indication->correction,
                     Yii::$app->formatter->asDate(('NOW'), 'php: d.m.Y'),
                     $indication->accruals -
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
                         Payment::getLgota($score->account_number, 3),
-                    'total_payment'
+                    $indication->debt_end_month
 
                 ],
             ]));
@@ -356,7 +356,7 @@ class ProfileController extends Controller
         $startTime = time();
         while (!Yii::$app->queue->isDone($id)) {
             sleep(1);
-            if (time() - $startTime > 30) {
+            if (time() - $startTime > 100) {
                 return Yii::$app->session->setFlash('danger', 'Не вдалося сформувати документ');
             }
         }
@@ -396,12 +396,11 @@ class ProfileController extends Controller
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,  http_build_query($post));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, http_build_query($post));
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
 
 
         $data = curl_exec($ch);

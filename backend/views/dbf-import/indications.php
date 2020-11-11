@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-
+<h3> <strong>Загрузить Довідник нарахувань та показань .DBF</strong></h3>
 <?php $form = ActiveForm::begin(['action' => 'upload', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 
 <?= $form->field($model, 'dbfFile')->fileInput(['accept' => '.dbf'])->label('Выберите файл для загрузки') ?>

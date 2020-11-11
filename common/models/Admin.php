@@ -89,7 +89,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     public static function statusList()
     {
         return [
-            static::STATUS_DELETED => 'Видалений',
+//            static::STATUS_DELETED => 'Видалений',
             static::STATUS_INACTIVE => 'Не активний',
             static::STATUS_ACTIVE => 'Активний',
         ];

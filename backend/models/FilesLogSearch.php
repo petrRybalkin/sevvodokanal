@@ -40,7 +40,7 @@ class FilesLogSearch extends FilesLog
      */
     public function search($params)
     {
-        $query = FilesLog::find();
+        $query = FilesLog::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

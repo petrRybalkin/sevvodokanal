@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use common\models\ClientMap;
 use Yii;
 use common\models\User;
 use yii\filters\AccessControl;
@@ -80,7 +81,7 @@ class ClientController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction( null, "Добавление абонента $model->username");
+            AdminLog::addAdminAction(null, "Добавление абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -101,7 +102,7 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction( null, "Редактирование абонента $model->username");
+            AdminLog::addAdminAction(null, "Редактирование абонента $model->username");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -120,8 +121,10 @@ class ClientController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->status = User::STATUS_DELETED;
-        $model->save();
+        $model->delete();
+
+        ClientMap::deleteAll(['client_id' => $id]);
+
         AdminLog::addAdminAction(null, "Удаление абонента $model->username");
         return $this->redirect(['index']);
     }
