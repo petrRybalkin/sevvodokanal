@@ -58,6 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     table.history-table td {
         border-right: 1px solid #e2e8f0;
+        /*max-width: 76px !important;*/
+    }
+    table.history-table thead td{font-style: italic;text-transform: inherit}
+    table.history-table thead td:not([colspan="2"]){
+        /*-webkit-writing-mode: vertical-rl; writing-mode:tb-rl;*/
+        /*-webkit-transform: rotate(-90deg); transform: rotate(-90deg);*/
+        /*max-width: 76px !important;*/
     }
 </style>
 
@@ -81,78 +88,36 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <?php if ($score && $indication): ?>
-                    <table class="min-w-full divide-y divide-gray-200 history-table">
-                        <thead>
-                        <tr>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400"
-                                rowspan="2">Місяць, рік
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Кіл. осіб
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                colspan="2">Лічильник №1
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                colspan="2">Лічильник №2
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                colspan="2">Лічильник №3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Обсяг водоспоживання, м³
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Тариф, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Нараховано, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Корекція, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Сплачено, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Оплата&nbsp;субсидій, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Оплата&nbsp;пільг, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Сальдо&nbsp;на кінець&nbsp;місяця, грн
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Попер. показання, м3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Поточн. показання, м3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Попередні показання, м3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Поточн. показання, м3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Попередні показання, м3
-                            </td>
-                            <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Поточн. показання, м3
-                            </td>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                <?php if($score && $indication ):?>
+                <table class="min-w-full divide-y divide-gray-200 history-table">
+                    <thead>
+                    <tr>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400" rowspan="2">Місяць, рік</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Кіл. осіб</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №1</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №2</td>
+                        <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Обсяг водоспоживання, м³</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Тариф, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Нараховано, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Корекція, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сплачено, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;субсидій, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Оплата&nbsp;пільг, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на кінець&nbsp;місяця, грн</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попер. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
+                        <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
 
                         <?php foreach ($indication as $item):
                             $str = substr($item->month_year, 0, 4) . '-' . substr($item->month_year, 4, 6) . '-01';

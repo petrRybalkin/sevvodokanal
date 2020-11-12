@@ -94,7 +94,7 @@ class ClientController extends Controller
     {
         $n = ClientMap::find()->where(['client_id' => $id, 'score_id' => $score_id])->one();
         if (!$n->delete()) {
-            Yii::$app->session->setFlash('danger', 'Не вдалося видалити рахунок.');
+            Yii::$app->session->setFlash('error', 'Не вдалося видалити рахунок.');
         }
         Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         return $this->redirect(['score', 'id' => $id]);

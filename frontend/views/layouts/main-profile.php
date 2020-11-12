@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use lavrentiev\widgets\toastr\NotificationFlash;
 use yii\helpers\Url;
 
 
@@ -40,7 +41,42 @@ AppAsset::register($this);
         <div class="container lk-sev w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-8 mt-1">
             <?= $this->render('sidebar-profile'); ?>
             <div class="w-full lg:w-3/4 pl-8 pr-8 pb-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white">
-                <?= Alert::widget() ?>
+                <?//= Alert::widget() ?>
+                <?= NotificationFlash::widget([
+                'options' => [
+                    "closeButton" => true,
+                    "debug" => false,
+                    "newestOnTop" => false,
+                    "progressBar" => true,
+                    "positionClass" => \lavrentiev\widgets\toastr\NotificationFlash::POSITION_TOP_CENTER,
+                    "preventDuplicates" => false,
+                    "onclick" => null,
+                    "showDuration" => "500",
+                    "hideDuration" => "2000",
+                    "timeOut" => "6000",
+                    "extendedTimeOut" => "1000",
+                    "showEasing" => "swing",
+                    "hideEasing" => "linear",
+                    "showMethod" => "fadeIn",
+                    "hideMethod" => "fadeOut"
+
+//                    "closeButton": true,
+//  "debug": false,
+//  "newestOnTop": true,
+//  "progressBar": true,
+//  "positionClass": "toast-top-center",
+//  "preventDuplicates": false,
+//  "onclick": null,
+//  "showDuration": "500",
+//  "hideDuration": "2000",
+//  "timeOut": "6000",
+//  "extendedTimeOut": "1000",
+//  "showEasing": "swing",
+//  "hideEasing": "linear",
+//  "showMethod": "fadeIn",
+//  "hideMethod": "fadeOut"
+                    ]
+                ]) ?>
                 <?= $content ?>
                 <!--Title-->
             </div>

@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
+use lavrentiev\widgets\toastr\NotificationFlash;
 use common\widgets\Alert;
 use yii\helpers\Url;
 
@@ -75,7 +76,8 @@ AppAsset::register($this);
         <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-8 mt-1">
             <?=$this->render('sidebar'); ?>
             <div class="w-full lg:w-3/4 pl-8 pr-8 pb-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white">
-                <?= Alert::widget() ?>
+                <?//= Alert::widget() ?>
+                <?= NotificationFlash::widget() ?>
                 <?= $content ?>
                 <!--Title-->
             </div>

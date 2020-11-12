@@ -20,7 +20,8 @@ use yii\bootstrap4\Breadcrumbs;
 <!--                    </h1>-->
 <!--                </div>--><!-- /.col -->
                 <div class="col-sm-12">
-                    <?= \common\widgets\Alert::widget();?>
+                    <?//= \common\widgets\Alert::widget();?>
+                    <?= \lavrentiev\widgets\toastr\NotificationFlash::widget() ?>
                     <?php
                     echo Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

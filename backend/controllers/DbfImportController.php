@@ -231,7 +231,7 @@ class DbfImportController extends Controller
             ->where(['synchronization' => 1]);
 
         if(!$model){
-            Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
+            Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
             return $this->redirect(Yii::$app->request->referrer);
         }
         $def = [
@@ -252,7 +252,7 @@ class DbfImportController extends Controller
         ];
 
         if (!dbase_create($path, $def)) {
-            Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
+            Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
         }
 
         $table = new WritableTable($path, null, 'CP1251');
@@ -261,7 +261,7 @@ class DbfImportController extends Controller
         foreach ($model->each(10) as $item) {
 
             if(!$item){
-                Yii::$app->session->setFlash('danger', "Нема даних для утворення файлу\n") ;
+                Yii::$app->session->setFlash('error', "Нема даних для утворення файлу\n") ;
                 return $this->redirect(Yii::$app->request->referrer);
             }
             set_time_limit(500);
@@ -291,7 +291,7 @@ class DbfImportController extends Controller
         }
 
 
-        Yii::$app->session->setFlash('danger', "Ошибка, не получается создать базу данных\n") ;
+        Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
     }
 
     /**
@@ -343,7 +343,7 @@ class DbfImportController extends Controller
 //        while (!Yii::$app->queue->isDone($idJob)) {
 //            sleep(1);
 //            if (time() - $startTime > 100) {
-//                Yii::$app->session->setFlash('danger', 'Не удалось сохранить данные');
+//                Yii::$app->session->setFlash('error', 'Не удалось сохранить данные');
 //                return $this->redirect($action);
 //            }
 //        }
