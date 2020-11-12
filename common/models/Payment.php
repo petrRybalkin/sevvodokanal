@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use DateTime;
 use Yii;
 use yii\db\Expression;
 
@@ -52,20 +53,24 @@ class Payment extends \yii\db\ActiveRecord
     }
 
 
-    public static function getLgota($account_number, $pr)
+    public static function getLgota($account_number, $pr, $date = null)
     {
-        return Payment::find()
+        $p = Payment::find()
             ->where([
-            'account_number' => $account_number,
-            'pr' => $pr,
-        ])
-            ->andWhere(new Expression('payment_date <= NOW() - INTERVAL 1 MONTH'))
-            ->orderBy(['id' => SORT_DESC])
-            ->one();
+                'account_number' => $account_number,
+                'pr' => $pr,
+            ]);
+        if ($date) {
+            $datew = new DateTime($date);
+            $datek =  $datew->modify('+30 day')->format('Y-m-d');
+            $p->andWhere(['between', 'payment_date', $date, $datek]);
+        } else {
+            $p->andWhere(new Expression('payment_date <= NOW() - INTERVAL 1 MONTH'));
+
+        }
+
+        $p->orderBy(['id' => SORT_DESC]);
+        return $p->one();
     }
 
-
-//    public static function calcPayments($account_number){
-//       return  Payment::find()->where(['account_number' => $account_number, 'pr' => 1])->sum('sum');
-//    }
 }
