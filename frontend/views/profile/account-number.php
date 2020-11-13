@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         /** @var \common\models\WaterMetering $vodomer */
         if(empty($number->vodomers)) { ?>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">немає даних</p>
+                <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">Засоби обліку води відсутні</p>
             </div>
         <?php } else {
         foreach ($number->vodomers as $vodomer): ?>
