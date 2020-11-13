@@ -40,6 +40,7 @@ return [
             'tableName' => '{{%queue}}', // Имя таблицы
             'channel' => 'default', // Выбранный для очереди канал
             'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
+            'as log' => \yii\queue\LogBehavior::class,
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

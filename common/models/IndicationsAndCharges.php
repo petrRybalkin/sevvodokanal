@@ -52,7 +52,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             [['privilege'], 'string', 'max' => 2],
             [['medium_cubes'], 'string', 'max' => 1],
             [['synchronization'], 'integer'],
-            [['debt_end_month', 'accruals', 'water_consumption', 'watering_consumption', 'total_tariff'], 'number', 'skipOnEmpty' => true]
+            [['accruals', 'water_consumption', 'watering_consumption', 'total_tariff'], 'number', 'skipOnEmpty' => true]
         ];
     }
 
