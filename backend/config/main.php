@@ -16,13 +16,23 @@ return [
     'modules' => [],
     'controllerMap' => [
         'elfinder' => [
-            'class' => 'mihaildev\elfinder\PathController',
+            'class' =>  \mihaildev\elfinder\Controller::class,
             'access' => ['@'],
-            'root' => [
-                'path' => 'uploads/files',
-                'name' => 'Files',
-            ],
-
+            'disabledCommands' => ['netmount'],
+            'roots' => [
+                [
+                    'baseUrl' => '@web',
+                    'basePath' => '@webroot',
+                    'path' => 'image',
+                    'name' => 'изображения',
+                ],
+                [
+                    'baseUrl' => '@web',
+                    'basePath' => '@webroot',
+                    'path' => 'docs',
+                    'name' => 'документы',
+                ],
+            ]
         ]
     ],
     'components' => [
@@ -50,7 +60,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning','info'],
+                    'levels' => ['error', 'warning', 'info'],
                 ],
             ],
         ],
