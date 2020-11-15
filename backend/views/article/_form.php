@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 <div class="article-form">
 
     <?php $form = ActiveForm::begin([
-            'enableClientValidation' => false,
+        'enableClientValidation' => false,
         'options' => [
             'enctype' => 'multipart/form-data',
         ],]); ?>
@@ -30,10 +30,8 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-        'editorOptions' => ElFinder::ckeditorOptions(
-            [ 'elfinder',]
-        ),
-    ]); ?>
+  'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),
+]); ?>
 
     <?php
     if (!$model->isNewRecord):
