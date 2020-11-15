@@ -23,13 +23,13 @@ return [
                 [
                     'baseUrl' => '@web',
                     'basePath' => '@webroot',
-                    'path' => 'image',
+                    'path' => 'news/image',
                     'name' => 'изображения',
                 ],
                 [
                     'baseUrl' => '@web',
                     'basePath' => '@webroot',
-                    'path' => 'docs',
+                    'path' => 'news/docs',
                     'name' => 'документы',
                 ],
             ]
