@@ -11,6 +11,7 @@ use common\models\User;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $password_repeat;
 
     /**
      * @var \common\models\User
@@ -43,9 +44,25 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['password', 'password_repeat'], 'required'],
+            [['password', 'password_repeat'], 'string', 'min' => 10],
         ];
+    }
+
+    function validateCompare($attribute, $params)
+    {
+        if ($this->password != $this->password_repeat) {
+            $message = Yii::t('app', 'Значения полей «Новый пароль» и «Подтверждение пароля» не совпадают.');
+            $this->addError('password', $message);
+        }
+    }
+
+    function validatePassword($attribute, $params)
+    {
+        if (mb_strlen($this->$attribute) < 8) {
+            $message = Yii::t('app', 'Значение поля «Пароль» должно содержать минимум 8 символов.');
+            $this->addError('password_repeat', $message);
+        }
     }
 
     /**
