@@ -11,6 +11,7 @@
 .second-item.absolute{z-index: 10}
 .has-error input{border:1px solid red !important;}
 .help-block.help-block-error{color:red!important;font-style: italic}
+.field-contactform-verifycode input#contactform-verifycode{border:1px solid #e2e8f0;border-radius:5px;padding:5px 10px}
 @media (min-width: 1024px) and (max-width: 1233px){
     .md\:text-2xl {
         font-size: 1rem;

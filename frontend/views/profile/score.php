@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <span class="ml-2 flex-1 w-0 truncate">“Рахунок”</span>
                                 </div>
                                 <div class="ml-4 flex-shrink-0">
-                                    <a href="<?= \yii\helpers\Url::to(['/profile/word', 'id' => Yii::$app->request->get('id')]) ?>" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">Скачать в ворд</a>
+                                    <a href="<?= \yii\helpers\Url::to(['/profile/word', 'id' => Yii::$app->request->get('id')]) ?>" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">Завантажити в ворд</a>
                                 </div>
                             </li>
                         </ul>

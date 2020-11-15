@@ -90,11 +90,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              Активный
+                              Активний
                             </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id]) ?>" class="text-indigo-600 hover:text-indigo-900">Смотреть</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="<?= Url::to(['/profile/account-number', 'id' => $item->id]) ?>" class="text-indigo-600 hover:text-indigo-900">Відкрити</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
