@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Payment;
+use yii\widgets\LinkPager;
 
 /** @var \common\models\WaterMetering $metering */
 /** @var \common\models\ScoreMetering $score */
@@ -87,7 +88,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <?php if($score && $indication ):?>
+                <?php
+
+
+                if( $indication && $score):?>
                 <table class="min-w-full divide-y divide-gray-200 history-table">
                     <thead>
                     <tr>
@@ -173,9 +177,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->debt_end_month ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach;
+
+
+                        ?>
+
                         <!-- More rows... -->
                         </tbody>
+
                     </table>
                 <?php else: ?>
                     <p style="color: red">
@@ -183,7 +192,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     </p>
 
                 <?php endif; ?>
+
             </div>
         </div>
     </div>
 </div>
+<?php
+echo LinkPager::widget([
+    'pagination' => $pages,
+]);
+
+?>

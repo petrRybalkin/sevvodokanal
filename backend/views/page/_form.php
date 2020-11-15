@@ -1,6 +1,7 @@
 <?php
 
 use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\Category;
@@ -58,14 +59,18 @@ use common\models\Category;
         ],
     ]);?>
 
-    <?= $form->field($model, 'description')->widget(CKEditor::className(),[
-    'editorOptions' => [
-    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-    'inline' => false, //по умолчанию false
-    ],
-    ]);?>
 
-    <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->widget(CKEditor::className(), [
+        'editorOptions' => ElFinder::ckeditorOptions('elfinderPage',['preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+            'inline' => false,]),
+    ]); ?>
+    <?php
+    if (!$model->isNewRecord):
+        ?>
+        <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
+        <a href="<?= \yii\helpers\Url::to(['page/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
+    <?php endif; ?>
+    <?= $form->field($model, 'img')->fileInput(['multiple' => false]) ?>
 
     <?= $form->field($model, 'seoTitle')->textInput(['maxlength' => true]) ?>
 

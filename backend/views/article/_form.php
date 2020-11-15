@@ -37,16 +37,17 @@ use yii\widgets\ActiveForm;
     if (!$model->isNewRecord):
         ?>
         <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
+        <a href="<?= \yii\helpers\Url::to(['article/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
     <?php endif; ?>
     <?= $form->field($model, 'img')->fileInput(['multiple' => false]) ?>
-    <?php
-    if (!$model->isNewRecord):
-        ?>
-        <a href="<?= $model->getUploadedFileUrl('pdf') ?>">
-            <span class="pl-2"><?= $model->pdf ?></span>
-        </a>
-    <?php endif; ?>
-    <?= $form->field($model, 'pdf')->fileInput(['multiple' => false]) ?>
+<!--    --><?php
+//    if (!$model->isNewRecord):
+//        ?>
+<!--        <a href="--><?//= $model->getUploadedFileUrl('pdf') ?><!--">-->
+<!--            <span class="pl-2">--><?//= $model->pdf ?><!--</span>-->
+<!--        </a>-->
+<!--    --><?php //endif; ?>
+<!--    --><?//= $form->field($model, 'pdf')->fileInput(['multiple' => false]) ?>
 
     <?= $form->field($model, 'seoTitle')->textInput(['maxlength' => true]) ?>
 

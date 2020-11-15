@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\ImageUploadBehavior;
 use common\models\Category;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -52,6 +53,22 @@ class Page extends \yii\db\ActiveRecord
         return 'page';
     }
 
+    public function behaviors()
+    {
+        return [
+            'thumb' => [
+                'class' => ImageUploadBehavior::class,
+                'attribute' => 'img',
+                'thumbs' => [
+                    'thumb' => ['width' => 300, 'height' => 200],
+                ],
+                'filePath' => '@webroot/page/img/[[pk]].[[extension]]',
+                'fileUrl' => '/page/img/[[pk]].[[extension]]',
+                'thumbPath' => '@webroot/page/img/[[profile]]_[[pk]].[[extension]]',
+                'thumbUrl' => '/page/img/[[profile]]_[[pk]].[[extension]]',
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -61,8 +78,9 @@ class Page extends \yii\db\ActiveRecord
             [['short_description', 'description'], 'string'],
             [['active', 'sidebar', 'main_menu', 'footer'], 'integer'],
             [['parent_page', 'sort_sidebar', 'sort_footer', 'sort_main_menu'], 'integer'],
-            [['title', 'img', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
+            [['title', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
             [['create_utime', 'update_utime'], 'safe'],
+            [['img'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
 

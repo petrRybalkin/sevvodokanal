@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\ClientMap;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use common\models\IndicationsAndCharges;
 use common\models\Payment;
@@ -277,16 +278,34 @@ class ProfileController extends Controller
     public function actionHistory($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
-        $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
+//        $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
+//        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
 
+
+
+
+        $query = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year');
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $indication = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
         return $this->render('history', [
-            'metering' => $metering,
-            'score' => $score,
             'indication' => $indication,
-
+            'pages' => $pages,
+//            'metering' => $metering,
+            'score' => $score,
         ]);
+
+
+//
+//        return $this->render('history', [
+//            'metering' => $metering,
+//            'score' => $score,
+//            'indication' => $indication,
+//
+//        ]);
 
     }
 

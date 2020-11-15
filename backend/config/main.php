@@ -33,6 +33,25 @@ return [
                     'name' => 'документы',
                 ],
             ]
+        ],
+        'elfinderPage' => [
+            'class' =>  \mihaildev\elfinder\Controller::class,
+            'access' => ['@'],
+            'disabledCommands' => ['netmount'],
+            'roots' => [
+                [
+                    'baseUrl' => '@web',
+                    'basePath' => '@webroot',
+                    'path' => 'page/image',
+                    'name' => 'изображения',
+                ],
+                [
+                    'baseUrl' => '@web',
+                    'basePath' => '@webroot',
+                    'path' => 'page/docs',
+                    'name' => 'документы',
+                ],
+            ]
         ]
     ],
     'components' => [

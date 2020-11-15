@@ -134,6 +134,27 @@ class PageController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDelPhoto($id)
+    {
+
+        $model = $this->findModel($id);
+        $img = Yii::getAlias('@webroot').$model->getImageFileUrl('img');
+        $thumb = Yii::getAlias('@webroot').$model->getThumbFileUrl('img', 'thumb');
+
+        if(file_exists( $img)){
+            unlink($img);
+        }
+        if(file_exists( $thumb)){
+            unlink($thumb);
+        }
+        $model->img = '';
+        if(!$model->save()){
+            Yii::$app->session->setFlash('danger', 'Не удалось удалить изображение');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     /**
      * Finds the Page model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

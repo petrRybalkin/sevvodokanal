@@ -79,6 +79,26 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function actionDelPhoto($id)
+    {
+
+        $model = $this->findModel($id);
+        $img = Yii::getAlias('@webroot').$model->getImageFileUrl('img');
+        $thumb = Yii::getAlias('@webroot').$model->getThumbFileUrl('img', 'thumb');
+
+        if(file_exists( $img)){
+            unlink($img);
+        }
+        if(file_exists( $thumb)){
+            unlink($thumb);
+        }
+        $model->img = '';
+        if(!$model->save()){
+           Yii::$app->session->setFlash('danger', 'Не удалось удалить изображение');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
     /**
      * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
