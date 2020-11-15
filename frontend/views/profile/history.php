@@ -1,11 +1,10 @@
 <?php
 
+use common\models\Payment;
+
 /** @var \common\models\WaterMetering $metering */
 /** @var \common\models\ScoreMetering $score */
-
 /** @var \common\models\IndicationsAndCharges $indication */
-
-use common\models\Payment;
 
 $this->title = 'Нарахування та передані показання - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
@@ -95,9 +94,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400" rowspan="2">Місяць, рік</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Кіл. осіб</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн</td>
+                        <?php
+                        $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
+                        if ($metering->water_metering_first): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №1</td>
+                        <?php endif; ?>
+                        <?php if ($metering->water_metering_second): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №2</td>
+                        <?php endif; ?>
+                        <?php if ($metering->watering_number): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №3</td>
+                        <?php endif; ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Обсяг водоспоживання, м³</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Тариф, грн</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Нараховано, грн</td>
@@ -109,12 +116,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³</td>
                     </tr>
                     <tr>
+                        <?php if ($metering->water_metering_first): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попер. показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <?php endif; ?>
+                        <?php if ($metering->water_metering_second): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <?php endif; ?>
+                        <?php if ($metering->watering_number): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
+                        <?php endif; ?>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -128,12 +141,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDate($str, 'php:m.Y') ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->count ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->debt_begin_month ?> </td>
+                                <?php if ($metering->water_metering_first): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?></td>
+                                <?php endif; ?>
+                                <?php if ($metering->water_metering_second): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?></td>
+                                <?php endif; ?>
+                                <?php if ($metering->watering_number): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
+                                <?php endif; ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first + $item->current_readings_second
                                     - $item->previous_readings_first - $item->previous_readings_second ?> </td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 2)) ?></td>
