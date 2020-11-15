@@ -15,10 +15,12 @@ class MenuSiteWidget extends Widget
         $pages = Page::getMenus()->all();
         $infos = Page::getInfo()->all();
         $abouts = Page::getAbout()->all();
+        $services = Page::getServices()->all();
         return $this->render('menu-header', [
             'pages' => $pages,
             'infos' => $infos,
             'abouts' => $abouts,
+            'services' => $services,
         ]);
     }
 }
