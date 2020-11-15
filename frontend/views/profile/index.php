@@ -147,11 +147,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->label('Pеєстраційний номер акту', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
-
+            <div class="block text-grey-darker text-sm font-bold mb-2 text-center">або</div>
             <div>
                 <?= $form->field($model, 'sum')
                     ->textInput(['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
-                    ->label('Cумма', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
+                    ->label('Cума', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
         </div>

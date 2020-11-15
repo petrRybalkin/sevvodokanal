@@ -73,7 +73,7 @@ class ProfileController extends Controller
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 if (empty($model->act_number) && empty($model->sum)) {
-                    Yii::$app->session->setFlash('error', 'Треба заповнити хоча б одне з полів "Номер акту" або "Сума".');
+                    Yii::$app->session->setFlash('error', 'Треба заповнити хоча б одне з полів Номер акту або Сума.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 if ($model->act_number) {
