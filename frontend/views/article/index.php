@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'pager' => [
                         'pagination' => $dataProvider->pagination,
-                        'nextPageLabel' => Yii::t('app', '<span class="icon icon-arrow-right"></span>'),
-                        'prevPageLabel' => Yii::t('app', '<span class="icon icon-arrow-left"></span>'),
+                        'nextPageLabel' => '<span class="icon icon-arrow-right">&raquo;</span>',
+                        'prevPageLabel' => '<span class="icon icon-arrow-left">&laquo;</span>',
                     ]
                 ])?>
 

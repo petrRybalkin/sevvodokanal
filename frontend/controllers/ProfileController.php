@@ -281,13 +281,12 @@ class ProfileController extends Controller
 //        $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
 //        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
 
-
-
-
         $query = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $indication = $query->offset($pages->offset)
+            ->orderBy('month_year DESC')
+            //->limit(12)
             ->limit($pages->limit)
             ->all();
 
@@ -298,8 +297,6 @@ class ProfileController extends Controller
             'score' => $score,
         ]);
 
-
-//
 //        return $this->render('history', [
 //            'metering' => $metering,
 //            'score' => $score,
