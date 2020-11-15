@@ -203,11 +203,12 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'Новий пароль збережено.');
-
-            return $this->goHome();
+                Yii::$app->session->setFlash('success', 'Новий пароль збережено.');
+                return $this->goHome();
+        } else {
+            Yii::$app->session->setFlash('error','Возникла ошибка в процессе изменения пароля.');
         }
-
+        
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
