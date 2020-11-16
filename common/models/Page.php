@@ -311,7 +311,7 @@ class Page extends \yii\db\ActiveRecord
         }
         return Html::tag('span', $this->getStatusFooterLabel(), $options);
     }
-    
+
     public static function getParents()
     {
         return self::find()->where([
@@ -386,6 +386,16 @@ class Page extends \yii\db\ActiveRecord
     {
         return self::find()
             ->where(['parent_page' => 2, 'active' => 1, 'main_menu' => 1])
+            ->orderBy('sort_main_menu ASC');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public static function getServices()
+    {
+        return self::find()
+            ->where(['parent_page' => 3, 'active' => 1, 'main_menu' => 1])
             ->orderBy('sort_main_menu ASC');
     }
 

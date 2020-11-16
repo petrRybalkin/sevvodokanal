@@ -12,21 +12,19 @@
 .has-error input{border:1px solid red !important;}
 .help-block.help-block-error{color:red!important;font-style: italic}
 .field-contactform-verifycode input#contactform-verifycode{border:1px solid #e2e8f0;border-radius:5px;padding:5px 10px}
+
+ul.pagination{margin:15px auto;text-align:center}
+ul.pagination li{display:inline-block;padding:5px 10px}
+ul.pagination li a{color:#a4a4a4;font-weight:bold !important}
+ul.pagination li a:hover{color:#5e5e5e}
+
 @media (min-width: 1024px) and (max-width: 1233px){
-    .md\:text-2xl {
-        font-size: 1rem;
-    }
-    .text-base {
-        font-size: 0.85rem;
-    }
+    .md\:text-2xl {font-size: 1rem;}
+    .text-base {font-size: 0.85rem;}
 }
 @media (min-width: 768px) and (max-width: 1023px){
-    .md\:text-2xl {
-        font-size: 1rem;
-    }
-    .text-base {
-        font-size: 0.85rem;
-    }
+    .md\:text-2xl {font-size: 1rem}
+    .text-base {font-size: 0.85rem;}
 }
 
 /*.container.lk-sev{max-width:100% !important;}*/
