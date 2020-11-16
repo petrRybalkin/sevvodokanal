@@ -90,7 +90,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <?php
 
-
                 if( $indication && $score):?>
                 <table class="min-w-full divide-y divide-gray-200 history-table">
                     <thead>
@@ -177,10 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->debt_end_month ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
-                        <?php endforeach;
-
-
-                        ?>
+                        <?php endforeach; ?>
 
                         <!-- More rows... -->
                         </tbody>

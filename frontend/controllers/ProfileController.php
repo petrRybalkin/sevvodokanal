@@ -284,9 +284,12 @@ class ProfileController extends Controller
 
 
 
-        $query = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year');
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $query = IndicationsAndCharges::find()
+            ->where(['account_number' => $score->account_number])
+            ->groupBy('month_year');
+//        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
+
         $indication = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
