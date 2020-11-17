@@ -5,6 +5,7 @@
 
 use frontend\models\IndicationForm;
 use yii\bootstrap\ActiveForm;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -23,7 +24,16 @@ if ($vodomers): ?>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $number->act_number ?: '-' ?></dd>
                 </div>
                 <!--                --><?php //foreach ($vodomers as $vodomer) : ?>
-                <?php if ($vodomers->water_metering_first): ?>
+                <?php
+//
+//$i = \common\models\IndicationsAndCharges::find()
+//    ->where(['account_number' => $number->account_number, 'current_readings_first' => $vodomers->previous_readings_first])
+//    ->orderBy(['id' => SORT_DESC])->one();
+////    ->andWhere(new Expression('current_readings_first < previous_readings_first'));
+//
+//                \yii\helpers\VarDumper::dump($i,10,1);exit;
+
+                if ($vodomers->water_metering_first): ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->water_metering_first ?></dd>

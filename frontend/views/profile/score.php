@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Заборгованість станом на
-                        <?=  date("m.Y", strtotime('first day of last month'));  ?>р.:</dt>
+                        <?=  date("d.m.Y", strtotime('first day of last month'));  ?>р.:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $indication->debt_end_month ?> грн.</dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

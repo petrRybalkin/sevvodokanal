@@ -76,4 +76,9 @@ class WaterMetering extends \yii\db\ActiveRecord
 
         return WaterMetering::find()->where(['account_number' => $account_number])->orderBy(['id'=>SORT_DESC])->one();
     }
+
+    public function getIndication()
+    {
+        return $this->hasMany(IndicationsAndCharges::class, ['account_number' => 'account_number']);
+    }
 }

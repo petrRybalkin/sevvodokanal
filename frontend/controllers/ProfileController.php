@@ -169,6 +169,7 @@ class ProfileController extends Controller
         $model = new IndicationForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
+
                 $indication = IndicationsAndCharges::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
                 $score = ScoreMetering::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
 //                if ($indication && strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
@@ -181,29 +182,27 @@ class ProfileController extends Controller
 
                 ]);
 //                }
-
                 if (!$indication) {
                     $indication = new  IndicationsAndCharges();
                 }
-
-                if ($model->meter1 && $model->number1) {
-                    $wm = WaterMetering::find()->where(['water_metering_first' => $model->number1])->one();
+                if ($model->meter1 && $indication->water) {
+                    $wm = WaterMetering::find()->where(['water_metering_first' => $indication->water->water_metering_first])->one();
                     $indication->updateAttributes([
                         'current_readings_first' => $model->meter1,
                     ]);
                     $wm->updateAttributes(['previous_readings_first' => (int)$model->meter1]);
                 }
 
-                if ($model->meter2 && $model->number2) {
-                    $wm = WaterMetering::find()->where(['water_metering_second' => $model->number2])->one();
+                if ($model->meter2 && $indication->water) {
+                    $wm = WaterMetering::find()->where(['water_metering_second' => $indication->water->water_metering_second])->one();
                     $indication->updateAttributes([
                         'current_readings_second' => $model->meter2,
 
                     ]);
                     $wm->updateAttributes(['previous_readings_second' => (int)$model->meter2]);
                 }
-                if ($model->number3 && $model->meter3) {
-                    $wm = WaterMetering::find()->where(['watering_number' => $model->number3])->one();
+                if ($indication->water && $model->meter3) {
+                    $wm = WaterMetering::find()->where(['watering_number' => $indication->water->watering_number])->one();
                     $indication->updateAttributes(['current_readings_watering' => $model->meter3,
 
                     ]);
@@ -211,6 +210,7 @@ class ProfileController extends Controller
                 }
                 $wc = ((int)$model->meter1 - (int)$indication->previous_readings_first)
                     + ((int)$model->meter2 - (int)$indication->previous_readings_second);
+
                 $watc = (int)$model->meter3 - (int)$indication->previous_readings_watering;
                 $indication->updateAttributes([
                     'account_number' => $wm->account_number,
@@ -245,7 +245,7 @@ class ProfileController extends Controller
 
         }
 
-        return $this->render('water-metering-form', [
+        return $this->render('water-metering', [
             'model' => $model
         ]);
 
@@ -365,7 +365,7 @@ class ProfileController extends Controller
 //                    $indication->current_readings_watering - $indication->previous_readings_watering,
 //                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
                     $indication->privilege == 0 ? 'Нi' : "Так",
-                    date("m.Y", strtotime('first day of last month')),
+                    date("d.m.Y", strtotime('first day of last month')),
                     $indication->debt_end_month,
                     $indication->accruals,
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
