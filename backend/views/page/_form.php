@@ -52,20 +52,6 @@ use common\models\Category;
     <hr>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-<!--    --><?//= $form->field($model, 'short_description')->widget(CKEditor::className(),[
-//        'editorOptions' => [
-//            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-//            'inline' => false, //по умолчанию false
-//        ],
-//    ]);?>
-<!---->
-<!---->
-<!--    --><?//= $form->field($model, 'description')->widget(CKEditor::className(), [
-//        'editorOptions' => ElFinder::ckeditorOptions('elfinderPage',['preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-//            'inline' => false,]),
-//    ]); ?>
-
-
     <?= $form->field($model, 'short_description')->widget(Widget::className(),
         ['settings' => [
             'lang' => 'ru',

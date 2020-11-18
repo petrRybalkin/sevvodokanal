@@ -55,12 +55,12 @@ class PageController extends Controller
             'images-get' => [
                 'class' => 'vova07\imperavi\actions\GetImagesAction',
                 'url' => '/page/image/',
-                'path' => Yii::getAlias('@webroot/page/image'),
+                'path' => Yii::getAlias('@webroot/backend/page/image'),
             ],
             'image-upload' => [
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
                 'url' => '/page/image/',
-                'path' => Yii::getAlias('@webroot/page/image')
+                'path' => Yii::getAlias('@webroot/backend/page/image')
             ],
             'file-delete' => [
                 'class' => 'vova07\imperavi\actions\DeleteFileAction',
