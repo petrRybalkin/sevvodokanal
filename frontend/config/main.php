@@ -47,8 +47,8 @@ return [
                 '' => 'site/index',
                 'about' => 'site/about',
                 'page/<id:[-\w_\/]+>'=>'page/view',
-                '/news' => 'article/index',
-                '/news/<id:[-\w_\/]+>'=>'article/view',
+                'news' => 'article/index',
+                'news/<id:[-\w_\/]+>'=>'article/view',
 
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
