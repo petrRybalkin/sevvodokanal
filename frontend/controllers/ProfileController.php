@@ -325,9 +325,9 @@ class ProfileController extends Controller
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:d.m.Y');
-        $name = 'Нарахування_та_показання_' . $score->name_of_the_tenant . '_' . $date . '.docx';
+        $name = 'Рахунок_' . $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
-        if ($score && $metering && $indication) {
+        if ($score &&  $indication) {
             $id = Yii::$app->queue->push(new PhpWordJob([
                 'template' => $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx",
                 'path' => $fullName,
@@ -388,7 +388,7 @@ class ProfileController extends Controller
                 return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
             }
         }
-        Yii::$app->response->sendFile($fullName);
+        Yii::$app->response->sendFile($fullName, $name);
         return Yii::$app->response->send();
     }
 
