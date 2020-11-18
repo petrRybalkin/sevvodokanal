@@ -99,13 +99,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Сальдо&nbsp;на початок&nbsp;місяця, грн</td>
                         <?php
                         $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
-                        if ($metering->water_metering_first): ?>
+                        if ($metering && $metering->water_metering_first): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №1</td>
                         <?php endif; ?>
-                        <?php if ($metering->water_metering_second): ?>
+                        <?php if ($metering &&  $metering->water_metering_second): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №2</td>
                         <?php endif; ?>
-                        <?php if ($metering->watering_number): ?>
+                        <?php if ($metering && $metering->watering_number): ?>
                         <td class="px-4 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor" colspan="2">Лічильник №3</td>
                         <?php endif; ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Обсяг водоспоживання, м³</td>
@@ -119,15 +119,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³</td>
                     </tr>
                     <tr>
-                        <?php if ($metering->water_metering_first): ?>
+                        <?php if ($metering && $metering->water_metering_first): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попер. показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
                         <?php endif; ?>
-                        <?php if ($metering->water_metering_second): ?>
+                        <?php if ($metering && $metering->water_metering_second): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
                         <?php endif; ?>
-                        <?php if ($metering->watering_number): ?>
+                        <?php if ($metering && $metering->watering_number): ?>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Попередні показання, м3</td>
                         <td class="px-4 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Поточн. показання, м3</td>
                         <?php endif; ?>
@@ -144,15 +144,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDate($str, 'php:m.Y') ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->count ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->debt_begin_month ?> </td>
-                                <?php if ($metering->water_metering_first): ?>
+                                <?php if ($metering && $metering->water_metering_first): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?></td>
                                 <?php endif; ?>
-                                <?php if ($metering->water_metering_second): ?>
+                                <?php if ($metering &&$metering->water_metering_second): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?></td>
                                 <?php endif; ?>
-                                <?php if ($metering->watering_number): ?>
+                                <?php if ($metering &&$metering->watering_number): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
