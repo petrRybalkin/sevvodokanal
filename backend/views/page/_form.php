@@ -1,8 +1,8 @@
 <?php
 
-use mihaildev\ckeditor\CKEditor;
-use mihaildev\elfinder\ElFinder;
+use vova07\imperavi\Widget;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\models\Category;
 
@@ -52,18 +52,60 @@ use common\models\Category;
     <hr>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'short_description')->widget(CKEditor::className(),[
-        'editorOptions' => [
-            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-            'inline' => false, //по умолчанию false
+<!--    --><?//= $form->field($model, 'short_description')->widget(CKEditor::className(),[
+//        'editorOptions' => [
+//            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+//            'inline' => false, //по умолчанию false
+//        ],
+//    ]);?>
+<!---->
+<!---->
+<!--    --><?//= $form->field($model, 'description')->widget(CKEditor::className(), [
+//        'editorOptions' => ElFinder::ckeditorOptions('elfinderPage',['preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+//            'inline' => false,]),
+//    ]); ?>
+
+
+    <?= $form->field($model, 'short_description')->widget(Widget::className(),
+        ['settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'source' => true,
+
+
+
+        ]]) ?>
+
+
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'source' => true,
+            'imageDelete' => Url::to(['/page/file-delete']),
+            'imageManagerJson' => Url::to(['/page/images-get']),
+            'imageUpload' => Url::to(['/page/image-upload']),
+            'fileUpload' => Url::to(['/page/file-upload']),
+            'fileDelete' => Url::to(['/page/file-delete']),
+            'fileManagerJson' => Url::to(['/page/files-get']),
+            'plugins' => [
+                'clips',
+                'table',
+                'fontsize',
+                'fontcolor',
+                'fontfamily',
+                'fontcolor',
+                'video',
+            ],
         ],
-    ]);?>
+        'plugins' => [
+            'imagemanager' => 'vova07\imperavi\bundles\ImageManagerAsset',
+            'filemanager' => 'vova07\imperavi\bundles\FileManagerAsset',
+        ],
 
 
-    <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-        'editorOptions' => ElFinder::ckeditorOptions('elfinderPage',['preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-            'inline' => false,]),
-    ]); ?>
+    ]) ?>
+
     <?php
     if (!$model->isNewRecord):
         ?>

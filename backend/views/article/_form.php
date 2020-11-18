@@ -2,7 +2,9 @@
 
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
+use vova07\imperavi\Widget;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
@@ -22,16 +24,57 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'active')->checkbox() ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'short_description')->widget(CKEditor::className(), [
-        'editorOptions' => [
-            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-            'inline' => false, //по умолчанию false
-        ],
-    ]); ?>
+<!--    --><?//= $form->field($model, 'short_description')->widget(CKEditor::className(), [
+//        'editorOptions' => [
+//            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+//            'inline' => false, //по умолчанию false
+//        ],
+//    ]); ?>
 
-    <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-  'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),
-]); ?>
+<!--    --><?//= $form->field($model, 'description')->widget(CKEditor::className(), [
+//  'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),
+//]); ?>
+    <?= $form->field($model, 'short_description')->widget(Widget::className(),
+        ['settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'source' => true,
+
+
+
+    ]]) ?>
+
+
+    <?= $form->field($model, 'description')->widget(Widget::className(), [
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'source' => true,
+            'imageDelete' => Url::to(['/article/file-delete']),
+            'imageManagerJson' => Url::to(['/article/images-get']),
+            'imageUpload' => Url::to(['/article/image-upload']),
+            'fileUpload' => Url::to(['/article/file-upload']),
+            'fileDelete' => Url::to(['/article/file-delete']),
+            'fileManagerJson' => Url::to(['/article/files-get']),
+            'plugins' => [
+                'clips',
+                'table',
+                'fontsize',
+                'fontcolor',
+                'fontfamily',
+                'fontcolor',
+                'video',
+            ],
+        ],
+        'plugins' => [
+            'imagemanager' => 'vova07\imperavi\bundles\ImageManagerAsset',
+            'filemanager' => 'vova07\imperavi\bundles\FileManagerAsset',
+        ],
+
+
+    ]) ?>
+
+
 
     <?php
     if (!$model->isNewRecord):

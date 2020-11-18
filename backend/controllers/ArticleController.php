@@ -44,6 +44,45 @@ class ArticleController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetImagesAction',
+                'url' => '/news/image/',
+                'path' => Yii::getAlias('@webroot/news/image'),
+            ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => '/news/image/',
+                'path' => Yii::getAlias('@webroot/news/image')
+            ],
+            'file-delete' => [
+                'class' => 'vova07\imperavi\actions\DeleteFileAction',
+                'url' => '/news/docs/',
+                'path' => Yii::getAlias('@webroot/news/docs'),
+            ],
+            'files-get' => [
+                'class' => 'vova07\imperavi\actions\GetFilesAction',
+                'url' => '/news/docs/',
+                'path' => Yii::getAlias('@webroot/news/docs'),
+            ],
+            'file-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => '/news/docs/',
+                'path' => Yii::getAlias('@webroot/news/docs'),
+                'uploadOnlyImage' => false,
+            ],
+        ];
+    }
+
+
+    /**
      * Lists all Article models.
      * @return mixed
      */

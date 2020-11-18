@@ -42,6 +42,44 @@ class PageController extends Controller
         ];
     }
 
+
+    /**
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetImagesAction',
+                'url' => '/page/image/',
+                'path' => Yii::getAlias('@webroot/page/image'),
+            ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => '/page/image/',
+                'path' => Yii::getAlias('@webroot/page/image')
+            ],
+            'file-delete' => [
+                'class' => 'vova07\imperavi\actions\DeleteFileAction',
+                'url' => '/page/docs/',
+                'path' => Yii::getAlias('@webroot/page/docs'),
+            ],
+            'files-get' => [
+                'class' => 'vova07\imperavi\actions\GetFilesAction',
+                'url' => '/page/docs/',
+                'path' => Yii::getAlias('@webroot/page/docs'),
+            ],
+            'file-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => '/page/docs/',
+                'path' => Yii::getAlias('@webroot/page/docs'),
+                'uploadOnlyImage' => false,
+            ],
+        ];
+    }
     /**
      * Lists all Page models.
      * @return mixed

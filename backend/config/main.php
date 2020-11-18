@@ -15,44 +15,44 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'controllerMap' => [
-        'elfinder' => [
-            'class' =>  \mihaildev\elfinder\Controller::class,
-            'access' => ['@'],
-            'disabledCommands' => ['netmount'],
-            'roots' => [
-                [
-                    'baseUrl' => '@web',
-                    'basePath' => '@webroot',
-                    'path' => 'news/image',
-                    'name' => 'изображения',
-                ],
-                [
-                    'baseUrl' => '@web',
-                    'basePath' => '@webroot',
-                    'path' => 'news/docs',
-                    'name' => 'документы',
-                ],
-            ]
-        ],
-        'elfinderPage' => [
-            'class' =>  \mihaildev\elfinder\Controller::class,
-            'access' => ['@'],
-            'disabledCommands' => ['netmount'],
-            'roots' => [
-                [
-                    'baseUrl' => '@web',
-                    'basePath' => '@webroot',
-                    'path' => 'page/image',
-                    'name' => 'изображения',
-                ],
-                [
-                    'baseUrl' => '@web',
-                    'basePath' => '@webroot',
-                    'path' => 'page/docs',
-                    'name' => 'документы',
-                ],
-            ]
-        ]
+//        'elfinder' => [
+//            'class' =>  \mihaildev\elfinder\Controller::class,
+//            'access' => ['@'],
+//            'disabledCommands' => ['netmount'],
+//            'roots' => [
+//                [
+//                    'baseUrl' => '@web',
+//                    'basePath' => '@webroot',
+//                    'path' => 'news/image',
+//                    'name' => 'изображения',
+//                ],
+//                [
+//                    'baseUrl' => '@web',
+//                    'basePath' => '@webroot',
+//                    'path' => 'news/docs',
+//                    'name' => 'документы',
+//                ],
+//            ]
+//        ],
+//        'elfinderPage' => [
+//            'class' =>  \mihaildev\elfinder\Controller::class,
+//            'access' => ['@'],
+//            'disabledCommands' => ['netmount'],
+//            'roots' => [
+//                [
+//                    'baseUrl' => '@web',
+//                    'basePath' => '@webroot',
+//                    'path' => 'page/image',
+//                    'name' => 'изображения',
+//                ],
+//                [
+//                    'baseUrl' => '@web',
+//                    'basePath' => '@webroot',
+//                    'path' => 'page/docs',
+//                    'name' => 'документы',
+//                ],
+//            ]
+//        ]
     ],
     'components' => [
 //        'view' => [
@@ -91,8 +91,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'site/index',
-                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+//                '' => 'site/index',
+//                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
 
