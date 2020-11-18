@@ -28,7 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <dt class="text-sm leading-5 font-medium text-gray-500">Особовий рахунок №</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->account_number ?></dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <?php
+            if($metering):?>
+                <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">№ акта</dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->act_number ?></dd>
+                </div>
+            <?php endif; ?>
+                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Споживач: П.І.Б.</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->name_of_the_tenant ?></dd>
                 </div>
@@ -44,7 +51,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <dt class="text-sm leading-5 font-medium text-gray-500">Тариф:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->total_tariff ?> грн.</dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+               <?php if($metering):?>
+                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">Витрати води:</dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $indication->current_readings_first + $indication->current_readings_second
+                        - $indication->previous_readings_first - $indication->previous_readings_second ?> м3, <br>
+                        витрати води на полив: <?= $indication->current_readings_watering - $indication->previous_readings_watering ?> м3</dd>
+                </div>
+                <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">Дата наступної повірки засобу(ів) обліку води: </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= $metering ? Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'): '' ?></dd>
+                </div>
+                <?php endif; ?>
+                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Наявність пільги:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $indication->privilege == 0 ? 'Нi' : "Так" ?></dd>
                 </div>

@@ -282,8 +282,6 @@ class ProfileController extends Controller
 //        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
 
 
-
-
         $query = IndicationsAndCharges::find()
             ->where(['account_number' => $score->account_number])
             ->groupBy('month_year');
@@ -327,11 +325,61 @@ class ProfileController extends Controller
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:d.m.Y');
         $name = 'Рахунок_' . $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
-        if ($score &&  $indication) {
-            $id = Yii::$app->queue->push(new PhpWordJob([
-                'template' => $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx",
-                'path' => $fullName,
-                'search' => [
+        if ($score && $indication) {
+            if ($metering) {
+              $search =   [
+                    'account_number',
+                    'act_number',
+                    'fio',
+                    'address',
+                    'norm',
+                    'total_tarif',
+                    'water',
+                    'watering',
+                    'verification_date',
+                    'exist_lgota',
+                    'date_debt',
+                    'debt',
+                    'accruals',
+                    'privelege_unpaid',
+                    'lgota',
+                    'current_pay',
+                    'perescore',
+                    'date_pay',
+                    'payment',
+                    'total_payment'
+
+                ];
+
+                $replace =  [
+                    $score->account_number,
+                    $score->act_number,
+                    $score->name_of_the_tenant,
+                    $score->address,
+                    $score->norm,
+                    $score->total_tariff,
+                    $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
+                    $indication->current_readings_watering - $indication->previous_readings_watering,
+                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
+                    $indication->privilege == 0 ? 'Нi' : "Так",
+                    date("d.m.Y", strtotime('first day of last month')),
+                    $indication->debt_end_month,
+                    $indication->accruals,
+                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
+                    Payment::getLgota($score->account_number, 3) ?: '-',
+                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
+                    $indication->correction,
+                    date('01.m.Y'),
+                    $indication->accruals -
+                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
+                        Payment::getLgota($score->account_number, 3),
+                    $indication->debt_end_month
+
+                ];
+
+                $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history-metering.docx";
+            } else {
+                $search =   [
                     'account_number',
 //                    'act_number',
                     'fio',
@@ -353,8 +401,9 @@ class ProfileController extends Controller
                     'payment',
                     'total_payment'
 
-                ],
-                'replace' => [
+                ];
+
+                $replace =  [
                     $score->account_number,
 //                    $score->act_number,
                     $score->name_of_the_tenant,
@@ -372,13 +421,22 @@ class ProfileController extends Controller
                     Payment::getLgota($score->account_number, 3) ?: '-',
                     Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
                     $indication->correction,
-                    date('01.m.Y') ,
+                    date('01.m.Y'),
                     $indication->accruals -
                     $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
                         Payment::getLgota($score->account_number, 3),
                     $indication->debt_end_month
 
-                ],
+                ];
+                $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx";
+            }
+
+
+            $id = Yii::$app->queue->push(new PhpWordJob([
+                'template' => $template,
+                'path' => $fullName,
+                'search' => $search ,
+                'replace' => $replace,
             ]));
         }
         $startTime = time();
