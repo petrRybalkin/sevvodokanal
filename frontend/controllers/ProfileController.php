@@ -324,8 +324,8 @@ class ProfileController extends Controller
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
-        $date = Yii::$app->formatter->asDate(('NOW'), 'php:Ymd');
-        $name = 'Нарахування та показання' . ($score->name_of_the_tenant ?: '_') . '_' . $date . '.docx';
+        $date = Yii::$app->formatter->asDate(('NOW'), 'php:d.m.Y');
+        $name = 'Нарахування_та_показання_' . $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
         if ($score && $metering && $indication) {
             $id = Yii::$app->queue->push(new PhpWordJob([
