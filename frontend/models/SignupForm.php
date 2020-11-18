@@ -4,6 +4,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use yii\bootstrap\ActiveForm;
 
 /**
  * Signup form
@@ -14,6 +15,7 @@ class SignupForm extends Model
     public $email;
     public $phone;
     public $password;
+    public $password_confirm;
 
 
     /**
@@ -36,6 +38,8 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => 10],
 
+            ['password_confirm', 'compare','compareAttribute' => 'password'],
+
             ['phone', 'required'],
             ['phone', 'string', 'min' => 12],
             ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон вже зайнятий.'],
@@ -50,6 +54,7 @@ class SignupForm extends Model
         return [
             'email'     => 'Email',
             'password'  => 'Пароль',
+            'password_confirm'  => 'Пiдтвердження пароля',
             'phone'     => 'Телефон',
         ];
     }
@@ -61,9 +66,10 @@ class SignupForm extends Model
      */
     public function signup()
     {
+
         if (!$this->validate()) {
-            return null;
-        }
+            return false;
+            }
 
             $client = new User();
             $client->username = $this->username;
@@ -72,7 +78,6 @@ class SignupForm extends Model
             $client->setPassword($this->password);
             $client->generateAuthKey();
             $client->generateEmailVerificationToken();
-
 
         return $client->save() && $this->sendEmail($client);
 
