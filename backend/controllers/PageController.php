@@ -62,6 +62,11 @@ class PageController extends Controller
                 'url' => '/page/image/',
                 'path' => Yii::getAlias('@webroot/page/image')
             ],
+            'image-delete' => [
+                'class' => 'vova07\imperavi\actions\DeleteFileAction',
+                'url' => '/page/image/',
+                'path' => Yii::getAlias('@webroot/page/image'),
+            ],
             'file-delete' => [
                 'class' => 'vova07\imperavi\actions\DeleteFileAction',
                 'url' => '/page/docs/',

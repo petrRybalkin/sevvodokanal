@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
             'lang' => 'ru',
             'minHeight' => 200,
             'source' => true,
-            'imageDelete' => Url::to(['/article/file-delete']),
+            'imageDelete' => Url::to(['/article/image-delete']),
             'imageManagerJson' => Url::to(['/article/images-get']),
             'imageUpload' => Url::to(['/article/image-upload']),
             'fileUpload' => Url::to(['/article/file-upload']),
@@ -73,14 +73,6 @@ use yii\widgets\ActiveForm;
         <a href="<?= \yii\helpers\Url::to(['article/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
     <?php endif; ?>
     <?= $form->field($model, 'img')->fileInput(['multiple' => false]) ?>
-<!--    --><?php
-//    if (!$model->isNewRecord):
-//        ?>
-<!--        <a href="--><?//= $model->getUploadedFileUrl('pdf') ?><!--">-->
-<!--            <span class="pl-2">--><?//= $model->pdf ?><!--</span>-->
-<!--        </a>-->
-<!--    --><?php //endif; ?>
-<!--    --><?//= $form->field($model, 'pdf')->fileInput(['multiple' => false]) ?>
 
     <?= $form->field($model, 'seoTitle')->textInput(['maxlength' => true]) ?>
 
