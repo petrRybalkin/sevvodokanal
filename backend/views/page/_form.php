@@ -1,5 +1,7 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 use vova07\imperavi\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -52,6 +54,7 @@ use common\models\Category;
     <hr>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+
     <?= $form->field($model, 'short_description')->widget(Widget::className(),
         ['settings' => [
             'lang' => 'ru',
@@ -68,7 +71,7 @@ use common\models\Category;
             'lang' => 'ru',
             'minHeight' => 200,
             'source' => true,
-            'imageDelete' => Url::to(['/page/file-delete']),
+            'imageDelete' => Url::to(['/page/image-delete']),
             'imageManagerJson' => Url::to(['/page/images-get']),
             'imageUpload' => Url::to(['/page/image-upload']),
             'fileUpload' => Url::to(['/page/file-upload']),
@@ -98,6 +101,7 @@ use common\models\Category;
         <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
         <a href="<?= \yii\helpers\Url::to(['page/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
     <?php endif; ?>
+
     <?= $form->field($model, 'img')->fileInput(['multiple' => false]) ?>
 
     <?= $form->field($model, 'seoTitle')->textInput(['maxlength' => true]) ?>

@@ -62,6 +62,11 @@ class ArticleController extends Controller
                 'url' => '/news/image/',
                 'path' => Yii::getAlias('@webroot/news/image')
             ],
+            'image-delete' => [
+                'class' => 'vova07\imperavi\actions\DeleteFileAction',
+                'url' => '/news/image/',
+                'path' => Yii::getAlias('@webroot/news/image'),
+            ],
             'file-delete' => [
                 'class' => 'vova07\imperavi\actions\DeleteFileAction',
                 'url' => '/news/docs/',
