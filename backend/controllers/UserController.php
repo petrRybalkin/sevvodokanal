@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use common\models\ClientMap;
+use common\models\ScoreMetering;
 use yii\filters\AccessControl;
 use backend\models\SignupAdminForm;
 use Yii;
@@ -55,6 +57,28 @@ class UserController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    public function actionScore($id)
+    {
+        $clientScore = ClientMap::find()->select('score_id')->where(['client_id' => $id])->column();
+
+        $model = new ActiveDataProvider([
+            'query' => ScoreMetering::find()->where(['id' => $clientScore]),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('score', [
+            'model' => $model
+
+
         ]);
     }
 

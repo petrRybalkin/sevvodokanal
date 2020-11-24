@@ -3,7 +3,10 @@
 namespace common\dbfImport;
 
 use common\models\Company;
+use common\models\IndicationsAndCharges;
 use common\models\Payment;
+use common\models\WaterMetering;
+use DateTime;
 use Yii;
 use yii\helpers\Json;
 
@@ -52,6 +55,32 @@ class PaymentDBF extends BaseDBF
 
         foreach ($this->parser() as $k => $item) {
             $arr =  array_combine($this->tableFaild() ,$item);
+
+//            $payExist = Payment::find()->where(['account_number' => $item['lic_schet']])->one();
+
+            $dateNow = new DateTime('now');
+            $dateMonth =  $dateNow->modify('+1 month')->format('Y-m-d');
+            $payment = Payment::find()
+                ->where(['account_number' => $item['lic_schet']])
+                ->andWhere(['between', 'month_year', $dateNow->format('Y-m-d'), $dateMonth])
+                ->all();
+
+            if ($payment) {
+                foreach ($payment as $p) {
+                    if(!$p->delete()){
+                        $error .= 'строка - ' . $k . Json::encode($p->getErrors()) . "\n";
+                    }
+                    print_r('delete' . "\n");
+                }
+
+            }
+//            if($payExist){
+//                if (!$payExist->delete()) {
+//                    $error .= 'строка - ' . $k . Json::encode($payExist->getErrors()) . "\n";
+//                }
+//                print_r('delete' . "\n");
+//            }
+
             $pay = new Payment();
             $pay->setAttributes($arr);
             if (!$pay->save(false)) {

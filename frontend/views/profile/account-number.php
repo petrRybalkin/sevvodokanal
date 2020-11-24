@@ -37,80 +37,108 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Поточна заборгованість:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?= $ind->debt_end_month ?
-                        "<i style='color: red'> $ind->debt_end_month грн</i>":
-                        "<i style='color: green'> $sum грн</i>" ?></b></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?php
+                        $date = new DateTime('now');
+                        if ($ind->debt_end_month && $ind->month_year == $date->format('Ym')){
+                            echo "<i style='color: red'> $ind->debt_end_month грн</i>";
+                        }else {
+                            echo "<i style='color: green'> $sum грн</i>";
+                        }
+
+                        ?></b></dd>
             </div>
         </dl>
     </div>
 </div>
 <br>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-<!--    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">-->
-<!--        <h3 class="text-lg leading-6 font-medium text-gray-900">Дані засобів обліку води:</h3>-->
-<!--    </div>-->
+    <!--    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">-->
+    <!--        <h3 class="text-lg leading-6 font-medium text-gray-900">Дані засобів обліку води:</h3>-->
+    <!--    </div>-->
     <div>
         <dl>
-        <?php
-        /** @var \common\models\WaterMetering $vodomer */
-        if(empty($number->vodomers)) { ?>
-            <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">Засоби обліку води відсутні</p>
-            </div>
-        <?php } else {
-        foreach ($number->vodomers as $vodomer): ?>
             <?php
-            if($vodomer->water_metering_first): ?>
+            /** @var \common\models\WaterMetering $vodomer */
+            if (empty($number->vodomers)) { ?>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->water_metering_first ?></dd>
+                    <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">Засоби обліку води відсутні</p>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку води: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?= $vodomer->previous_readings_first ?></b>,
-                        дата їх передачі <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings , 'php:d.m.Y' )?></b></dd>
-                </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">строк наступної повірки засоба обліку: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y' )?></dd>
-                </div>
-            <?php endif; ?>
-            <?php
-            if($vodomer->water_metering_second): ?>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500"><?= $vodomer->water_metering_second ? "Номер засобу обліку води №2" : '' ?></dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->water_metering_second ?></dd>
-                </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку води: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?= $vodomer->previous_readings_second ?></b>,
-                        дата їх передачі <b><?=  Yii::$app->formatter->asDate( $vodomer->date_previous_readings , 'php:d.m.Y' )?></b></dd>
-                </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Cтрок наступної повірки засоба обліку: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y' )?></dd>
-                </div>
-            <?php endif; ?>
-            <?php
-            if($vodomer->watering_number): ?>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500"><?= $vodomer->watering_number ? "Номер засобу обліку води для поливу" : '' ?></dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->watering_number ?></dd>
-                </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку води: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?= $vodomer->previous_watering_readings ?></b>,
-                        дата їх передачі <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings , 'php:d.m.Y' )?></b></dd>
-                </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">Cтрок наступної повірки засоба обліку: </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y' )?></dd>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; } ?>
+            <?php } else {
+                foreach ($number->vodomers as $vodomer): ?>
+                    <?php
+                    if ($vodomer->water_metering_first): ?>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1</dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->water_metering_first ?></dd>
+                        </div>
+                        <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку
+                                води:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <b><?= $vodomer->previous_readings_first ?></b>,
+                                дата їх передачі
+                                <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
+                            </dd>
+                        </div>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">строк наступної повірки засоба
+                                обліку:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y') ?></dd>
+                        </div>
+                    <?php endif; ?>
+                    <?php
+                    if ($vodomer->water_metering_second): ?>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500"><?= $vodomer->water_metering_second ? "Номер засобу обліку води №2" : '' ?></dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->water_metering_second ?></dd>
+                        </div>
+                        <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку
+                                води:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <b><?= $vodomer->previous_readings_second ?></b>,
+                                дата їх передачі
+                                <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
+                            </dd>
+                        </div>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Cтрок наступної повірки засоба
+                                обліку:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y') ?></dd>
+                        </div>
+                    <?php endif; ?>
+                    <?php
+                    if ($vodomer->watering_number): ?>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500"><?= $vodomer->watering_number ? "Номер засобу обліку води для поливу" : '' ?></dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->watering_number ?></dd>
+                        </div>
+                        <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку
+                                води:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <b><?= $vodomer->previous_watering_readings ?></b>,
+                                дата їх передачі
+                                <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
+                            </dd>
+                        </div>
+                        <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Cтрок наступної повірки засоба
+                                обліку:
+                            </dt>
+                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                                <?= Yii::$app->formatter->asDate($vodomer->verification_date, 'php:d.m.Y') ?></dd>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach;
+            } ?>
         </dl>
     </div>
 </div>
@@ -144,29 +172,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <div>
         <dl>
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm leading-5 font-medium text-gray-500">- вода + стоки:</dt>
+                <dt class="text-sm leading-5 font-medium text-gray-500">-послуги:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                     <?php
-
-                    if ($number->tariff_for_water !== 0 && $number->tariff_for_stocks !== 0) {
-                        echo 'вода + стоки' ;
+                    if ($number->tariff_for_water > 0 && $number->tariff_for_stocks > 0) {
+                        echo 'вода + стоки';
                     } elseif ($number->tariff_for_stocks == 0) {
-                        echo 'вода' ;
+                        echo 'вода';
                     }
 
                     ?></dd>
             </div>
             <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- тариф на водоспоживання:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $number->tariff_for_water ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->tariff_for_water, 3) ?></dd>
             </div>
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- тариф на водовідведення:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $number->tariff_for_stocks ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->tariff_for_stocks, 3) ?></dd>
             </div>
             <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- сумарний тариф:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $number->total_tariff ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->total_tariff, 3) ?></dd>
             </div>
         </dl>
     </div>

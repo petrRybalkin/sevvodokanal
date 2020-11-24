@@ -94,18 +94,21 @@ class ScoreDBF extends BaseDBF
 
             $arr = array_combine($this->tableFaild(), $item);
             if ($scoreExist) {
-                $scoreExist->updateAttributes($arr);
-                print_r('update');
-            } else {
-                $score = new ScoreMetering();
-                $score->setAttributes($arr);
-                if (!$score->save()) {
-                    $error .= 'строка - ' . $k. Json::encode($score->getErrors());
-                    continue;
-                } else {
-                    print_r('ok');
+                if (!$scoreExist->delete()) {
+                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
                 }
+//                $scoreExist->updateAttributes($arr);
+                print_r('delete' . "\n");
             }
+            $score = new ScoreMetering();
+            $score->setAttributes($arr);
+            if (!$score->save()) {
+                $error .= 'строка - ' . $k . Json::encode($score->getErrors()) . "\n";
+                continue;
+            } else {
+                print_r('ok' . "\n");
+            }
+
         }
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
         return true;

@@ -120,7 +120,7 @@ class InfoDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $item) {
+        foreach ($this->parser() as $k => $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
             $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
@@ -129,20 +129,26 @@ class InfoDBF extends BaseDBF
                 if ($item['ph1'] < $scoreExist->previous_readings_first) {
                     continue;
                 }
-
-                $scoreExist->updateAttributes($arr);
-            } else {
-                $score = new WaterMetering();
-                $score->setAttributes($arr, false);
-                if (!$score->save()) {
-                    $error .= Json::encode($score->getErrors());
-                    continue;
-                } else {
-                    print_r('ok');
+                if (!$scoreExist->delete()) {
+                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
                 }
+
+//                $scoreExist->updateAttributes($arr);
+                print_r('delete' . "\n");
             }
+            $score = new WaterMetering();
+            $score->setAttributes($arr, false);
+            if (!$score->save()) {
+                $error .= Json::encode($score->getErrors());
+                continue;
+            } else {
+                print_r('ok');
+            }
+
         }
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена ." );
+        $this->log($admin_id, $error !=='' ?
+            "Запись файла $fileName окончена. Ошибки - ".$error :
+            "Запись файла $fileName окончена ." );
         return true;
 
 

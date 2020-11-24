@@ -264,4 +264,8 @@ class Admin extends ActiveRecord implements IdentityInterface
             ->where(['id'=>Yii::$app->user->identity->role_id]);
     }
 
+    public function getClientMap()
+    {
+        return $this->hasMany(ClientMap::className(), ['client_id' => 'id']);
+    }
 }

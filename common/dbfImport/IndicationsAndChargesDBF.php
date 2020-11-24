@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 
 use common\models\IndicationsAndCharges;
+use DateTime;
 use Yii;
 use yii\helpers\Json;
 
@@ -154,6 +155,23 @@ class IndicationsAndChargesDBF extends BaseDBF
 
         foreach ($this->parser() as $k => $item) {
             $arr = array_combine($this->tableFaild(), $item);
+
+            $dateNow = new DateTime('now');
+            $dateMonth =  $dateNow->modify('+1 month')->format('Ym');
+            $indications = IndicationsAndCharges::find()
+                ->where(['account_number' => $item['lic_schet']])
+                ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
+                ->all();
+
+            if ($indications) {
+                foreach ($indications as $indication) {
+                    if(!$indication->delete()){
+                        $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
+                    }
+                    print_r('delete' . "\n");
+                }
+
+            }
 
             $score = new IndicationsAndCharges();
             $score->setAttributes($arr, false);

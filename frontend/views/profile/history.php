@@ -143,7 +143,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDate($str, 'php:m.Y') ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->count ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->debt_begin_month ?> </td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?php
+                                    $date = new DateTime('now');
+                                    if ($item->debt_end_month &&
+                                        $item->month_year == $date->format('Ym')){
+                                        echo "<i style='color: red'>" . Yii::$app->formatter->asDecimal($item->debt_begin_month,2)." грн</i>";
+                                    }else {
+                                        echo "<i style='color: green'> " . Yii::$app->formatter->asDecimal($item->debt_begin_month,2)." грн</i>";
+                                    }
+
+
+                                    ?> </td>
                                 <?php if ($metering && $metering->water_metering_first): ?>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?></td>
@@ -156,11 +166,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first + $item->current_readings_second
-                                    - $item->previous_readings_first - $item->previous_readings_second ?> </td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 2)) ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->accruals ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->correction ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= Yii::$app->formatter->asDecimal($item->current_readings_first + $item->current_readings_second
+                                    - $item->previous_readings_first - $item->previous_readings_second,2) ?> </td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 3)) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->accruals,2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?=Yii::$app->formatter->asDecimal( $item->correction,2) ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center">
                                     <?=
                                     Yii::$app->formatter->asDecimal(
@@ -171,9 +181,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             : 0)
                                         , 2)
                                     ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Payment::getLgota($score->account_number, 3, $str) ?: '0 ' ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str) ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->debt_end_month ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 3, $str) ?: 0 ,2)?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str),2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->debt_end_month ,2)?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
                         <?php endforeach; ?>

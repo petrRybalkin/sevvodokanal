@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{score} {update} {delete}',
                 'buttons' => [
                     'update' => function ($url, Admin $model) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/user/update', 'id' => $model->id], [
@@ -80,6 +80,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'method' => 'post',
                             ],
                         ]);
+                    },
+                    'score' => function ($url, Admin $model) {
+                        if ($model->clientMap) {
+                            return Html::a('Рахунки', ['/user/score', 'id' => $model->id], [
+                                'title' => 'Рахунки',
+                            ]);
+                        }
+
                     }
                 ],
                 'options' => [

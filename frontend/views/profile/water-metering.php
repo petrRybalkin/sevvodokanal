@@ -13,6 +13,7 @@ $this->title = 'Передача показань - Особистий кабі�
 $this->params['breadcrumbs'][] = $this->title;
 
 $vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
+
 if ($vodomers): ?>
     <!--    Розділ “Передача показань”:-->
 
@@ -99,7 +100,7 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
                         </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->verification_date ?></dd>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= Yii::$app->formatter->asDate($vodomers->verification_date, 'php:d.m.Y') ?></dd>
                     </div>
                 <?php endif; ?>
                 <!--                --><?php //endforeach; ?>
@@ -118,7 +119,11 @@ if ($vodomers): ?>
     </div>
     <br>
 
+    <?php
+//\yii\helpers\VarDumper::dump(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')),10,1);exit;
+//    \yii\helpers\VarDumper::dump(strtotime(date('Ym')),10,1);exit;
 
+    if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym'))):  ?>
     <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
@@ -194,6 +199,13 @@ if ($vodomers): ?>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+
+    <?php else: ?>
+        <p style="color: red">
+            Передати показники засобiв облiку води можна тiльки 1 раз на мiсяць.
+        </p>
+    <?php endif; ?>
+
 <?php else: ?>
     <p style="color: red">
         На цьому рахунку засоби обліку води відсутні
