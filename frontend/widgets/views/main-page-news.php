@@ -22,7 +22,7 @@ $url_menus = explode("/", $url);
                 <div class="py-6">
                     <?= $new->short_description ?>
                 </div>
-                <a href="<?= Url::to(['/news/'.$new->id]) ?>">
+                <a href="<?= Url::to(['/novyny/'.$new->id]) ?>">
                     <button type="button" class="btn-outline-primary transition duration-300 ease-in-out focus:outline-none focus:shadow-outline border border-purple-700 hover:bg-purple-700 text-purple-700 hover:text-white font-normal py-2 px-4 rounded mb-2">Читати повнiстью</button>
                 </a>
                 <hr class="border-b border-gray-200">
