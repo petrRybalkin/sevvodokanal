@@ -36,7 +36,8 @@ return [
         'queue' => [
             'class' => \yii\queue\db\Queue::class,
             'db' => 'db', // Компонент подключения к БД или его конфиг
-//            'ttr'   =>  3000, // без лимита времени
+            'ttr'   =>  999999999999999, // без лимита времени
+            'attempts' => 3,
             'tableName' => '{{%queue}}', // Имя таблицы
             'channel' => 'default', // Выбранный для очереди канал
             'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
