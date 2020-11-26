@@ -110,7 +110,9 @@ class ScoreDBF extends BaseDBF
             }
 
         }
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
+        $this->log($admin_id, ($error !==''
+            ? "Запись файла $fileName окончена. Ошибки - ".$error
+            : "Запись файла $fileName окончена." ));
         return true;
     }
 

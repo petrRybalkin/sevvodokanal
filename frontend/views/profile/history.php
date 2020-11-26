@@ -147,9 +147,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $date = new DateTime('now');
                                     if ($item->debt_end_month &&
                                         $item->month_year == $date->format('Ym')){
-                                        echo "<i style='color: red'>" . Yii::$app->formatter->asDecimal($item->debt_begin_month,2)." грн</i>";
+                                        echo  Yii::$app->formatter->asDecimal($item->debt_begin_month,2);
                                     }else {
-                                        echo "<i style='color: green'> " . Yii::$app->formatter->asDecimal($item->debt_begin_month,2)." грн</i>";
+                                        echo  Yii::$app->formatter->asDecimal($item->debt_begin_month,2);
                                     }
 
 
