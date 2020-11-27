@@ -35,13 +35,13 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей емейл вже зайнятий.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 10],
+            [['password','password_confirm'], 'required'],
+            [['password','password_confirm'], 'string', 'min' => 10],
 
             ['password_confirm', 'compare','compareAttribute' => 'password'],
 
             ['phone', 'required'],
-            ['phone', 'string', 'min' => 12],
+            ['phone', 'string', 'min' => 10],
             ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон вже зайнятий.'],
         ];
     }
@@ -81,6 +81,14 @@ class SignupForm extends Model
 
         return $client->save() && $this->sendEmail($client);
 
+    }
+
+    function validateCompare($attribute, $params)
+    {
+        if ($this->password != $this->password_confirm) {
+            $message = Yii::t('app', 'Значення полів "Пароль" і "Пiдтвердження пароля» не збігаються.');
+            $this->addError('password', $message);
+        }
     }
 
     /**

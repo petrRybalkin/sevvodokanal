@@ -52,15 +52,15 @@ class ResetPasswordForm extends Model
     function validateCompare($attribute, $params)
     {
         if ($this->password != $this->password_repeat) {
-            $message = Yii::t('app', 'Значения полей «Новый пароль» и «Подтверждение пароля» не совпадают.');
+            $message = Yii::t('app', 'Значення полів «Новий пароль» і «Підтвердження пароля» не збігаються.');
             $this->addError('password', $message);
         }
     }
 
     function validatePassword($attribute, $params)
     {
-        if (mb_strlen($this->$attribute) < 8) {
-            $message = Yii::t('app', 'Значение поля «Пароль» должно содержать минимум 8 символов.');
+        if (mb_strlen($this->$attribute) < 10) {
+            $message = Yii::t('app', 'Значення поля «Пароль» має містити мінімум 10 символів.');
             $this->addError('password_repeat', $message);
         }
     }

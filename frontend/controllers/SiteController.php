@@ -216,9 +216,9 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('success', 'Новий пароль збережено.');
                 return $this->goHome();
         } else {
-            Yii::$app->session->setFlash('error','Возникла ошибка в процессе изменения пароля.');
+            Yii::$app->session->setFlash('error','Виникла помилка в процесі зміни пароля.');
         }
-        
+
         return $this->render('resetPassword', [
             'model' => $model,
         ]);

@@ -36,30 +36,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div>
                 <?= $form->field($model, 'email')
-                    ->textInput(['type' => 'email', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Введіть ваш email'])
+                    ->textInput(['type' => 'email', 'tabindex'=>'-1', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Введіть ваш email'])
                     ->label('Email', ['class' => 'block text-grey-darker text-sm font-bold mb-2']) ?>
             </div>
 
             <div>
                 <?= $form->field($model, 'phone')
-                    ->textInput(['type' => 'phone', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Ваш телефон'])
+                    ->textInput(['type' => 'phone', 'tabindex'=>'-1', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Ваш телефон'])
                     ->label('Телефон', ['class' => 'block text-grey-darker text-sm font-bold mb-2 mt-3']) ?>
             </div>
 
             <div>
-                <?= $form->field($model, 'password')->passwordInput(['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Введіть ваш пароль'])
+                <?= $form->field($model, 'password')->passwordInput(['tabindex'=>'-1','class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Введіть ваш пароль'])
                     ->label('Пароль', ['class' => 'block text-grey-darker text-sm font-bold mb-2 mt-3']) ?>
                 <p class="text-grey text-xs mt-1">Принаймні 10 символів</p>
             </div>
             <div>
                 <?= $form->field($model, 'password_confirm')->passwordInput(['class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5', 'placeholder' => 'Введіть ваш пароль ще раз'])
-                    ->label('Пiдтвердження пароля', ['class' => 'block text-grey-darker text-sm font-bold mb-2 mt-3']) ?>
+                    ->label('Пiдтвердження пароля', ['tabindex'=>'-1','class' => 'block text-grey-darker text-sm font-bold mb-2 mt-3']) ?>
 <!--                <p class="text-grey text-xs mt-1">Введiть пароль ще раз</p>-->
             </div>
         </div>
 
         <div class="mt-6">
-            <button type="submit" name="signup-button" value="1"
+            <button type="submit" name="signup-button" value="1" tabindex="-1"
                     class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
                   <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                     <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150"
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </button>
         </div>
         <p class="text-center my-4">
-            <?= Html::a('У мене вже є обліковий запис', ['/site/login'], ['class' => 'text-grey-dark text-sm no-underline hover:text-grey-darker']) ?>
+            <?= Html::a('У мене вже є обліковий запис', ['/site/login'], ['tabindex'=>'-1','class' => 'text-grey-dark text-sm no-underline hover:text-grey-darker']) ?>
         </p>
         <!--        </form>-->
         <?php ActiveForm::end(); ?>
