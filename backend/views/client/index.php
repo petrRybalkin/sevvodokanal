@@ -1,5 +1,6 @@
 <?php
 
+use common\models\ClientMap;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\User;
@@ -32,7 +33,21 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password_hash',
             //'password_reset_token',
             'phone',
-            'email:email',
+            [
+                'attribute' => 'email',
+                'format' => 'raw',
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Начните вводить емейл клиента...'
+                ],
+                'value' => function (User $model) {
+                    if (!$model->email) {
+                        return '-';
+                    }
+
+                    return $model->email ;
+                }
+            ],
             [
                 'attribute' => 'status',
                 'filter' => User::enumStatus(),
@@ -44,6 +59,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($model->status == User::STATUS_INACTIVE) return '<span class="label label-warning">' . User::enumStatus($model->status) . '</span>';
                     if ($model->status == User::STATUS_DELETED) return '<span class="label label-primary">' . User::enumStatus($model->status) . '</span>';
                 },
+            ],
+            [
+                'attribute' => 'auth_key',
+                'label'=>'счета',
+                'format' => 'raw',
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Начните вводить счет клиента...'
+                ],
+                'value' => function (User $model) {
+//                    $scores = $model->getClientScores($model->client_id);
+//
+//                    $return = '';
+//                    foreach ($scores as $item) {
+//                        $return .= "<p>" . $item->account_number . "</p>";
+//                    }
+                    return 555;
+                }
             ],
             [
                 'attribute' => 'created_at',

@@ -19,7 +19,7 @@ class UserSearch extends User
         return [
             [['id', 'status', 'action', 'phone'], 'integer'],
             [['username', 'email'], 'string'],
-            [['created_at', 'message'], 'safe'],
+            [['created_at', 'message','auth_key'], 'safe'],
         ];
     }
 
@@ -60,16 +60,20 @@ class UserSearch extends User
             'id' => $this->id,
             'status' => $this->status,
             'username' => $this->username,
-            'email' => $this->email,
+//            'email' => $this->email,
             'phone' => $this->phone,
             'created_at' => $this->created_at,
         ]);
-
-        $query->andFilterWhere(['like', 'email', $this->email])
+if($this->auth_key){
+    $query->leftJoin('score_metering', 'user.id = client_map.client_id');
+    $query->andFilterWhere(['like', 'score_metering.account_number', $this->auth_key]);
+}
+        $query->andFilterWhere(['like', 'email', trim($this->email)])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'created_at', $this->created_at]);
+
 
         return $dataProvider;
     }

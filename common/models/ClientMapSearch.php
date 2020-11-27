@@ -44,8 +44,8 @@ class ClientMapSearch extends ClientMap
     {
         $query = ClientMap::find()
             ->groupBy('client_id');
-        $query->leftJoin('user', 'user.id = client_map.client_id');
-        $query->joinWith('score');
+
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -68,13 +68,14 @@ class ClientMapSearch extends ClientMap
         ]);
 
         if ($this->client_id) {
-
-            $query->andFilterWhere(['like', 'user.email', trim("{$this->client_id}")]);
+            $query = User::find();
+//            $query->leftJoin('user', 'user.id = client_map.client_id');
+            $query->where(['like', 'email', trim($this->client_id)]);
 //            \yii\helpers\VarDumper::dump($query->createCommand()->rawSql,10,1);exit;
         }
 
         if ($this->score_id) {
-
+            $query->joinWith('score');
             $query->andFilterWhere(['like', 'score_metering.account_number',  trim($this->score_id)]);
 
         }
