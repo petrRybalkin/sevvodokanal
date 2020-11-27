@@ -15,11 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <!--    <p>-->
-    <!--        --><? //= Html::a('Create Client Map', ['create'], ['class' => 'btn btn-success']) ?>
-    <!--    </p>-->
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
