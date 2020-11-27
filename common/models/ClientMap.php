@@ -41,8 +41,8 @@ class ClientMap extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'client_id' => 'Client ID',
-            'score_id' => 'Score ID',
+            'client_id' => 'Клиент',
+            'score_id' => 'Счет',
         ];
     }
 
@@ -62,5 +62,22 @@ class ClientMap extends \yii\db\ActiveRecord
     public function getScore()
     {
         return $this->hasOne(ScoreMetering::class, ['id' => 'score_id']);
+    }
+
+    public function getClient()
+    {
+        return $this->hasOne(User::class, ['id' => 'client_id']);
+    }
+
+    public function getClientScores($client_id)
+    {
+        $r = ClientMap::find()
+            ->select(['score_id'])
+            ->where(['client_id' => $client_id])
+            ->asArray()
+            ->column();
+
+       return \common\models\ScoreMetering::find()->where(['id' => $r])->all();
+
     }
 }

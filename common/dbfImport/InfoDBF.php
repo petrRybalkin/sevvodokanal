@@ -129,12 +129,12 @@ class InfoDBF extends BaseDBF
                 if ($item['ph1'] < $scoreExist->previous_readings_first) {
                     continue;
                 }
-                if (!$scoreExist->delete()) {
-                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
-                }
+//                if (!$scoreExist->delete()) {
+//                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
+//                }
 
-//                $scoreExist->updateAttributes($arr);
-                print_r('delete' . "\n");
+                $scoreExist->updateAttributes($arr);
+                print_r('update' . "\n");
             }
             $score = new WaterMetering();
             $score->setAttributes($arr, false);

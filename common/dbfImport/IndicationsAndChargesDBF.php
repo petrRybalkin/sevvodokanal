@@ -76,12 +76,12 @@ class IndicationsAndChargesDBF extends BaseDBF
             ],
             'khv' => [
                 'field' => 'water_consumption',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Обсяг водоспоживання по воді',
             ],
             'kpv' => [
                 'field' => 'watering_consumption',
-                'type' => static::TYPE_FLOAT,
+                'type' => static::TYPE_NUMERIC,
                 'title' => 'Обсяг водоспоживання по поливу',
             ],
             'sumtarif' => [

@@ -31,15 +31,14 @@ return [
         ],
         'db' => [
             'class' => \yii\db\Connection::class,
-            // ...
         ],
         'queue' => [
             'class' => \yii\queue\db\Queue::class,
-            'db' => 'db', // Компонент подключения к БД или его конфиг
-            'ttr'   =>  86400000, // без лимита времени
+            'db' => 'db',
+            'ttr'   =>  86400000,
             'attempts' => 3,
-            'tableName' => '{{%queue}}', // Имя таблицы
-            'channel' => 'default', // Выбранный для очереди канал
+            'tableName' => '{{%queue}}',
+            'channel' => 'default',
             'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
             'as log' => \yii\queue\LogBehavior::class,
         ],

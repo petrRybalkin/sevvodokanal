@@ -94,11 +94,11 @@ class ScoreDBF extends BaseDBF
 
             $arr = array_combine($this->tableFaild(), $item);
             if ($scoreExist) {
-                if (!$scoreExist->delete()) {
-                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
-                }
-//                $scoreExist->updateAttributes($arr);
-                print_r('delete' . "\n");
+//                if (!$scoreExist->delete()) {
+//                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
+//                }
+                $scoreExist->updateAttributes($arr);
+                print_r('update' . "\n");
             }
             $score = new ScoreMetering();
             $score->setAttributes($arr);
