@@ -26,6 +26,8 @@ ul.pagination li a:hover{color:#5e5e5e}
     .md\:text-2xl {font-size: 1rem}
     .text-base {font-size: 0.85rem;}
 }
+input[type='number'] {-moz-appearance:textfield}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance:none}
 
 /*.container.lk-sev{max-width:100% !important;}*/
 /*@media (max-width: 639px) {*/
