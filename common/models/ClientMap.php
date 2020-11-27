@@ -69,15 +69,5 @@ class ClientMap extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'client_id']);
     }
 
-    public function getClientScores($client_id)
-    {
-        $r = ClientMap::find()
-            ->select(['score_id'])
-            ->where(['client_id' => $client_id])
-            ->asArray()
-            ->column();
 
-       return \common\models\ScoreMetering::find()->where(['id' => $r])->all();
-
-    }
 }

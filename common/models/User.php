@@ -283,4 +283,16 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(ClientMap::className(), ['client_id' => 'id']);
     }
+
+    public function getClientScores($client_id)
+    {
+        $r = ClientMap::find()
+            ->select(['score_id'])
+            ->where(['client_id' => $client_id])
+            ->asArray()
+            ->column();
+
+        return \common\models\ScoreMetering::find()->where(['id' => $r])->all();
+
+    }
 }

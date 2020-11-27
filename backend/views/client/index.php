@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return '-';
                     }
 
-                    return $model->email ;
+                    return $model->email;
                 }
             ],
             [
@@ -62,20 +62,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'auth_key',
-                'label'=>'счета',
+                'label' => 'Cчета',
                 'format' => 'raw',
                 'filterInputOptions' => [
                     'class' => 'form-control',
                     'placeholder' => 'Начните вводить счет клиента...'
                 ],
                 'value' => function (User $model) {
-//                    $scores = $model->getClientScores($model->client_id);
-//
-//                    $return = '';
-//                    foreach ($scores as $item) {
-//                        $return .= "<p>" . $item->account_number . "</p>";
-//                    }
-                    return 555;
+
+                    $scores = $model->getClientScores($model->id);
+                    $return = '';
+                    foreach ($scores as $item) {
+                        $return .= "<p>" . $item->account_number . "</p>";
+                    }
+                    return $return;
                 }
             ],
             [

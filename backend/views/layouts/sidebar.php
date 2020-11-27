@@ -50,10 +50,6 @@ use common\models\Admin;
                             ['label' => 'еще что-то с абонентами', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ],
-                    [
-                       'label' => 'Счета', 'url' => ['client-map/index'], 'iconStyle' => 'far',
-                       'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1,
-                    ],
 
                     ['label' => 'Загрузка/выгрузка данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
                     ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
