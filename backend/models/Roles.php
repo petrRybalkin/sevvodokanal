@@ -37,7 +37,6 @@ class Roles extends \yii\db\ActiveRecord
     {
         return [
             [['access_pages', 'access_news', 'access_users', 'access_abonents'], 'integer'],
-            //['access_one_page', Page::getPages()],
             ['access_one_page', 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -55,7 +54,7 @@ class Roles extends \yii\db\ActiveRecord
             'access_news' => 'Редактирование статей',
             'access_users' => 'Редактирование пользователей',
             'access_abonents' => 'Редактирование абонентов',
-            'access_one_page' => '',
+            'access_one_page' => 'Редактирование одной страницы',
         ];
     }
 

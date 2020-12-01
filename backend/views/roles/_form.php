@@ -11,7 +11,7 @@ use common\models\Page;
 ?>
 
 <div class="roles-form">
-<style>#roles-access_one_page label{display:block}</style>
+<style>#roles-access_one_page label{display:block;margin:5px 0;padding:10px}</style>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
