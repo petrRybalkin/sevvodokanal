@@ -289,7 +289,7 @@ class ProfileController extends Controller
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
 
         $indication = $query->offset($pages->offset)
-            ->orderBy('month_year DESC')
+            ->orderBy('month_year ASC')
             ->limit($pages->limit)
             ->all();
 
