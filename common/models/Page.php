@@ -325,10 +325,9 @@ class Page extends \yii\db\ActiveRecord
     }
 
     public static function getPages(){
-        //return self::findAll(['active' => 1]);
-        return self::find()->orderBy([
+        return ArrayHelper::map(Page::find()->orderBy([
             'id' => SORT_ASC,
-        ])->all();
+        ])->asArray()->all(), 'id', 'title');
     }
 
     public static function getParentsList()

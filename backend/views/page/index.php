@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Page::statusMenuList(),
                 'format' => 'raw',
                 'value' => function (Page $model) {
-                    return Html::a($model->getStatusMenuTag(), ['update', 'id' => $model->id]);
+                    return Html::a($model->getStatusMenuTag());
                 }
             ],
             [
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Page::statusSidebarList(),
                 'format' => 'raw',
                 'value' => function (Page $model) {
-                    return Html::a($model->getStatusSidebarTag(), ['update', 'id' => $model->id]);
+                    return Html::a($model->getStatusSidebarTag());
                 }
             ],
             [
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Page::statusFooterList(),
                 'format' => 'raw',
                 'value' => function (Page $model) {
-                    return Html::a($model->getStatusFooterTag(), ['update', 'id' => $model->id]);
+                    return Html::a($model->getStatusFooterTag());
                 }
             ],
             [
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Page::statusList(),
                 'format' => 'raw',
                 'value' => function (Page $model) {
-                    return Html::a($model->getStatusTag(), ['update', 'id' => $model->id]);
+                    return Html::a($model->getStatusTag());
                 }
             ],
             'create_utime',
@@ -73,11 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, Page $model) {
+                    if(Yii::$app->user->identity->roleOption->access_pages == 1 || Yii::$app->user->identity->roleOption->access_one_page == $model->id){
                         return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/page/update', 'id' => $model->id], [
                             'title' => 'Update',
                         ]);
+                    }
+
+
                     },
                     'delete' => function ($url, Page $model) {
+                    if(Yii::$app->user->identity->roleOption->access_pages == 1) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/page/delete', 'id' => $model->id], [
                             'title' => 'Delete',
                             'class' => 'btn btn-danger',
@@ -86,6 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'method' => 'post',
                             ],
                         ]);
+                    }
                     }
                 ],
                 'options' => [

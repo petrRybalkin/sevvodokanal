@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\models\Category;
+use common\models\Page;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Page */

@@ -11,7 +11,7 @@ use common\models\Page;
 ?>
 
 <div class="roles-form">
-
+<style>#roles-access_one_page label{display:block}</style>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -21,18 +21,9 @@ use common\models\Page;
     <?= $form->field($model, 'access_users')->checkbox() ?>
     <?= $form->field($model, 'access_abonents')->checkbox() ?>
 
-    <?php
-    $test = Page::getPages();
-    //\yii\helpers\VarDumper::dump($test, 10, 10);
-    foreach (Page::getPages() as $page){
-        echo $page['id'];
-        //echo '<br>';
-        //echo $page['title'];
-        echo '<br>';
-        //$form->field($model, 'img')->radioList($items = ['Не показывать', 'В левой колонке', 'В правой колонке']);
-        echo $form->field($model, 'access_one_page')->radio(['label' => $page['title'], 'value' => $page['id']]);
-    }
-    ?>
+    <h2>Права на редактирование определенной страницы:</h2>
+    <?= $form->field($model, 'access_one_page')->radioList(Page::getPages()); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
