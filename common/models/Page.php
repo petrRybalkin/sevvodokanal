@@ -179,6 +179,7 @@ class Page extends \yii\db\ActiveRecord
      * @param string $default
      * @param null $active
      * @return string
+     * @throws \Exception
      */
     public function getStatusLabel($default = '-', $active = null)
     {
@@ -312,6 +313,7 @@ class Page extends \yii\db\ActiveRecord
         return Html::tag('span', $this->getStatusFooterLabel(), $options);
     }
 
+
     public static function getParents()
     {
         return self::find()->where([
@@ -320,6 +322,13 @@ class Page extends \yii\db\ActiveRecord
 //        ->orderBy([
 //            'sort' => SORT_DESC,
 //        ]);
+    }
+
+    public static function getPages(){
+        //return self::findAll(['active' => 1]);
+        return self::find()->orderBy([
+            'id' => SORT_ASC,
+        ])->all();
     }
 
     public static function getParentsList()
