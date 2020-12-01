@@ -34,12 +34,12 @@ use common\models\User;
             <?php if(Yii::$app->user->isGuest): ?>
                 <div class="relative profile group w-1/4 sm:invisible md:visible">
                     <div class="flex justify-end">
-                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </button>
-                        <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                        </div>
+                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </button>
+                        </div>
                     </div>
                 </div>
             <?php else: ?>
