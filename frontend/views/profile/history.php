@@ -166,11 +166,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= Yii::$app->formatter->asDecimal($item->current_readings_first + $item->current_readings_second
-                                    - $item->previous_readings_first - $item->previous_readings_second,2) ?> </td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 3)) ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->accruals,2) ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?=Yii::$app->formatter->asDecimal( $item->correction,2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"> <?=
+                                    Yii::$app->formatter->asDecimal($item->current_readings_first + $item->current_readings_second
+                                    - $item->previous_readings_first - $item->previous_readings_second,2)
+                                    ?> </td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 3)) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?= Yii::$app->formatter->asDecimal($item->accruals,2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?=Yii::$app->formatter->asDecimal( $item->correction,2) ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center">
                                     <?=
                                     Yii::$app->formatter->asDecimal(
@@ -188,8 +193,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 : 0
                                             ,2)?>
                                 </td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str)->sum,2) ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->debt_end_month ,2)?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str)->sum,2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?= Yii::$app->formatter->asDecimal($item->debt_end_month ,2)?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
                         <?php endforeach; ?>

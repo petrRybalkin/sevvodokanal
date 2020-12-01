@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\ClientMap;
 use yii\data\Pagination;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use common\models\IndicationsAndCharges;
 use common\models\Payment;
@@ -283,8 +284,8 @@ class ProfileController extends Controller
 
 
         $query = IndicationsAndCharges::find()
-            ->where(['account_number' => $score->account_number])
-            ->groupBy('month_year');
+            ->where(['account_number' => $score->account_number]);
+//            ->groupBy('month_year');
 //        $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
 

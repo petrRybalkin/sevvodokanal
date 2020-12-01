@@ -53,9 +53,10 @@ class Payment extends \yii\db\ActiveRecord
     }
 
 
-    public static function getLgota($account_number, $pr, $date = null)
+    public static function getLgota($account_number, $pr, $date = null, $asArray = false)
     {
         $p = Payment::find()
+            ->select(new Expression('id, account_number, pr, sum, SUM(sum) as sumAll'))
             ->where([
                 'account_number' => $account_number,
                 'pr' => $pr,
@@ -75,7 +76,12 @@ class Payment extends \yii\db\ActiveRecord
         }
 
         $p->orderBy(['id' => SORT_DESC]);
-        return $p->one();
+
+        if($asArray){
+           return  $p->asArray()->one();
+        }else{
+            return $p->one();
+        }
     }
 
 }

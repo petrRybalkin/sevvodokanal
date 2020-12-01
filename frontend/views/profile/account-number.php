@@ -4,6 +4,8 @@ use common\models\Payment;
 use frontend\widgets\SidebarProfileWidget;
 use yii\helpers\Url;
 
+/** @var \common\models\IndicationsAndCharges $ind */
+
 $this->title = 'Дані особового рахунку - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,8 +16,37 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php
     /** @var \common\models\ScoreMetering $number */
+    $date = new DateTime('now');
+    $debt = 0;
     $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])->orderBy(['id' => SORT_DESC])->one();
-    $sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
+    if($ind){
+
+
+        if ($ind->month_year == $date->format('Ym')) {
+            $payThisMonth = Payment::getLgota($number->account_number,1,$date->format('Y-m-d'), true);
+//        (если человек передал показания на сайте то
+            if ($number->tariff_for_water > 0 && $number->tariff_for_stocks > 0) {
+                // (khv+kpv)*tarifv+(khv*tarifst)если есть вода и стоки,
+                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water +
+                    ($ind->water_consumption * $number->tariff_for_stocks);
+            } elseif ($number->tariff_for_stocks == 0) {
+                // или (khv+kpv)*tarifv) если только вода)
+                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water;
+            }
+
+// -(минус) оплата в текущем месяце.
+            $debt = $s-$payThisMonth['sumAll'];
+        }else{
+//        задолженность на конец месяца+начисления
+
+            $debt = $ind->debt_end_month+$ind->accruals;
+
+        }
+
+        //    $sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
+    }
+
+
     ?>
     <div>
         <dl>
@@ -38,11 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Поточна заборгованість:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?php
-                        $date = new DateTime('now');
-                        if ($ind->debt_end_month && $ind->month_year == $date->format('Ym')){
-                            echo "<i style='color: red'> $ind->debt_end_month грн</i>";
+
+                        if ($debt){
+                            echo "<i style='color: red'> $debt грн</i>";
                         }else {
-                            echo "<i style='color: green'> $sum грн</i>";
+                            echo "<i style='color: green'> $debt грн</i>";
                         }
 
                         ?></b></dd>
