@@ -60,6 +60,11 @@ class Payment extends \yii\db\ActiveRecord
                 'account_number' => $account_number,
                 'pr' => $pr,
             ]);
+
+        if(!$p){
+            return null;
+        }
+
         if ($date) {
             $datew = new DateTime($date);
             $datek =  $datew->modify('+30 day')->format('Y-m-d');

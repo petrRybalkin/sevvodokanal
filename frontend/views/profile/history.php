@@ -181,8 +181,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             : 0)
                                         , 2)
                                     ?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 3, $str) ?: 0 ,2)?></td>
-                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str),2) ?></td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center">
+                                    <?= Yii::$app->formatter->asDecimal(
+                                            Payment::getLgota($score->account_number, 3, $str) ?
+                                                Payment::getLgota($score->account_number, 3, $str)->sum
+                                                : 0
+                                            ,2)?>
+                                </td>
+                                <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0 ? $item->privilege_unpaid : Payment::getLgota($score->account_number, 2, $str)->sum,2) ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= Yii::$app->formatter->asDecimal($item->debt_end_month ,2)?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
