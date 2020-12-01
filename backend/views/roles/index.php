@@ -26,10 +26,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'access_pages',
-            'access_news',
-            'access_users',
-            'access_abonents',
+            //'access_pages',
+            //'access_news',
+            //'access_users',
+            //'access_abonents',
+            'access_one_page',
+            [
+                'attribute' => 'access_pages',
+                'filter' => Roles::statusList(),
+                'format' => 'raw',
+                'value' => function (Roles $model) {
+                    return Html::a($model->getStatusPagesTag(), ['update', 'id' => $model->id]);
+                }
+            ],
+            [
+                'attribute' => 'access_news',
+                'filter' => Roles::statusList(),
+                'format' => 'raw',
+                'value' => function (Roles $model) {
+                    return Html::a($model->getStatusNewsTag(), ['update', 'id' => $model->id]);
+                }
+            ],
+            [
+                'attribute' => 'access_users',
+                'filter' => Roles::statusList(),
+                'format' => 'raw',
+                'value' => function (Roles $model) {
+                    return Html::a($model->getStatusUsersTag(), ['update', 'id' => $model->id]);
+                }
+            ],
+            [
+                'attribute' => 'access_abonents',
+                'filter' => Roles::statusList(),
+                'format' => 'raw',
+                'value' => function (Roles $model) {
+                    return Html::a($model->getStatusAbonentTag(), ['update', 'id' => $model->id]);
+                }
+            ],
 
             //['class' => 'yii\grid\ActionColumn'],
             [
