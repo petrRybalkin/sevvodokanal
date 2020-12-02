@@ -153,6 +153,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
+        try {
         foreach ($this->parser() as $k => $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
@@ -184,6 +185,9 @@ class IndicationsAndChargesDBF extends BaseDBF
                 print_r('ok');
             }
 
+        }
+        } catch (\Exception $e) {
+            $this->log($admin_id, $e);
         }
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
         return true;
