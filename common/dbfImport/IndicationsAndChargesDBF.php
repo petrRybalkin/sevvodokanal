@@ -157,7 +157,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             $arr = array_combine($this->tableFaild(), $item);
 
             $dateNow = new DateTime('now');
-            $dateMonth =  $dateNow->modify('+1 month')->format('Ym');
+            $dateMonth =  $dateNow->modify('-1 month')->format('Ym');
             $indications = IndicationsAndCharges::find()
                 ->where(['account_number' => $item['lic_schet']])
                 ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
