@@ -4,8 +4,9 @@ namespace common\queue;
 
 use Yii;
 use yii\queue\JobInterface;
+use yii\queue\RetryableJobInterface;
 
-class DbfJob extends BaseJob implements JobInterface
+class DbfJob extends BaseJob implements RetryableJobInterface
 {
 
     public $file;
