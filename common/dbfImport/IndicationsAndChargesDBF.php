@@ -153,7 +153,6 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        try {
         foreach ($this->parser() as $k => $item) {
             $arr = array_combine($this->tableFaild(), $item);
 
@@ -164,11 +163,14 @@ class IndicationsAndChargesDBF extends BaseDBF
                 ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
                 ->all();
 
+
             if ($indications) {
                 foreach ($indications as $indication) {
                     if(!$indication->delete()){
                         $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
+
                     }
+                    $this->log($admin_id,"delete  $k  - " .$item['lic_schet']);
                     print_r('delete' . "\n");
                 }
 
@@ -183,11 +185,9 @@ class IndicationsAndChargesDBF extends BaseDBF
                 continue;
             } else {
                 print_r('ok');
+                $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
             }
 
-        }
-        } catch (\Exception $e) {
-            $this->log($admin_id, $e->getMessage());
         }
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
         return true;
