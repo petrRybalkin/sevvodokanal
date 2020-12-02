@@ -163,6 +163,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                 ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
                 ->all();
 
+            $this->log($admin_id,"$k _1");
 
             if ($indications) {
                 foreach ($indications as $indication) {
@@ -175,10 +176,13 @@ class IndicationsAndChargesDBF extends BaseDBF
                 }
 
             }
+            $this->log($admin_id,"$k _2");
 
             $score = new IndicationsAndCharges();
             $score->setAttributes($arr, false);
             $score->setAttributes(['synchronization' => 0]);
+
+            $this->log($admin_id,"$k _3");
 
             if (!$score->save()) {
                 $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
@@ -187,8 +191,9 @@ class IndicationsAndChargesDBF extends BaseDBF
                 print_r('ok');
                 $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
             }
-
+            $this->log($admin_id,"$k _4");
         }
+
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
         return true;
 

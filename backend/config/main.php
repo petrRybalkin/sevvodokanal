@@ -81,16 +81,6 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'info'],
                 ],
-                [
-                    'class' => 'yii\log\EmailTarget',
-                    'levels' => ['error', 'warning', 'info'],
-                    'categories' => ['yii\db\*'],
-                    'message' => [
-                        'from' => ['log@example.com'],
-                        'to' => ['anyuta.serik@gmail.com'],
-                        'subject' => 'Database errors at severvoda.com',
-                    ],
-                ],
 
 
             ],
