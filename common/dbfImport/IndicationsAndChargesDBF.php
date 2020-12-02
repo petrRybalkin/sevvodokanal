@@ -160,24 +160,28 @@ class IndicationsAndChargesDBF extends BaseDBF
 
             $dateNow = new DateTime('now');
             $dateMonth =  $dateNow->modify('-1 month')->format('Ym');
+
+
             $indications = IndicationsAndCharges::find()
                 ->where(['account_number' => $item['lic_schet']])
                 ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
-                ->all();
+                ->delete();
+
+
 
             $this->log($admin_id,"$k _1");
 
-            if ($indications) {
-                foreach ($indications as $indication) {
-                    if(!$indication->delete()){
-                        $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
-
-                    }
-                    $this->log($admin_id,"delete  $k  - " .$item['lic_schet']);
-                    print_r('delete' . "\n");
-                }
-
-            }
+//            if ($indications) {
+//                foreach ($indications as $indication) {
+//                    if(!$indication->delete()){
+//                        $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
+//
+//                    }
+//                    $this->log($admin_id,"delete  $k  - " .$item['lic_schet']);
+//                    print_r('delete' . "\n");
+//                }
+//
+//            }
             $this->log($admin_id,"$k _2");
 
             $score = new IndicationsAndCharges();

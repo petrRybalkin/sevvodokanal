@@ -45,7 +45,7 @@ return [
         'queue' => [
             'class' => 'yii\queue\db\Queue',
             'db' => 'db', // DB connection component or its config
-            'ttr'   =>  120*60,
+            'ttr'   => 60,
             'tableName' => '{{%queue}}', // Table name
             'channel' => 'default', // Queue channel key
             'mutex' => 'yii\mutex\MysqlMutex', // Mutex used to sync queries
