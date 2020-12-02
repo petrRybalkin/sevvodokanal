@@ -156,20 +156,30 @@ class IndicationsAndChargesDBF extends BaseDBF
         $items = $this->parser();
         foreach ($items as $k => $item) {
             $this->log($admin_id,"$k _0");
+//            print_r("$k _0". "\n");
             $arr = array_combine($this->tableFaild(), $item);
 
             $dateNow = new DateTime('now');
             $dateMonth =  $dateNow->modify('-1 month')->format('Ym');
 
 
-            $indications = IndicationsAndCharges::find()
-                ->where(['account_number' => $item['lic_schet']])
-                ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
-                ->delete();
+//            $indications = IndicationsAndCharges::find()
+//                ->where(['account_number' => $item['lic_schet']])
+//                ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
+//                ->delete();
 
+//            print_r('1');
+            IndicationsAndCharges::deleteAll([
+                'AND',
+                'account_number' => $item['lic_schet'],
+                ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
+            ]);
 
+//            print_r('del');
 
-            $this->log($admin_id,"$k _1");
+            $this->log($admin_id,"$k _del");
+
+//            $this->log($admin_id,"$k _1");
 
 //            if ($indications) {
 //                foreach ($indications as $indication) {
@@ -182,22 +192,24 @@ class IndicationsAndChargesDBF extends BaseDBF
 //                }
 //
 //            }
-            $this->log($admin_id,"$k _2");
+//            $this->log($admin_id,"$k _2");
 
             $score = new IndicationsAndCharges();
             $score->setAttributes($arr, false);
             $score->setAttributes(['synchronization' => 0]);
 
-            $this->log($admin_id,"$k _3");
+            $this->log($admin_id,"$k _1");
 
             if (!$score->save()) {
+                print_r('no'. $k . "\n");
                 $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
+                $this->log($admin_id,"$k".$error."\n");
                 continue;
             } else {
-                print_r('ok');
+                print_r('ok'. "\n");
                 $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
             }
-            $this->log($admin_id,"$k _4");
+            $this->log($admin_id,"$k _2");
         }
 
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );

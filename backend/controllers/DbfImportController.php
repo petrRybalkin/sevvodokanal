@@ -190,7 +190,7 @@ class DbfImportController extends Controller
         $dataProvider = new ArrayDataProvider([
             'allModels' => $dataArray,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 100,
             ],
             'sort' => [
                 'attributes' => [
