@@ -187,7 +187,7 @@ class IndicationsAndChargesDBF extends BaseDBF
 
         }
         } catch (\Exception $e) {
-            $this->log($admin_id, $e);
+            $this->log($admin_id, $e->getMessage());
         }
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
         return true;
