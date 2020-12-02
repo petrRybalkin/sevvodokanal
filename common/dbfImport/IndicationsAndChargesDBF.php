@@ -155,7 +155,7 @@ class IndicationsAndChargesDBF extends BaseDBF
 
         $items = $this->parser();
         foreach ($items as $k => $item) {
-            $this->log($admin_id,"$k _0");
+//            $this->log($admin_id,"$k _0");
 //            print_r("$k _0". "\n");
             $arr = array_combine($this->tableFaild(), $item);
 
@@ -198,18 +198,18 @@ class IndicationsAndChargesDBF extends BaseDBF
             $score->setAttributes($arr, false);
             $score->setAttributes(['synchronization' => 0]);
 
-            $this->log($admin_id,"$k _1");
+//            $this->log($admin_id,"$k _1");
 
             if (!$score->save()) {
-                print_r('no'. $k . "\n");
+//                print_r('no'. $k . "\n");
                 $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
-                $this->log($admin_id,"$k".$error."\n");
+//                $this->log($admin_id,"$k".$error."\n");
                 continue;
             } else {
-                print_r('ok'. "\n");
+//                print_r('ok'. "\n");
                 $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
             }
-            $this->log($admin_id,"$k _2");
+//            $this->log($admin_id,"$k _2");
         }
 
         $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );

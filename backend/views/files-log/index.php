@@ -10,6 +10,9 @@ use yii\grid\GridView;
 
 $this->title = 'Лог загрузки файлов';
 $this->params['breadcrumbs'][] = $this->title;
+
+
+$dataProvider->pagination->pageSize = 100;
 ?>
 <div class="files-log-index">
 
