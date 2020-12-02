@@ -49,7 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Тариф:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($score->total_tariff, 3) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($score->total_tariff, 3) ?>
                         грн.
                     </dd>
                 </div>
@@ -90,53 +91,67 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endif; ?>
                 <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Наявність пільги:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $indication->privilege == 0 ? 'Нi' : "Так" ?></dd>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= $indication->privilege == 0 ? 'Нi' : "Так" ?></dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Заборгованість станом на
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Нараховано:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->accruals, 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->accruals, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Пільга:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2), 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->privilege_unpaid !== 0
+                            ? $indication->privilege_unpaid
+                            : Payment::getLgota($score->account_number, 2), 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Субсидія:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 3) ?: 0, 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 3)->sum ?: 0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Поточна оплата:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : 0, 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 1)
+                            ? Payment::getLgota($score->account_number, 1)->sum
+                            : 0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Перерахунок:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->correction, 2) ?></dd>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->correction, 2) ?></dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm leading-5 font-medium text-gray-500">До оплати на <?= date('01.m.Y') ?>р. :</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                    <dt class="text-sm leading-5 font-medium text-gray-500">До оплати на
+                        <?= date('01.m.Y') ?>р. :</dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Всього до оплати:</dt>
-                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
                         грн.
                     </dd>
                 </div>
