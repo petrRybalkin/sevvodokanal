@@ -6,7 +6,7 @@ use Yii;
 use yii\queue\JobInterface;
 use yii\queue\RetryableJobInterface;
 
-class DbfJob extends BaseJob implements RetryableJobInterface
+class DbfJob extends BaseJob implements JobInterface
 {
 
     public $file;
