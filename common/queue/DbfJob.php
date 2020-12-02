@@ -27,7 +27,7 @@ class DbfJob extends BaseJob implements JobInterface
 
     public function getTtr()
     {
-        return 15;
+        return 15 * 60;
     }
 
 
