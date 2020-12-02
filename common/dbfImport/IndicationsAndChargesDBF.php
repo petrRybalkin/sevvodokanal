@@ -154,6 +154,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         foreach ($this->parser() as $k => $item) {
+            $this->log($admin_id,"$k _0");
             $arr = array_combine($this->tableFaild(), $item);
 
             $dateNow = new DateTime('now');
