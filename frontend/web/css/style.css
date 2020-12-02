@@ -28,7 +28,7 @@ ul.pagination li a:hover{color:#5e5e5e}
 }
 input[type='number'] {-moz-appearance:textfield}
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance:none}
-.bigmenu .bg-white nav > a{margin:0 5px}
+.bg-white .bigmenu nav > a{margin:0 5px}
 
 /*.container.lk-sev{max-width:100% !important;}*/
 /*@media (max-width: 639px) {*/
