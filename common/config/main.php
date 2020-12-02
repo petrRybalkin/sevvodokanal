@@ -32,15 +32,22 @@ return [
         'db' => [
             'class' => \yii\db\Connection::class,
         ],
+//        'queue' => [
+//            'class' => \yii\queue\db\Queue::class,
+//            'db' => 'db',
+//            'ttr'   =>  15,
+//            'attempts' => 3,
+//            'tableName' => '{{%queue}}',
+//            'channel' => 'default',
+//            'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
+//            'as log' => \yii\queue\LogBehavior::class,
+//        ],
         'queue' => [
-            'class' => \yii\queue\db\Queue::class,
-            'db' => 'db',
-            'ttr'   =>  86400000,
-            'attempts' => 3,
-            'tableName' => '{{%queue}}',
-            'channel' => 'default',
-            'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
-            'as log' => \yii\queue\LogBehavior::class,
+            'class' => 'yii\queue\db\Queue',
+            'db' => 'db', // DB connection component or its config
+            'tableName' => '{{%queue}}', // Table name
+            'channel' => 'default', // Queue channel key
+            'mutex' => 'yii\mutex\MysqlMutex', // Mutex used to sync queries
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
