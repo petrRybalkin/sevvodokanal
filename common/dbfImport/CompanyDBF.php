@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 use backend\models\FilesLog;
 use common\models\Company;
+use common\models\ScoreMetering;
 use Yii;
 use yii\helpers\Json;
 
@@ -53,18 +54,30 @@ class CompanyDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
 
-        foreach ($this->parser() as $item) {
-            $arr =  array_combine($this->tableFaild() ,$item);
-                $newCompany = new Company();
-                $newCompany->setAttributes($arr);
-                if (!$newCompany->save()) {
-                    $error .= Json::encode($newCompany->getErrors());
-                    continue;
-                } else {
-                    print_r('ok');
-                }
+        $i = 0;
+        while ($item = $this->nextRecord()) {
+//        foreach ($this->parser() as $item) {
+
+            $companyExist = Company::find()->where(['account_number' => $item['lic_schet']])->one();
+
+            $arr = array_combine($this->tableFaild(), $item);
+
+            if ($companyExist) {
+                $companyExist->updateAttributes($arr);
+            }
+
+            $newCompany = new Company();
+            $newCompany->setAttributes($arr);
+            if (!$newCompany->save()) {
+                $error .= Json::encode($newCompany->getErrors());
+                continue;
+            } else {
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                    print_r('ok');
+            }
+            $i++;
         }
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
+        $this->log($admin_id, $error !== '' ? "Запись файла $fileName окончена. Ошибки - " . $error : "Запись файла $fileName окончена.");
         return true;
     }
 }

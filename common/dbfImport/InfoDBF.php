@@ -120,46 +120,27 @@ class InfoDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $k => $item) {
+        $i = 0;
+        while ($item = $this->nextRecord()) {
             $arr = array_combine($this->tableFaild(), $item);
 
-            $scoreExist = WaterMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+            WaterMetering::deleteAll(['account_number' => $item['lic_schet']]);
 
-            if ($scoreExist) {
-                if ($item['ph1'] < $scoreExist->previous_readings_first) {
-                    continue;
-                }
-//                if (!$scoreExist->delete()) {
-//                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
-//                }
-
-                $scoreExist->updateAttributes($arr);
-                print_r('update' . "\n");
-            }
             $score = new WaterMetering();
             $score->setAttributes($arr, false);
             if (!$score->save()) {
                 $error .= Json::encode($score->getErrors());
                 continue;
             } else {
-                print_r('ok');
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                print_r('ok');
             }
-
+            $i++;
         }
-        $this->log($admin_id, $error !=='' ?
-            "Запись файла $fileName окончена. Ошибки - ".$error :
-            "Запись файла $fileName окончена ." );
+        $this->log($admin_id, $error !== '' ?
+            "Запись файла $fileName окончена. Ошибки - " . $error :
+            "Запись файла $fileName окончена .");
         return true;
 
-
-//
-//        Yii::$app->db->createCommand()->batchInsert('water_metering', [
-//            'account_number', 'act_number', 'water_metering_first', 'water_metering_second',
-//            'watering_number', 'previous_readings_first', 'previous_readings_second', 'previous_watering_readings',
-//            'date_previous_readings', 'type_first', 'type_second', 'type_watering', 'verification_date',
-//            'medium_cubes', 'number_medium_cubes',
-//        ], $this->parser())->execute();
-//
-//        return true;
     }
 }

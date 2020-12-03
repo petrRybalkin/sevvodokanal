@@ -32,20 +32,10 @@ return [
         'db' => [
             'class' => \yii\db\Connection::class,
         ],
-//        'queue' => [
-//            'class' => \yii\queue\db\Queue::class,
-//            'db' => 'db',
-//            'ttr'   =>  15,
-//            'attempts' => 3,
-//            'tableName' => '{{%queue}}',
-//            'channel' => 'default',
-//            'mutex' => \yii\mutex\MysqlMutex::class, // Мьютекс для синхронизации запросов
-//            'as log' => \yii\queue\LogBehavior::class,
-//        ],
         'queue' => [
             'class' => 'yii\queue\db\Queue',
             'db' => 'db', // DB connection component or its config
-            'ttr'   => 3*60,
+            'ttr'   => 360*60,
             'tableName' => '{{%queue}}', // Table name
             'channel' => 'default', // Queue channel key
             'mutex' => 'yii\mutex\MysqlMutex', // Mutex used to sync queries

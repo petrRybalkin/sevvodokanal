@@ -113,7 +113,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                 'field' => 'medium_cubes',
                 'type' => static::TYPE_STRING,
                 'title' => 'Ознака середніх кубов',
-            ] ,
+            ],
             'synch' => [
                 'field' => 'synchronization',
                 'type' => static::TYPE_NUMERIC,
@@ -147,77 +147,40 @@ class IndicationsAndChargesDBF extends BaseDBF
         ];
     }
 
-    public function save($admin_id ,$fileName)
+    public function save($admin_id, $fileName)
     {
         $error = '';
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
+        $i = 0;
+        while ($item = $this->nextRecord()) {
 
-//        $items = $this->parser(1,5 );
-//        foreach ($items as $k => $item) {
-//            $this->log($admin_id,"$k _0");
-//            print_r("$k _0". "\n");
-$i = 0;
-        while($item = $this->nextRecord()) {
-
-//print_r($item);
             $arr = array_combine($this->tableFaild(), $item);
 
             $dateNow = new DateTime('now');
-            $dateMonth =  $dateNow->modify('-1 month')->format('Ym');
-
-
-//            $indications = IndicationsAndCharges::find()
-//                ->where(['account_number' => $item['lic_schet']])
-//                ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
-//                ->delete();
-
-//            print_r('1');
+            $dateMonth = $dateNow->modify('-1 month')->format('Ym');
             IndicationsAndCharges::deleteAll([
                 'AND',
                 'account_number' => $item['lic_schet'],
                 ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
             ]);
 
-//            print_r('del');
-
-//            $this->log($admin_id,$i."_del");
-
-//            $this->log($admin_id,"$k _1");
-
-//            if ($indications) {
-//                foreach ($indications as $indication) {
-//                    if(!$indication->delete()){
-//                        $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
-//
-//                    }
-//                    $this->log($admin_id,"delete  $k  - " .$item['lic_schet']);
-//                    print_r('delete' . "\n");
-//                }
-//
-//            }
-//            $this->log($admin_id,"$k _2");
-
             $score = new IndicationsAndCharges();
             $score->setAttributes($arr, false);
             $score->setAttributes(['synchronization' => 0]);
 
-//            $this->log($admin_id,"$k _1");
-
             if (!$score->save()) {
-//                print_r('no'. $k . "\n");
-                $error .= 'строка - '.$i .Json::encode($score->getErrors()) ."\n";
-//                $this->log($admin_id,"$k".$error."\n");
+                $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
                 continue;
             } else {
-//                print_r('ok'. "\n");
-                $this->log($admin_id,"ok  $i - " .$item['lic_schet']);
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
             }
             $i++;
-//            $this->log($admin_id,"$k _2");
         }
 
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
+        $this->log($admin_id, $error !== ''
+                ? "Запись файла $fileName  окончена. Ошибки - " . $error
+                : " Запись файла $fileName окончена.");
         return true;
 
     }

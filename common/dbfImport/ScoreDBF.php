@@ -2,6 +2,7 @@
 
 namespace common\dbfImport;
 
+use common\models\IndicationsAndCharges;
 use common\models\ScoreMetering;
 use Yii;
 use yii\db\Command;
@@ -89,30 +90,35 @@ class ScoreDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $k => $item) {
+        $i = 0;
+        while ($item = $this->nextRecord()) {
+
+//        foreach ($this->parser() as $k => $item) {
             $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
 
             $arr = array_combine($this->tableFaild(), $item);
+
             if ($scoreExist) {
 //                if (!$scoreExist->delete()) {
 //                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
 //                }
                 $scoreExist->updateAttributes($arr);
-                print_r('update' . "\n");
+//                print_r('update' . "\n");
             }
             $score = new ScoreMetering();
             $score->setAttributes($arr);
             if (!$score->save()) {
-                $error .= 'строка - ' . $k . Json::encode($score->getErrors()) . "\n";
+                $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
                 continue;
             } else {
-                print_r('ok' . "\n");
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                print_r('ok' . "\n");
             }
-
+            $i++;
         }
-        $this->log($admin_id, ($error !==''
-            ? "Запись файла $fileName окончена. Ошибки - ".$error
-            : "Запись файла $fileName окончена." ));
+        $this->log($admin_id, ($error !== ''
+            ? "Запись файла $fileName окончена. Ошибки - " . $error
+            : "Запись файла $fileName окончена."));
         return true;
     }
 
