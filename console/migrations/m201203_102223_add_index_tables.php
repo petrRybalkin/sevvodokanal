@@ -21,11 +21,6 @@ class m201203_102223_add_index_tables extends Migration
 
         $this->createIndex(
             'idx-account_number',
-            'company',
-            'account_number'
-        );
-        $this->createIndex(
-            'idx-account_number',
             'score_metering',
           'account_number'
         );
@@ -44,10 +39,6 @@ class m201203_102223_add_index_tables extends Migration
         $this->dropIndex(
             'idx-account_number',
             'payment'
-        );
-        $this->dropIndex(
-            'idx-account_number',
-            'company'
         );
         $this->dropIndex(
             'idx-account_number',
