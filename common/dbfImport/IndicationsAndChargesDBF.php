@@ -153,10 +153,14 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        $items = $this->parser();
-        foreach ($items as $k => $item) {
+//        $items = $this->parser(1,5 );
+//        foreach ($items as $k => $item) {
 //            $this->log($admin_id,"$k _0");
 //            print_r("$k _0". "\n");
+$i = 0;
+        while($item = $this->nextRecord()) {
+
+//print_r($item);
             $arr = array_combine($this->tableFaild(), $item);
 
             $dateNow = new DateTime('now');
@@ -177,7 +181,7 @@ class IndicationsAndChargesDBF extends BaseDBF
 
 //            print_r('del');
 
-            $this->log($admin_id,"$k _del");
+//            $this->log($admin_id,$i."_del");
 
 //            $this->log($admin_id,"$k _1");
 
@@ -202,13 +206,14 @@ class IndicationsAndChargesDBF extends BaseDBF
 
             if (!$score->save()) {
 //                print_r('no'. $k . "\n");
-                $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
+                $error .= 'строка - '.$i .Json::encode($score->getErrors()) ."\n";
 //                $this->log($admin_id,"$k".$error."\n");
                 continue;
             } else {
 //                print_r('ok'. "\n");
-                $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
+                $this->log($admin_id,"ok  $i - " .$item['lic_schet']);
             }
+            $i++;
 //            $this->log($admin_id,"$k _2");
         }
 
