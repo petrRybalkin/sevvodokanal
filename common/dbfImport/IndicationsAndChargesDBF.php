@@ -181,7 +181,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                     $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
                     continue;
                 } else {
-                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
 
                 $i++;

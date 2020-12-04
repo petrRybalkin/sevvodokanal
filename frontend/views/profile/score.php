@@ -69,12 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
 
                             ?>
-
-
-
-
-<!--                            --><?//= $indication->current_readings_first + $indication->current_readings_second
-//                            - $indication->previous_readings_first - $indication->previous_readings_second ?>
                             м3, <br>
                             витрати води на
                             полив: <?= $indication->current_readings_watering - $indication->previous_readings_watering ?>
@@ -106,6 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Нараховано:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+<!--                        Нарахування (дані беруться з довідника нарахувань поле nac).-->
                         <?= Yii::$app->formatter->asDecimal($indication->accruals, 2) ?>
                         грн.
                     </dd>
@@ -113,45 +108,60 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Пільга:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal($indication->privilege_unpaid !== 0
+<!--                        Пільга (дані беруться з довідника оплати з ознакою “2”. У випадку,
+ коли в довіднику нарахувань поле lgota<>0, то поле пільга заповнюється з довідника нарахувань з поля lgota).-->
+                        <?php
+                        $lgota = $indication->privilege_unpaid !== 0
                             ? $indication->privilege_unpaid
-                            : Payment::getLgota($score->account_number, 2), 2) ?>
+                            : Payment::getLgota($score->account_number, 2, null, true)['sumAll'] ;
+                        ?>
+                        <?= Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Субсидія:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 3)->sum ?: 0, 2) ?>
+<!--                        Субсидія (дані беруться з довідника оплати з ознакою “3”)-->
+                        <?php
+                        $subs = Payment::getLgota($score->account_number, 3,null, true)
+                            ? Payment::getLgota($score->account_number, 3,null, true)['sumAll']
+                            : 0;
+                        ?>
+                        <?= Yii::$app->formatter->asDecimal($subs?:0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Поточна оплата:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal(Payment::getLgota($score->account_number, 1)
-                            ? Payment::getLgota($score->account_number, 1)->sum
-                            : 0, 2) ?>
+                        <?php
+                        $opl = Payment::getLgota($score->account_number, 1, null,true)
+                            ? Payment::getLgota($score->account_number, 1,null,true)['sumAll']
+                            : 0
+                        ?>
+
+                        <?= Yii::$app->formatter->asDecimal($opl?:0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Перерахунок:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal($indication->correction, 2) ?></dd>
+                        <?= Yii::$app->formatter->asDecimal($indication->correction?:0, 2) ?></dd>
                 </div>
                 <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">До оплати на
                         <?= date('01.m.Y') ?>р. :</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Всього до оплати:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2) ?>
                         грн.
                     </dd>
                 </div>

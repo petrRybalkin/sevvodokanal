@@ -327,9 +327,10 @@ class ProfileController extends Controller
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
-        $date = Yii::$app->formatter->asDate(('NOW'), 'php:d.m.Y');
-        $name = 'Рахунок_' . $score->name_of_the_tenant . '_' . $date . '.docx';
+        $date = Yii::$app->formatter->asDate(('NOW'), 'php:d-m-Y');
+        $name = 'Рахунок_'. str_replace("'",'',$score->name_of_the_tenant) . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
+
         if ($score && $indication) {
             if ($metering) {
               $search =   [
@@ -386,14 +387,10 @@ class ProfileController extends Controller
             } else {
                 $search =   [
                     'account_number',
-//                    'act_number',
                     'fio',
                     'address',
                     'norm',
                     'total_tarif',
-//                    'water',
-//                    'watering',
-//                    'verification_date',
                     'exist_lgota',
                     'date_debt',
                     'debt',
@@ -410,14 +407,10 @@ class ProfileController extends Controller
 
                 $replace =  [
                     $score->account_number,
-//                    $score->act_number,
                     $score->name_of_the_tenant,
                     $score->address,
                     $score->norm,
                     $score->total_tariff,
-//                    $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
-//                    $indication->current_readings_watering - $indication->previous_readings_watering,
-//                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
                     $indication->privilege == 0 ? 'Нi' : "Так",
                     date("d.m.Y", strtotime('first day of last month')),
                     $indication->debt_end_month,
@@ -443,6 +436,8 @@ class ProfileController extends Controller
                 'search' => $search ,
                 'replace' => $replace,
             ]));
+        }else{
+            return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
         }
         $startTime = time();
         while (!Yii::$app->queue->isDone($id)) {
