@@ -20,11 +20,15 @@ class DbfJob extends BaseJob implements JobInterface
 
         if($parser->save($this->admin_id,$this->fileName)){
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
+    public function dbConnect()
+    {
+        return $this->checkDbConnection();
+    }
 
     public function getTtr()
     {

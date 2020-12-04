@@ -53,46 +53,37 @@ class PaymentDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-        foreach ($this->parser() as $k => $item) {
-            $arr =  array_combine($this->tableFaild() ,$item);
+
+        $i = 0;
+        while ($item = $this->nextRecord()) {
+
+//            foreach ($this->parser() as $k => $item) {
+            $arr = array_combine($this->tableFaild(), $item);
 
 //            $payExist = Payment::find()->where(['account_number' => $item['lic_schet']])->one();
 
             $dateNow = new DateTime('now');
-            $dateMonth =  $dateNow->modify('+1 month')->format('Y-m-d');
-            $payment = Payment::find()
-                ->where(['account_number' => $item['lic_schet']])
-                ->andWhere(['between', 'month_year', $dateNow->format('Y-m-d'), $dateMonth])
-                ->all();
+            $dateMonth = $dateNow->modify('-1 month')->format('Y-m-d');
 
-            if ($payment) {
-                foreach ($payment as $p) {
-                    if(!$p->delete()){
-                        $error .= 'строка - ' . $k . Json::encode($p->getErrors()) . "\n";
-                    }
-                    print_r('delete' . "\n");
-                }
-
-            }
-//            if($payExist){
-//                if (!$payExist->delete()) {
-//                    $error .= 'строка - ' . $k . Json::encode($payExist->getErrors()) . "\n";
-//                }
-//                print_r('delete' . "\n");
-//            }
+            Payment::deleteAll([
+                'AND',
+                'account_number' => $item['lic_schet'],
+                ['between', 'payment_date', $dateNow->format('Y-m-d'), $dateMonth],
+            ]);
 
             $pay = new Payment();
             $pay->setAttributes($arr);
             if (!$pay->save(false)) {
-                $error .= 'строка - '.$k.Json::encode($pay->getErrors());
+                $error .= 'строка - ' . $i . Json::encode($pay->getErrors());
                 continue;
             } else {
-                print_r('ok');
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                print_r('ok');
             }
+            $i++;
         }
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName окончена. Ошибки - ".$error :"Запись файла $fileName окончена." );
+        $this->log($admin_id, $error !== '' ? "Запись файла $fileName окончена. Ошибки - " . $error : "Запись файла $fileName окончена.");
         return true;
-
 
 
     }

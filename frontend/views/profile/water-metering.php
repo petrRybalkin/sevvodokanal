@@ -121,9 +121,9 @@ if ($vodomers): ?>
 
     <?php
 //\yii\helpers\VarDumper::dump(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')),10,1);exit;
-//    \yii\helpers\VarDumper::dump(strtotime(date('Ym')),10,1);exit;
+//\yii\helpers\VarDumper::dump($vodomers,10,1);exit;
 
-    if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym'))):  ?>
+    if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym')) || $vodomers->in_site == 0):  ?>
     <div class="min-h-screen flex justify-left bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
@@ -151,9 +151,14 @@ if ($vodomers): ?>
 
                     <div>
                         <?= $form->field($model, 'meter1')
-                            ->textInput(['type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                            ->textInput(['type' => 'number',
+                                'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md 
+                                 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №1', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
+                        <?= $form->field($model, 'number1')->hiddenInput(['value'=>$vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : ''])
+                        ->label(false)?>
                     </div>
                 <?php endif;
                 if (ArrayHelper::getValue($vodomers, 'water_metering_second') !== null): ?>
@@ -170,6 +175,8 @@ if ($vodomers): ?>
                             ->textInput(['type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №2', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
+                        <?= $form->field($model, 'number2')->hiddenInput(['value'=>$vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : ''])
+                            ->label(false)?>
                     </div>
                 <?php endif;
                 if (ArrayHelper::getValue($vodomers, 'watering_number') !== null): ?>
@@ -185,6 +192,8 @@ if ($vodomers): ?>
                             ->textInput(['type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №3', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
+                        <?= $form->field($model, 'number3')->hiddenInput(['value'=>$vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : ''])
+                            ->label(false)?>
                     </div>
                 <?php endif; ?>
                 <?= $form->field($model, 'acc')->hiddenInput(['value' => $number->account_number])->label(false) ?>

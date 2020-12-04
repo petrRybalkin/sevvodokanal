@@ -22,7 +22,49 @@ abstract class BaseDBF
 //        $this->table = new Table($path, null, 'windows-1251');
     }
 
-    public function parser($limit = 0)
+    /**
+     * @throws \yii\db\Exception
+     */
+    protected function checkDbConnection()
+    {
+        try {
+            \Yii::$app->db->createCommand("DO 1")->execute();
+        } catch (\yii\db\Exception $e) {
+            \Yii::$app->db->close();
+            \Yii::$app->db->open();
+            sleep(1);
+        }
+    }
+
+
+    public function nextRecord(){
+        $record = $this->table->nextRecord();
+
+        if (!$record) {return false;}
+        $columns = array_keys($this->table->columns);
+
+        foreach ($this->fieldList() as $column => $settings) {
+
+            if ($settings['type'] == self::TYPE_DATE) {
+                $item[$column] = date('Y-m-d', strtotime($record->$column));
+            } else {
+                if($column === 'synch'){
+                    $item[$column] = 1;
+                }else{
+                    if (in_array($column, $columns)) {
+                        $item[$column] = $record->$column;
+                    } else {
+                        $item[$column] = null;
+                    }
+                }
+
+            }
+
+        }
+        return $item;
+    }
+
+    public function parser($limit = 0, $str = 0)
     {
         $retTable = [];
         $item = [];

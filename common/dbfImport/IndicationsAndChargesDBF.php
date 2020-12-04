@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 
 use common\models\IndicationsAndCharges;
+use common\queue\BaseJob;
 use DateTime;
 use Yii;
 use yii\helpers\Json;
@@ -113,7 +114,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                 'field' => 'medium_cubes',
                 'type' => static::TYPE_STRING,
                 'title' => 'Ознака середніх кубов',
-            ] ,
+            ],
             'synch' => [
                 'field' => 'synchronization',
                 'type' => static::TYPE_NUMERIC,
@@ -147,72 +148,54 @@ class IndicationsAndChargesDBF extends BaseDBF
         ];
     }
 
-    public function save($admin_id ,$fileName)
+    public function save($admin_id, $fileName)
     {
         $error = '';
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
+        $i = 0;
+        while ($item = $this->nextRecord()) {
+            try {
 
-        $items = $this->parser();
-        foreach ($items as $k => $item) {
-//            $this->log($admin_id,"$k _0");
-//            print_r("$k _0". "\n");
-            $arr = array_combine($this->tableFaild(), $item);
+                if($i % 5000 == 0){
+                    sleep(3);
+                }
 
-            $dateNow = new DateTime('now');
-            $dateMonth =  $dateNow->modify('-1 month')->format('Ym');
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
 
+                $dateNow = new DateTime('now');
+                $dateMonth = $dateNow->modify('-1 month')->format('Ym');
 
-//            $indications = IndicationsAndCharges::find()
-//                ->where(['account_number' => $item['lic_schet']])
-//                ->andWhere(['between', 'month_year', $dateNow->format('Ym'), $dateMonth])
-//                ->delete();
+                IndicationsAndCharges::deleteAll([
+                    'AND',
+                    'account_number' => $item['lic_schet'],
+                    ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
+                ]);
 
-//            print_r('1');
-            IndicationsAndCharges::deleteAll([
-                'AND',
-                'account_number' => $item['lic_schet'],
-                ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
-            ]);
+                $score = new IndicationsAndCharges();
+                $score->setAttributes($arr, false);
+                $score->setAttributes(['synchronization' => 0]);
 
-//            print_r('del');
+                if (!$score->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
+                    continue;
+                } else {
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
 
-            $this->log($admin_id,"$k _del");
+                $i++;
 
-//            $this->log($admin_id,"$k _1");
-
-//            if ($indications) {
-//                foreach ($indications as $indication) {
-//                    if(!$indication->delete()){
-//                        $error .= 'строка - ' . $k . Json::encode($indication->getErrors()) . "\n";
-//
-//                    }
-//                    $this->log($admin_id,"delete  $k  - " .$item['lic_schet']);
-//                    print_r('delete' . "\n");
-//                }
-//
-//            }
-//            $this->log($admin_id,"$k _2");
-
-            $score = new IndicationsAndCharges();
-            $score->setAttributes($arr, false);
-            $score->setAttributes(['synchronization' => 0]);
-
-//            $this->log($admin_id,"$k _1");
-
-            if (!$score->save()) {
-//                print_r('no'. $k . "\n");
-                $error .= 'строка - '. $k .Json::encode($score->getErrors()) ."\n";
-//                $this->log($admin_id,"$k".$error."\n");
-                continue;
-            } else {
-//                print_r('ok'. "\n");
-                $this->log($admin_id,"ok  $k  - " .$item['lic_schet']);
+            } catch (\yii\db\Exception $e) {
+                $this->log($admin_id, $e->getMessage());
+                $this->log($admin_id,"error $i - " . $item['lic_schet']);
+                sleep(1);
             }
-//            $this->log($admin_id,"$k _2");
         }
 
-        $this->log($admin_id, $error !=='' ? "Запись файла $fileName  окончена. Ошибки - ". $error :" Запись файла $fileName окончена." );
+        $this->log($admin_id, $error !== ''
+            ? "Запись файла $fileName  окончена. Ошибки - " . $error
+            : " Запись файла $fileName окончена.");
         return true;
 
     }

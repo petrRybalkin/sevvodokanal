@@ -231,7 +231,11 @@ class ProfileController extends Controller
                                 $indication->previous_readings_first -
                                 $indication->previous_readings_second) * $score->tariff_for_stocks)
                 ]);
-                $wm->updateAttributes(['date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d')]);
+                $wm->updateAttributes([
+                    'date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d'),
+                    'in_site' => 1
+                    ]);
+
                 if (!$indication->save() || !$wm->save()) {
                     Yii::$app->session->setFlash('error', 'Показання не збереженi. Виникла помилка.');
                 } else {
@@ -284,8 +288,8 @@ class ProfileController extends Controller
 
 
         $query = IndicationsAndCharges::find()
-            ->where(['account_number' => $score->account_number]);
-//            ->groupBy('month_year');
+            ->where(['account_number' => $score->account_number])
+            ->groupBy('month_year');
 //        $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
 
