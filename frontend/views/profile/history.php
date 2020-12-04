@@ -244,18 +244,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-4 py-2 whitespace-no-wrap text-center">
                                     <!--                                    Оплата субсидій (дані беруться з довідника оплати):  поля з ознакою “3”-->
                                     <?php
-                                    $lgota = Payment::getLgota($score->account_number, 3, $str, true)
+                                    $subs = Payment::getLgota($score->account_number, 3, $str, true)
                                         ? Payment::getLgota($score->account_number, 3, $str, true)['sumAll']
                                         : 0;
                                     ?>
-                                    <?= Yii::$app->formatter->asDecimal($lgota !== null ? $lgota : 0, 2) ?>
+                                    <?= Yii::$app->formatter->asDecimal($subs !== null ? $subs : 0, 2) ?>
                                 </td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center">
+
+<!--                                    Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
+                                  <?php
+                                  $lgota = Payment::getLgota($score->account_number, 2, $str, true)
+                                    ? Payment::getLgota($score->account_number, 2, $str, true)['sumAll']
+                                    : 0;
+                                  ?>
                                     <?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0
                                         ? $item->privilege_unpaid
-                                        : Payment::getLgota($score->account_number, 2, $str)->sum, 2) ?></td>
+                                        : $lgota, 2)
+
+                                    ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center">
-                                    <?= Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?></td>
+<!--                                    Сальдо на кінець місяця, грн-->
+                                    <?=
+
+                                    Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?></td>
                                 <td class="px-4 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                             </tr>
                         <?php endforeach; ?>

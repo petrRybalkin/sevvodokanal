@@ -157,7 +157,7 @@ class IndicationsAndChargesDBF extends BaseDBF
         while ($item = $this->nextRecord()) {
             try {
 
-                if($i == 5000){
+                if($i % 5000 == 0){
                     sleep(3);
                 }
 
