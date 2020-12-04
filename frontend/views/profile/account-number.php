@@ -19,32 +19,30 @@ $this->params['breadcrumbs'][] = $this->title;
     $date = new DateTime('now');
     $debt = 0;
     $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])->orderBy(['id' => SORT_DESC])->one();
-//    if($ind){
-//
-//
-//        if ($ind->month_year == $date->format('Ym')) {
-//            $payThisMonth = Payment::getLgota($number->account_number,1,$date->format('Y-m-d'), true);
-////        (если человек передал показания на сайте то
-//            if ($number->tariff_for_water > 0 && $number->tariff_for_stocks > 0) {
-//                // (khv+kpv)*tarifv+(khv*tarifst)если есть вода и стоки,
-//                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water +
-//                    ($ind->water_consumption * $number->tariff_for_stocks);
-//            } elseif ($number->tariff_for_stocks == 0) {
-//                // или (khv+kpv)*tarifv) если только вода)
-//                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water;
-//            }
-//
-//// -(минус) оплата в текущем месяце.
-//            $debt = $s-$payThisMonth['sumAll'];
-//        }else{
-////        задолженность на конец месяца+начисления
-//
-//            $debt = $ind->debt_end_month+$ind->accruals;
-//
-//        }
-//
-//    }
-        $sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
+
+    if($ind){
+        if ($ind->month_year == $date->modify('-1 month')->format('Ym')) {
+            $payThisMonth = Payment::getLgota($number->account_number,1,$date->modify('-1 month')->format('Y-m-d'), true);
+//        (если человек передал показания на сайте то
+            if ($number->tariff_for_water > 0 && $number->tariff_for_stocks > 0) {
+                // (khv+kpv)*tarifv+(khv*tarifst)если есть вода и стоки,
+                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water +
+                    ($ind->water_consumption * $number->tariff_for_stocks);
+            } elseif ($number->tariff_for_stocks == 0) {
+                // или (khv+kpv)*tarifv) если только вода)
+                $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water;
+            }
+
+// -(минус) оплата в текущем месяце.
+            $debt = $s-$payThisMonth['sumAll'];
+        }else{
+//        задолженность на конец месяца+начисления
+            $debt = $ind->debt_end_month+$ind->accruals;
+
+        }
+
+    }
+//        $sum = $ind->accruals - (Payment::getLgota($number->account_number, 1) ? Payment::getLgota($number->account_number, 1)->sum : '0');
 
 
     ?>
@@ -69,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Поточна заборгованість:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b><?php
-                        $date = new DateTime('now');
-                        if ($ind->debt_end_month && $ind->month_year == $date->format('Ym')){
-                            echo "<i style='color: green'>".Yii::$app->formatter->asDecimal(  $sum  * -1 ,2)." грн</i>";
-
-                        }else {
-                            echo "<i style='color: red'>".Yii::$app->formatter->asDecimal( $ind->debt_end_month ,2) ."  грн</i>";
-                        }
+//                        $date = new DateTime('now');
+//                        if ($ind->debt_end_month && $ind->month_year == $date->format('Ym')){
+                            echo $debt." грн";
+//
+//                        }else {
+//                            echo "<i style='color: red'>".$debt ."  грн</i>";
+//                        }
 
                         ?></b></dd>
             </div>
@@ -217,15 +215,18 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- тариф на водоспоживання:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->tariff_for_water, 3) ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                    <?= Yii::$app->formatter->asDecimal($number->tariff_for_water, 3) ?></dd>
             </div>
             <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- тариф на водовідведення:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->tariff_for_stocks, 3) ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                    <?= Yii::$app->formatter->asDecimal($number->tariff_for_stocks, 3) ?></dd>
             </div>
             <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">- сумарний тариф:</dt>
-                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= Yii::$app->formatter->asDecimal($number->total_tariff, 3) ?></dd>
+                <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                    <?= Yii::$app->formatter->asDecimal($number->total_tariff, 3) ?></dd>
             </div>
         </dl>
     </div>

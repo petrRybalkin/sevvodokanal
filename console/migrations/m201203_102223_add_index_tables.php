@@ -40,6 +40,7 @@ class m201203_102223_add_index_tables extends Migration
             'idx-account_number_pay',
             'payment'
         );
+
         $this->dropIndex(
             'idx-account_number_score',
             'score_metering'
