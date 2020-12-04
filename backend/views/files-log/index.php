@@ -62,5 +62,4 @@ $dataProvider->pagination->pageSize = 100;
             ]]
     ]); ?>
 
-
 </div>

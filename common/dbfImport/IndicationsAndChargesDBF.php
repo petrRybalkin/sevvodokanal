@@ -154,13 +154,19 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
         $i = 0;
-        try {
-            while ($item = $this->nextRecord()) {
+        while ($item = $this->nextRecord()) {
+            try {
+
+                if($i == 5000){
+                    sleep(3);
+                }
+
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
 
                 $dateNow = new DateTime('now');
                 $dateMonth = $dateNow->modify('-1 month')->format('Ym');
+
                 IndicationsAndCharges::deleteAll([
                     'AND',
                     'account_number' => $item['lic_schet'],
@@ -177,11 +183,16 @@ class IndicationsAndChargesDBF extends BaseDBF
                 } else {
                     $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
+
                 $i++;
+
+            } catch (\yii\db\Exception $e) {
+                $this->log($admin_id, $e->getMessage());
+                $this->log($admin_id,"error $i - " . $item['lic_schet']);
+                sleep(1);
             }
-        } catch (\yii\db\Exception $e) {
-            $this->log($admin_id, $e->getMessage());
         }
+
         $this->log($admin_id, $error !== ''
             ? "Запись файла $fileName  окончена. Ошибки - " . $error
             : " Запись файла $fileName окончена.");
