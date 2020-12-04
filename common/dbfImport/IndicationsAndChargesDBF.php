@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 
 use common\models\IndicationsAndCharges;
+use common\queue\BaseJob;
 use DateTime;
 use Yii;
 use yii\helpers\Json;
@@ -153,34 +154,37 @@ class IndicationsAndChargesDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
         $i = 0;
-        while ($item = $this->nextRecord()) {
+        try {
+            while ($item = $this->nextRecord()) {
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
 
-            $arr = array_combine($this->tableFaild(), $item);
+                $dateNow = new DateTime('now');
+                $dateMonth = $dateNow->modify('-1 month')->format('Ym');
+                IndicationsAndCharges::deleteAll([
+                    'AND',
+                    'account_number' => $item['lic_schet'],
+                    ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
+                ]);
 
-            $dateNow = new DateTime('now');
-            $dateMonth = $dateNow->modify('-1 month')->format('Ym');
-            IndicationsAndCharges::deleteAll([
-                'AND',
-                'account_number' => $item['lic_schet'],
-                ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
-            ]);
+                $score = new IndicationsAndCharges();
+                $score->setAttributes($arr, false);
+                $score->setAttributes(['synchronization' => 0]);
 
-            $score = new IndicationsAndCharges();
-            $score->setAttributes($arr, false);
-            $score->setAttributes(['synchronization' => 0]);
-
-            if (!$score->save()) {
-                $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
-                continue;
-            } else {
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                if (!$score->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
+                    continue;
+                } else {
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
+                $i++;
             }
-            $i++;
+        } catch (\yii\db\Exception $e) {
+            $this->log($admin_id, $e->getMessage());
         }
-
         $this->log($admin_id, $error !== ''
-                ? "Запись файла $fileName  окончена. Ошибки - " . $error
-                : " Запись файла $fileName окончена.");
+            ? "Запись файла $fileName  окончена. Ошибки - " . $error
+            : " Запись файла $fileName окончена.");
         return true;
 
     }

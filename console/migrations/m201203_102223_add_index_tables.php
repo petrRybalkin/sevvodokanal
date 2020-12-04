@@ -14,23 +14,18 @@ class m201203_102223_add_index_tables extends Migration
     {
 
         $this->createIndex(
-            'idx-account_number',
+            'idx-account_number_pay',
             'payment',
             ['account_number','payment_date']
         );
 
         $this->createIndex(
-            'idx-account_number',
-            'company',
-            'account_number'
-        );
-        $this->createIndex(
-            'idx-account_number',
+            'idx-account_number_score',
             'score_metering',
           'account_number'
         );
         $this->createIndex(
-            'idx-account_number',
+            'idx-account_number_wat',
             'water_metering',
           'account_number'
         );
@@ -42,19 +37,16 @@ class m201203_102223_add_index_tables extends Migration
     public function safeDown()
     {
         $this->dropIndex(
-            'idx-account_number',
+            'idx-account_number_pay',
             'payment'
         );
+
         $this->dropIndex(
-            'idx-account_number',
-            'company'
-        );
-        $this->dropIndex(
-            'idx-account_number',
+            'idx-account_number_score',
             'score_metering'
         );
         $this->dropIndex(
-            'idx-account_number',
+            'idx-account_number_wat',
             'water_metering'
         );
     }

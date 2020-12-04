@@ -22,6 +22,21 @@ abstract class BaseDBF
 //        $this->table = new Table($path, null, 'windows-1251');
     }
 
+    /**
+     * @throws \yii\db\Exception
+     */
+    protected function checkDbConnection()
+    {
+        try {
+            \Yii::$app->db->createCommand("DO 1")->execute();
+        } catch (\yii\db\Exception $e) {
+            \Yii::$app->db->close();
+            \Yii::$app->db->open();
+            sleep(1);
+        }
+    }
+
+
     public function nextRecord(){
         $record = $this->table->nextRecord();
 
