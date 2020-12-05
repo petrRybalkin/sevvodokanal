@@ -121,22 +121,37 @@ class InfoDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         $i = 0;
+
         while ($item = $this->nextRecord()) {
-            $arr = array_combine($this->tableFaild(), $item);
+            try {
 
-            WaterMetering::deleteAll(['account_number' => $item['lic_schet']]);
+                if($i % 2000 == 0){
+                    sleep(5);
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
 
-            $score = new WaterMetering();
-            $score->setAttributes($arr, false);
-            if (!$score->save()) {
-                $error .= Json::encode($score->getErrors());
-                continue;
-            } else {
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
-//                print_r('ok');
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
+
+                WaterMetering::deleteAll(['account_number' => $item['lic_schet']]);
+
+                $score = new WaterMetering();
+                $score->setAttributes($arr, false);
+
+                if (!$score->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
+                    continue;
+                }
+
+                $i++;
+
+            } catch (\yii\db\Exception $e) {
+                $i++;
+                $this->log($admin_id, $e->getMessage());
+                sleep(2);
             }
-            $i++;
         }
+
         $this->log($admin_id, $error !== '' ?
             "Запись файла $fileName окончена. Ошибки - " . $error :
             "Запись файла $fileName окончена .");

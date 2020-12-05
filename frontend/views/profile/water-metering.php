@@ -34,7 +34,12 @@ if ($vodomers): ?>
 //
 //                \yii\helpers\VarDumper::dump($i,10,1);exit;
 
-                if ($vodomers->water_metering_first): ?>
+                if ($vodomers->water_metering_first):
+                    $k = array_key_last($vodomers->indication);
+                $ind = $vodomers->indication[$k];
+//                \yii\helpers\VarDumper::dump($vodomers->indication[$k],10,1);exit;
+
+                    ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->water_metering_first ?></dd>
@@ -47,7 +52,15 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">- попередні показання засоба обліку
                             води:
                         </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->previous_readings_first ?></dd>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
+                            <?= $ind->current_readings_first > 0 ?  $ind->current_readings_first :  $ind->previous_readings_first ?></dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
+                            <?= $ind->month_year
+                                ? Yii::$app->formatter->asDate($ind->month_year , 'php: d.m.Y')
+                                : '' ?></dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
@@ -70,7 +83,16 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">- попередні показання засоба обліку
                             води:
                         </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->previous_readings_second ?></dd>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
+                            <?= $ind->current_readings_second > 0 ?  $ind->current_readings_second :  $ind->previous_readings_second ?></dd>
+                            </dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
+                            <?= $ind->month_year
+                                ? Yii::$app->formatter->asDate($ind->month_year , 'php: d.m.Y')
+                                : '' ?></dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
