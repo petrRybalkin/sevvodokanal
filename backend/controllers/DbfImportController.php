@@ -275,7 +275,7 @@ class DbfImportController extends Controller
             $record->np = $item->water ? $item->water->watering_number : 0;
             $record->th1 = $item->current_readings_first;
             $record->th2 = $item->current_readings_second;
-            $record->tp = $item->previous_readings_watering;
+            $record->tp = $item->current_readings_watering;
             $record->ph1 = $item->previous_readings_first;
             $record->ph2 = $item->previous_readings_second;
             $record->pp = $item->previous_readings_watering;
