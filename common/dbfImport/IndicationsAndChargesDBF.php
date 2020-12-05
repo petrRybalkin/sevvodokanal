@@ -160,7 +160,7 @@ class IndicationsAndChargesDBF extends BaseDBF
             try {
 
                 if($i % 5000 == 0){
-                    sleep(3);
+                    sleep(10);
                     $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
 
