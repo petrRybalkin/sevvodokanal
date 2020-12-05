@@ -18,6 +18,9 @@ ul.pagination li{display:inline-block;padding:5px 10px}
 ul.pagination li a{color:#a4a4a4;font-weight:bold !important}
 ul.pagination li a:hover{color:#5e5e5e}
 
+ul.sidebar.sidebar-profile li{display: inline-block}
+.dropdown-menu-mobile ul.sidebar.sidebar-profile li{display:block}
+
 @media (min-width: 1024px) and (max-width: 1233px){
     .md\:text-2xl {font-size: 1rem;}
     .text-base {font-size: 0.85rem;}
@@ -26,6 +29,8 @@ ul.pagination li a:hover{color:#5e5e5e}
     .md\:text-2xl {font-size: 1rem}
     .text-base {font-size: 0.85rem;}
 }
+@media (min-width:768px){.profile.menu{display:inline-block !important}}
+@media (max-width:767px){.profile.menu{display:none}}
 input[type='number'] {-moz-appearance:textfield}
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance:none}
 /*.bg-white .bigmenu nav > a{margin:0 5px}*/
