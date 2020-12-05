@@ -40,7 +40,6 @@ AppAsset::register($this);
     </header>
     <main>
         <div class="container lk-sev w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-8 mt-1">
-            <?//= $this->render('sidebar-profile'); ?>
             <div class="w-full lg:w-4/4 pl-8 pr-8 pb-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white">
                 <div class="w-full sticky inset-0 h-16 hidden overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" id="menu-content">
                     <ul class="list-reset sidebar sidebar-profile">
