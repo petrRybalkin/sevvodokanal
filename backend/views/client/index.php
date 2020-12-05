@@ -32,7 +32,22 @@ $this->params['breadcrumbs'][] = $this->title;
             //'auth_key',
             //'password_hash',
             //'password_reset_token',
-            'phone',
+            //'phone',
+            [
+                'attribute' => 'phone',
+                'format' => 'raw',
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Начните вводить емейл клиента...'
+                ],
+                'value' => function (User $model) {
+                    if (!$model->phone) {
+                        return '-';
+                    }
+
+                    return $model->phone;
+                }
+            ],
             [
                 'attribute' => 'email',
                 'format' => 'raw',

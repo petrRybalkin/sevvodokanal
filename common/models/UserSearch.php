@@ -61,7 +61,7 @@ class UserSearch extends User
             'status' => $this->status,
             'username' => $this->username,
 //            'email' => $this->email,
-            'phone' => $this->phone,
+//            'phone' => $this->phone,
             'created_at' => $this->created_at,
         ]);
         if ($this->auth_key) {
