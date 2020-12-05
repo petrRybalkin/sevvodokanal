@@ -198,17 +198,9 @@ class IndicationsAndChargesDBF extends BaseDBF
                 if (!$score->save()) {
                     $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
                     continue;
-                } else {
-//                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
 
                 $i++;
-
-                $time_end = microtime(true);
-                $time = $time_end - $time_start;
-                $time_start = $time_end;
-                $this->log($admin_id, "time_as  $i - " . $time);
-
             } catch (\yii\db\Exception $e) {
                 $this->log($admin_id, $e->getMessage());
                 $this->log($admin_id,"error $i - " . $item['lic_schet']);
