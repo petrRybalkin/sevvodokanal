@@ -153,21 +153,15 @@ class IndicationsAndChargesDBF extends BaseDBF
         $error = '';
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
-        $i = 2;
-        $time_start = microtime(true);
+        $i = 0;
 
         while ($item = $this->nextRecord()) {
             try {
 
-                if($i % 5000 == 0){
-                    sleep(10);
+                if($i % 2000 == 0){
+                    sleep(5);
                     $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
-
-                $time_end = microtime(true);
-                $time = $time_end - $time_start;
-                $time_start = $time_end;
-                $this->log($admin_id, "time_0  $i - " . $time);
 
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
@@ -175,21 +169,11 @@ class IndicationsAndChargesDBF extends BaseDBF
                 $dateNow = new DateTime('now');
                 $dateMonth = $dateNow->modify('-1 month')->format('Ym');
 
-                $time_end = microtime(true);
-                $time = $time_end - $time_start;
-                $time_start = $time_end;
-                $this->log($admin_id, "time_bd  $i - " . $time);
-
                 IndicationsAndCharges::deleteAll([
                     'AND',
                     'account_number' => $item['lic_schet'],
                     ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
                 ]);
-
-                $time_end = microtime(true);
-                $time = $time_end - $time_start;
-                $time_start = $time_end;
-                $this->log($admin_id, "time_ad  $i - " . $time);
 
                 $score = new IndicationsAndCharges();
                 $score->setAttributes($arr, false);
@@ -201,10 +185,11 @@ class IndicationsAndChargesDBF extends BaseDBF
                 }
 
                 $i++;
+
             } catch (\yii\db\Exception $e) {
+                $i++;
                 $this->log($admin_id, $e->getMessage());
-                $this->log($admin_id,"error $i - " . $item['lic_schet']);
-                sleep(1);
+                sleep(2);
             }
         }
 
