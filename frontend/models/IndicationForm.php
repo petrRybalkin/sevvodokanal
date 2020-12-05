@@ -71,7 +71,6 @@ class IndicationForm extends Model
             }
         }
 
-
     }
 
     public function validationMeterSecond($attribute, $params)
