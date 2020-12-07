@@ -7,6 +7,7 @@
 /** @var Payment $payment */
 
 
+use common\models\IndicationsAndCharges;
 use common\models\Payment;
 
 $this->title = 'РАХУНОК - Особистий кабінет';
@@ -93,7 +94,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?= Yii::$app->formatter->asDecimal($indication->debt_end_month, 2) ?>
+                        <?php
+                        $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
+                            date("d.m.Y", strtotime('first day of last month')));
+
+                        ?>
+                        <?= Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) ?>
                         грн.
                     </dd>
                 </div>

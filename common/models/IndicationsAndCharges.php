@@ -94,4 +94,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     {
         return $this->hasOne(WaterMetering::class, ['account_number' => 'account_number']);
     }
+
+
+    public static function debtBeginMonth($acc, $date){
+      return  IndicationsAndCharges::find()->where(['account_number' => $acc])
+            ->andWhere(['between', 'month_year', $date, date("d.m.Y", strtotime('first day of this month'))])
+        ->one();
+
+    }
 }

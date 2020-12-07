@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
     table.history-table thead td {
         /*font-style: italic;*/
         text-transform: inherit;
-        font-size:0.65rem;
+        font-size: 0.65rem;
     }
 
     table.history-table thead td:not([colspan="2"]) {
@@ -126,9 +126,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     colspan="2">Лічильник №3
                                 </td>
                             <?php endif; ?>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Обсяг водоспоживання, м³
-                            </td>
+                            <?php if ($metering): ?>
+                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                    rowspan="2">Обсяг водоспоживання, м³
+                                </td>
+                            <?php endif; ?>
                             <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Тариф, грн
                             </td>
@@ -150,9 +152,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Сальдо на кінець<br>місяця, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³
-                            </td>
+                            <?php if ($metering): ?>
+                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                    rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³
+                                </td>
+                            <?php endif; ?>
                         </tr>
                         <tr>
                             <?php if ($metering && $metering->water_metering_first): ?>
@@ -215,24 +219,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
+                                <?php if($metering):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--                                   Обсяг водоспоживання розраховується по формулі: (th1+th2-ph1-ph2)-->
+                                    <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2-ph1-ph2)-->
                                     <?= $item->current_readings_first + $item->current_readings_second
                                     - $item->previous_readings_first - $item->previous_readings_second;
                                     ?> </td>
+                                <?php endif;?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <?= str_replace(',', '.', Yii::$app->formatter->asDecimal($item->total_tariff, 3)) ?></td>
+                                    <?=  Yii::$app->formatter->asDecimal($item->total_tariff, 3) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--                                    Нарахування розраховується по формулі:-->
-                                    <!--                                    Поле nac “-” поле lgota-->
+                                    <!--   Нарахування розраховується по формулі:-->
+                                    <!--  Поле nac “-” поле lgota-->
                                     <?=
                                     Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--                                    корекция-->
+                                    <!--   корекция-->
                                     <?= Yii::$app->formatter->asDecimal(($item->correction ?: 0), 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--                                    Сплачено розраховується по формулі (дані беруться з довідника оплати):-->
-                                    <!--                                    (поля з ознакою “1”)+(поля з ознакою “0”)-->
+                                    <!--  Сплачено розраховується по формулі (дані беруться з довідника оплати):-->
+                                    <!-- (поля з ознакою “1”)+(поля з ознакою “0”)-->
 
                                     <?= Yii::$app->formatter->asDecimal(
                                         (Payment::getLgota($score->account_number, 1, $str, true)
@@ -243,7 +249,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         , 2)
                                     ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--                                    Оплата субсидій (дані беруться з довідника оплати):  поля з ознакою “3”-->
+                                    <!--   Оплата субсидій (дані беруться з довідника оплати):  поля з ознакою “3”-->
                                     <?php
                                     $subs = Payment::getLgota($score->account_number, 3, $str, true)
                                         ? Payment::getLgota($score->account_number, 3, $str, true)['sumAll']
@@ -253,27 +259,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
 
-<!--                                    Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
-                                  <?php
-                                  $lgota = Payment::getLgota($score->account_number, 2, $str, true)
-                                    ? Payment::getLgota($score->account_number, 2, $str, true)['sumAll']
-                                    : 0;
-                                  ?>
+                                    <!--      Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
+                                    <?php
+                                    $lgota = Payment::getLgota($score->account_number, 2, $str, true)
+                                        ? Payment::getLgota($score->account_number, 2, $str, true)['sumAll']
+                                        : 0;
+                                    ?>
                                     <?= Yii::$app->formatter->asDecimal($item->privilege_unpaid !== 0
                                         ? $item->privilege_unpaid
                                         : $lgota, 2)
 
                                     ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-<!--                                    Сальдо на кінець місяця, грн-->
-                                    <?=
-
-                                    Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?></td>
+                                    <!--   Сальдо на кінець місяця, грн-->
+                                    <?=  Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?></td>
+                                <?php if($metering):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
+                                <?php endif;?>
                             </tr>
                         <?php endforeach; ?>
 
-                        <!-- More rows... -->
                         </tbody>
 
                     </table>

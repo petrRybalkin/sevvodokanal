@@ -166,13 +166,9 @@ class IndicationsAndChargesDBF extends BaseDBF
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
 
-                $dateNow = new DateTime('now');
-                $dateMonth = $dateNow->modify('-1 month')->format('Ym');
-
                 IndicationsAndCharges::deleteAll([
-                    'AND',
                     'account_number' => $item['lic_schet'],
-                    ['between', 'month_year', $dateNow->format('Ym'), $dateMonth],
+                    'month_year' => $item['mes'],
                 ]);
 
                 $score = new IndicationsAndCharges();
