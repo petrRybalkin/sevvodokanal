@@ -136,12 +136,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <dt class="text-sm leading-5 font-medium text-gray-500">Поточна оплата:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?php
-                        $opl = Payment::getLgota($score->account_number, 1, null,true)
+                        $opl1 = Payment::getLgota($score->account_number, 1, null,true)
                             ? Payment::getLgota($score->account_number, 1,null,true)['sumAll']
-                            : 0
+                            : 0;
+
+                         $opl0 = Payment::getLgota($score->account_number, 0, null,true)
+                             ? Payment::getLgota($score->account_number, 0,null,true)['sumAll']
+                             : 0
                         ?>
 
-                        <?= Yii::$app->formatter->asDecimal($opl?:0, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal($opl1+$opl0, 2) ?>
                         грн.
                     </dd>
                 </div>
