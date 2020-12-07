@@ -176,7 +176,7 @@ class IndicationsAndChargesDBF extends BaseDBF
                 $score->setAttributes(['synchronization' => 0]);
 
                 if (!$score->save()) {
-                    $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
+                    $error .= 'строка - ' . $i .'счет - '.$item['lic_schet'].'.  '. Json::encode($score->getErrors()) . "\n";
                     continue;
                 }
 

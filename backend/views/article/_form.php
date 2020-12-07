@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="article-form">
 
     <?php $form = ActiveForm::begin([
@@ -31,18 +30,29 @@ use yii\widgets\ActiveForm;
             'source' => true,
 
 
+        ]]) ?>
+    <div style="color: #9e0505">
+        <p>
+            1. Cогласно рекомендации Google по улучшению скорости загрузки страниц размер вставляемого изображения не
+            должен
+            превышать 100 кб.
+        </p
 
-    ]]) ?>
-
-    согласно реком гугла по улучшению скорости загр страниц размер изобр не должен превыш 100 кб
-    <?= $form->field($model, 'description')->textarea(['id'=>'editor']);?>
+        <p> 2. Прикрепления файлов (pdf, doc,docx):</p>
+        <p> - загрузите файл в разделе <a href="<?= Url::to(['pdf-files/index']) ?>">Файлы</a> ,</p>
+        <p> - скопируйте путь файла из поля Путь,</p>
+        <p> - напишите название файла, которое будет выводиться в тексте новости, выделите его,</p>
+        <p> - создайте ссылку (нажав на скрепку) в поле ниже,</p>
+        <p> - вставьте скопированую ссылку в поле создания ссылки, нажать Сохранить (галочку).</p>
+    </div>
+    <?= $form->field($model, 'description')->textarea(['id' => 'editor']); ?>
 
 
     <?php
     if (!$model->isNewRecord):
         ?>
         <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
-        <a href="<?= \yii\helpers\Url::to(['article/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
+        <a href="<?= \yii\helpers\Url::to(['article/del-photo', 'id' => $model->id]) ?>">Удалить картинку</a>
     <?php endif; ?>
     <?= $form->field($model, 'img')->fileInput(['multiple' => false]) ?>
 

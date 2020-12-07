@@ -32,6 +32,7 @@ use common\models\Admin;
                     ['label' => 'Контент сайта', 'header' => true],
                     ['label' => 'Страницы', 'url' => ['page/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_pages == 1 || Yii::$app->user->identity->roleOption->access_one_page != 0],
                     ['label' => 'Новости', 'url' => ['article/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_news == 1],
+                    ['label' => 'Файлы', 'url' => ['pdf-files/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_news == 1],
                     ['label' => 'Управление сайтом', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
                     [
                         'label' => 'Администраторы','iconStyle' => 'far', 'iconClassAdded' => 'text-danger',
