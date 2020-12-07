@@ -1,5 +1,6 @@
 <?php
 
+use backend\assets\AppAsset;
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
 use vova07\imperavi\Widget;
@@ -12,6 +13,7 @@ use common\models\Page;
 /* @var $this yii\web\View */
 /* @var $model common\models\Page */
 /* @var $form yii\widgets\ActiveForm */
+AppAsset::register($this);
 ?>
 <style>
     #page-footer label{display:block}
@@ -65,7 +67,20 @@ use common\models\Page;
 
 
         ]]) ?>
+    <div style="color: #9e0505">
+        <p>
+            1. Cогласно рекомендации Google по улучшению скорости загрузки страниц размер вставляемого изображения не
+            должен
+            превышать 100 кб.
+        </p
 
+        <p> 2. Прикрепления файлов (pdf, doc,docx):</p>
+        <p> - загрузите файл в разделе <a href="<?= Url::to(['pdf-files/index']) ?>">Файлы</a> ,</p>
+        <p> - скопируйте путь файла из поля Путь,</p>
+        <p> - напишите название файла, которое будет выводиться в тексте новости, выделите его,</p>
+        <p> - создайте ссылку (нажав на скрепку) в поле ниже,</p>
+        <p> - вставьте скопированую ссылку в поле создания ссылки, нажать Сохранить (галочку).</p>
+    </div>
     <?= $form->field($model, 'description')->textarea(['id'=>'editor']);?>
 
     <?php
