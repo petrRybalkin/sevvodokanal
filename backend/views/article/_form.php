@@ -1,5 +1,6 @@
 <?php
 
+use backend\assets\AppAsset;
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
 use vova07\imperavi\Widget;
@@ -11,6 +12,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Article */
 /* @var $form yii\widgets\ActiveForm */
+AppAsset::register($this);
 ?>
 <div class="article-form">
 
