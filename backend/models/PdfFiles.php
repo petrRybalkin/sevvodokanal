@@ -39,8 +39,9 @@ class PdfFiles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['path','name'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['path'], 'file', 'skipOnEmpty' => false,'extensions' => 'pdf, doc, docx'],
+            [['path'], 'file', 'extensions' => 'pdf, doc, docx'],
         ];
     }
 
