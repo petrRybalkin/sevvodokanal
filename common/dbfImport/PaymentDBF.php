@@ -66,13 +66,14 @@ class PaymentDBF extends BaseDBF
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
 
-                $dateNow = new DateTime('now');
-                $dateMonth = $dateNow->modify('-1 month')->format('Ym');
+                $dateNow = new DateTime($item['datp']);
+                $dateThis = $dateNow->format('Y-m-01');
+                $dateMonth = $dateNow->format('Y-m-31');
 
                 Payment::deleteAll([
                     'AND',
                     'account_number' => $item['lic_schet'],
-                    ['between', 'payment_date', $dateNow->format('Y-m-d'), $dateMonth],
+                    ['between', 'payment_date', $dateThis, $dateMonth],
                 ]);
 
                 $pay = new Payment();
