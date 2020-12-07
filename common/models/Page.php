@@ -41,6 +41,7 @@ class Page extends \yii\db\ActiveRecord
     const STATUS_MENU_ACTIVE = 1;
     const STATUS_SIDEBAR_INACTIVE = 0;
     const STATUS_SIDEBAR_ACTIVE = 1;
+    const STATUS_SIDEBAR_ACTIVE2 = 2;
     const STATUS_FOOTER_INACTIVE = 0;
     const STATUS_FOOTER_ACTIVE = 1;
     const STATUS_FOOTER_ACTIVE2 = 2;
@@ -146,6 +147,7 @@ class Page extends \yii\db\ActiveRecord
         return [
             self::STATUS_SIDEBAR_INACTIVE => 'Нет',
             self::STATUS_SIDEBAR_ACTIVE => 'Да',
+            self::STATUS_SIDEBAR_ACTIVE2 => 'Да',
         ];
     }
 
@@ -430,13 +432,22 @@ class Page extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public static function getSidebars()
+    public static function getSidebarsBeforeNews()
     {
         return self::find()
             ->where(['active' => 1, 'sidebar' => 1])
             ->orderBy('sort_sidebar ASC');
     }
 
+    /**
+     * @return ActiveQuery
+     */
+    public static function getSidebarsAfterNews()
+    {
+        return self::find()
+            ->where(['active' => 1, 'sidebar' => 2])
+            ->orderBy('sort_sidebar ASC');
+    }
     /**
      * Creates data provider instance with search query applied
      *

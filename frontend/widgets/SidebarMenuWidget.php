@@ -11,9 +11,11 @@ class SidebarMenuWidget extends Widget
 {
     public function run()
     {
-        $pages = Page::getSidebars()->all();
+        $pagesBefore = Page::getSidebarsBeforeNews()->all();
+        $pagesAfter = Page::getSidebarsAfterNews()->all();
         return $this->render('menu-sidebar', [
-            'pages' => $pages,
+            'pagesBefore' => $pagesBefore,
+            'pagesAfter' => $pagesAfter,
         ]);
     }
 }
