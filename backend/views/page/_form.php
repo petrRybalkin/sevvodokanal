@@ -66,35 +66,7 @@ use common\models\Page;
 
         ]]) ?>
 
-
-    <?= $form->field($model, 'description')->widget(Widget::className(), [
-        'settings' => [
-            'lang' => 'ru',
-            'minHeight' => 200,
-            'source' => true,
-            'imageDelete' => Url::to(['/page/image-delete']),
-            'imageManagerJson' => Url::to(['/page/images-get']),
-            'imageUpload' => Url::to(['/page/image-upload']),
-            'fileUpload' => Url::to(['/page/file-upload']),
-            'fileDelete' => Url::to(['/page/file-delete']),
-            'fileManagerJson' => Url::to(['/page/files-get']),
-            'plugins' => [
-                'clips',
-                'table',
-                'fontsize',
-                'fontcolor',
-                'fontfamily',
-                'fontcolor',
-                'video',
-            ],
-        ],
-        'plugins' => [
-            'imagemanager' => 'vova07\imperavi\bundles\ImageManagerAsset',
-            'filemanager' => 'vova07\imperavi\bundles\FileManagerAsset',
-        ],
-
-
-    ]) ?>
+    <?= $form->field($model, 'description')->textarea(['id'=>'editor']);?>
 
     <?php
     if (!$model->isNewRecord):

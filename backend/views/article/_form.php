@@ -33,37 +33,9 @@ use yii\widgets\ActiveForm;
 
 
     ]]) ?>
+
+    согласно реком гугла по улучшению скорости загр страниц размер изобр не должен превыш 100 кб
     <?= $form->field($model, 'description')->textarea(['id'=>'editor']);?>
-
-<!--    --><?//= $form->field($model, 'description')->widget(Widget::className(), [
-//        'settings' => [
-//            'lang' => 'ru',
-//            'minHeight' => 200,
-//            'source' => true,
-//            'imageDelete' => Url::to(['/article/image-delete']),
-//            'imageManagerJson' => Url::to(['/article/images-get']),
-//            'imageUpload' => Url::to(['/article/image-upload']),
-//            'fileUpload' => Url::to(['/article/file-upload']),
-//            'fileDelete' => Url::to(['/article/file-delete']),
-//            'fileManagerJson' => Url::to(['/article/files-get']),
-//            'plugins' => [
-//                'clips',
-//                'table',
-//                'fontsize',
-//                'fontcolor',
-//                'fontfamily',
-//                'fontcolor',
-//                'video',
-//            ],
-//        ],
-//        'plugins' => [
-//            'imagemanager' => 'vova07\imperavi\bundles\ImageManagerAsset',
-//            'filemanager' => 'vova07\imperavi\bundles\FileManagerAsset',
-//        ],
-//
-//
-//    ]) ?>
-
 
 
     <?php
