@@ -55,29 +55,46 @@ class CompanyDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
 
         $i = 0;
+
         while ($item = $this->nextRecord()) {
-//        foreach ($this->parser() as $item) {
+            try {
 
-            $companyExist = Company::find()->where(['account_number' => $item['lic_schet']])->one();
+                if($i % 2000 == 0){
+                    sleep(5);
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
 
-            $arr = array_combine($this->tableFaild(), $item);
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
 
-            if ($companyExist) {
-                $companyExist->updateAttributes($arr);
+                $query = Company::find()->where(['account_number' => $item['lic_schet']]);
+
+                if ($query->exists()) {
+                    $company = $query->one();
+                    $company->updateAttributes($arr);
+                }else{
+                    $company = new ScoreMetering();
+                    $company->setAttributes($arr);
+                }
+
+                if (!$company->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($company->getErrors()) . "\n";
+                    continue;
+                }
+
+                $i++;
+
+            } catch (\yii\db\Exception $e) {
+                $i++;
+                $this->log($admin_id, $e->getMessage());
+                sleep(2);
             }
-
-            $newCompany = new Company();
-            $newCompany->setAttributes($arr);
-            if (!$newCompany->save()) {
-                $error .= Json::encode($newCompany->getErrors());
-                continue;
-            } else {
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
-//                    print_r('ok');
-            }
-            $i++;
         }
-        $this->log($admin_id, $error !== '' ? "Запись файла $fileName окончена. Ошибки - " . $error : "Запись файла $fileName окончена.");
+
+        $this->log($admin_id,
+            $error !== ''
+                ? "Запись файла $fileName окончена. Ошибки - " . $error
+                : "Запись файла $fileName окончена.");
         return true;
     }
 }

@@ -53,36 +53,49 @@ class PaymentDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
-
         $i = 0;
+
         while ($item = $this->nextRecord()) {
+            try {
 
-//            foreach ($this->parser() as $k => $item) {
-            $arr = array_combine($this->tableFaild(), $item);
+                if($i % 2000 == 0){
+                    sleep(5);
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
 
-//            $payExist = Payment::find()->where(['account_number' => $item['lic_schet']])->one();
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
 
-            $dateNow = new DateTime('now');
-            $dateMonth = $dateNow->modify('-1 month')->format('Y-m-d');
+                $dateNow = new DateTime('now');
+                $dateMonth = $dateNow->modify('-1 month')->format('Ym');
 
-            Payment::deleteAll([
-                'AND',
-                'account_number' => $item['lic_schet'],
-                ['between', 'payment_date', $dateNow->format('Y-m-d'), $dateMonth],
-            ]);
+                Payment::deleteAll([
+                    'AND',
+                    'account_number' => $item['lic_schet'],
+                    ['between', 'payment_date', $dateNow->format('Y-m-d'), $dateMonth],
+                ]);
 
-            $pay = new Payment();
-            $pay->setAttributes($arr);
-            if (!$pay->save(false)) {
-                $error .= 'строка - ' . $i . Json::encode($pay->getErrors());
-                continue;
-            } else {
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
-//                print_r('ok');
+                $pay = new Payment();
+                $pay->setAttributes($arr);
+
+                if (!$pay->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($pay->getErrors()) . "\n";
+                    continue;
+                }
+
+                $i++;
+
+            } catch (\yii\db\Exception $e) {
+                $i++;
+                $this->log($admin_id, $e->getMessage());
+                sleep(2);
             }
-            $i++;
         }
-        $this->log($admin_id, $error !== '' ? "Запись файла $fileName окончена. Ошибки - " . $error : "Запись файла $fileName окончена.");
+
+        $this->log($admin_id,
+            $error !== ''
+                ? "Запись файла $fileName окончена. Ошибки - " . $error
+                : "Запись файла $fileName окончена.");
         return true;
 
 

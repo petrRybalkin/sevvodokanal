@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 use common\models\IndicationsAndCharges;
 use common\models\ScoreMetering;
+use DateTime;
 use Yii;
 use yii\db\Command;
 use yii\helpers\ArrayHelper;
@@ -91,31 +92,42 @@ class ScoreDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         $i = 0;
+
         while ($item = $this->nextRecord()) {
+            try {
 
-//        foreach ($this->parser() as $k => $item) {
-            $scoreExist = ScoreMetering::find()->where(['account_number' => $item['lic_schet']])->one();
+                if($i % 2000 == 0){
+                    sleep(5);
+                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                }
 
-            $arr = array_combine($this->tableFaild(), $item);
+                $this->checkDbConnection();
+                $arr = array_combine($this->tableFaild(), $item);
 
-            if ($scoreExist) {
-//                if (!$scoreExist->delete()) {
-//                    $error .= 'строка - ' . $k . Json::encode($scoreExist->getErrors()) . "\n";
-//                }
-                $scoreExist->updateAttributes($arr);
-//                print_r('update' . "\n");
+                $query = ScoreMetering::find()->where(['account_number' => $item['lic_schet']]);
+
+                if ($query->exists()) {
+                    $score = $query->one();
+                    $score->updateAttributes($arr);
+                }else{
+                    $score = new ScoreMetering();
+                    $score->setAttributes($arr);
+                }
+
+                if (!$score->save()) {
+                    $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
+                    continue;
+                }
+
+                $i++;
+
+            } catch (\yii\db\Exception $e) {
+                $i++;
+                $this->log($admin_id, $e->getMessage());
+                sleep(2);
             }
-            $score = new ScoreMetering();
-            $score->setAttributes($arr);
-            if (!$score->save()) {
-                $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
-                continue;
-            } else {
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
-//                print_r('ok' . "\n");
-            }
-            $i++;
         }
+
         $this->log($admin_id, ($error !== ''
             ? "Запись файла $fileName окончена. Ошибки - " . $error
             : "Запись файла $fileName окончена."));

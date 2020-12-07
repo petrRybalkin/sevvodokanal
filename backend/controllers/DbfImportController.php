@@ -281,7 +281,6 @@ class DbfImportController extends Controller
             $record->pp = $item->previous_readings_watering;
             $record->dpp =  Yii::$app->formatter->asDate($str,'php:mY');
             $table->writeRecord();
-            $item->updateAttributes(['synchronization' => 0]);
         }
         $table->close();
 
