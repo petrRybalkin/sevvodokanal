@@ -94,6 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+<!--                        Заборгованість станом на-->
                         <?php
                         $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
                             date("d.m.Y", strtotime('first day of last month')));

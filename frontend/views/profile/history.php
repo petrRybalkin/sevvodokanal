@@ -222,8 +222,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php if($metering):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2-ph1-ph2)-->
-                                    <?= $item->current_readings_first + $item->current_readings_second
-                                    - $item->previous_readings_first - $item->previous_readings_second;
+
+                                    <?php
+                                    $on = $item->current_readings_first + $item->current_readings_second
+                                        - $item->previous_readings_first - $item->previous_readings_second;
+
+                                    ?>
+                                    <?= $item->current_readings_first + $item->current_readings_second == 0
+                                    ? $on *-1
+                                        : $on
                                     ?> </td>
                                 <?php endif;?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
