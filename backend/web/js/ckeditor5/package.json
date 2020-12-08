@@ -14,16 +14,22 @@
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^23.6.0",
     "@ckeditor/ckeditor5-editor-classic": "^23.1.0",
     "@ckeditor/ckeditor5-essentials": "^23.1.0",
+    "@ckeditor/ckeditor5-export-pdf": "^23.1.0",
+    "@ckeditor/ckeditor5-export-word": "^23.1.0",
     "@ckeditor/ckeditor5-font": "^23.1.0",
     "@ckeditor/ckeditor5-heading": "^23.1.0",
+    "@ckeditor/ckeditor5-highlight": "^23.1.0",
+    "@ckeditor/ckeditor5-horizontal-line": "^23.1.0",
     "@ckeditor/ckeditor5-image": "^23.1.0",
     "@ckeditor/ckeditor5-indent": "^23.1.0",
     "@ckeditor/ckeditor5-link": "^23.1.0",
     "@ckeditor/ckeditor5-list": "^23.1.0",
     "@ckeditor/ckeditor5-media-embed": "^23.1.0",
+    "@ckeditor/ckeditor5-mention": "^23.1.0",
     "@ckeditor/ckeditor5-paragraph": "^23.1.0",
     "@ckeditor/ckeditor5-paste-from-office": "^23.1.0",
     "@ckeditor/ckeditor5-remove-format": "^23.1.0",
+    "@ckeditor/ckeditor5-special-characters": "^23.1.0",
     "@ckeditor/ckeditor5-table": "^23.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^23.1.0",
     "@ckeditor/ckeditor5-typing": "^23.1.0",
@@ -39,9 +45,5 @@
   },
   "scripts": {
     "build": "webpack --mode production"
-  },
-  "dependencies": {
-    "@emagtechlabs/ckeditor5-file-upload": "^1.0.4",
-    "ckeditor5-simple-upload": "^1.0.7"
   }
 }
