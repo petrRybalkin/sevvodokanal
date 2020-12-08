@@ -62,11 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php
                             $date = new DateTime('now');
                             if ($indication->month_year == $date->format('Ym')){
-                                echo $indication->previous_readings_first - $indication->previous_readings_second -
-                                    $indication->current_readings_first + $indication->current_readings_second;
+                                echo ($indication->previous_readings_first - $indication->previous_readings_second) -
+                                    ($indication->current_readings_first + $indication->current_readings_second);
                             }else {
-                                echo $indication->current_readings_first + $indication->current_readings_second
-                                    - $indication->previous_readings_first - $indication->previous_readings_second ;
+                                echo ($indication->previous_readings_first - $indication->previous_readings_second) -
+                                    ($indication->current_readings_first + $indication->current_readings_second);
                             }
 
                             ?>
