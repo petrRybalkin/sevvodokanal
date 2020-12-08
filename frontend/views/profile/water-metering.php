@@ -24,21 +24,13 @@ if ($vodomers): ?>
                     <dt class="text-sm leading-5 font-medium text-gray-500">Номер реєстраційного акту:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $number->act_number ?: '-' ?></dd>
                 </div>
-                <!--                --><?php //foreach ($vodomers as $vodomer) : ?>
                 <?php
-//
-//$i = \common\models\IndicationsAndCharges::find()
-//    ->where(['account_number' => $number->account_number, 'current_readings_first' => $vodomers->previous_readings_first])
-//    ->orderBy(['id' => SORT_DESC])->one();
-////    ->andWhere(new Expression('current_readings_first < previous_readings_first'));
-//
 
                 if ($vodomers->water_metering_first):
                     $ind = null;
                     if($k = array_key_last($vodomers->indication)){
                         $ind = $vodomers->indication[$k];
                     }
-//                \yii\helpers\VarDumper::dump($vodomers,10,1);exit;
 
                     ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
@@ -152,12 +144,6 @@ if ($vodomers): ?>
                                 : $vodomers->date_previous_readings ?></dd>
                     </div>
                 <?php endif; ?>
-                <!--                --><?php //endforeach; ?>
-<!--                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
-<!--                    <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
-<!--                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
-<!--                        --><?//= $vodomers->date_previous_readings ? Yii::$app->formatter->asDate($vodomers->date_previous_readings, 'php: d.m.Y') : '' ?><!--</dd>-->
-<!--                </div>-->
                 <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Кількість засобів обліку води, які
                         обліковуються на особовому рахунку споживача:
@@ -170,8 +156,6 @@ if ($vodomers): ?>
     <br>
 
     <?php
-//\yii\helpers\VarDumper::dump(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')),10,1);exit;
-//\yii\helpers\VarDumper::dump($vodomers,10,1);exit;
 
     if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym')) || $vodomers->in_site == 0):  ?>
     <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
