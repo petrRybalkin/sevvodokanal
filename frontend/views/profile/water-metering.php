@@ -27,11 +27,8 @@ if ($vodomers): ?>
                 <?php
 
                 if ($vodomers->water_metering_first):
-                    $ind = null;
-                    if($k = array_key_last($vodomers->indication)){
-                        $ind = $vodomers->indication[$k];
-                    }
-
+                        $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
+                $d = new Datetime($ind->month_year .'01');
                     ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1:</dt>
@@ -54,8 +51,8 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                             <?= $ind && $ind->month_year
-                                ? Yii::$app->formatter->asDate($ind->month_year , 'php: d.m.Y')
-                                : $vodomers->date_previous_readings ?></dd>
+                                ? $d->format('m.Y')
+                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings , 'php: d.m.Y') ?></dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
@@ -66,11 +63,8 @@ if ($vodomers): ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($vodomers->water_metering_second):
-                    $ind = null;
-                    if($k = array_key_last($vodomers->indication)){
-                        $ind = $vodomers->indication[$k];
-                    }
-
+                    $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
+                    $d = new Datetime($ind->month_year .'01');
                     ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №2":</dt>
@@ -94,8 +88,8 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                             <?= $ind && $ind->month_year
-                                ? Yii::$app->formatter->asDate($ind->month_year , 'php: d.m.Y')
-                                : $vodomers->date_previous_readings?></dd>
+                                ? $d->format('m.Y')
+                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php: d.m.Y') ?></dd>
                     </div>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
@@ -105,10 +99,8 @@ if ($vodomers): ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($vodomers->watering_number):
-                    $ind = null;
-                    if($k = array_key_last($vodomers->indication)){
-                        $ind = $vodomers->indication[$k];
-                    }
+                    $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
+                    $d = new Datetime($ind->month_year .'01');
                     ?>
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води для
@@ -140,8 +132,8 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                             <?= $ind && $ind->month_year
-                                ? Yii::$app->formatter->asDate($ind->month_year , 'php: d.m.Y')
-                                : $vodomers->date_previous_readings ?></dd>
+                                ? $d->format('m.Y')
+                                :  Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php: d.m.Y')  ?></dd>
                     </div>
                 <?php endif; ?>
                 <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
