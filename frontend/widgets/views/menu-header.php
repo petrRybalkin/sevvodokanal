@@ -52,7 +52,7 @@ use common\models\Page;
                                     <div class="rounded-lg shadow-xs overflow-hidden">
                                         <div class="z-20 relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                             <?php foreach (Page::getChild($page->id) as $child): ?>
-                                                <a href="<?= Url::to(['/page/'.$child->id]) ?>" class="-m-3 p-2 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
+                                                <a href="<?= Url::to(['/page/'.$child['id']]) ?>" class="-m-3 p-2 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150 text-gray-900 hover:text-blue-700 focus:outline-none focus:text-blue-700">
                                                     <div class="space-y-1">
                                                         <p class="text-base leading-6 font-medium">
                                                             <?= $child['title'] ?>
