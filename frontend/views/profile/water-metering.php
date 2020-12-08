@@ -95,7 +95,8 @@ if ($vodomers): ?>
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
                         </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->verification_date ?></dd>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
+                            <?= Yii::$app->formatter->asDate( $vodomers->verification_date , 'php:d.m.Y')?></dd>
                     </div>
                 <?php endif; ?>
                 <?php if ($vodomers->watering_number):
