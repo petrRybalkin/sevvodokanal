@@ -30,6 +30,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $main_menu
  * @property int|null $footer
  * @property int|null $parent_page
+ * @property int|null $deletable
  * @property int|null $create_utime
  * @property int|null $update_utime
  */
@@ -110,6 +111,24 @@ class Page extends \yii\db\ActiveRecord
             'update_utime' => 'Обновлено',
         ];
     }
+
+    public static function enumCategory($id = null)
+    {
+        static $enum;
+        $model = new Page();
+        if (!isset($enum)) {
+            $enum = self::find()
+                ->where(['parent_page' => 0, 'active' => 1, 'main_menu' => 1])
+                ->orderBy('title')
+                ->all();
+            //$enum = self::getParentsListTitle2($model->id);
+            $enum = ArrayHelper::map($enum, 'id', 'title');
+            //$enum = ArrayHelper::map(self::getParentsListTitle2($model->id)->select('id, title')->asArray()->all(), 'id', 'title');
+        }
+        return $id === null ? $enum : ArrayHelper::getValue($enum, $id, '');
+    }
+
+
     public static function statusList()
     {
         return [
@@ -315,28 +334,6 @@ class Page extends \yii\db\ActiveRecord
         return Html::tag('span', $this->getStatusFooterLabel(), $options);
     }
 
-
-    public static function getParents()
-    {
-        return self::find()->where([
-            'parent_page' => 0,
-        ]);
-//        ->orderBy([
-//            'sort' => SORT_DESC,
-//        ]);
-    }
-
-    public static function getPages(){
-        return ArrayHelper::map(Page::find()->orderBy([
-            'id' => SORT_ASC,
-        ])->asArray()->all(), 'id', 'title');
-    }
-
-    public static function getParentsList()
-    {
-        return ArrayHelper::map(self::getParents()->select('id, title')->asArray()->all(), 'id', 'title');
-    }
-
     /**
      * Gets query for [[Category]].
      *
@@ -358,15 +355,54 @@ class Page extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public static function getParentsListId()
+    {
+        return ArrayHelper::map(self::getParents()->select('id, title')->asArray()->all(), 'title', 'id');
+    }
+
+    public static function getParentsListTitle()
+    {
+        return ArrayHelper::map(self::getParents()->select('id, title')->asArray()->all(), 'id', 'title');
+    }
+
     /**
      * @return ActiveQuery
      */
-    public static function getChild()
+    public static function getChilds()
     {
-        $model = Category::find();
+        $model = new Page();
+
         return self::find()
-            ->where(['parent_page' => $model->id])
-            ->where(['active' => 1, 'main_menu' => 1]);
+            ->where(['parent_page' => 0, 'active' => 1, 'main_menu' => 1, 'id' != $model->id])
+            ->orderBy('sort_main_menu ASC');
+    }
+
+    /**
+     * @param $id
+     * @return ActiveQuery
+     */
+    public static function getChild($id)
+    {
+//        return self::find()
+//            ->where(['parent_page' => ])
+//            ->where(['active' => 1, 'main_menu' => 1]);
+        return Yii::$app->db->createCommand("SELECT id,title FROM page WHERE active=1 AND main_menu=1 AND parent_page=".$id."")->queryAll();
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public static function getParents()
+    {
+        return self::find()
+            ->where(['parent_page' => 0, 'active' => 1, 'main_menu' => 1])
+            ->orderBy('sort_main_menu ASC');
+    }
+/*----------------------*/
+    public static function getPages(){
+        return ArrayHelper::map(Page::find()->orderBy([
+            'id' => SORT_ASC,
+        ])->asArray()->all(), 'id', 'title');
     }
 
     /**
@@ -375,7 +411,8 @@ class Page extends \yii\db\ActiveRecord
     public static function getMenus()
     {
         return self::find()
-            ->where(['active' => 1, 'main_menu' => 1])
+            //->where(['active' => 1, 'main_menu' => 1])
+            ->where(['active' => 1, 'main_menu' => 1, 'parent_page' => 0])
             ->orderBy('sort_main_menu ASC');
     }
 

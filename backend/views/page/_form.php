@@ -17,8 +17,12 @@ AppAsset::register($this);
 ?>
 <style>
     #page-footer label{display:block}
+    h4{color:red}
 </style>
 <div class="page-form">
+    <?php if($model->deletable == 0 ): ?>
+    <h4>ЭТА СТРАНИЦА НЕ УДАЛЯЕМАЯ!!!</h4>
+    <?php endif; ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -32,14 +36,14 @@ AppAsset::register($this);
 
         </div>
         <div class="col-md-8 col-sm-12">
-            <?= $form->field($model, 'parent_page')->dropDownList(Category::enumCategory()); ?>
+            <?= $form->field($model, 'parent_page')->dropDownList($items=['Нет',Page::getParentsListTitle()]); ?>
             <?= $form->field($model, 'sort_main_menu')->textInput()->label('Приоритет (0 - выше(левее), 0< - ниже(правее))') ?>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-4 col-sm-12">
-            <?= $form->field($model, 'sidebar')->checkbox() ?>
+            <?= $form->field($model, 'sidebar')->radioList($items=['Не показывать','Выше новостей','Ниже новостей']) ?>
         </div>
         <div class="col-md-8 col-sm-12">
             <?= $form->field($model, 'sort_sidebar')->textInput()->label('Приоритет (0 - выше, 0< - ниже)') ?>

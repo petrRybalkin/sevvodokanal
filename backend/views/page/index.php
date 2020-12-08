@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     },
                     'delete' => function ($url, Page $model) {
-                    if(Yii::$app->user->identity->roleOption->access_pages == 1) {
+                    if(Yii::$app->user->identity->roleOption->access_pages == 1 && $model->deletable != 0) {
                         return Html::a('<span class="glyphicon glyphicon-plus">Удалить</span>', ['/page/delete', 'id' => $model->id], [
                             'title' => 'Delete',
                             'class' => 'btn btn-danger',
