@@ -51,7 +51,7 @@ AppAsset::register($this);
 
 
     <?php
-    if (!$model->isNewRecord):
+    if (!$model->isNewRecord && $model->img):
         ?>
         <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
         <a href="<?= \yii\helpers\Url::to(['article/del-photo', 'id' => $model->id]) ?>">Удалить картинку</a>

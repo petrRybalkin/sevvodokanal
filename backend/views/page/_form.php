@@ -88,8 +88,7 @@ AppAsset::register($this);
     <?= $form->field($model, 'description')->textarea(['id'=>'editor']);?>
 
     <?php
-    if (!$model->isNewRecord):
-        ?>
+    if (!$model->isNewRecord && $model->img): ?>
         <img src="<?= $model->getThumbFileUrl('img', 'thumb', ''); ?>" alt="">
         <a href="<?= \yii\helpers\Url::to(['page/del-photo', 'id' => $model->id])?>">Удалить картинку</a>
     <?php endif; ?>

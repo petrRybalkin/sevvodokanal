@@ -170,7 +170,10 @@ class ProfileController extends Controller
         $model = new IndicationForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
-
+                if(!$model->validate()){
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ActiveForm::validate($model);
+                }
                 $indication = IndicationsAndCharges::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
                 $score = ScoreMetering::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
 //                if ($indication && strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
@@ -188,6 +191,7 @@ class ProfileController extends Controller
                 }
                 if ($model->meter1 && $indication->water) {
                     $wm = WaterMetering::find()->where(['water_metering_first' => $indication->water->water_metering_first])->one();
+
                     $indication->updateAttributes([
                         'current_readings_first' => $model->meter1,
                     ]);

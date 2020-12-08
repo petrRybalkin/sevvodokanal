@@ -62,11 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php
                             $date = new DateTime('now');
                             if ($indication->month_year == $date->format('Ym')){
-                                echo $indication->previous_readings_first - $indication->previous_readings_second -
-                                    $indication->current_readings_first + $indication->current_readings_second;
+                                echo ($indication->previous_readings_first - $indication->previous_readings_second) -
+                                    ($indication->current_readings_first + $indication->current_readings_second);
                             }else {
-                                echo $indication->current_readings_first + $indication->current_readings_second
-                                    - $indication->previous_readings_first - $indication->previous_readings_second ;
+                                echo ($indication->previous_readings_first - $indication->previous_readings_second) -
+                                    ($indication->current_readings_first + $indication->current_readings_second);
                             }
 
                             ?>
@@ -94,6 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+<!--                        Заборгованість станом на-->
                         <?php
                         $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
                             date("d.m.Y", strtotime('first day of last month')));
