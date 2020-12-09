@@ -59,6 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Витрати води:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+
+<!--                            данные из табл нач и показ за предыдуш мес water_consumption -->
                             <?php
                             $date = new DateTime('now');
                             if ($indication->month_year == $date->format('Ym')){
@@ -72,7 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                             м3, <br>
                             витрати води на
-                            полив: <?= $indication->current_readings_watering - $indication->previous_readings_watering ?>
+                            полив:
+<!--                            данные из табл нач и показ за предыдуш мес watering_consumption -->
+
+                            <?= $indication->current_readings_watering - $indication->previous_readings_watering ?>
                             м3
                         </dd>
                     </div>

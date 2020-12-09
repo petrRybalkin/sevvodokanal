@@ -97,6 +97,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
 
     public static function debtBeginMonth($acc, $date){
+//        выбрать предыдущ мес
       return  IndicationsAndCharges::find()->where(['account_number' => $acc])
             ->andWhere(['between', 'month_year', $date, date("d.m.Y", strtotime('first day of this month'))])
         ->one();

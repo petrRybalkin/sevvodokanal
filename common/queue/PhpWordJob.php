@@ -20,10 +20,11 @@ class PhpWordJob extends BaseJob implements RetryableJobInterface
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($this->template);
 
         $templateProcessor->setValue($this->search, $this->replace);
-
+//        print_r($this->path);exit;
 //        $this->log("Replaced");
 
         try {
+//            print_r($this->path);exit;
             $templateProcessor->saveAs($this->path);
 
         } catch (\Exception $e) {

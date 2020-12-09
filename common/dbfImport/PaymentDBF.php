@@ -8,6 +8,7 @@ use common\models\Payment;
 use common\models\WaterMetering;
 use DateTime;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\Json;
 
 class PaymentDBF extends BaseDBF
@@ -54,6 +55,7 @@ class PaymentDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         $i = 0;
+        $isDeleted = [];
 
         while ($item = $this->nextRecord()) {
             try {
@@ -67,15 +69,21 @@ class PaymentDBF extends BaseDBF
                 $arr = array_combine($this->tableFaild(), $item);
 
                 $dateNow = new DateTime($item['datp']);
-                $dateThis = $dateNow->format('Y-m-01');
-                $dateMonth = $dateNow->format('Y-m-31');
+                $dateThis = $dateNow->format('Ym');
 
-                Payment::deleteAll([
-                    'AND',
-                    'account_number' => $item['lic_schet'],
-                    ['between', 'payment_date', $dateThis, $dateMonth],
-                ]);
+                $key = $item['lic_schet'] . $dateThis;
 
+                $date_format = new \yii\db\Expression("DATE_FORMAT(payment_date, '%Y%m') = '".$dateThis."'");
+
+                if (!in_array($key, $isDeleted)) {
+
+                 Payment::deleteAll([
+                        'account_number' => $item['lic_schet'],
+                        $date_format
+                    ]);
+
+                    $isDeleted[] = $key;
+                }
                 $pay = new Payment();
                 $pay->setAttributes($arr);
 
@@ -83,7 +91,8 @@ class PaymentDBF extends BaseDBF
                     $error .= 'строка - ' . $i . Json::encode($pay->getErrors()) . "\n";
                     continue;
                 }
-
+                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                print_r('ok');
                 $i++;
 
             } catch (\yii\db\Exception $e) {

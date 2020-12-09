@@ -16,11 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
     /** @var \common\models\ScoreMetering $number */
     $date = new DateTime('now');
     $debt = 0;
-    $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])->orderBy(['id' => SORT_DESC])->one();
+    $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])
+        ->orderBy(['id' => SORT_DESC])->one();
 
     if ($ind) {
         if ($ind->month_year == $date->modify('-1 month')->format('Ym')) {
-            $payThisMonth = Payment::getLgota($number->account_number, 1, $date->modify('-1 month')->format('Y-m-d'), true);
+            $payThisMonth = Payment::getLgota($number->account_number, 1, $date->modify('-1 month')
+                ->format('Y-m-d'), true);
 //        (если человек передал показания на сайте то
             if ($number->tariff_for_water > 0 && $number->tariff_for_stocks > 0) {
                 // (khv+kpv)*tarifv+(khv*tarifst)если есть вода и стоки,
@@ -94,6 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 води:
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+<!--                                если в табл нач показ тек показ 0 то вывожу из водомеров, если не 0 то вывожу из нач показ.-->
                                 <b><?= $vodomer->previous_readings_first ?></b>,
                                 дата їх передачі
                                 <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
