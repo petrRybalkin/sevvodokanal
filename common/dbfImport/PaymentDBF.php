@@ -73,13 +73,11 @@ class PaymentDBF extends BaseDBF
 
                 $key = $item['lic_schet'] . $dateThis;
 
-                $date_format = new \yii\db\Expression("DATE_FORMAT(payment_date, '%Y%m') = '".$dateThis."'");
-
                 if (!in_array($key, $isDeleted)) {
 
-                 Payment::deleteAll([
-                        'account_number' => $item['lic_schet'],
-                        $date_format
+                    Payment::deleteAll("account_number = :an AND DATE_FORMAT(payment_date, '%Y%m') = :dt", [
+                        ':an' => $item['lic_schet'],
+                        ':dt' => $dateThis,
                     ]);
 
                     $isDeleted[] = $key;
@@ -91,13 +89,13 @@ class PaymentDBF extends BaseDBF
                     $error .= 'строка - ' . $i . Json::encode($pay->getErrors()) . "\n";
                     continue;
                 }
-                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+//                $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 print_r('ok');
                 $i++;
 
             } catch (\yii\db\Exception $e) {
                 $i++;
-                $this->log($admin_id, $e->getMessage());
+                $this->log($admin_id,  'строка - ' ." $i - " . $item['lic_schet']." ". $e->getMessage());
                 sleep(2);
             }
         }
