@@ -324,15 +324,6 @@ class ProfileController extends Controller
             'score' => $score,
         ]);
 
-
-//
-//        return $this->render('history', [
-//            'metering' => $metering,
-//            'score' => $score,
-//            'indication' => $indication,
-//
-//        ]);
-
     }
 
     /**
@@ -399,21 +390,21 @@ class ProfileController extends Controller
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff,//total_tarif
+                    $score->total_tariff.' грн.',//total_tarif
                     $indication->water_consumption,//water
                     $indication->watering_consumption,//watering
                     Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),//verification_date
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
-                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2),//debt
-                    Yii::$app->formatter->asDecimal($indication->accruals, 2),//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-',//lgota
-                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2),//perescore
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2).' грн.',//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2).' грн.',//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-'.' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-'.' грн.',//lgota
+                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0'.' грн.',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2).' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2),//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2)//total_payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.',//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.'//total_payment
 
                 ];
 
@@ -444,18 +435,18 @@ class ProfileController extends Controller
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff,//total_tarif
+                    $score->total_tariff.' грн.',//total_tarif
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
-                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2),//debt
-                    Yii::$app->formatter->asDecimal($indication->accruals, 2),//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-',//lgota
-                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2),//perescore
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2).' грн.',//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2).' грн.',//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-'.' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-'.' грн.',//lgota
+                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0'.' грн.',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2).' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2),//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2)//total_payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.',//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.'//total_payment
 
                 ];
                 $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx";
@@ -470,18 +461,8 @@ class ProfileController extends Controller
                 $templateProcessor->saveAs($fullName);
             } catch (\Exception $e) {
                 return false;
-//            $this->log($e->getMessage());
-//            $this->log($e->getTraceAsString());
             }
 
-
-//
-//            $id = Yii::$app->queue->push(new PhpWordJob([
-//                'template' => $template,
-//                'path' => $fullName,
-//                'search' => $search ,
-//                'replace' => $replace,
-//            ]));
         }else{
             return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
         }
