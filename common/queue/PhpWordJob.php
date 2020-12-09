@@ -17,6 +17,8 @@ class PhpWordJob extends BaseJob implements RetryableJobInterface
     public function execute($queue)
     {
         $this->log(1,"Run PhpWordJob");
+        $this->log(1,$this->template);
+        $this->log(1,$this->path);
 
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($this->template);
 
