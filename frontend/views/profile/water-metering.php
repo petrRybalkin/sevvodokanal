@@ -20,7 +20,7 @@ if ($vodomers): ?>
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div>
             <dl>
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Номер реєстраційного акту:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $number->act_number ?: '-' ?></dd>
                 </div>
@@ -30,15 +30,15 @@ if ($vodomers): ?>
                         $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
                 $d = new Datetime($ind->month_year .'01');
                     ?>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №1:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->water_metering_first ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Тип засобу(ів) обліку води:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->type_first ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- попередні показання засоба обліку
                             води:
                         </dt>
@@ -47,14 +47,14 @@ if ($vodomers): ?>
                                 ?  $ind->current_readings_first
                                 :  $vodomers->previous_readings_first ?></dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
+<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
 <!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
 <!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
 <!--                            --><?//= $ind && $ind->month_year
 //                                ? $d->format('m.Y')
 //                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings , 'php: d.m.Y') ?><!--</dd>-->
 <!--                    </div>-->
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
                         </dt>
@@ -66,15 +66,15 @@ if ($vodomers): ?>
                     $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
                     $d = new Datetime($ind->month_year .'01');
                     ?>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води №2":</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->water_metering_second ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Тип засобу(ів) обліку води:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->type_second ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- попередні показання засоба обліку
                             води:
                         </dt>
@@ -84,14 +84,14 @@ if ($vodomers): ?>
                                 :  $vodomers->previous_readings_second ?></dd>
                             </dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
+<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
 <!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
 <!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
 <!--                            --><?//= $ind && $ind->month_year
 //                                ? $d->format('m.Y')
 //                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php: d.m.Y') ?><!--</dd>-->
 <!--                    </div>-->
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
                         </dt>
@@ -103,17 +103,17 @@ if ($vodomers): ?>
                     $ind = $vodomers->indication[ array_key_last($vodomers->indication) ];
                     $d = new Datetime($ind->month_year .'01');
                     ?>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Номер засобу обліку води для
                             поливу:
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->watering_number ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Тип засобу(ів) обліку води:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $vodomers->type_watering ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- попередні показання засоба обліку
                             води:
                         </dt>
@@ -123,14 +123,14 @@ if ($vodomers): ?>
                                 ? $ind->previous_readings_watering
                                 : $vodomers->previous_watering_readings ?></dd>
                     </div>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                             <?= Yii::$app->formatter->asDate($vodomers->verification_date, 'php:d.m.Y') ?></dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
+<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
 <!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
 <!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
 <!--                            --><?//= $ind && $ind->month_year
@@ -139,7 +139,7 @@ if ($vodomers): ?>
 <!--                    </div>-->
                 <?php endif; ?>
 
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                         <?= $vodomers->date_previous_readings
@@ -148,7 +148,7 @@ if ($vodomers): ?>
                 </div>
 
 
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Кількість засобів обліку води, які
                         обліковуються на особовому рахунку споживача:
                     </dt>

@@ -14,7 +14,7 @@ $this->title = 'РАХУНОК - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+    <div class="px-4 py-3 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             РАХУНОК
         </h3>
@@ -25,30 +25,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <div>
         <dl>
             <?php if ($score && $indication): ?>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Особовий рахунок №</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->account_number ?></dd>
                 </div>
                 <?php
                 if ($metering):?>
-                    <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">№ акта</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->act_number ?></dd>
                     </div>
                 <?php endif; ?>
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Споживач: П.І.Б.</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->name_of_the_tenant ?></dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Адреса:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->address ?></dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Норма водоспоживання:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $score->norm ?></dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Тариф:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?= Yii::$app->formatter->asDecimal($score->total_tariff, 3) ?>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </dd>
                 </div>
                 <?php if ($metering): ?>
-                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Витрати води:</dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
 
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             м3
                         </dd>
                     </div>
-                    <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">Дата наступної повірки засобу(ів) обліку
                             води:
                         </dt>
@@ -89,12 +89,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?= $metering ? Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y') : '' ?></dd>
                     </div>
                 <?php endif; ?>
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Наявність пільги:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?= $indication->privilege == 0 ? 'Нi' : "Так" ?></dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Заборгованість станом на
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Нараховано:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
 <!--                        Нарахування (дані беруться з довідника нарахувань поле nac).-->
@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Пільга:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
 <!--                        Пільга (дані беруться з довідника оплати з ознакою “2”. У випадку,
@@ -131,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Субсидія:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
 <!--                        Субсидія (дані беруться з довідника оплати з ознакою “3”)-->
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Поточна оплата:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?php
@@ -161,12 +161,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Перерахунок:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?= Yii::$app->formatter->asDecimal($indication->correction?:0, 2) ?></dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">До оплати на
                         <?= date('01.m.Y') ?>р. :</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
@@ -174,14 +174,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         грн.
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Всього до оплати:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <?= Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2) ?>
                         грн.
                     </dd>
                 </div>
-                <div class="bg-white px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">
                         &nbsp;
                     </dt>
@@ -208,7 +208,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </dd>
                 </div>
             <?php else: ?>
-                <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">&nbsp;</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2" style="color: red">Нема
                         можливостi сформувати рахунок.

@@ -14,15 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div>
         <dl>
-            <div class="bg-gray-50 px-1 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Номер особового рахунку:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->account_number ?></dd>
             </div>
-            <div class="bg-gray-50 px-1 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">П.І.Б.:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->name_of_the_tenant ?></dd>
             </div>
-            <div class="bg-gray-50 px-1 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Адреса:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1"><?= $score->address ?></dd>
             </div>
@@ -100,13 +100,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="min-w-full divide-y divide-gray-200 history-table">
                         <thead>
                         <tr>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400"
                                 rowspan="2">Місяць, рік
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Кіл. осіб
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн
                             </td>
                             <?php
@@ -127,59 +127,59 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                             <?php endif; ?>
                             <?php if ($metering): ?>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                     rowspan="2">Обсяг водоспоживання, м³
                                 </td>
                             <?php endif; ?>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Тариф, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Нараховано, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Корекція, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Сплачено, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Оплата<br>субсидій, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Оплата<br>пільг, грн
                             </td>
-                            <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                 rowspan="2">Сальдо на кінець<br>місяця, грн
                             </td>
                             <?php if ($metering): ?>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                     rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³
                                 </td>
                             <?php endif; ?>
                         </tr>
                         <tr>
                             <?php if ($metering && $metering->water_metering_first): ?>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Попер. показання,<br>м3
                                 </td>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Поточн. показання,<br>м3
                                 </td>
                             <?php endif; ?>
                             <?php if ($metering && $metering->water_metering_second): ?>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Попередні показання,<br>м3
                                 </td>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Поточн. показання,<br>м3
                                 </td>
                             <?php endif; ?>
                             <?php if ($metering && $metering->watering_number): ?>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Попередні показання,<br>м3
                                 </td>
-                                <td class="px-1 py-2 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Поточн. показання,<br>м3
                                 </td>
                             <?php endif; ?>
@@ -204,8 +204,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     } else {
                                         echo Yii::$app->formatter->asDecimal($item->debt_begin_month, 2);
                                     }
-
-
                                     ?> </td>
                                 <?php if ($metering && $metering->water_metering_first): ?>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?></td>
@@ -238,10 +236,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <!--  Поле nac “-” поле lgota-->
                                     в тек мес  (при передаче показаний я считаю начисления по формуле
 
-
-                                    <?=
-
-                                    Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
+                                    <?= Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   корекция-->
                                     <?= Yii::$app->formatter->asDecimal(($item->correction ?: 0), 2) ?></td>
