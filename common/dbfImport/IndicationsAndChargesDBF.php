@@ -184,7 +184,7 @@ class IndicationsAndChargesDBF extends BaseDBF
 
             } catch (\yii\db\Exception $e) {
                 $i++;
-                $this->log($admin_id, $e->getMessage());
+                $this->log($admin_id, 'строка - ' . $i .'счет - '.$item['lic_schet'].'.'.$e->getMessage());
                 sleep(2);
             }
         }

@@ -223,7 +223,17 @@ class ProfileController extends Controller
                     'synchronization' => 1,
                     'water_consumption' => $wc,
                     'watering_consumption' => $watc,
-                    'accruals' => ($wc + $watc) * $indication->total_tariff,
+                    'accruals' => (($indication->current_readings_first +
+                                $indication->current_readings_second +
+                                $indication->current_readings_watering -
+                                $indication->previous_readings_first -
+                                $indication->previous_readings_second -
+                                $indication->previous_readings_watering) * $score->tariff_for_water) +
+                        (($indication->current_readings_first +
+                                $indication->current_readings_second -
+                                $indication->previous_readings_first -
+                                $indication->previous_readings_second) * $score->tariff_for_stocks)
+                ,
                     'debt_end_month' => (($indication->current_readings_first +
                                 $indication->current_readings_second +
                                 $indication->current_readings_watering -
@@ -235,6 +245,7 @@ class ProfileController extends Controller
                                 $indication->previous_readings_first -
                                 $indication->previous_readings_second) * $score->tariff_for_stocks)
                 ]);
+//              слаьдо на поч мес + то что вверху - кор тек - сплачено тек- субс тек -пильг тек
                 $wm->updateAttributes([
                     'date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d'),
                     'in_site' => 1
@@ -268,7 +279,11 @@ class ProfileController extends Controller
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+
+//      выбрать предыдущий мес
+        $indication = IndicationsAndCharges::find()
+            ->where(['account_number' => $score->account_number])
+            ->orderBy(['id' => SORT_DESC])->one();
         $payment = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
 
         return $this->render('score', [
@@ -332,7 +347,7 @@ class ProfileController extends Controller
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:d-m-Y');
-        $name = 'Рахунок_'. str_replace("'",'',$score->name_of_the_tenant) . '_' . $date . '.docx';
+        $name = 'Рахунок_'. $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {

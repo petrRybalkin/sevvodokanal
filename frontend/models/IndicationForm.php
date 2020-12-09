@@ -54,20 +54,20 @@ class IndicationForm extends Model
         } else {
 
             if ($acc->number_medium_cubes > 0 &&
-                (int)$this->$attribute < ($acc->number_medium_cubes - 10)
+                (int)$this->$attribute < ($acc->previous_readings_first - $acc->number_medium_cubes)
             ) {
-                $this->addError('meter1', 'Переданi показання меньше середнiх кубiв.');
+                $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
             }
-
+//выбрать из нач тек мес строку, и дописать условие и (int)$this->$attribute < нач показ -> тек показ
             if ((int)$this->$attribute < $acc->previous_readings_first
             ) {
-                $this->addError('meter1', 'Переданi показання меньше попереднiх.');
+                $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
             }
 
-            if (
-                (int)$this->$attribute >= ($acc->previous_readings_first + 200)
+            if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
             ) {
-                $this->addError('meter1', 'Переданi показання бiльше попереднiх.');
+                $r = ($acc->previous_readings_first + 200)-(int)$this->$attribute;
+                $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
             }
         }
 
@@ -84,12 +84,12 @@ class IndicationForm extends Model
                 $this->addError('meter2', 'Переданi показання меньше попереднiх.');
             }
 
-            if (
-                (int)$this->$attribute >= ($acc->previous_readings_second + 200)
-            ) {
-                $this->addError('meter2', 'Переданi показання бiльше попереднiх.');
-            }
 
+            if ((int)$this->$attribute >= ($acc->previous_readings_second + 200)
+            ) {
+                $r = ($acc->previous_readings_second + 200)-(int)$this->$attribute;
+                $this->addError('meter2', "Переданi показання бiльше попереднiх на $r кубiв.");
+            }
 
 
         }
@@ -106,10 +106,10 @@ class IndicationForm extends Model
                 $this->addError('meter3', 'Переданi показання меньше попереднiх.');
             }
 
-            if (
-                (int)$this->$attribute >= ($acc->previous_watering_readings + 200)
+            if ((int)$this->$attribute >= ($acc->previous_watering_readings + 200)
             ) {
-                $this->addError('meter3', 'Переданi показання бiльше попереднiх.');
+                $r = ($acc->previous_watering_readings + 200)-(int)$this->$attribute;
+                $this->addError('meter3', "Переданi показання бiльше попереднiх на $r кубiв.");
             }
 
         }
