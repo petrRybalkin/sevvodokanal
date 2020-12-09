@@ -344,13 +344,30 @@ class ProfileController extends Controller
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])
+            ->andWhere(['month_year' => date("Ym", strtotime('first day of last month'))])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:d-m-Y');
         $name = 'Рахунок_'. $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {
+            $lgota = $indication->privilege_unpaid !== 0
+                ? $indication->privilege_unpaid
+                : Payment::getLgota($score->account_number, 2, null, true)['sumAll'] ;
+            $subs = Payment::getLgota($score->account_number, 3,null, true)
+                ? Payment::getLgota($score->account_number, 3,null, true)['sumAll']
+                : 0;
+            $opl1 = Payment::getLgota($score->account_number, 1, null,true)
+                ? Payment::getLgota($score->account_number, 1,null,true)['sumAll']
+                : 0;
+
+            $opl0 = Payment::getLgota($score->account_number, 0, null,true)
+                ? Payment::getLgota($score->account_number, 0,null,true)['sumAll']
+                : 0;
+
+            $d = IndicationsAndCharges::debtBeginMonth($indication->account_number,
+                date("d.m.Y", strtotime('first day of last month')));
             if ($metering) {
               $search =   [
                     'account_number',
@@ -377,28 +394,26 @@ class ProfileController extends Controller
                 ];
 
                 $replace =  [
-                    $score->account_number,
-                    $score->act_number,
-                    $score->name_of_the_tenant,
-                    $score->address,
-                    $score->norm,
-                    $score->total_tariff,
-                    $indication->current_readings_first + $indication->current_readings_second - $indication->previous_readings_first - $indication->previous_readings_second,
-                    $indication->current_readings_watering - $indication->previous_readings_watering,
-                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),
-                    $indication->privilege == 0 ? 'Нi' : "Так",
-                    date("d.m.Y", strtotime('first day of last month')),
-                    $indication->debt_end_month,
-                    $indication->accruals,
-                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
-                    Payment::getLgota($score->account_number, 3) ?: '-',
-                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
-                    $indication->correction,
-                    date('01.m.Y'),
-                    $indication->accruals -
-                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
-                        Payment::getLgota($score->account_number, 3),
-                    $indication->debt_end_month
+                    $score->account_number,//account_number
+                    $score->act_number,//act_number
+                    $score->name_of_the_tenant,//fio
+                    $score->address,//address
+                    $score->norm,//norm
+                    $score->total_tariff,//total_tarif
+                    $indication->water_consumption,//water
+                    $indication->watering_consumption,//watering
+                    Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),//verification_date
+                    $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
+                    date("d.m.Y", strtotime('first day of last month')),//date_debt
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2),//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2),//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-',//lgota
+                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2),//perescore
+                    date('01.m.Y'),//date_pay
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2),//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2)//total_payment
 
                 ];
 
@@ -425,36 +440,48 @@ class ProfileController extends Controller
                 ];
 
                 $replace =  [
-                    $score->account_number,
-                    $score->name_of_the_tenant,
-                    $score->address,
-                    $score->norm,
-                    $score->total_tariff,
-                    $indication->privilege == 0 ? 'Нi' : "Так",
-                    date("d.m.Y", strtotime('first day of last month')),
-                    $indication->debt_end_month,
-                    $indication->accruals,
-                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2),
-                    Payment::getLgota($score->account_number, 3) ?: '-',
-                    Payment::getLgota($score->account_number, 1) ? Payment::getLgota($score->account_number, 1)->sum : '0',
-                    $indication->correction,
-                    date('01.m.Y'),
-                    $indication->accruals -
-                    $indication->privilege_unpaid !== 0 ? $indication->privilege_unpaid : Payment::getLgota($score->account_number, 2) -
-                        Payment::getLgota($score->account_number, 3),
-                    $indication->debt_end_month
+                    $score->account_number, //account_number
+                    $score->name_of_the_tenant,//fio
+                    $score->address,//address
+                    $score->norm,//norm
+                    $score->total_tariff,//total_tarif
+                    $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
+                    date("d.m.Y", strtotime('first day of last month')),//date_debt
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2),//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2),//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-',//lgota
+                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2),//perescore
+                    date('01.m.Y'),//date_pay
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2),//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2)//total_payment
 
                 ];
                 $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx";
             }
 
 
-            $id = Yii::$app->queue->push(new PhpWordJob([
-                'template' => $template,
-                'path' => $fullName,
-                'search' => $search ,
-                'replace' => $replace,
-            ]));
+            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($template);
+
+            $templateProcessor->setValue($search, $replace);
+
+            try {
+                $templateProcessor->saveAs($fullName);
+            } catch (\Exception $e) {
+                return false;
+//            $this->log($e->getMessage());
+//            $this->log($e->getTraceAsString());
+            }
+
+
+//
+//            $id = Yii::$app->queue->push(new PhpWordJob([
+//                'template' => $template,
+//                'path' => $fullName,
+//                'search' => $search ,
+//                'replace' => $replace,
+//            ]));
         }else{
             return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
         }
