@@ -47,13 +47,6 @@ if ($vodomers): ?>
                                 ?  $ind->current_readings_first
                                 :  $vodomers->previous_readings_first ?></dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
-<!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
-<!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
-<!--                            --><?//= $ind && $ind->month_year
-//                                ? $d->format('m.Y')
-//                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings , 'php: d.m.Y') ?><!--</dd>-->
-<!--                    </div>-->
                     <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
@@ -84,13 +77,6 @@ if ($vodomers): ?>
                                 :  $vodomers->previous_readings_second ?></dd>
                             </dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
-<!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
-<!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
-<!--                            --><?//= $ind && $ind->month_year
-//                                ? $d->format('m.Y')
-//                                : Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php: d.m.Y') ?><!--</dd>-->
-<!--                    </div>-->
                     <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                         <dt class="text-sm leading-5 font-medium text-gray-500">- строк наступної повірки засоба
                             обліку:
@@ -130,13 +116,6 @@ if ($vodomers): ?>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">
                             <?= Yii::$app->formatter->asDate($vodomers->verification_date, 'php:d.m.Y') ?></dd>
                     </div>
-<!--                    <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
-<!--                        <dt class="text-sm leading-5 font-medium text-gray-500">Дата попередніх показань:</dt>-->
-<!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1">-->
-<!--                            --><?//= $ind && $ind->month_year
-//                                ? $d->format('m.Y')
-//                                :  Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php: d.m.Y')  ?><!--</dd>-->
-<!--                    </div>-->
                 <?php endif; ?>
 
                 <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
