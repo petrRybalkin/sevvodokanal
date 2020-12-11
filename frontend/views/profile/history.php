@@ -234,7 +234,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Нарахування розраховується по формулі:-->
                                     <!--  Поле nac “-” поле lgota-->
-                                    в тек мес  (при передаче показаний я считаю начисления по формуле
+<!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
 
                                     <?= Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">

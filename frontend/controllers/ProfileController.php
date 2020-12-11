@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\ClientMap;
+use DateTime;
 use yii\data\Pagination;
 use yii\db\Expression;
 use yii\filters\AccessControl;
@@ -170,88 +171,119 @@ class ProfileController extends Controller
         $model = new IndicationForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
-                if(!$model->validate()){
+                if (!$model->validate()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     return ActiveForm::validate($model);
                 }
-                $indication = IndicationsAndCharges::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
+                $dThis = new DateTime('first day of this month');
+                $indicationThisMonth = IndicationsAndCharges::find()
+                    ->where(['account_number' => $model->acc])
+                    ->andWhere(['month_year' => $dThis->format('Ym')])
+                    ->orderBy(['id' => SORT_DESC])
+                    ->one();
+
+                $dPrev = new DateTime('first day of last month');
+                $indicationPrevMonth = IndicationsAndCharges::find()
+                    ->where(['account_number' => $model->acc])
+                    ->andWhere(['month_year' => $dPrev->format('Ym')])
+                    ->orderBy(['id' => SORT_DESC])
+                    ->one();
+
+
                 $score = ScoreMetering::find()->where(['account_number' => $model->acc])->orderBy(['id' => SORT_DESC])->one();
 //                if ($indication && strtotime($indication->month_year) < strtotime(Yii::$app->formatter->asDate(('NOW'), 'php:Ym'))) {
-                $indication->id = null;
-                $indication->isNewRecord = true;
-                $indication->updateAttributes([
-                    'previous_readings_first' => $indication->current_readings_first,
-                    'previous_readings_second' => $indication->current_readings_second,
-                    'previous_readings_watering' => $indication->current_readings_watering,
+//                $indication->id = null;
+//                $indication->isNewRecord = true;
+                $indicationThisMonth->updateAttributes([
+                    'previous_readings_first' => $indicationPrevMonth->current_readings_first,
+                    'previous_readings_second' => $indicationPrevMonth->current_readings_second,
+                    'previous_readings_watering' => $indicationPrevMonth->current_readings_watering,
 
                 ]);
 //                }
-                if (!$indication) {
-                    $indication = new  IndicationsAndCharges();
-                }
-                if ($model->meter1 && $indication->water) {
-                    $wm = WaterMetering::find()->where(['water_metering_first' => $indication->water->water_metering_first])->one();
+//                if (!$indication) {
+//                    $indication = new  IndicationsAndCharges();
+//                }
+                if ($model->meter1 && $indicationThisMonth->water) {
+                    $wm = WaterMetering::find()
+                        ->where(['water_metering_first' => $indicationThisMonth->water->water_metering_first])
+                        ->one();
 
-                    $indication->updateAttributes([
-                        'current_readings_first' => $model->meter1,
+                    $indicationThisMonth->updateAttributes([
+                        'current_readings_first' => (int)$model->meter1,
                     ]);
                     $wm->updateAttributes(['previous_readings_first' => (int)$model->meter1]);
                 }
 
-                if ($model->meter2 && $indication->water) {
-                    $wm = WaterMetering::find()->where(['water_metering_second' => $indication->water->water_metering_second])->one();
-                    $indication->updateAttributes([
-                        'current_readings_second' => $model->meter2,
+                if ($model->meter2 && $indicationThisMonth->water) {
+                    $wm = WaterMetering::find()
+                        ->where(['water_metering_second' => $indicationThisMonth->water->water_metering_second])
+                        ->one();
+
+                    $indicationThisMonth->updateAttributes([
+                        'current_readings_second' => (int)$model->meter2,
 
                     ]);
                     $wm->updateAttributes(['previous_readings_second' => (int)$model->meter2]);
                 }
-                if ($indication->water && $model->meter3) {
-                    $wm = WaterMetering::find()->where(['watering_number' => $indication->water->watering_number])->one();
-                    $indication->updateAttributes(['current_readings_watering' => $model->meter3,
+                if ($model->meter3 && $indicationThisMonth->water) {
+                    $wm = WaterMetering::find()
+                        ->where(['watering_number' => $indicationThisMonth->water->watering_number])
+                        ->one();
+                    $indicationThisMonth->updateAttributes([
+                        'current_readings_watering' => (int)$model->meter3]);
 
-                    ]);
                     $wm->updateAttributes(['previous_watering_readings' => (int)$model->meter3]);
                 }
-                $wc = ((int)$model->meter1 - (int)$indication->previous_readings_first)
-                    + ((int)$model->meter2 - (int)$indication->previous_readings_second);
+                $wc = ((int)$model->meter1 - (int)$indicationThisMonth->previous_readings_first)
+                    + ((int)$model->meter2 - (int)$indicationThisMonth->previous_readings_second);
 
-                $watc = (int)$model->meter3 - (int)$indication->previous_readings_watering;
-                $indication->updateAttributes([
+
+                $watc = (int)$model->meter3 - (int)$indicationPrevMonth->previous_readings_watering;
+                $calcWaterCons = (((int)$model->meter1 +
+                            (int)$model->meter2 +
+                            (int) $model->meter3 -
+                            $indicationThisMonth->previous_readings_first -
+                            $indicationThisMonth->previous_readings_second -
+                            $indicationThisMonth->previous_readings_watering) * $score->tariff_for_water) +
+                    (((int)$model->meter1 +
+                            (int)$model->meter2 -
+                            $indicationThisMonth->previous_readings_first -
+                            $indicationThisMonth->previous_readings_second) * $score->tariff_for_stocks);
+
+
+                $splacheno = (Payment::getLgota($score->account_number, 1, date('Y-m-d'), true)
+                        ? Payment::getLgota($score->account_number, 1, date('Y-m-d'), true)['sumAll'] : 0) +
+                    (Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)
+                        ? Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)['sumAll']
+                        : 0);
+                $lgo = $indicationThisMonth->privilege_unpaid !== 0
+                    ? $indicationThisMonth->privilege_unpaid
+                    : Payment::getLgota($score->account_number, 2, date('Y-m-d'), true)['sumAll'];
+
+                $subs = Payment::getLgota($score->account_number, 3, date('Y-m-d'), true)
+                    ? Payment::getLgota($score->account_number, 3, date('Y-m-d'), true)['sumAll']
+                    : 0;
+                /** @var IndicationsAndCharges $indicationPrevMonth */
+                /** @var IndicationsAndCharges $indicationThisMonth */
+                $indicationThisMonth->updateAttributes([
                     'account_number' => $wm->account_number,
                     'month_year' => Yii::$app->formatter->asDate(('NOW'), 'php:Ym'),
                     'synchronization' => 1,
                     'water_consumption' => $wc,
                     'watering_consumption' => $watc,
-                    'accruals' => (($indication->current_readings_first +
-                                $indication->current_readings_second +
-                                $indication->current_readings_watering -
-                                $indication->previous_readings_first -
-                                $indication->previous_readings_second -
-                                $indication->previous_readings_watering) * $score->tariff_for_water) +
-                        (($indication->current_readings_first +
-                                $indication->current_readings_second -
-                                $indication->previous_readings_first -
-                                $indication->previous_readings_second) * $score->tariff_for_stocks)
-                ,
-                    'debt_end_month' => (($indication->current_readings_first +
-                                $indication->current_readings_second +
-                                $indication->current_readings_watering -
-                                $indication->previous_readings_first -
-                                $indication->previous_readings_second -
-                                $indication->previous_readings_watering) * $score->tariff_for_water) +
-                        (($indication->current_readings_first +
-                                $indication->current_readings_second -
-                                $indication->previous_readings_first -
-                                $indication->previous_readings_second) * $score->tariff_for_stocks)
+                    'accruals' => $calcWaterCons,
+                    //   слаьдо на поч мес + то что вверху - кор тек - сплачено тек- субс тек -пильг тек +
+                    'debt_end_month' => $indicationThisMonth->debt_begin_month + $calcWaterCons - $indicationThisMonth->correction
+                        - $splacheno - $lgo - $subs
+
                 ]);
-//              слаьдо на поч мес + то что вверху - кор тек - сплачено тек- субс тек -пильг тек
                 $wm->updateAttributes([
                     'date_previous_readings' => Yii::$app->formatter->asDate(('NOW'), 'php:Y-m-d'),
                     'in_site' => 1
-                    ]);
+                ]);
 
-                if (!$indication->save() || !$wm->save()) {
+                if (!$indicationThisMonth->save() || !$wm->save()) {
                     Yii::$app->session->setFlash('error', 'Показання не збереженi. Виникла помилка.');
                 } else {
                     Yii::$app->session->setFlash('success', 'Показання переданi.');
@@ -280,9 +312,11 @@ class ProfileController extends Controller
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
 
-//      выбрать предыдущий мес
+//      выбрать предыдущий мес +
+        $d = new DateTime('first day of last month');
         $indication = IndicationsAndCharges::find()
             ->where(['account_number' => $score->account_number])
+            ->andWhere(['month_year' => $d->format('Ym')])
             ->orderBy(['id' => SORT_DESC])->one();
         $payment = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->all();
 
@@ -339,28 +373,28 @@ class ProfileController extends Controller
             ->andWhere(['month_year' => date("Ym", strtotime('first day of last month'))])->one();
         FileHelper::createDirectory(\Yii::getAlias('@runtimeFront') . '/history/');
         $date = Yii::$app->formatter->asDate(('NOW'), 'php:d-m-Y');
-        $name = 'Рахунок_'. $score->name_of_the_tenant . '_' . $date . '.docx';
+        $name = 'Рахунок_' . $score->name_of_the_tenant . '_' . $date . '.docx';
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {
             $lgota = $indication->privilege_unpaid !== 0
                 ? $indication->privilege_unpaid
-                : Payment::getLgota($score->account_number, 2, null, true)['sumAll'] ;
-            $subs = Payment::getLgota($score->account_number, 3,null, true)
-                ? Payment::getLgota($score->account_number, 3,null, true)['sumAll']
+                : Payment::getLgota($score->account_number, 2, null, true)['sumAll'];
+            $subs = Payment::getLgota($score->account_number, 3, null, true)
+                ? Payment::getLgota($score->account_number, 3, null, true)['sumAll']
                 : 0;
-            $opl1 = Payment::getLgota($score->account_number, 1, null,true)
-                ? Payment::getLgota($score->account_number, 1,null,true)['sumAll']
+            $opl1 = Payment::getLgota($score->account_number, 1, null, true)
+                ? Payment::getLgota($score->account_number, 1, null, true)['sumAll']
                 : 0;
 
-            $opl0 = Payment::getLgota($score->account_number, 0, null,true)
-                ? Payment::getLgota($score->account_number, 0,null,true)['sumAll']
+            $opl0 = Payment::getLgota($score->account_number, 0, null, true)
+                ? Payment::getLgota($score->account_number, 0, null, true)['sumAll']
                 : 0;
 
             $d = IndicationsAndCharges::debtBeginMonth($indication->account_number,
                 date("d.m.Y", strtotime('first day of last month')));
             if ($metering) {
-              $search =   [
+                $search = [
                     'account_number',
                     'act_number',
                     'fio',
@@ -384,33 +418,33 @@ class ProfileController extends Controller
 
                 ];
 
-                $replace =  [
+                $replace = [
                     $score->account_number,//account_number
                     $score->act_number,//act_number
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff.' грн.',//total_tarif
+                    $score->total_tariff . ' грн.',//total_tarif
                     $indication->water_consumption,//water
                     $indication->watering_consumption,//watering
                     Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),//verification_date
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
-                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2).' грн.',//debt
-                    Yii::$app->formatter->asDecimal($indication->accruals, 2).' грн.',//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-'.' грн.',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-'.' грн.',//lgota
-                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0'.' грн.',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2).' грн.',//perescore
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) . ' грн.',//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2) . ' грн.',//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?: '-' . ' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs ?: 0, 2) ?: '-' . ' грн.',//lgota
+                    Yii::$app->formatter->asDecimal($opl1 + $opl0, 2) ?: '0' . ' грн.',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction ?: 0, 2) . ' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.',//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.'//total_payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.',//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.'//total_payment
 
                 ];
 
                 $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history-metering.docx";
             } else {
-                $search =   [
+                $search = [
                     'account_number',
                     'fio',
                     'address',
@@ -430,23 +464,23 @@ class ProfileController extends Controller
 
                 ];
 
-                $replace =  [
+                $replace = [
                     $score->account_number, //account_number
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff.' грн.',//total_tarif
+                    $score->total_tariff . ' грн.',//total_tarif
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
-                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2).' грн.',//debt
-                    Yii::$app->formatter->asDecimal($indication->accruals, 2).' грн.',//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?:0, 2) ?: '-'.' грн.',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs?:0, 2) ?: '-'.' грн.',//lgota
-                    Yii::$app->formatter->asDecimal($opl1+$opl0, 2)?: '0'.' грн.',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction?:0, 2).' грн.',//perescore
+                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) . ' грн.',//debt
+                    Yii::$app->formatter->asDecimal($indication->accruals, 2) . ' грн.',//accruals
+                    Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?: '-' . ' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal($subs ?: 0, 2) ?: '-' . ' грн.',//lgota
+                    Yii::$app->formatter->asDecimal($opl1 + $opl0, 2) ?: '0' . ' грн.',//current_pay
+                    Yii::$app->formatter->asDecimal($indication->correction ?: 0, 2) . ' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.',//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month?:0, 2).' грн.'//total_payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.',//payment
+                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.'//total_payment
 
                 ];
                 $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx";
@@ -463,16 +497,10 @@ class ProfileController extends Controller
                 return false;
             }
 
-        }else{
+        } else {
             return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
         }
-        $startTime = time();
-        while (!Yii::$app->queue->isDone($id)) {
-            sleep(1);
-            if (time() - $startTime > 100) {
-                return Yii::$app->session->setFlash('error', 'Не вдалося сформувати документ');
-            }
-        }
+
         Yii::$app->response->sendFile($fullName, $name);
         return Yii::$app->response->send();
     }
