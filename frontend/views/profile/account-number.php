@@ -16,8 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     /** @var \common\models\ScoreMetering $number */
     $date = new DateTime('now');
     $debt = 0;
-    $ind = \common\models\IndicationsAndCharges::find()->where(['account_number' => $number->account_number])
-        ->orderBy(['id' => SORT_DESC])->one();
+    $ind = \common\models\IndicationsAndCharges::find()
+        ->where(['account_number' => $number->account_number])
+        ->orderBy(['month_year' => SORT_DESC])->one();
 
     if ($ind) {
         if ($ind->month_year == $date->modify('-1 month')->format('Ym')) {
@@ -65,7 +66,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm leading-5 font-medium text-gray-500">Поточна заборгованість:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b>
-                        <?= Yii::$app->formatter->asDecimal($debt, 2)   . " грн"; ?></b></dd>
+                        <?= Yii::$app->formatter->asDecimal(
+                                ($ind->synchronization > 0
+                                    ? $ind->debt_end_month
+                                    : $ind->debt_begin_month
+                                ), 2)   . " грн"; ?></b></dd>
             </div>
         </dl>
     </div>
@@ -96,8 +101,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 води:
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-<!--                                если в табл нач показ тек показ 0 то вывожу из водомеров, если не 0 то вывожу из нач показ.-->
-                                <b><?= $vodomer->previous_readings_first ?></b>,
+<!--                                если в табл нач показ тек показ 0 то вывожу из водомеров, если не 0 то вывожу из нач показ. +-->
+                                <b>
+                                    <?= $ind->current_readings_first > 0 ? $ind->current_readings_first : $vodomer->previous_readings_first ?></b>,
                                 дата їх передачі
                                 <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
                             </dd>
@@ -122,7 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 води:
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                                <b><?= $vodomer->previous_readings_second ?></b>,
+                                <b><?=
+                                    $ind->current_readings_second > 0 ? $ind->current_readings_second : $vodomer->previous_readings_second
+
+                                   ?></b>,
                                 дата їх передачі
                                 <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
                             </dd>
@@ -147,7 +156,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 води:
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                                <b><?= $vodomer->previous_watering_readings ?></b>,
+                                <b><?=
+                                    $ind->current_readings_watering > 0 ? $ind->current_readings_watering : $vodomer->previous_watering_readings
+
+                                   ?></b>,
                                 дата їх передачі
                                 <b><?= Yii::$app->formatter->asDate($vodomer->date_previous_readings, 'php:d.m.Y') ?></b>
                             </dd>
