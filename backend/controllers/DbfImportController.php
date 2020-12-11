@@ -327,7 +327,7 @@ class DbfImportController extends Controller
                 break;
         }
 
-        $idJob = \Yii::$app->queue->push(new DbfJob([
+       \Yii::$app->queue->push(new DbfJob([
             'file' => $path,
             'model' => $modelName,
             'admin_id' => Yii::$app->user->getId(),
@@ -338,14 +338,6 @@ class DbfImportController extends Controller
 
 
         AdminLog::addAdminAction( null, "Запуск записи в БД  файла  $file");
-//        $startTime = time();
-//        while (!Yii::$app->queue->isDone($idJob)) {
-//            sleep(1);
-//            if (time() - $startTime > 100) {
-//                Yii::$app->session->setFlash('error', 'Не удалось сохранить данные');
-//                return $this->redirect($action);
-//            }
-//        }
         Yii::$app->session->setFlash('success', 'Началась загрузка файла. Файл будет загружен через несколько минут.');
         return $this->redirect($action);
 
