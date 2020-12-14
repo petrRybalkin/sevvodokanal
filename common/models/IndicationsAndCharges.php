@@ -47,12 +47,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
         return [
             [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
                 'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
-                'current_readings_watering', 'privilege_unpaid', 'correction','water_consumption', 'watering_consumption'], 'default'],
+                'current_readings_watering', 'privilege_unpaid', 'correction', 'water_consumption', 'watering_consumption'], 'default'],
             [['account_number'], 'string', 'max' => 13],
             [['privilege'], 'string', 'max' => 2],
             [['medium_cubes'], 'string', 'max' => 1],
             [['synchronization'], 'integer'],
-            [['accruals','total_tariff'], 'number', 'skipOnEmpty' => true]
+            [['accruals', 'total_tariff'], 'number', 'skipOnEmpty' => true]
         ];
     }
 
@@ -96,11 +96,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     }
 
 
-    public static function debtBeginMonth($acc, $date){
+    public static function debtBeginMonth($acc, $date)
+    {
 //        выбрать предыдущ мес
-      return  IndicationsAndCharges::find()->where(['account_number' => $acc])
-            ->andWhere(['between', 'month_year', $date, date("d.m.Y", strtotime('first day of this month'))])
-        ->one();
+        return IndicationsAndCharges::find()->where(['account_number' => $acc])
+            ->andWhere(['month_year' => $date])
+            ->one();
 
     }
 }

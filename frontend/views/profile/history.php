@@ -223,9 +223,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                     <?php
                                     $on = $item->current_readings_first + $item->current_readings_second
-                                        - $item->previous_readings_first - $item->previous_readings_second;
+                                        - $item->previous_readings_first - $item->previous_readings_second;?>
 
-                                    ?>
                                     <?= $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
                                     ? 0 : $on ?> </td>
                                 <?php endif;?>
