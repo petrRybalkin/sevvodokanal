@@ -19,8 +19,8 @@ use Yii;
  * @property int|null $current_readings_second
  * @property int|null $previous_readings_watering
  * @property int|null $current_readings_watering
- * @property int|null $water_consumption
- * @property int|null $watering_consumption
+ * @property float|null $water_consumption
+ * @property float|null $watering_consumption
  * @property float|null $total_tariff
  * @property float|null $accruals
  * @property float|null $privilege_unpaid
@@ -47,11 +47,11 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
         return [
             [['month_year', 'count', 'debt_begin_month', 'previous_readings_first', 'current_readings_first',
                 'previous_readings_second', 'current_readings_second', 'previous_readings_watering',
-                'current_readings_watering', 'privilege_unpaid', 'correction'], 'default'],
+                'current_readings_watering', 'privilege_unpaid', 'correction','water_consumption', 'watering_consumption'], 'default'],
             [['account_number'], 'string', 'max' => 13],
             [['privilege'], 'string', 'max' => 2],
             [['medium_cubes'], 'string', 'max' => 1],
-            [['synchronization','water_consumption', 'watering_consumption'], 'integer'],
+            [['synchronization'], 'integer'],
             [['accruals','total_tariff'], 'number', 'skipOnEmpty' => true]
         ];
     }
