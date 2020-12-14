@@ -161,11 +161,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date('01.m.Y') ?>р. :
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <? $dent = IndicationsAndCharges::debtBeginMonth(
+                        <? $debt = IndicationsAndCharges::debtBeginMonth(
                                 $indication->account_number,
                                 date("Ym", strtotime('first day of last month'))
                         ); ?>
-                        <?= Yii::$app->formatter->asDecimal($dent->debt_end_month ?: 0, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal($debt->debt_end_month ?: 0, 2) ?>
                         грн.
                     </dd>
                 </div>
