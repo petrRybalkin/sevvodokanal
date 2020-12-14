@@ -161,7 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date('01.m.Y') ?>р. :
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <? $debt = IndicationsAndCharges::debtBeginMonth(
+                        <?php $debt = IndicationsAndCharges::debtBeginMonth(
                                 $indication->account_number,
                                 date("Ym", strtotime('first day of last month'))
                         ); ?>
