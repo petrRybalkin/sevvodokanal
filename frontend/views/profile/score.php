@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date("d.m.Y", strtotime('first day of last month')); ?>р.:
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <!--                        Заборгованість станом на-->
+                        <!--  Заборгованість станом на-->
                         <?php
                         $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
                             date("Ym", strtotime('first day of last month')));
@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Нараховано:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <!--                        Нарахування (дані беруться з довідника нарахувань поле nac).-->
+                        <!--   Нарахування (дані беруться з довідника нарахувань поле nac).-->
                         <?= Yii::$app->formatter->asDecimal($indication->accruals, 2) ?>
                         грн.
                     </dd>
@@ -110,27 +110,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Пільга:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <!--                        Пільга (дані беруться з довідника оплати з ознакою “2”. У випадку,
+                        <!--  Пільга (дані беруться з довідника оплати з ознакою “2”. У випадку,
                          коли в довіднику нарахувань поле lgota<>0, то поле пільга заповнюється з довідника нарахувань з поля lgota).-->
                         <?php
-                        $lgota = $indication->privilege_unpaid !== 0
+                        $lgota = $indication->privilege_unpaid > 0
                             ? $indication->privilege_unpaid
                             : Payment::getLgota($score->account_number, 2, null, true)['sumAll'];
                         ?>
-                        <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal(($lgota ?: 0), 2) ?>
                         грн.
                     </dd>
                 </div>
                 <div class="bg-gray-50 px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm leading-5 font-medium text-gray-500">Субсидія:</dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <!--                        Субсидія (дані беруться з довідника оплати з ознакою “3”)-->
+                        <!--   Субсидія (дані беруться з довідника оплати з ознакою “3”)-->
                         <?php
                         $subs = Payment::getLgota($score->account_number, 3, null, true)
                             ? Payment::getLgota($score->account_number, 3, null, true)['sumAll']
                             : 0;
                         ?>
-                        <?= Yii::$app->formatter->asDecimal($subs ?: 0, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal(($subs ?: 0), 2) ?>
                         грн.
                     </dd>
                 </div>

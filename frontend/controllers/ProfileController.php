@@ -171,6 +171,8 @@ class ProfileController extends Controller
         $model = new IndicationForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
+
+
                 if (!$model->validate()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     return ActiveForm::validate($model);
@@ -257,7 +259,7 @@ class ProfileController extends Controller
                     (Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)
                         ? Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)['sumAll']
                         : 0);
-                $lgo = $indicationThisMonth->privilege_unpaid !== 0
+                $lgo = $indicationThisMonth->privilege_unpaid > 0
                     ? $indicationThisMonth->privilege_unpaid
                     : Payment::getLgota($score->account_number, 2, date('Y-m-d'), true)['sumAll'];
 
@@ -296,7 +298,6 @@ class ProfileController extends Controller
             }
 
         }
-
         return $this->render('water-metering', [
             'model' => $model
         ]);
@@ -377,12 +378,15 @@ class ProfileController extends Controller
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {
-            $lgota = $indication->privilege_unpaid !== 0
+
+            $lgota = $indication->privilege_unpaid > 0
                 ? $indication->privilege_unpaid
                 : Payment::getLgota($score->account_number, 2, null, true)['sumAll'];
+
             $subs = Payment::getLgota($score->account_number, 3, null, true)
                 ? Payment::getLgota($score->account_number, 3, null, true)['sumAll']
                 : 0;
+
             $opl1 = Payment::getLgota($score->account_number, 1, null, true)
                 ? Payment::getLgota($score->account_number, 1, null, true)['sumAll']
                 : 0;
@@ -432,13 +436,13 @@ class ProfileController extends Controller
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
                     Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) . ' грн.',//debt
                     Yii::$app->formatter->asDecimal($indication->accruals, 2) . ' грн.',//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?: '-' . ' грн.',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs ?: 0, 2) ?: '-' . ' грн.',//lgota
+                    Yii::$app->formatter->asDecimal(($lgota ?: 0), 2) ?: '-' . ' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal(($subs ?: 0), 2) ?: '-' . ' грн.',//lgota
                     Yii::$app->formatter->asDecimal($opl1 + $opl0, 2) ?: '0' . ' грн.',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction ?: 0, 2) . ' грн.',//perescore
+                    Yii::$app->formatter->asDecimal(($indication->correction ?: 0), 2) . ' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.',//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.'//total_payment
+                    Yii::$app->formatter->asDecimal(($indication->debt_end_month ?: 0), 2) . ' грн.',//payment
+                    Yii::$app->formatter->asDecimal(($indication->debt_end_month ?: 0), 2) . ' грн.'//total_payment
 
                 ];
 
@@ -472,15 +476,15 @@ class ProfileController extends Controller
                     $score->total_tariff . ' грн.',//total_tarif
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
-                    Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) . ' грн.',//debt
+                    Yii::$app->formatter->asDecimal(($d ? $d->debt_begin_month : 0), 2) . ' грн.',//debt
                     Yii::$app->formatter->asDecimal($indication->accruals, 2) . ' грн.',//accruals
-                    Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?: '-' . ' грн.',//privelege_unpaid
-                    Yii::$app->formatter->asDecimal($subs ?: 0, 2) ?: '-' . ' грн.',//lgota
+                    Yii::$app->formatter->asDecimal(($lgota ?: 0), 2) ?: '-' . ' грн.',//privelege_unpaid
+                    Yii::$app->formatter->asDecimal(($subs ?: 0), 2) ?: '-' . ' грн.',//lgota
                     Yii::$app->formatter->asDecimal($opl1 + $opl0, 2) ?: '0' . ' грн.',//current_pay
-                    Yii::$app->formatter->asDecimal($indication->correction ?: 0, 2) . ' грн.',//perescore
+                    Yii::$app->formatter->asDecimal(($indication->correction ?: 0), 2) . ' грн.',//perescore
                     date('01.m.Y'),//date_pay
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.',//payment
-                    Yii::$app->formatter->asDecimal($indication->debt_end_month ?: 0, 2) . ' грн.'//total_payment
+                    Yii::$app->formatter->asDecimal(($indication->debt_end_month ?: 0), 2) . ' грн.',//payment
+                    Yii::$app->formatter->asDecimal(($indication->debt_end_month ?: 0), 2) . ' грн.'//total_payment
 
                 ];
                 $template = $_SERVER['DOCUMENT_ROOT'] . "/template/template-history.docx";

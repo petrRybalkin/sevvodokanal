@@ -68,7 +68,7 @@ class Payment extends \yii\db\ActiveRecord
 
         if ($date) {
             $datew = new DateTime($date);
-            $datek =  $datew->modify('+1 month')->format('Y-m-d');
+            $datek =  $datew->modify('+1 month -1 day' )->format('Y-m-d');
 
             $p->andWhere(['between', 'payment_date', $date, $datek]);
         } else {
@@ -77,11 +77,7 @@ class Payment extends \yii\db\ActiveRecord
             $datek =  date("Y-m-d", strtotime('first day of last month'));
             $p->andWhere(['between', 'payment_date', $datek,  $date]);// все оплаты за предыдущ мес
 
-
-//            $p->andWhere(new Expression('payment_date <= NOW() - INTERVAL 1 MONTH'));
-
         }
-//        $p->orderBy(['id' => SORT_DESC]);
 
         if($asArray){
            return  $p->asArray()->one();
