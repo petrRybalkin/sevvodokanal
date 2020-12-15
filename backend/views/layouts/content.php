@@ -42,4 +42,7 @@ use yii\bootstrap4\Breadcrumbs;
         <?= $content ?><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
+    <style>
+        .pagination li{padding:1px 10px;border:1px solid #ccc;margin:5px 2px}
+    </style>
 </div>
