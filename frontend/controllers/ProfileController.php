@@ -83,7 +83,8 @@ class ProfileController extends Controller
                     $score->andWhere(['act_number' => $model->act_number]);
                 }
                 if ($model->sum) {
-                    $sum = Payment::find()->where(['account_number' => $model->account_number])->orderBy(['id' => SORT_DESC])->one();
+                    $sum = Payment::find()->where(['account_number' => $model->account_number, 'pr' => 1])
+                        ->orderBy(['id' => SORT_DESC])->one();
                     if (!$sum || str_replace(',', '.', $model->sum) + 0 !== $sum->sum) {
                         Yii::$app->session->setFlash('error', 'Невірна сума оплати - можливо, Ви помилились при вводі суми оплати.');
                         return $this->redirect(Yii::$app->request->referrer);
@@ -153,11 +154,12 @@ class ProfileController extends Controller
     public function actionWaterMetering($id)
     {
         $number = ScoreMetering::find()->where(['id' => $id])->one();
+        $model = new IndicationForm();
 
 
         return $this->render('water-metering', [
             'number' => $number,
-
+            'model' => $model
         ]);
 
     }
@@ -169,6 +171,7 @@ class ProfileController extends Controller
     public function actionMeter()
     {
         $model = new IndicationForm();
+//        \yii\helpers\VarDumper::dump($model,10,1);exit;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
 
