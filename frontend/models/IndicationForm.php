@@ -5,6 +5,7 @@ namespace frontend\models;
 use common\models\WaterMetering;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
 /**
  * IndicationForm is the model behind the contact form.
@@ -53,20 +54,21 @@ class IndicationForm extends Model
             $this->addError('meter1', 'Заповнiть номер засобу обліку води №1.');
         } else {
 
-            if ($acc->number_medium_cubes > 0 &&
-                (int)$this->$attribute < ($acc->previous_readings_first - $acc->number_medium_cubes)
-            ) {
-                $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
-            }
-//выбрать из нач тек мес строку, и дописать условие и (int)$this->$attribute < нач показ -> тек показ
+            //выбрать из нач тек мес строку, и дописать условие и (int)$this->$attribute < нач показ -> тек показ
             if ((int)$this->$attribute < $acc->previous_readings_first
             ) {
-                $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
+                if ($acc->number_medium_cubes > 0) {
+                    if ((int)$this->$attribute <= ($acc->previous_readings_first - $acc->number_medium_cubes)) {
+                        $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
+                    }
+                } else {
+                    $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
+                }
             }
 
             if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
             ) {
-                $r = ($acc->previous_readings_first + 200)-(int)$this->$attribute;
+                $r = ($acc->previous_readings_first + 200) - (int)$this->$attribute;
                 $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
             }
         }
@@ -77,7 +79,7 @@ class IndicationForm extends Model
     {
         if (!$acc = WaterMetering::find()->where(['water_metering_second' => $this->number2])->one()) {
             $this->addError('meter2', 'Заповнiть номер засобу обліку води №2.');
-        }else{
+        } else {
 
             if ((int)$this->$attribute < $acc->previous_readings_second
             ) {
@@ -87,7 +89,7 @@ class IndicationForm extends Model
 
             if ((int)$this->$attribute >= ($acc->previous_readings_second + 200)
             ) {
-                $r = ($acc->previous_readings_second + 200)-(int)$this->$attribute;
+                $r = ($acc->previous_readings_second + 200) - (int)$this->$attribute;
                 $this->addError('meter2', "Переданi показання бiльше попереднiх на $r кубiв.");
             }
 
@@ -99,7 +101,7 @@ class IndicationForm extends Model
     {
         if (!$acc = WaterMetering::find()->where(['watering_number' => $this->number3])->one()) {
             $this->addError('meter3', 'Заповнiть номер засобу обліку води №3.');
-        }else{
+        } else {
 
             if ((int)$this->$attribute < $acc->previous_watering_readings
             ) {
@@ -108,7 +110,7 @@ class IndicationForm extends Model
 
             if ((int)$this->$attribute >= ($acc->previous_watering_readings + 200)
             ) {
-                $r = ($acc->previous_watering_readings + 200)-(int)$this->$attribute;
+                $r = ($acc->previous_watering_readings + 200) - (int)$this->$attribute;
                 $this->addError('meter3', "Переданi показання бiльше попереднiх на $r кубiв.");
             }
 
@@ -121,12 +123,12 @@ class IndicationForm extends Model
     public function attributeLabels()
     {
         return [
-            'number1' => 'Номер засобу обліку води №1 (якщо є)',
-            'number2' => 'Номер засобу обліку води №2 (якщо є)',
-            'number3' => 'Номер засобу обліку води №3 (якщо є) ',
-            'meter1' => 'Попередні показання засоба обліку води №1 (якщо є) ',
-            'meter2' => 'Попередні показання засоба обліку води №2 (якщо є) ',
-            'meter3' => 'Попередні показання засоба обліку води №3 (якщо є)',
+            'number1' => 'Номер засобу обліку води №1',
+            'number2' => 'Номер засобу обліку води №2 ',
+            'number3' => 'Номер засобу обліку води №3  ',
+            'meter1' => 'Показники лiчильника №1  ',
+            'meter2' => 'Показники лiчильника №2  ',
+            'meter3' => 'Показники лiчильника №3 ',
         ];
     }
 }

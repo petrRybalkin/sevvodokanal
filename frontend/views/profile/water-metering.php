@@ -8,6 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\validators\Validator;
 
 $this->title = 'Передача показань - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
@@ -154,15 +155,21 @@ if ($vodomers): ?>
                 'action' => '/profile/meter'
             ]);
 
-            $model = new IndicationForm();
-//            \yii\helpers\VarDumper::dump($vodomers,10,1);exit;
             ?>
             <div class="rounded-md shadow-sm">
                 <?php
-                if (ArrayHelper::getValue($vodomers, 'water_metering_first') !== null): ?>
+                if (ArrayHelper::getValue($vodomers, 'water_metering_first') !== null):
+
+                $r = [['meter1'], 'required'];
+                    ArrayHelper::merge($model->rules(),$r)
+                    ?>
                     <div>
                         <?= $form->field($model, 'number1')
-                            ->textInput(['value' => $vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : '', 'type' => 'number','disabled' => true, 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                            ->textInput(['value' => $vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : '',
+                                'type' => 'number','disabled' => true,
+                                'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
+                                focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5','required' =>'required'])
                             ->label('Номер засобу обліку води №1 ', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                     </div>
@@ -182,7 +189,8 @@ if ($vodomers): ?>
                         ->label(false)?>
                     </div>
                 <?php endif;
-                if (ArrayHelper::getValue($vodomers, 'water_metering_second') !== null): ?>
+                if (ArrayHelper::getValue($vodomers, 'water_metering_second') !== null):
+                    ?>
 
                     <div>
                         <?= $form->field($model, 'number2')
@@ -193,7 +201,8 @@ if ($vodomers): ?>
 
                     <div>
                         <?= $form->field($model, 'meter2')
-                            ->textInput(['type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                            ->textInput(['type' => 'number',
+                                'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №2', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                         <?= $form->field($model, 'number2')
@@ -203,7 +212,8 @@ if ($vodomers): ?>
                             ->label(false)?>
                     </div>
                 <?php endif;
-                if (ArrayHelper::getValue($vodomers, 'watering_number') !== null): ?>
+                if (ArrayHelper::getValue($vodomers, 'watering_number') !== null):
+                    ?>
                     <div>
                         <?= $form->field($model, 'number3')
                             ->textInput(['value' => $vodomers['watering_number'] ? $vodomers['watering_number'] : '', 'disabled' => true,'type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])

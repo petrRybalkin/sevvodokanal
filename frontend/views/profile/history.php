@@ -1,5 +1,6 @@
 <?php
 
+use common\models\IndicationsAndCharges;
 use common\models\Payment;
 use yii\widgets\LinkPager;
 
@@ -128,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php endif; ?>
                             <?php if ($metering): ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                    rowspan="2">Обсяг водоспоживання, м³
+                                    rowspan="2">Обсяг водо-<br>споживання,<br> м³
                                 </td>
                             <?php endif; ?>
                             <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
@@ -154,14 +155,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <?php if ($metering): ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                    rowspan="2">Ознака&nbsp;нарах. середн.&nbsp;кубів, м³
+                                    rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³
                                 </td>
                             <?php endif; ?>
                         </tr>
                         <tr>
                             <?php if ($metering && $metering->water_metering_first): ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Попер. показання,<br>м3
+                                    Попередні показання,<br>м3
                                 </td>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Поточн. показання,<br>м3
@@ -334,7 +335,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Сальдо на кінець місяця, грн-->
-                                    <?=  Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?></td>
+
+                                    <?php $debt = IndicationsAndCharges::debtBeginMonth(
+                                        $item->account_number,
+                                        $item->month_year
+                                    ); ?>
+                                    <?= Yii::$app->formatter->asDecimal($debt->debt_end_month ?: 0, 2) ?>
+
+<!--                                    --><?//=  Yii::$app->formatter->asDecimal($item->debt_end_month, 2) ?><!--</td>-->
                                 <?php if($metering):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                                 <?php endif;?>
