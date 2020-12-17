@@ -58,7 +58,7 @@ class IndicationForm extends Model
             if ((int)$this->$attribute < $acc->previous_readings_first
             ) {
                 if ($acc->number_medium_cubes > 0) {
-                    if ((int)$this->$attribute <= ($acc->previous_readings_first - $acc->number_medium_cubes)) {
+                    if ((int)$this->$attribute < ($acc->previous_readings_first - $acc->number_medium_cubes)) {
                         $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                     }
                 } else {
