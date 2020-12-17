@@ -218,7 +218,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?></td>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
-                                <?php if($metering->water_metering_first || $metering->water_metering_second):?>
+                                <?php
+                                if($metering){
+
+                                if( $metering->water_metering_first || $metering->water_metering_second):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
 <!--ееш один столбик для поливного сч   -->
@@ -252,9 +255,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ?>
 
                                 </td>
-                                <?php endif;?>
+                                <?php endif; }?>
                                 <?php
-                                if($metering->watering_number):?>
+
+                                if($metering && $metering->watering_number):?>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center">
                                         <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
                                         <!--ееш один столбик для поливного сч-->
@@ -280,7 +284,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         }
                                         ?>
-
 
                                     </td>
                                 <?php endif;?>

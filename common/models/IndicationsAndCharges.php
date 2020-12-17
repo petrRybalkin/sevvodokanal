@@ -103,7 +103,9 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 ->andWhere(['month_year' => date('Ym')])
                 ->one();
             /** @var IndicationsAndCharges $m */
-
+            if ($m->synchronization > 0) {
+                return $m->debt_end_month;
+            }
             $splacheno = (Payment::getLgota($acc, 1, date('Y-m-d'), true)
                     ? Payment::getLgota($acc, 1, date('Y-m-d'), true)['sumAll'] : 0) +
                 (Payment::getLgota($acc, 0, date('Y-m-d'), true)
