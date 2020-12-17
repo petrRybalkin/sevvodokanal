@@ -98,10 +98,34 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
     public static function debtBeginMonth($acc, $date)
     {
-//        выбрать предыдущ мес
-        return IndicationsAndCharges::find()->where(['account_number' => $acc])
-            ->andWhere(['month_year' => $date])
-            ->one();
+        if (strtotime($date) == strtotime(date('Ym'))) {
+            $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
+                ->andWhere(['month_year' => date('Ym')])
+                ->one();
+            /** @var IndicationsAndCharges $m */
+
+            $splacheno = (Payment::getLgota($acc, 1, date('Y-m-d'), true)
+                    ? Payment::getLgota($acc, 1, date('Y-m-d'), true)['sumAll'] : 0) +
+                (Payment::getLgota($acc, 0, date('Y-m-d'), true)
+                    ? Payment::getLgota($acc, 0, date('Y-m-d'), true)['sumAll']
+                    : 0);
+            $lgo = $m->privilege_unpaid > 0
+                ? $m->privilege_unpaid
+                : Payment::getLgota($acc, 2, date('Y-m-d'), true)['sumAll'];
+
+            $subs = Payment::getLgota($acc, 3, date('Y-m-d'), true)
+                ? Payment::getLgota($acc, 3, date('Y-m-d'), true)['sumAll']
+                : 0;
+
+            return ($m->debt_begin_month + 0 - $m->correction
+                - $splacheno - $lgo - $subs);
+        } else {
+          $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
+                ->andWhere(['month_year' => $date])
+                ->one();
+            return $m->debt_end_month;
+        }
+
 
     }
 }

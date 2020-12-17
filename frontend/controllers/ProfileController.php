@@ -171,7 +171,6 @@ class ProfileController extends Controller
     public function actionMeter()
     {
         $model = new IndicationForm();
-//        \yii\helpers\VarDumper::dump($model,10,1);exit;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
 
@@ -247,7 +246,7 @@ class ProfileController extends Controller
                 $watc = (int)$model->meter3 - (int)$indicationPrevMonth->previous_readings_watering;
                 $calcWaterCons = (((int)$model->meter1 +
                             (int)$model->meter2 +
-                            (int) $model->meter3 -
+                            (int)$model->meter3 -
                             $indicationThisMonth->previous_readings_first -
                             $indicationThisMonth->previous_readings_second -
                             $indicationThisMonth->previous_readings_watering) * $score->tariff_for_water) +

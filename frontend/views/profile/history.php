@@ -339,8 +339,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?php $debt = IndicationsAndCharges::debtBeginMonth(
                                         $item->account_number,
                                         $item->month_year
-                                    ); ?>
-                                    <?= Yii::$app->formatter->asDecimal(($debt->debt_end_month ?: 0), 2) ?>
+                                    );
+
+
+                                    ?>
+                                    <?= Yii::$app->formatter->asDecimal(($debt ?: 0), 2) ?>
 
                                 <?php if($metering):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>

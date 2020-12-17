@@ -12,6 +12,9 @@ use common\models\Payment;
 
 $this->title = 'РАХУНОК - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
+$d =  IndicationsAndCharges::find()->where(['account_number' => $indication->account_number])
+    ->andWhere(['month_year' =>  date("Ym", strtotime('first day of last month'))])
+    ->one();
 ?>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-3 border-b border-gray-200 sm:px-6">
@@ -92,10 +95,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <!--  Заборгованість станом на-->
                         <?php
-                        $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
-                            date("Ym", strtotime('first day of last month')));
+//                        $d = common\models\IndicationsAndCharges::debtBeginMonth($indication->account_number,
+//                            date("Ym", strtotime('first day of last month')));
+
                         ?>
-                        <?= Yii::$app->formatter->asDecimal($d ? $d->debt_begin_month : 0, 2) ?>
+                        <?= Yii::$app->formatter->asDecimal(($d ? $d->debt_begin_month : 0), 2) ?>
                         грн.
                     </dd>
                 </div>
@@ -161,11 +165,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= date('01.m.Y') ?>р. :
                     </dt>
                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                        <?php $debt = IndicationsAndCharges::debtBeginMonth(
-                                $indication->account_number,
-                                date("Ym", strtotime('first day of last month'))
-                        ); ?>
-                        <?= Yii::$app->formatter->asDecimal($debt->debt_end_month ?: 0, 2) ?>
+                        <?php
+//                        $debt = IndicationsAndCharges::debtBeginMonth(
+//                                $indication->account_number,
+//                                date("Ym", strtotime('first day of last month'))
+//                        ); ?>
+                        <?= Yii::$app->formatter->asDecimal($d->debt_end_month ?: 0, 2) ?>
                         грн.
                     </dd>
                 </div>
