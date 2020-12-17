@@ -43,7 +43,23 @@ class IndicationForm extends Model
             [['meter1'], 'validationMeterFirst'],
             [['meter2'], 'validationMeterSecond'],
             [['meter3'], 'validationMeterWatering'],
-            [['acc'], 'safe']
+            [['acc'], 'safe'],
+            [['meter1'], 'required', 'when' => function ($model) {
+                return $model->number1 !== null;
+            }, 'whenClient' => "function (attribute, value) {
+        return $('#indicationform-number1') !== undefined;
+    }", 'message' => 'Заповнiть показання усiх засобiв облiку води'],
+            [['meter2'], 'required', 'when' => function ($model) {
+                return $model->number2 !== null;
+            }, 'whenClient' => "function (attribute, value) {
+        return $('#indicationform-number2') !== undefined;
+    }", 'message' => 'Заповнiть показання усiх засобiв облiку води'],
+            [['meter3'], 'required', 'when' => function ($model) {
+                return $model->number3 !== null;
+            }, 'whenClient' => "function (attribute, value) {
+        return $('#indicationform-number3') !== undefined;
+    }", 'message' => 'Заповнiть показання усiх засобiв облiку води']
+
         ];
     }
 

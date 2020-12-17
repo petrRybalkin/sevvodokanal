@@ -174,7 +174,6 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-meter-button')) {
 
-
                 if (!$model->validate()) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     return ActiveForm::validate($model);
