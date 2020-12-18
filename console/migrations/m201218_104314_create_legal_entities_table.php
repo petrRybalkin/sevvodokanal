@@ -12,7 +12,7 @@ class m201218_104314_create_legal_entities_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%legal_entities}}', [
+        $this->createTable('{{%legal_entities_info}}', [
             'id' => $this->primaryKey(),
             'contract_number' => $this->string(5),
             'number' => $this->string(10),
@@ -26,6 +26,6 @@ class m201218_104314_create_legal_entities_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%legal_entities}}');
+        $this->dropTable('{{%legal_entities_info}}');
     }
 }
