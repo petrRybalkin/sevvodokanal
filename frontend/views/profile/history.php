@@ -224,7 +224,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 if( $metering->water_metering_first || $metering->water_metering_second):?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
-<!--ееш один столбик для поливного сч   -->
+                                    <!--ееш один столбик для поливного сч   -->
                                     <?php
                                     $on = $item->current_readings_first + $item->current_readings_second
                                         - $item->previous_readings_first - $item->previous_readings_second;

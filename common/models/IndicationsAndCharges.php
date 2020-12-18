@@ -98,11 +98,29 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
     public static function debtBeginMonth($acc, $date)
     {
+        /** @var IndicationsAndCharges $m */
         if (strtotime($date) == strtotime(date('Ym'))) {
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
                 ->one();
-            /** @var IndicationsAndCharges $m */
+
+
+            if($m->current_readings_first >0 || $m->current_readings_second>0 || $m->current_readings_watering>0){
+                $calcWaterCons = (($m->current_readings_first +
+                            $m->current_readings_second +
+                            $m->current_readings_watering -
+                            $m->previous_readings_first -
+                            $m->previous_readings_second -
+                            $m->previous_readings_watering) * $m->score->tariff_for_water) +
+                    (($m->current_readings_first +
+                            $m->current_readings_second -
+                            $m->previous_readings_first -
+                            $m->previous_readings_second) * $m->score->tariff_for_stocks);
+            }else{
+                $calcWaterCons = 0;
+            }
+
+
             if ($m->synchronization > 0) {
                 return $m->debt_end_month;
             }
@@ -119,7 +137,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 ? Payment::getLgota($acc, 3, date('Y-m-d'), true)['sumAll']
                 : 0;
 
-            return ($m->debt_begin_month + 0 - $m->correction
+            return ($m->debt_begin_month + $calcWaterCons - $m->correction
                 - $splacheno - $lgo - $subs);
         } else {
           $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
@@ -130,4 +148,14 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
 
     }
+
+    public static function clientDebt($acc, $date)
+    {
+        return IndicationsAndCharges::find()->where(['account_number' => $acc])
+            ->andWhere(['month_year' => $date])
+            ->one();
+    }
+
+
+
 }
