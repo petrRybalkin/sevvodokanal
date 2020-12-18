@@ -12,10 +12,10 @@ class m200817_180756_add_table_article_create_update_time_column extends Migrati
      */
     public function safeUp()
     {
-        $this->addColumn('article', 'create_utime', $this->timestamp());
-        $this->addColumn('article', 'update_utime', $this->timestamp());
-        $this->addColumn('page', 'create_utime', $this->timestamp());
-        $this->addColumn('page', 'update_utime', $this->timestamp());
+        $this->addColumn('article', 'create_utime', $this->timestamp()->defaultValue(null));
+        $this->addColumn('article', 'update_utime', $this->timestamp()->defaultValue(null));
+        $this->addColumn('page', 'create_utime', $this->timestamp()->defaultValue(null));
+        $this->addColumn('page', 'update_utime', $this->timestamp()->defaultValue(null));
     }
 
     /**
