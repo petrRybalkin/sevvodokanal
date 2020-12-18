@@ -148,4 +148,14 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
 
     }
+
+    public static function clientDebt($acc, $date)
+    {
+        return IndicationsAndCharges::find()->where(['account_number' => $acc])
+            ->andWhere(['month_year' => $date])
+            ->one();
+    }
+
+
+
 }

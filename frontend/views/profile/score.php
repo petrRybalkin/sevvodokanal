@@ -12,9 +12,8 @@ use common\models\Payment;
 
 $this->title = 'РАХУНОК - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
-$d =  IndicationsAndCharges::find()->where(['account_number' => $indication->account_number])
-    ->andWhere(['month_year' =>  date("Ym", strtotime('first day of last month'))])
-    ->one();
+
+$d = IndicationsAndCharges::clientDebt($indication->account_number, date("Ym", strtotime('first day of last month')));
 ?>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
     <div class="px-4 py-3 border-b border-gray-200 sm:px-6">
