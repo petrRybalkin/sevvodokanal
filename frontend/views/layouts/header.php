@@ -46,6 +46,9 @@ use common\models\User;
                 <div class="relative profile menu group w-1/4 xs:hidden sm:hidden md:visible">
                     <div class="flex justify-end">
                         <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Юридичнi особи', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        </div>
+                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </div>
                         <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
