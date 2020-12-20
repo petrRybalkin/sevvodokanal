@@ -19,7 +19,7 @@ use yii\bootstrap\ActiveForm;
     </div>
 <?php
 $dateThis = (new DateTime())->format('d');
-if ((int)$dateThis < 11): ?>
+//if ((int)$dateThis < 11): ?>
     <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
@@ -61,8 +61,8 @@ if ((int)$dateThis < 11): ?>
         </div>
     </div>
 
-<?php else: ?>
-        <p style="color: red">
-            Передати показники засобiв облiку води можна тiльки з 1 по 10 число мiсяця.
-        </p>
-<?php endif; ?>
+<?php //else: ?>
+<!--        <p style="color: red">-->
+<!--            Передати показники засобiв облiку води можна тiльки з 1 по 10 число мiсяця.-->
+<!--        </p>-->
+<?php //endif; ?>
