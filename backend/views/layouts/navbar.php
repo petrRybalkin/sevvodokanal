@@ -25,10 +25,16 @@ use common\models\User;
                 <li><a href="<?= Url::to(['dbf-import/index']) ?>" class="dropdown-item">Загрузить показания водомеров .DBF </a></li>
                 <li><a href="<?= Url::to(['dbf-import/score']) ?>" class="dropdown-item">Загрузить счета .DBF</a></li>
                 <li><a href="<?= Url::to(['dbf-import/payment']) ?>" class="dropdown-item">Загрузить платежи .DBF</a></li>
-                <li><a href="<?= Url::to(['dbf-import/company']) ?>" class="dropdown-item">Загрузить юр. лица .DBF</a></li>
 
                 <li class="dropdown-divider"></li>
-
+                <!-- Level two dropdown-->
+                <li class="dropdown-submenu dropdown-hover">
+                    <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Загрузить юр. лица </a>
+                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                        <li><a href="<?= Url::to(['dbf-import/company']) ?>" class="dropdown-item">Загрузить юр. лица .DBF</a></li>
+                        <li><a href="<?= Url::to(['dbf-import/download-company']) ?>" class="dropdown-item">Скачать показания юр. лиц. в dbf</a></li>
+                    </ul>
+                </li>
                 <!-- Level two dropdown-->
                 <li class="dropdown-submenu dropdown-hover">
                     <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Довідник нарахувань та показань .DBF</a>

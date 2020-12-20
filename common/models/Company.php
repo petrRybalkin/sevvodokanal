@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "company".
  *
  * @property int $id
+ * @property int $sinh
  * @property string $num_contract
  * @property string  $accounting_number
  * @property string|null $verification_date

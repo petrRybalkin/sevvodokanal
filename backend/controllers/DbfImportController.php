@@ -8,6 +8,7 @@ use common\dbfImport\IndicationsAndChargesDBF;
 use common\dbfImport\InfoDBF;
 use common\dbfImport\PaymentDBF;
 use common\dbfImport\ScoreDBF;
+use common\models\Company;
 use common\models\DbfImport;
 use common\models\IndicationsAndCharges;
 use common\queue\DbfJob;
@@ -292,6 +293,62 @@ class DbfImportController extends Controller
 
         Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
     }
+
+
+
+
+    public function actionDownloadCompany()
+    {
+        $path = Yii::getAlias('@runtimeBack/Показання_юр_особи_'.date('Y-m-d H:i:s') .'.dbf');
+
+        $model = Company::find()
+            ->where(['sinh' => 1]);
+
+        if(!$model->all()){
+            Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $def = [
+            ['kod_p', "C", 5],
+            ['nomer', "C",10],
+            ['datgosp', "D", 12],
+            ['pred', "N", 11, 3],
+
+        ];
+
+        if (!dbase_create($path, $def)) {
+            Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
+        }
+
+        $table = new WritableTable($path, null, 'CP1251');
+        $table->openWrite();
+
+        /** @var Company $item */
+        foreach ($model->each(10) as $item) {
+
+            if(!$item){
+                Yii::$app->session->setFlash('error', "Нема даних для утворення файлу\n") ;
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            set_time_limit(500);
+            $record = $table->appendRecord();
+            $record->kod_p = $item->num_contract;
+            $record->nomer = $item->accounting_number;
+            $record->datgosp = Yii::$app->formatter->asDate($item->verification_date, 'd.m.Y');
+            $record->pred = $item->previous_readings;
+            $table->writeRecord();
+        }
+        $table->close();
+
+        AdminLog::addAdminAction( null, "Скачивание  файла  Показання юр. лиц.dbf");
+        if (file_exists($path)) {
+            return  \Yii::$app->response->sendFile($path);
+        }
+
+
+        Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
+    }
+
 
     /**
      * @param $fileName
