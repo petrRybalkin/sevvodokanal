@@ -7,7 +7,7 @@ use yii\helpers\Html;
 <div>
     <h6 class="font-sans break-normal font-semibold text-black pt-6 text-lg"><?= $model->title ?></h6>
     <img src="<?=  $model->getThumbFileUrl('img', 'thumb','');?>" alt="" >
-    <p class="py-1 text-gray-500"><?= $model->create_utime ?></p>
+    <p class="py-1 text-gray-500"><?= Yii::$app->formatter->asDate($model->create_utime, 'php:d.m.Y H:i') ?></p>
     <div class="py-6">
         <?= $model->short_description ?>
     </div>

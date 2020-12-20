@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'create_utime',
+            'update_utime',
 
             //['class' => 'yii\grid\ActionColumn'],
             [

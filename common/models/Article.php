@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use common\components\ImageUploadBehavior;
@@ -57,6 +58,14 @@ class Article extends \yii\db\ActiveRecord
                 'filePath' => '@webroot/news/pdf/[[pk]].[[extension]]',
                 'fileUrl' => '/news/pdf/[[pk]].[[extension]]',
             ],
+//            'timestamp' => [
+//                'class' => 'yii\behaviors\TimestampBehavior',
+//                'attributes' => [
+//                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_utime', 'update_utime'],
+//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_utime'],
+//                ],
+//                'value' => new Expression('NOW()'),
+//            ],
         ];
     }
 

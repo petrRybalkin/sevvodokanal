@@ -3,9 +3,6 @@
 
 use common\models\LegalNumContractForm;
 use yii\bootstrap\ActiveForm;
-use common\models\ConfigSite;
-
-$settings = ConfigSite::getSettings(1);
 ?>
 
 
@@ -22,7 +19,7 @@ $settings = ConfigSite::getSettings(1);
     </div>
 <?php
 $dateThis = (new DateTime())->format('d');
-if ((int)$dateThis < 11): ?>
+//if ((int)$dateThis < 11): ?>
     <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
@@ -59,16 +56,13 @@ if ((int)$dateThis < 11): ?>
                 </button>
             </div>
 
-        <?php if($settings->action == 1){ ?>
+
             <?php ActiveForm::end(); ?>
-            <?php } else { ?>
-                <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
-            <?php } ?>
         </div>
     </div>
 
-<?php else: ?>
-        <p style="color: red">
-            Передати показники засобiв облiку води можна тiльки з 1 по 10 число мiсяця.
-        </p>
-<?php endif; ?>
+<?php //else: ?>
+<!--        <p style="color: red">-->
+<!--            Передати показники засобiв облiку води можна тiльки з 1 по 10 число мiсяця.-->
+<!--        </p>-->
+<?php //endif; ?>

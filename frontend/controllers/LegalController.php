@@ -79,7 +79,7 @@ class LegalController extends Controller
                     if ($acc !== null) {
                         $pr = "previous_readings_$item";
                         $sql = "UPDATE company
-                                SET previous_readings='{$model->$pr}' 
+                                SET previous_readings='{$model->$pr}', sinh=1
                                 WHERE num_contract='{$num}' 
                                 AND accounting_number='{$acc}'
                                 ";

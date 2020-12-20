@@ -18,7 +18,7 @@ $url_menus = explode("/", $url);
         <?php foreach ($news as $new): ?>
             <div>
                 <h6 class="font-sans break-normal font-semibold text-black pt-6 text-lg"><?= $new->title ?></h6>
-                <p class="py-1 text-gray-500"><?= $new->create_utime ?></p>
+                <p class="py-1 text-gray-500"><?=  Yii::$app->formatter->asDate($new->create_utime, 'php:d.m.Y H:i') ?></p>
                 <div class="py-6">
                     <?= $new->short_description ?>
                 </div>
