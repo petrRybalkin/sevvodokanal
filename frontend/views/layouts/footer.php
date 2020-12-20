@@ -7,11 +7,14 @@ use yii\helpers\Url;
 use common\models\Page;
 use frontend\widgets\FooterMenuLeftWidget;
 use frontend\widgets\FooterMenuRightWidget;
+use common\models\ConfigSite;
 
 /* @var $this \yii\web\View */
 /* @var $model \common\models\Page */
 /* @var $client \common\models\User */
 /* @var $content string */
+
+$settings = ConfigSite::getSettings(1);
 ?>
 <!-- <div class="container bg-blue-800 p-12"> -->
 <div class="footer-sevkanal">
@@ -19,7 +22,7 @@ use frontend\widgets\FooterMenuRightWidget;
         <div class="sm:flex mb-4">
             <div class="sm:w-1/4 h-auto">
                 <ul class="list-reset leading-normal">
-                    <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">КОМУНАЛЬНЕ ПІДПРИЄМСТВО "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</li>
+                    <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"><?= $settings->name_footer ?></li>
                     <li class="text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">ЧИСТА ВОДА В КОЖЕН ДIМ!</li>
                 </ul>
             </div>
@@ -54,7 +57,7 @@ use frontend\widgets\FooterMenuRightWidget;
 
     <div class="bg-black p-2">
         <div class="sm:flex mb-4">
-            <p class="text-gray-100">&copy;<?php echo date('Y'); ?> КОМУНАЛЬНЕ ПІДПРИЄМСТВО "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</p>
+            <p class="text-gray-100">&copy;<?php echo date('Y'); ?> <?= $settings->name_footer ?></p>
         </div>
     </div>
 </div>

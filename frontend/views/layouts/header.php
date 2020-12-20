@@ -10,23 +10,24 @@ use yii\helpers\Url;
 use common\models\Page;
 use frontend\widgets\MenuSiteWidget;
 use common\models\User;
+use common\models\ConfigSite;
 
 /* @var $this \yii\web\View */
 /* @var $model \common\models\Page */
 /* @var $client \common\models\User */
 /* @var $content string */
+
+$settings = ConfigSite::getSettings(1);
+
 ?>
 <div class="bg-blue-800">
     <div class="max-w-9xl mx-auto px-4 sm:px-1 lg:px-3">
         <div class="flex mr-5 items-center justify-between md:h-12 sm:h-18">
             <div class="md:block md:w-3/4 sm:w-4/4">
                 <div class="md:flex items-baseline justify-start">
-                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"> м.&nbsp;Сєвєродонецк,вул.&nbsp;Богдана&nbsp;Лiщини,&nbsp;13
-                    </p>
-                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: 4-01-33
-                    </p>
-                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: 4-32-91
-                    </p>
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"> <!--м. Сєвєродонецк,вул. Богдана Лiщини, 13--><?= $settings->address ?></p>
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: <?= $settings->phone_priem ?></p>
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: <?= $settings->phone_disp ?></p>
                 </div>
             </div>
             <!-- Profile dropdown -->
@@ -68,7 +69,7 @@ use common\models\User;
         <div class="flex justify-between items-center py-2 md:justify-start md:space-x-10">
             <div class="lg:w-0 lg:flex-1" id="home">
                 <a href="/" class="flex">
-                    <h3 class="md:text-2xl font-bold text-left text-black-400 sm:text-base"><!--КОМУНАЛЬНЕ ПІДПРИЄМСТВО-->КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"</h3>
+                    <h3 class="md:text-2xl font-bold text-left text-black-400 sm:text-base"><!--КОМУНАЛЬНЕ ПІДПРИЄМСТВО КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"--><?= $settings->name_header ?></h3>
                 </a>
             </div>
             <div class="-mr-2 -my-2 md:hidden" id="burger">

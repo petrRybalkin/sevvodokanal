@@ -3,6 +3,9 @@
 
 use common\models\LegalNumContractForm;
 use yii\bootstrap\ActiveForm;
+use common\models\ConfigSite;
+
+$settings = ConfigSite::getSettings(1);
 ?>
 
 
@@ -56,8 +59,11 @@ if ((int)$dateThis < 11): ?>
                 </button>
             </div>
 
-
+        <?php if($settings->action == 1){ ?>
             <?php ActiveForm::end(); ?>
+            <?php } else { ?>
+                <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
+            <?php } ?>
         </div>
     </div>
 

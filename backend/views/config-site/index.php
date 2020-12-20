@@ -2,34 +2,60 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\ConfigSite;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Config Sites';
+$this->title = 'Настройки сайта';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="config-site-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Config Site', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name:ntext',
-            'title:ntext',
-            'value:ntext',
-            'action',
+            //'id',
+            //'name:ntext',
+            //'title:ntext',
+            //'value:ntext',
+            'name_header:ntext',
+            'name_footer:ntext',
+            'address:ntext',
+            'phone_priem:ntext',
+            'phone_disp:ntext',
+            [
+                'attribute' => 'action',
+                'filter' => ConfigSite::statusList(),
+                'format' => 'raw',
+                'value' => function (ConfigSite $model) {
+                    return Html::a($model->getStatusTag());
+                }
+            ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+                'buttons' => [
+                    'update' => function ($url, ConfigSite $model) {
+                        if(Yii::$app->user->identity->roleOption->access_users == 1){
+                            return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/config-site/update', 'id' => $model->id], [
+                                'title' => 'Update',
+                            ]);
+                        }
+
+
+                    },
+                ],
+                'options' => [
+                    'width' => 100,
+                ],
+            ],
         ],
     ]); ?>
 

@@ -34,6 +34,7 @@ use common\models\Admin;
                     ['label' => 'Новости', 'url' => ['article/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_news == 1],
                     ['label' => 'Файлы', 'url' => ['pdf-files/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_news == 1],
                     ['label' => 'Управление сайтом', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
+                    ['label' => 'Настройки сайта', 'url' => ['config-site/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
                     [
                         'label' => 'Администраторы','iconStyle' => 'far', 'iconClassAdded' => 'text-danger',
                         'items' => [
@@ -51,10 +52,6 @@ use common\models\Admin;
                             //['label' => 'еще что-то с абонентами', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ],
-
-                    ['label' => 'Настройки сайта', 'header' => true],
-                    ['label' => 'Страницы', 'url' => ['config-site/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
-
 
                     ['label' => 'Загрузка/выгрузка данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
                     ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],

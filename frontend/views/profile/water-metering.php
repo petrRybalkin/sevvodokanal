@@ -10,11 +10,13 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\validators\Validator;
+use common\models\ConfigSite;
 
 $this->title = 'Передача показань - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
 
 $vodomers = \common\models\WaterMetering::getWaterMeteringInAccNum($number->account_number);
+$settings = ConfigSite::getSettings(1);
 
 if ($vodomers): ?>
     <!--    Розділ “Передача показань”:-->
@@ -149,6 +151,8 @@ if ($vodomers): ?>
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань
                     лічильника</h2>
             </div>
+            <?php if($settings->action == 1){ ?>
+
             <?php $form = ActiveForm::begin([
                 'id' => 'water-metering-form',
                 'class' => 'mt-8',
@@ -244,6 +248,9 @@ if ($vodomers): ?>
                 </button>
             </div>
             <?php ActiveForm::end(); ?>
+            <?php } else { ?>
+                <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
+            <?php } ?>
         </div>
     </div>
 

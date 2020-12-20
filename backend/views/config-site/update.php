@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ConfigSite */
 
-$this->title = 'Update Config Site: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Config Sites', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Обновить настройки сайта: ' . $model->name_header;
+$this->params['breadcrumbs'][] = ['label' => 'Конфигурация', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name_header];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="config-site-update">
