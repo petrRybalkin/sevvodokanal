@@ -149,9 +149,12 @@ class Article extends \yii\db\ActiveRecord
         $time = $this->timestampToDate($currentTime);
         if ($this->isNewRecord) {
             $this->create_utime = $time;
+            $this->update_utime = $time;
+
+        } else {
+            $this->update_utime = $time;
         }
 
-        $this->update_utime = $time;
         return parent::beforeSave($insert);
     }
 
