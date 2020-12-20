@@ -58,14 +58,14 @@ class Article extends \yii\db\ActiveRecord
                 'filePath' => '@webroot/news/pdf/[[pk]].[[extension]]',
                 'fileUrl' => '/news/pdf/[[pk]].[[extension]]',
             ],
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_utime', 'update_utime'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_utime'],
-                ],
-                'value' => new Expression('NOW()'),
-            ],
+//            'timestamp' => [
+//                'class' => 'yii\behaviors\TimestampBehavior',
+//                'attributes' => [
+//                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_utime', 'update_utime'],
+//                    ActiveRecord::EVENT_BEFORE_UPDATE => ['update_utime'],
+//                ],
+//                'value' => new Expression('NOW()'),
+//            ],
         ];
     }
 
@@ -78,7 +78,7 @@ class Article extends \yii\db\ActiveRecord
             [['short_description', 'description'], 'string'],
             [['active'], 'integer'],
             [['title', 'seoTitle', 'seoDescription'], 'string', 'max' => 255],
-            [['create_utime', 'update_utime'], 'default', 'value' =>  new Expression('NOW()')],
+            [['create_utime', 'update_utime'], 'safe'],
             [['img'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
             [['pdf'], 'file', 'extensions' => 'pdf']
         ];
@@ -152,29 +152,29 @@ class Article extends \yii\db\ActiveRecord
         return Html::tag('span', $this->getStatusLabel(), $options);
     }
 
-//    public function beforeSave($insert)
-//    {
-//        $currentTime = time();
-//        $time = $this->timestampToDate($currentTime);
-//        if ($this->isNewRecord) {
-//            $this->create_utime = $time;
-//            $this->update_utime = $time;
-//
-//        } else {
-//            $this->update_utime = $time;
-//        }
-//
-//        return parent::beforeSave($insert);
-//    }
-//
-//    protected function timestampToDate($timestamp, $format = 'Y-m-d H:i:s')
-//    {
-//        $tz = new DateTimeZone("Europe/Kiev");
-//
-//        $date = DateTime::createFromFormat('U', $timestamp)->setTimezone($tz)->format($format);
-//
-//        return $date;
-//    }
+    public function beforeSave($insert)
+    {
+        $currentTime = time();
+        $time = $this->timestampToDate($currentTime);
+        if ($this->isNewRecord) {
+            $this->create_utime = $time;
+            $this->update_utime = $time;
+
+        } else {
+            $this->update_utime = $time;
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    protected function timestampToDate($timestamp, $format = 'Y-m-d H:i:s')
+    {
+        $tz = new DateTimeZone("Europe/Kiev");
+
+        $date = DateTime::createFromFormat('U', $timestamp)->setTimezone($tz)->format($format);
+
+        return $date;
+    }
 
     /**
      * {@inheritdoc}
