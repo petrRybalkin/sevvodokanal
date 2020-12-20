@@ -42,10 +42,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appe
 /*header.bg-white.shadow{display: none}*/
 /*}*/
 
-label:after {content:'+';position:absolute;right:1em;color:#000}
-input:checked + label:after {content:'-'}
-.accordion__content{max-height:0em;transition:all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87)}
-input[name='panel']:checked ~ .accordion__content {/* Get this as close to what height you expect */max-height:50em}
+.accordion label:after {content:'+';position:absolute;right:1em;color:#000}
+.accordion input:checked + label:after {content:'-'}
+.accordion .accordion__content{max-height:0em;transition:all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87)}
+.accordion .accordion__content label:after{content:''}
+.accordion input[name='panel']:checked ~ .accordion__content {/* Get this as close to what height you expect */max-height:50em}
 
 main{min-height: calc(100vh - 240px);}
 .footer-sevkanal{height:240px}

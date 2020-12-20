@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if(count($clientScore) < 5) { ?>
     <div class="accordion flex flex-col items-center justify-center mt-2">
         <!--  Panel 1  -->
-        <div class="w-1/2">
+        <div class="md:w-1/2 w-1/1">
             <input type="checkbox" name="panel" id="panel-1" class="hidden">
             <label for="panel-1" class="relative block bg-white p-4 shadow border-b border-grey mt-6 text-center text-2xl leading-9 font-bold text-gray-900">Додати особовий рахунок</label>
 
