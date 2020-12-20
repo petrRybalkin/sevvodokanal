@@ -25,7 +25,7 @@ use common\models\User;
                 <li><a href="<?= Url::to(['dbf-import/index']) ?>" class="dropdown-item">Загрузить показания водомеров .DBF </a></li>
                 <li><a href="<?= Url::to(['dbf-import/score']) ?>" class="dropdown-item">Загрузить счета .DBF</a></li>
                 <li><a href="<?= Url::to(['dbf-import/payment']) ?>" class="dropdown-item">Загрузить платежи .DBF</a></li>
-                <li><a href="<?= Url::to(['dbf-import/company']) ?>" class="dropdown-item">Загрузить компании .DBF</a></li>
+                <li><a href="<?= Url::to(['dbf-import/company']) ?>" class="dropdown-item">Загрузить юр. лица .DBF</a></li>
 
                 <li class="dropdown-divider"></li>
 

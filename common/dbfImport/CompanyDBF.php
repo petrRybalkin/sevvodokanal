@@ -5,6 +5,7 @@ namespace common\dbfImport;
 use backend\models\FilesLog;
 use common\models\Company;
 use common\models\ScoreMetering;
+use DateTime;
 use Yii;
 use yii\helpers\Json;
 
@@ -55,25 +56,28 @@ class CompanyDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
 
         $i = 0;
+//        $isDeleted = [];
 
         while ($item = $this->nextRecord()) {
             try {
 
-                if($i % 2000 == 0){
+                if ($i % 2000 == 0) {
                     sleep(5);
-                    $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
+                    $this->log($admin_id, "ok  $i - " . $item['kod_p']);
                 }
 
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
 
-                $query = Company::find()->where(['account_number' => $item['lic_schet']]);
+                $query = Company::find()
+                    ->where(['num_contract' => $item['kod_p'], 'accounting_number' => $item['nomer']]);
+
 
                 if ($query->exists()) {
                     $company = $query->one();
                     $company->updateAttributes($arr);
-                }else{
-                    $company = new ScoreMetering();
+                } else {
+                    $company = new Company();
                     $company->setAttributes($arr);
                 }
 
