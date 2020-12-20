@@ -31,49 +31,29 @@ use common\models\User;
             </div>
             <!-- Profile dropdown -->
             <?php $client = true; if($client): ?>
-            <?php if(Yii::$app->user->isGuest): ?>
+
                 <div class="relative profile menu group w-1/4 xs:hidden sm:hidden md:visible">
                     <div class="flex justify-end">
+                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                            <?= Html::a('Юридичнi особи', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        </div>
+                <?php if(Yii::$app->user->isGuest): ?>
                         <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </div>
                         <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
                             <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </div>
+                <?php else: ?>
+                    <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                        <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                    </div>
+                    <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                        <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                    </div>
+                <?php endif; ?>
                     </div>
                 </div>
-            <?php else: ?>
-                <div class="relative profile menu group w-1/4 xs:hidden sm:hidden md:visible">
-                    <div class="flex justify-end">
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Юридичнi особи', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </div>
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </div>
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </div>
-                    </div>
-                    <!--
-                      Profile dropdown panel, show/hide based on dropdown state.
-
-                      Entering: "transition ease-out duration-100"
-                        From: "transform opacity-0 scale-95"
-                        To: "transform opacity-100 scale-100"
-                      Leaving: "transition ease-in duration-75"
-                        From: "transform opacity-100 scale-100"
-                        To: "transform opacity-0 scale-95"
-                    -->
-<!--                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">-->
-<!--                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">-->
-<!--                            <a href="--><?//= Url::to(['/profile/index']);?><!--" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Особистий кабінет-->
-<!--                            </a>-->
-                    <!--       Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem'])-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
-            <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
@@ -157,6 +137,9 @@ use common\models\User;
                                 <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150']) ?>
                             </p>
                         <?php endif; ?>
+                        <p class="text-center text-base leading-6 font-medium text-gray-500">
+                            <?= Html::a('Юридичнi особи', ['/legal/index'], ['class'=>'text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150']) ?>
+                        </p>
                     </div>
                 </div>
 

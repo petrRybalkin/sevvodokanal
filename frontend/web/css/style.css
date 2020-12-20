@@ -12,7 +12,8 @@
 .second-item.absolute{z-index: 35}
 .has-error input{border:1px solid red !important;}
 .help-block.help-block-error{color:red!important;font-style: italic}
-.field-contactform-verifycode input#contactform-verifycode{border:1px solid #e2e8f0;border-radius:5px;padding:5px 10px}
+.field-contactform-verifycode input#contactform-verifycode,
+#legal-water-metering-form input#legalform-verifycode{border:1px solid #e2e8f0;border-radius:5px;padding:5px 10px}
 
 ul.pagination{margin:15px auto;text-align:center}
 ul.pagination li{display:inline-block;padding:5px 10px}
