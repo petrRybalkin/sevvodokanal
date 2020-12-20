@@ -52,6 +52,10 @@ use common\models\Admin;
                         ]
                     ],
 
+                    ['label' => 'Настройки сайта', 'header' => true],
+                    ['label' => 'Страницы', 'url' => ['config-site/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_users == 1],
+
+
                     ['label' => 'Загрузка/выгрузка данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
                     ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
                     ['label' => 'Загрузить счета .DBF', 'url' => ['dbf-import/score'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],

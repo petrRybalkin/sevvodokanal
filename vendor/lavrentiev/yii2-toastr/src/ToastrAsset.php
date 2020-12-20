@@ -22,6 +22,6 @@ class ToastrAsset extends AssetBundle
     /** @var array $depends */
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        //'yii\bootstrap\BootstrapAsset',
     ];
 }
