@@ -34,7 +34,10 @@ class CompanyDBF extends BaseDBF
                 'type' => static::TYPE_NUMERIC,
                 'title' => 'Попередні показання',
             ],
-
+            'sinh' => [
+                'field' => 'sinh',
+                'type' => static::TYPE_NUMERIC,
+            ]
         ];
     }
 
@@ -46,6 +49,7 @@ class CompanyDBF extends BaseDBF
             'accounting_number',
             'verification_date',
             'previous_readings',
+            'sinh'
         ];
     }
 
@@ -79,6 +83,7 @@ class CompanyDBF extends BaseDBF
                 } else {
                     $company = new Company();
                     $company->setAttributes($arr);
+                    $company->setAttributes(['sinh' => 0]);
                 }
 
                 if (!$company->save()) {

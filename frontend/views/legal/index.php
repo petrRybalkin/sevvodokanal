@@ -28,9 +28,9 @@ if ((int)$dateThis < 11): ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'legal-water-metering-form',
                 'class' => 'mt-8',
-                'enableAjaxValidation' => true,
+                'enableClientValidation' => true,
             ]);
-            $model = new LegalNumContractForm();
+//            $model = new LegalNumContractForm();
             ?>
             <div class="rounded-md shadow-sm" id="append">
                 <div>

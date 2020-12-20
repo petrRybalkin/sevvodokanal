@@ -47,17 +47,19 @@ class LegalController extends Controller
     public function actionIndex()
     {
         $model = new LegalNumContractForm();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if(Yii::$app->request->post('num_button')){
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            if ($model->validate()) {
+//                if(Yii::$app->request->post('num_button')){
                     return $this->redirect(['/legal/meter', 'num' => $model->num_contract]);
-                }
-            } else {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
+//                }
+//            }
+//            else {
+//                Yii::$app->response->format = Response::FORMAT_JSON;
+//                return ActiveForm::validate($model);
+//            }
         }
         return $this->render('index', [
+            'model' => $model
         ]);
     }
 
