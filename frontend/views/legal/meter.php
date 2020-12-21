@@ -13,9 +13,9 @@ use yii\captcha\Captcha; ?>
         <?php $form = ActiveForm::begin([
             'id' => 'legal-water-metering-form',
             'class' => 'mt-8',
-            'enableAjaxValidation' => true,
+            'enableClientValidation' => true,
         ]);
-        $model = new LegalForm();
+//        $model = new LegalForm();
         ?>
         <div class="rounded-md shadow-sm" id="append">
             <div>
@@ -34,34 +34,37 @@ use yii\captcha\Captcha; ?>
             <?php
             /** @var \common\models\Company $company */
             /** @var \common\models\Company $item */
-            foreach ($company as $k => $item) :?>
+            foreach ($company as $k => $item) :
+                $num = $k+1;
+                ?>
 
                 <div>
                     <?= $form->field($model, "acc_num_$k")
                         ->textInput([
-                            'tabindex'=>'-1', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
+                           'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
                                 focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
                             'readonly'=>'readonly', 'value' => $item->accounting_number
-                        ])->label("Номер засобу обліку води № $k", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
+                        ])->label("Номер засобу обліку води № $num", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                     ?>
                 </div>
 
                 <div>
                     <?= $form->field($model,  "previous_readings_$k" )
                         ->textInput([
-                            'tabindex'=>'-1', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
+                           'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
                                 focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
-                        ])->label("Показання засобу обліку води № $k", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
+                        ])->label("Показання засобу обліку води № $num", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                     ?>
                 </div>
             <?php endforeach; ?>
 
             <div>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                        'captchaAction' => 'legal/captcha',
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ])->label('Введить код с зображення', ['tabindex'=>'-1', 'class'=>'block text-grey-darker text-sm font-bold mb-2']) ?>
+                ])->label('Введить код с зображення', [ 'class'=>'block text-grey-darker text-sm font-bold mb-2']) ?>
             </div>
         </div>
 

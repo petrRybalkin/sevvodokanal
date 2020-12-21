@@ -156,8 +156,8 @@ if ($vodomers): ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'water-metering-form',
                 'class' => 'mt-8',
-                'enableAjaxValidation' => true,
-                'action' => '/profile/meter',
+                'enableClientValidation' => true,
+//                'action' => '/profile/meter',
             ]);
 
             ?>
@@ -181,7 +181,7 @@ if ($vodomers): ?>
 
                     <div>
                         <?= $form->field($model, 'meter1')
-                            ->textInput(['type' => 'number','tabindex'=>'-1',
+                            ->textInput(['type' => 'number',
                                 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md 
                                  focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
@@ -206,7 +206,7 @@ if ($vodomers): ?>
 
                     <div>
                         <?= $form->field($model, 'meter2')
-                            ->textInput(['type' => 'number','tabindex'=>'-1',
+                            ->textInput(['type' => 'number',
                                 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №2', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
@@ -228,7 +228,7 @@ if ($vodomers): ?>
 
                     <div>
                         <?= $form->field($model, 'meter3')
-                            ->textInput(['type' => 'number','tabindex'=>'-1', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                            ->textInput(['type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Показники лiчильника №3', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                         <?= $form->field($model, 'number3')
