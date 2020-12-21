@@ -67,14 +67,16 @@ class LegalController extends Controller
     {
         $company = Company::find()->where(['num_contract' => $num])->all();
         $model = new LegalForm();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            if (!$model->validate()) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
-            if (Yii::$app->request->post('meter-button')) {
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            if (!$model->validate()) {
+//                Yii::$app->response->format = Response::FORMAT_JSON;
+//                return ActiveForm::validate($model);
+//            }
+//            if (Yii::$app->request->post('meter-button')) {
 //                дата наступної повірки” - “поточна дата”) < (“один місяць”)
-                foreach ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as $item) {
+
+                foreach (range(0, count($company)-1) as $item) {
                     $acc = ArrayHelper::getValue($model, "acc_num_$item");
                     if ($acc !== null) {
                         $pr = "previous_readings_$item";
@@ -84,9 +86,8 @@ class LegalController extends Controller
                                 AND accounting_number='{$acc}'
                                 ";
 
-                       if(!Yii::$app->db->createCommand($sql)->execute()){
-                           Yii::$app->session->setFlash('error', 'Не вдалося передати показання');
-                       }
+                      Yii::$app->db->createCommand($sql)->execute();
+
                        $ver_date = Company::find()->select('verification_date')
                             ->where(['num_contract' => $num,'accounting_number'=>$acc])
                             ->scalar();
@@ -103,10 +104,10 @@ class LegalController extends Controller
                 Yii::$app->session->setFlash('success', 'Показання успiшно переданi.');
                 return $this->redirect(['legal/index']);
 
-            } else {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
+//            } else {
+//                Yii::$app->response->format = Response::FORMAT_JSON;
+//                return ActiveForm::validate($model);
+//            }
         }
 
         return $this->render('meter', [

@@ -6,6 +6,7 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 class LegalForm extends Model
 {
@@ -38,7 +39,7 @@ class LegalForm extends Model
     {
         return [
             [['num_contract'], 'required'],
-            ['verifyCode', 'captcha'],
+            [['verifyCode'], 'captcha',  'captchaAction' => 'legal/captcha'],
             [['num_contract'], 'exist', 'targetClass' => Company::class,
                 'targetAttribute' => 'num_contract',
                 'message' => 'Немає такого номеру договору 
@@ -152,7 +153,7 @@ class LegalForm extends Model
             ])->one()) {
             $this->addError($acc, 'Заповнiть номер засобу обліку води .');
         } else {
-            if ((int)$this->$attribute <= $company->previous_readings) {
+            if ((int)$this->$attribute < $company->previous_readings) {
                 $this->addError($field, "Поточні показання не можуть залишатися пустими або бути менше попередніх. 
                 Попередні показання = $company->previous_readings");
             }
