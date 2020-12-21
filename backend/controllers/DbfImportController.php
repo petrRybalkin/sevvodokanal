@@ -299,7 +299,7 @@ class DbfImportController extends Controller
 
     public function actionDownloadCompany()
     {
-        $path = Yii::getAlias('@runtimeBack/Показання_юр_особи_'.date('Y-m-d H:i:s') .'.dbf');
+        $path = Yii::getAlias('@runtimeBack/Показання_юр_особ_'.date('Y-m-d H:i:s') .'.dbf');
 
         $model = Company::find()
             ->where(['sinh' => 1]);
@@ -313,6 +313,8 @@ class DbfImportController extends Controller
             ['nomer', "C",10],
             ['datgosp', "D", 12],
             ['pred', "N", 11, 3],
+            ['tek', "N", 11, 3],
+            ['dpp', "D", 12],
 
         ];
 
@@ -336,6 +338,8 @@ class DbfImportController extends Controller
             $record->nomer = $item->accounting_number;
             $record->datgosp = Yii::$app->formatter->asDate($item->verification_date, 'd.m.Y');
             $record->pred = $item->previous_readings;
+            $record->tek = $item->current_readings?: 0;
+            $record->dpp = Yii::$app->formatter->asDate($item->date_readings?:date('d.m.Y'), 'd.m.Y');
             $table->writeRecord();
         }
         $table->close();
