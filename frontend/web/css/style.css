@@ -6,8 +6,8 @@
 .shadow-text{text-shadow:0 0 3px #333}
 .page-view ul{padding-left:20px}
 .page-view ul li{list-style:disc}
-.page-view table,
-.page-view table tr, .page-view table td{border-width: 1px;border-color: #e2e8f0;}
+.page-view table, .page-view table tr, .page-view table td,
+.article-view table, .article-view table tr, .article-view table td{border-width: 1px;border-color: #e2e8f0;}
 #menu-toggle{display: none}
 .second-item.absolute{z-index: 35}
 .has-error input{border:1px solid red !important;}
@@ -51,3 +51,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appe
 
 main{min-height: calc(100vh - 240px);}
 .footer-sevkanal{height:240px}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
