@@ -8,51 +8,14 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'language' => 'uk',
-    //'sourceLanguage' => 'uk',
+    'language' => 'ua',
+//    'sourceLanguage' => 'uk',
+    'timeZone' => 'Europe/Ukraine',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
     'controllerMap' => [
-//        'elfinder' => [
-//            'class' =>  \mihaildev\elfinder\Controller::class,
-//            'access' => ['@'],
-//            'disabledCommands' => ['netmount'],
-//            'roots' => [
-//                [
-//                    'baseUrl' => '@web',
-//                    'basePath' => '@webroot',
-//                    'path' => 'news/image',
-//                    'name' => 'изображения',
-//                ],
-//                [
-//                    'baseUrl' => '@web',
-//                    'basePath' => '@webroot',
-//                    'path' => 'news/docs',
-//                    'name' => 'документы',
-//                ],
-//            ]
-//        ],
-//        'elfinderPage' => [
-//            'class' =>  \mihaildev\elfinder\Controller::class,
-//            'access' => ['@'],
-//            'disabledCommands' => ['netmount'],
-//            'roots' => [
-//                [
-//                    'baseUrl' => '@web',
-//                    'basePath' => '@webroot',
-//                    'path' => 'page/image',
-//                    'name' => 'изображения',
-//                ],
-//                [
-//                    'baseUrl' => '@web',
-//                    'basePath' => '@webroot',
-//                    'path' => 'page/docs',
-//                    'name' => 'документы',
-//                ],
-//            ]
-//        ]
     ],
     'components' => [
 //        'view' => [
@@ -73,6 +36,13 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'long',
+            'datetimeFormat' => 'long',
+            'defaultTimeZone' => 'Europe/Ukraine',
+            'timeZone' => 'Europe/Ukraine'
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
