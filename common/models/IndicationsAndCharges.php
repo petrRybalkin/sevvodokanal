@@ -99,6 +99,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     public static function debtBeginMonth($acc, $date)
     {
         /** @var IndicationsAndCharges $m */
+//        \yii\helpers\VarDumper::dump(strtotime($date),10,1);
         if (strtotime($date) == strtotime(date('Ym'))) {
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
@@ -124,21 +125,34 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             if ($m->synchronization > 0) {
                 return $m->debt_end_month;
             }
-            $splacheno = (Payment::getLgota($acc, 1, date('Y-m-d'), true)
-                    ? Payment::getLgota($acc, 1, date('Y-m-d'), true)['sumAll'] : 0) +
-                (Payment::getLgota($acc, 0, date('Y-m-d'), true)
-                    ? Payment::getLgota($acc, 0, date('Y-m-d'), true)['sumAll']
+            $str = substr($m->month_year, 0, 4) . '-' . substr($m->month_year, 4, 6) . '-01';
+
+            $splacheno = (Payment::getLgota($acc, 1, $str, true)
+                    ? Payment::getLgota($acc, 1, $str, true)['sumAll'] : 0) +
+                (Payment::getLgota($acc, 0, $str, true)
+                    ? Payment::getLgota($acc, 0, $str, true)['sumAll']
                     : 0);
             $lgo = $m->privilege_unpaid > 0
                 ? $m->privilege_unpaid
-                : Payment::getLgota($acc, 2, date('Y-m-d'), true)['sumAll'];
+                : Payment::getLgota($acc, 2, $str, true)['sumAll'];
 
-            $subs = Payment::getLgota($acc, 3, date('Y-m-d'), true)
-                ? Payment::getLgota($acc, 3, date('Y-m-d'), true)['sumAll']
+            $subs = Payment::getLgota($acc, 3,$str, true)
+                ? Payment::getLgota($acc, 3,$str, true)['sumAll']
                 : 0;
 
-            return ($m->debt_begin_month + $calcWaterCons - $m->correction
-                - $splacheno - $lgo - $subs);
+            //hsumma (за предыдущий месяц)+
+            //((th1+th2+tp-ph1-ph2-pp)*tarifv)+((th1+th2-ph1-ph2)*tarifst)
+            //-оплата текущего месяца
+            //-субсидия текущего месяца
+            //-льгота текущего месяца
+            //-коррекция текущего месяца.
+
+            return ($m->debt_begin_month
+                + $calcWaterCons
+                - $splacheno
+                - $subs
+                - $lgo
+                - $m->correction);
         } else {
           $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => $date])
