@@ -37,7 +37,18 @@ class CompanyDBF extends BaseDBF
             'sinh' => [
                 'field' => 'sinh',
                 'type' => static::TYPE_NUMERIC,
-            ]
+            ],
+            'tek' => [
+                'field' => 'current_readings',
+                'type' => static::TYPE_NUMERIC,
+            ],
+            'dpp' => [
+                'field' => 'date_readings',
+                'type' => static::TYPE_NUMERIC,
+            ],
+
+
+
         ];
     }
 
@@ -49,7 +60,9 @@ class CompanyDBF extends BaseDBF
             'accounting_number',
             'verification_date',
             'previous_readings',
-            'sinh'
+            'sinh',
+            'current_readings',
+            'date_readings'
         ];
     }
 
@@ -60,7 +73,6 @@ class CompanyDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
 
         $i = 0;
-//        $isDeleted = [];
 
         while ($item = $this->nextRecord()) {
             try {
@@ -84,6 +96,8 @@ class CompanyDBF extends BaseDBF
                     $company = new Company();
                     $company->setAttributes($arr);
                     $company->setAttributes(['sinh' => 0]);
+                    $company->setAttributes(['current_readings' => 0]);
+                    $company->setAttributes(['date_readings' => null]);
                 }
 
                 if (!$company->save()) {

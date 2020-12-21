@@ -66,76 +66,76 @@ class LegalForm extends Model
             [['previous_readings_9'], 'validationMeter', 'params' => ['acc' => 'acc_num_9','field' => 'previous_readings_9']],
             [['previous_readings_0', 'previous_readings_1', 'previous_readings_2', 'previous_readings_3',
                 'previous_readings_4', 'previous_readings_5', 'previous_readings_6', 'previous_readings_7',
-                'previous_readings_8', 'previous_readings_9'], 'number'],
-
-            [['previous_readings_0'], 'required', 'when' => function ($model) {
-                return $model->acc_num_0 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_0') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-            [['previous_readings_1'], 'required', 'when' => function ($model) {
-                return $model->acc_num_1 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_1') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_2'], 'required', 'when' => function ($model) {
-                return $model->acc_num_2 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_2') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_3'], 'required', 'when' => function ($model) {
-                return $model->acc_num_3 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_3') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_4'], 'required', 'when' => function ($model) {
-                return $model->acc_num_4 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_4') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_5'], 'required', 'when' => function ($model) {
-                return $model->acc_num_5 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_5') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_6'], 'required', 'when' => function ($model) {
-                return $model->acc_num_6 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_6') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_7'], 'required', 'when' => function ($model) {
-                return $model->acc_num_7 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_7') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_8'], 'required', 'when' => function ($model) {
-                return $model->acc_num_8 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_8') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
-
-            [['previous_readings_9'], 'required', 'when' => function ($model) {
-                return $model->acc_num_9 !== null;
-            }, 'whenClient' => "function (attribute, value) {
-        return $('#legalform-acc_num_9') !== undefined;
-    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
-
+                'previous_readings_8', 'previous_readings_9'], 'number']
+//
+//            [['previous_readings_0'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_0 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_0') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//            [['previous_readings_1'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_1 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_1') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_2'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_2 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_2') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_3'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_3 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_3') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_4'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_4 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_4') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_5'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_5 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_5') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_6'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_6 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_6') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_7'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_7 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_7') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_8'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_8 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_8') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
+//
+//            [['previous_readings_9'], 'required', 'when' => function ($model) {
+//                return $model->acc_num_9 !== null;
+//            }, 'whenClient' => "function (attribute, value) {
+//        return $('#legalform-acc_num_9') !== undefined;
+//    }", 'message' => 'Поточні показання не можуть залишатися пустими.'],
+//
         ];
 
 

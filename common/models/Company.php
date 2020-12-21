@@ -13,6 +13,8 @@ use Yii;
  * @property string  $accounting_number
  * @property string|null $verification_date
  * @property float|null $previous_readings
+ * @property float|null $current_readings
+ * @property string|null $date_readings
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -30,9 +32,8 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-//            [['previous_readings'], 'number', 'skipOnEmpty' => true],
-            [['verification_date','previous_readings','accounting_number','num_contract'], 'safe'],
-//            [[ 'accounting_number','num_contract'], 'string']
+            [['verification_date','previous_readings','accounting_number',
+                'num_contract','date_readings','current_readings'], 'safe'],
         ];
     }
 

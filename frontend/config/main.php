@@ -49,6 +49,8 @@ return [
                 '/page/<id:[-\w_\/]+>'=>'page/view',
                 '/novyny' => 'article/index',
                 '/novyny/<id:[-\w_\/]+>'=>'article/view',
+                '/legal/pokazannya_yur_osoby/<num:[-\d\/]+>'=>'legal/meter',
+                '/yur_osoby'=>'legal/index',
 
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],

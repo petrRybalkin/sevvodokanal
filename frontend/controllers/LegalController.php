@@ -25,6 +25,7 @@ class LegalController extends Controller
             ],
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -50,7 +51,7 @@ class LegalController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            if ($model->validate()) {
 //                if(Yii::$app->request->post('num_button')){
-                    return $this->redirect(['/legal/meter', 'num' => $model->num_contract]);
+            return $this->redirect(['/legal/meter', 'num' => $model->num_contract]);
 //                }
 //            }
 //            else {
@@ -69,45 +70,37 @@ class LegalController extends Controller
         $model = new LegalForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            if (!$model->validate()) {
-//                Yii::$app->response->format = Response::FORMAT_JSON;
-//                return ActiveForm::validate($model);
-//            }
-//            if (Yii::$app->request->post('meter-button')) {
-//                дата наступної повірки” - “поточна дата”) < (“один місяць”)
-
-                foreach (range(0, count($company)-1) as $item) {
-                    $acc = ArrayHelper::getValue($model, "acc_num_$item");
-                    if ($acc !== null) {
-                        $pr = "previous_readings_$item";
+            foreach (range(0, count($company) - 1) as $item) {
+                $acc = ArrayHelper::getValue($model, "acc_num_$item");
+                if ($acc !== null) {
+                    $pr = "previous_readings_$item";
+                    $date = date('Y-m-d');
+                    if ($model->$pr !== '') {
                         $sql = "UPDATE company
-                                SET previous_readings='{$model->$pr}', sinh=1
+                                SET current_readings='{$model->$pr}', sinh=1, date_readings='{$date}'
                                 WHERE num_contract='{$num}' 
                                 AND accounting_number='{$acc}'
                                 ";
 
-                      Yii::$app->db->createCommand($sql)->execute();
+                        Yii::$app->db->createCommand($sql)->execute();
 
-                       $ver_date = Company::find()->select('verification_date')
-                            ->where(['num_contract' => $num,'accounting_number'=>$acc])
+//                дата наступної повірки” - “поточна дата”) < (“один місяць”)
+                        $ver_date = Company::find()->select('verification_date')
+                            ->where(['num_contract' => $num, 'accounting_number' => $acc])
                             ->scalar();
 
                         $datetime1 = date_create($ver_date);
                         $datetime2 = date_create(date('Y-m-d'));
                         $interval = date_diff($datetime1, $datetime2);
 
-                       if($interval->days / 30 < 1){
-                           Yii::$app->session->setFlash('error', 'Наближаеться дати повірки  засобу обліку води, рекомендуемо звернутись до відділу збуту підприємства.');
-                       }
+                        if ($interval->days / 30 < 1) {
+                            Yii::$app->session->setFlash('error', 'Наближаеться дати повірки  засобу обліку води, рекомендуемо звернутись до відділу збуту підприємства.');
+                        }
                     }
                 }
-                Yii::$app->session->setFlash('success', 'Показання успiшно переданi.');
-                return $this->redirect(['legal/index']);
-
-//            } else {
-//                Yii::$app->response->format = Response::FORMAT_JSON;
-//                return ActiveForm::validate($model);
-//            }
+            }
+            Yii::$app->session->setFlash('success', 'Показання успiшно переданi.');
+            return $this->redirect(['legal/index']);
         }
 
         return $this->render('meter', [
