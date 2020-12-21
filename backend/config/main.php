@@ -10,7 +10,7 @@ return [
     'id' => 'app-backend',
     'language' => 'ua',
 //    'sourceLanguage' => 'uk',
-    'timeZone' => 'Europe/Ukraine',
+    'timeZone' => 'Europe/Kiev',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -41,8 +41,8 @@ return [
             'class' => 'yii\i18n\Formatter',
             'dateFormat' => 'long',
             'datetimeFormat' => 'long',
-            'defaultTimeZone' => 'Europe/Ukraine',
-            'timeZone' => 'Europe/Ukraine'
+            'defaultTimeZone' => 'Europe/Kiev',
+            'timeZone' => 'Europe/Kiev'
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
