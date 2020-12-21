@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'language' => 'ua-UA',
-    'timeZone' => 'UTC',
+    'timeZone' => 'Europe/Kiev',
     //'sourceLanguage' => 'uk',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
