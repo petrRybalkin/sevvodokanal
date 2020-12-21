@@ -8,7 +8,8 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'language' => 'uk',
+    'language' => 'ua-UA',
+    'timeZone' => 'UTC',
     //'sourceLanguage' => 'uk',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -35,6 +36,7 @@ return [
                 ],
             ],
         ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
