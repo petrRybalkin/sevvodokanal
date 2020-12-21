@@ -3,6 +3,8 @@
 
 use common\models\LegalNumContractForm;
 use yii\bootstrap\ActiveForm;
+
+$this->title = 'Передача показань юридичними особами(крок 1) - Особистий кабінет';
 ?>
 
 

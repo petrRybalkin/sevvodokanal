@@ -3,7 +3,10 @@
 
 use common\models\LegalForm;
 use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha; ?>
+use yii\captcha\Captcha;
+
+$this->title = 'Передача показань юридичними особами(крок 2) - Особистий кабінет';
+?>
 
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
