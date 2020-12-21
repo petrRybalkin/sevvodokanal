@@ -127,9 +127,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     colspan="2">Лічильник №3
                                 </td>
                             <?php endif; ?>
-                            <?php if ($metering): ?>
+                            <?php if ($metering):
+                                if($metering->water_metering_first || $metering->water_metering_second):
+                                ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                     rowspan="2">Обсяг водо-<br>споживання,<br> м³
+                                </td>
+                            <?php endif;endif; ?>
+                            <?php if ($metering && $metering->watering_number): ?>
+                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                    rowspan="2">Обсяг водо-<br>споживання <br>по поливу<br> м³
                                 </td>
                             <?php endif; ?>
                             <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
@@ -191,7 +198,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach ($indication as $item):
                             /** @var \common\models\IndicationsAndCharges $item */
                             $str = substr($item->month_year, 0, 4) . '-' . substr($item->month_year, 4, 6) . '-01';
-
 
                             ?>
                             <tr>
@@ -257,7 +263,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                                 <?php endif; }?>
                                 <?php
-
                                 if($metering && $metering->watering_number):?>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center">
                                         <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->

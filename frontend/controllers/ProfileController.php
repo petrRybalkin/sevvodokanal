@@ -254,18 +254,20 @@ class ProfileController extends Controller
                             $indicationThisMonth->previous_readings_first -
                             $indicationThisMonth->previous_readings_second) * $score->tariff_for_stocks);
 
+                $str = substr($indicationThisMonth->month_year, 0, 4) . '-' . substr($indicationThisMonth->month_year, 4, 6) . '-01';
 
-                $splacheno = (Payment::getLgota($score->account_number, 1, date('Y-m-d'), true)
-                        ? Payment::getLgota($score->account_number, 1, date('Y-m-d'), true)['sumAll'] : 0) +
-                    (Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)
-                        ? Payment::getLgota($score->account_number, 0, date('Y-m-d'), true)['sumAll']
+
+                $splacheno = (Payment::getLgota($score->account_number, 1, $str, true)
+                        ? Payment::getLgota($score->account_number, 1, $str, true)['sumAll'] : 0) +
+                    (Payment::getLgota($score->account_number, 0, $str, true)
+                        ? Payment::getLgota($score->account_number, 0, $str, true)['sumAll']
                         : 0);
                 $lgo = $indicationThisMonth->privilege_unpaid > 0
                     ? $indicationThisMonth->privilege_unpaid
-                    : Payment::getLgota($score->account_number, 2, date('Y-m-d'), true)['sumAll'];
+                    : Payment::getLgota($score->account_number, 2, $str, true)['sumAll'];
 
-                $subs = Payment::getLgota($score->account_number, 3, date('Y-m-d'), true)
-                    ? Payment::getLgota($score->account_number, 3, date('Y-m-d'), true)['sumAll']
+                $subs = Payment::getLgota($score->account_number, 3, $str, true)
+                    ? Payment::getLgota($score->account_number, 3, $str, true)['sumAll']
                     : 0;
                 /** @var IndicationsAndCharges $indicationPrevMonth */
                 /** @var IndicationsAndCharges $indicationThisMonth */
@@ -277,8 +279,12 @@ class ProfileController extends Controller
                     'watering_consumption' => $watc,
                     'accruals' => $calcWaterCons,
                     //   слаьдо на поч мес + то что вверху - кор тек - сплачено тек- субс тек -пильг тек +
-                    'debt_end_month' => $indicationThisMonth->debt_begin_month + $calcWaterCons - $indicationThisMonth->correction
-                        - $splacheno - $lgo - $subs
+                    'debt_end_month' => $indicationThisMonth->debt_begin_month
+                        + $calcWaterCons
+                        - $splacheno
+                        - $subs
+                        - $lgo
+                        - $indicationThisMonth->correction
 
                 ]);
                 $wm->updateAttributes([
