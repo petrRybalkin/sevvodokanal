@@ -99,7 +99,6 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     public static function debtBeginMonth($acc, $date)
     {
         /** @var IndicationsAndCharges $m */
-//        \yii\helpers\VarDumper::dump(strtotime($date),10,1);
         if (strtotime($date) == strtotime(date('Ym'))) {
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
@@ -154,10 +153,10 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 - $lgo
                 - $m->correction);
         } else {
-          $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
+            $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => $date])
                 ->one();
-            return $m->debt_end_month;
+            return $m;
         }
 
 
