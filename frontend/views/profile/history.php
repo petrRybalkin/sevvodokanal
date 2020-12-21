@@ -128,12 +128,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </td>
                             <?php endif; ?>
                             <?php if ($metering):
-                                if($metering->water_metering_first || $metering->water_metering_second):
-                                ?>
-                                <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                    rowspan="2">Обсяг водо-<br>споживання,<br> м³
-                                </td>
-                            <?php endif;endif; ?>
+                                if ($metering->water_metering_first || $metering->water_metering_second):
+                                    ?>
+                                    <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                        rowspan="2">Обсяг водо-<br>споживання,<br> м³
+                                    </td>
+                                <?php endif;endif; ?>
                             <?php if ($metering && $metering->watering_number): ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                     rowspan="2">Обсяг водо-<br>споживання <br>по поливу<br> м³
@@ -225,45 +225,47 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?></td>
                                 <?php endif; ?>
                                 <?php
-                                if($metering){
+                                if ($metering) {
 
-                                if( $metering->water_metering_first || $metering->water_metering_second):?>
-                                <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
-                                    <!--ееш один столбик для поливного сч   -->
-                                    <?php
-                                    $on = $item->current_readings_first + $item->current_readings_second
-                                        - $item->previous_readings_first - $item->previous_readings_second;
+                                    if ($metering->water_metering_first || $metering->water_metering_second):?>
+                                        <td class="px-1 py-2 whitespace-no-wrap text-center">
+                                            <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
+                                            <!--ееш один столбик для поливного сч   -->
+                                            <?php
+                                            $on = $item->current_readings_first + $item->current_readings_second
+                                                - $item->previous_readings_first - $item->previous_readings_second;
 
-                                    if ($on == round($on)) {
-                                        $ov =  Yii::$app->formatter->asDecimal($on, 0);
-                                    }else{
-                                        $ov =  Yii::$app->formatter->asDecimal($on, 3);
-                                    }
-                                    ?>
+                                            if ($on == round($on)) {
+                                                $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                            } else {
+                                                $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                            }
+                                            ?>
 
-                                    <?php
-                                    if(strtotime($item->month_year) === strtotime(date('Ym'))){
+                                            <?php
+                                            if (strtotime($item->month_year) === strtotime(date('Ym'))) {
 
-                                        echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
-                                            ? 0
-                                            : $ov;
-                                    }else{
+                                                echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
+                                                    ? 0
+                                                    : $ov;
+                                            } else {
 
-                                        if ($item->water_consumption === round($item->water_consumption)) {
-                                            $item->water_consumption =  Yii::$app->formatter->asDecimal($item->water_consumption, 0);
-                                        }else{
-                                            $item->water_consumption =  Yii::$app->formatter->asDecimal($item->water_consumption, 3);
-                                        }
+                                                if ($item->water_consumption === round($item->water_consumption)) {
+                                                    $item->water_consumption = Yii::$app->formatter->asDecimal($item->water_consumption, 0);
+                                                } else {
+                                                    $item->water_consumption = Yii::$app->formatter->asDecimal($item->water_consumption, 3);
+                                                }
 
 
-                                        echo $item->water_consumption;                                    }
-                                    ?>
+                                                echo $item->water_consumption;
+                                            }
+                                            ?>
 
-                                </td>
-                                <?php endif; }?>
+                                        </td>
+                                    <?php endif;
+                                } ?>
                                 <?php
-                                if($metering && $metering->watering_number):?>
+                                if ($metering && $metering->watering_number):?>
                                     <td class="px-1 py-2 whitespace-no-wrap text-center">
                                         <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
                                         <!--ееш один столбик для поливного сч-->
@@ -271,33 +273,33 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $on = $item->current_readings_watering - $item->previous_readings_watering;
 
                                         if ($on == round($on)) {
-                                            $ov =  Yii::$app->formatter->asDecimal($on, 0);
-                                        }else{
-                                            $ov =  Yii::$app->formatter->asDecimal($on, 3);
+                                            $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                        } else {
+                                            $ov = Yii::$app->formatter->asDecimal($on, 3);
                                         }
 
-                                        if(strtotime($item->month_year) === strtotime(date('Ym'))){
+                                        if (strtotime($item->month_year) === strtotime(date('Ym'))) {
                                             echo $item->current_readings_watering ? $ov : 0;
-                                        }else{
+                                        } else {
 
-                                              if ($item->watering_consumption == round($item->watering_consumption)) {
-                                                  $iWC =  Yii::$app->formatter->asDecimal($item->watering_consumption, 0);
-                                              }else{
-                                                  $iWC =  Yii::$app->formatter->asDecimal($item->watering_consumption, 3);
-                                              }
+                                            if ($item->watering_consumption == round($item->watering_consumption)) {
+                                                $iWC = Yii::$app->formatter->asDecimal($item->watering_consumption, 0);
+                                            } else {
+                                                $iWC = Yii::$app->formatter->asDecimal($item->watering_consumption, 3);
+                                            }
                                             echo $iWC;
 
                                         }
                                         ?>
 
                                     </td>
-                                <?php endif;?>
+                                <?php endif; ?>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                    <?=  Yii::$app->formatter->asDecimal($item->total_tariff, 3) ?></td>
+                                    <?= Yii::$app->formatter->asDecimal($item->total_tariff, 3) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Нарахування розраховується по формулі:-->
                                     <!--  Поле nac “-” поле lgota-->
-<!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
+                                    <!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
 
                                     <?= Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -329,33 +331,34 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <!--      Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
                                     <?php
 
-                                    if($item->privilege_unpaid > 0){
+                                    if ($item->privilege_unpaid > 0) {
                                         $lgota = $item->privilege_unpaid;
-                                    }else{
+                                    } else {
                                         $lgota = Payment::getLgota($score->account_number, 2, $str, true)
                                             ? Payment::getLgota($score->account_number, 2, $str, true)['sumAll']
                                             : 0;
                                     }
 
                                     ?>
-                                    <?= Yii::$app->formatter->asDecimal($lgota?:0, 2)
-
-                                    ?></td>
+                                    <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
+                                </td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   Сальдо на кінець місяця, грн-->
 
-                                    <?php $debt = IndicationsAndCharges::debtBeginMonth(
+                                    <?php
+
+                                    $debt = IndicationsAndCharges::debtBeginMonth(
                                         $item->account_number,
                                         $item->month_year
                                     );
 
-
                                     ?>
-                                    <?= Yii::$app->formatter->asDecimal(($debt ?: 0), 2) ?>
+                                    <?= Yii::$app->formatter->asDecimal((is_double($debt) ? $debt : $debt->debt_end_month), 2) ?>
+                                </td>
 
-                                <?php if($metering):?>
-                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
-                                <?php endif;?>
+                                <?php if ($metering): ?>
+                                    <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
 

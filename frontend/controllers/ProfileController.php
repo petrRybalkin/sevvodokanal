@@ -385,7 +385,7 @@ class ProfileController extends Controller
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {
-
+$datePred = date("Ym", strtotime('first day of last month'));
             $lgota = $indication->privilege_unpaid > 0
                 ? $indication->privilege_unpaid
                 : Payment::getLgota($score->account_number, 2, null, true)['sumAll'];
@@ -403,7 +403,8 @@ class ProfileController extends Controller
                 : 0;
 
             $d = IndicationsAndCharges::debtBeginMonth($indication->account_number,
-                date("d.m.Y", strtotime('first day of last month')));
+                $datePred);
+
             if ($metering) {
                 $search = [
                     'account_number',
