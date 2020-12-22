@@ -103,7 +103,10 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
                 ->one();
-
+//            if ($m->synchronization > 0) {
+//                \yii\helpers\VarDumper::dump(444444,10,1);exit;
+//                return $m->debt_end_month;
+//            }
             if($m->current_readings_first >0 || $m->current_readings_second>0 || $m->current_readings_watering>0){
                 $calcWaterCons = (($m->current_readings_first +
                             $m->current_readings_second +
@@ -120,9 +123,6 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             }
 
 
-            if ($m->synchronization > 0) {
-                return $m->debt_end_month;
-            }
             $str = substr($m->month_year, 0, 4) . '-' . substr($m->month_year, 4, 6) . '-01';
 
             $splacheno = (Payment::getLgota($acc, 1, $str, true)
@@ -130,6 +130,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 (Payment::getLgota($acc, 0, $str, true)
                     ? Payment::getLgota($acc, 0, $str, true)['sumAll']
                     : 0);
+
+
             $lgo = $m->privilege_unpaid > 0
                 ? $m->privilege_unpaid
                 : Payment::getLgota($acc, 2, $str, true)['sumAll'];

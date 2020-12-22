@@ -305,8 +305,24 @@ $i = 0;
                                     <!--   Нарахування розраховується по формулі:-->
                                     <!--  Поле nac “-” поле lgota-->
                                     <!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
+                                    <?php
+                                    if($item->current_readings_first >0 || $item->current_readings_second>0 || $item->current_readings_watering>0){
+                                        $calcWaterCons = (($item->current_readings_first  +
+                                                    $item->current_readings_second+
+                                                    $item->current_readings_watering -
+                                                    $item->previous_readings_first -
+                                                    $item->previous_readings_second -
+                                                    $item->previous_readings_watering) * $score->tariff_for_water) +
+                                            (($item->current_readings_first +
+                                                    $item->current_readings_second-
+                                                    $item->previous_readings_first -
+                                                    $item->previous_readings_second) * $score->tariff_for_stocks);
 
-                                    <?= Yii::$app->formatter->asDecimal($item->accruals - $item->privilege_unpaid, 2) ?></td>
+                                    }else{
+                                        $calcWaterCons = $item->accruals - $item->privilege_unpaid;
+                                    }
+                                    ?>
+                                    <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?></td>
                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                     <!--   корекция-->
                                     <?= Yii::$app->formatter->asDecimal(($item->correction ?: 0), 2) ?></td>
