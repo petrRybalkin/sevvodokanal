@@ -1,5 +1,6 @@
 <?php
 
+use common\models\IndicationsAndCharges;
 use common\models\Payment;
 
 /** @var \common\models\IndicationsAndCharges $ind */
@@ -67,14 +68,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <dt class="text-sm leading-5 font-medium text-gray-500">Поточна заборгованість:</dt>
                 <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><b>
                         <?php
-                        if ($ind->current_readings_first > 0 || $ind->current_readings_second > 0 || $ind->current_readings_watering > 0) {
-                            $debt = $ind->debt_end_month;
-                        } else {
-                            $debt = $ind->debt_begin_month;
-                        }
 
-                        echo Yii::$app->formatter->asDecimal(
-                                $debt, 2) . " грн"; ?></b></dd>
+                        $debt = IndicationsAndCharges::debtBeginMonth(
+                            $ind->account_number,
+                            $ind->month_year
+                        );
+
+                        ?>
+                        <?= Yii::$app->formatter->asDecimal((is_double($debt) ? $debt : $debt->debt_end_month), 2) ?></b></dd>
             </div>
         </dl>
     </div>
