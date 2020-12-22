@@ -189,10 +189,10 @@ class PbController extends Controller
 
     private function checkIp()
     {
-        return true;
         $ip = Yii::$app->getRequest()->getUserIP();
         $whitelist = [
             '172.19.0.1',
+            '31.128.100.203',
             '217.117.64.232',
             '217.117.68.232'
         ];
