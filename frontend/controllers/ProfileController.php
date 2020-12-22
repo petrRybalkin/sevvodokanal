@@ -156,7 +156,7 @@ class ProfileController extends Controller
         $number = ScoreMetering::find()->where(['id' => $id])->one();
         $model = new IndicationForm();
 
-        if ($model->load(Yii::$app->request->post()) &&  $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            if (Yii::$app->request->post('add-meter-button')) {
 //
 //                if (!$model->validate()) {
@@ -371,7 +371,7 @@ class ProfileController extends Controller
         $fullName = \Yii::getAlias('@runtimeFront') . '/history/' . $name;
 
         if ($score && $indication) {
-$datePred = date("Ym", strtotime('first day of last month'));
+            $datePred = date("Ym", strtotime('first day of last month'));
             $lgota = $indication->privilege_unpaid > 0
                 ? $indication->privilege_unpaid
                 : Payment::getLgota($score->account_number, 2, null, true)['sumAll'];
@@ -511,6 +511,9 @@ $datePred = date("Ym", strtotime('first day of last month'));
      */
     public function actionPayment($id)
     {
+        $score = ScoreMetering::find()->where(['id' => $id])->one();
+        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])
+            ->andWhere(['month_year' => date("Ym", strtotime('first day of last month'))])->one();
 
         $xml =
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -549,6 +552,7 @@ $datePred = date("Ym", strtotime('first day of last month'));
             curl_close($ch);
 
         return $this->render('payment', [
+            'indication' => $indication
         ]);
 
     }

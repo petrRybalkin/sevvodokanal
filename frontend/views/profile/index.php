@@ -17,26 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
             Кожен особовий рахунок може містити до трьох лічильників.
         </p>
     </div>
-<!--    <div>-->
-<!--        <dl>-->
-<!--            --><?php
-//            /** @var \common\models\ScoreMetering $item */
-//            if(empty($clientScore)) { ?>
-<!--                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">-->
-<!--                    <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">немає даних</p>-->
-<!--                </div>-->
-<!--            --><?php //} else {
-//                foreach ($clientScore as $key => $item): ?>
-<!--                    <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">-->
-<!--                        <dt class="text-sm leading-5 font-medium text-gray-500">особовий рахунок --><?//= $key + 1 ?><!--:</dt>-->
-<!--                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-1 flex">-->
-<!--                            <a href="<?//= Url::to(['/profile/account-number', 'id' => $item->id]) ?>"><?//= $item->account_number ?></a>-->
-<!--                            <a href="<?//= Url::to(['/profile/delete-number', 'id' => $item->id]) ?>"><img src="/img/close.jpeg" alt="" width="20"></a>-->
-<!--                        </dd>-->
-<!--                    </div>-->
-<!--                --><?php //endforeach; } ?>
-<!--        </dl>-->
-<!--    </div>-->
 </div>
 <br>
 

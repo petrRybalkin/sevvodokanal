@@ -5,8 +5,10 @@ use common\models\IndicationsAndCharges;
 $this->title = 'Оплата - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
 
+
+
 $debt = IndicationsAndCharges::debtBeginMonth(
-   Yii::$app->request->get('id'),
+    $indication->account_number,
     date('Ym')
 );
 
