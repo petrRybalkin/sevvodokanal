@@ -8,9 +8,9 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'language' => 'ua',
+    'language' => 'ua-UA',
 //    'sourceLanguage' => 'uk',
-    'timeZone' => 'Europe/Kiev',
+//    'timeZone' => 'Europe/Kiev',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -37,13 +37,13 @@ return [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
-        'formatter' => [
-            'class' => 'yii\i18n\Formatter',
-            'dateFormat' => 'long',
-            'datetimeFormat' => 'long',
-            'defaultTimeZone' => 'Europe/Kiev',
-            'timeZone' => 'Europe/Kiev'
-        ],
+//        'formatter' => [
+//            'class' => 'yii\i18n\Formatter',
+//            'dateFormat' => 'long',
+//            'datetimeFormat' => 'long',
+//            'defaultTimeZone' => 'Europe/Kiev',
+//            'timeZone' => 'Europe/Kiev'
+//        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

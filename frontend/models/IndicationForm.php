@@ -2,7 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\IndicationsAndCharges;
 use common\models\WaterMetering;
+use DateTime;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -69,24 +71,51 @@ class IndicationForm extends Model
         if (!$acc = WaterMetering::find()->where(['water_metering_first' => $this->number1])->one()) {
             $this->addError('meter1', 'Заповнiть номер засобу обліку води №1.');
         } else {
+            $dThis = new DateTime('first day of this month');
+            $indicationThisMonth = IndicationsAndCharges::find()
+                ->where(['account_number' => $acc->account_number])
+                ->andWhere(['month_year' => $dThis->format('Ym')])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
 
-            //выбрать из нач тек мес строку, и дописать условие и (int)$this->$attribute < нач показ -> тек показ
-            if ((int)$this->$attribute < $acc->previous_readings_first
-            ) {
-                if ($acc->number_medium_cubes > 0) {
-                    if ((int)$this->$attribute < ($acc->previous_readings_first - $acc->number_medium_cubes)) {
-                        $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
+
+            /** @var IndicationsAndCharges $indicationThisMonth */
+            if ($indicationThisMonth && $indicationThisMonth->current_readings_first > 0) {
+
+                if ((int)$this->$attribute < $indicationThisMonth->current_readings_first) {
+                    if ($acc->number_medium_cubes > 0) {
+                        if ((int)$this->$attribute < ($indicationThisMonth->current_readings_first - $acc->number_medium_cubes)) {
+                            $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
+                        }
+                    } else {
+                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
                     }
-                } else {
-                    $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
                 }
+                if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)
+                ) {
+                    $r = ($indicationThisMonth->current_readings_first + 200) - (int)$this->$attribute;
+                    $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
+                }
+            } else {
+                //выбрать из нач тек мес строку, и дописать условие и (int)$this->$attribute < нач показ -> тек показ
+                if ((int)$this->$attribute < $acc->previous_readings_first) {
+                    if ($acc->number_medium_cubes > 0) {
+                        if ((int)$this->$attribute < ($acc->previous_readings_first - $acc->number_medium_cubes)) {
+                            $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
+                        }
+                    } else {
+                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
+                    }
+                    if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
+                    ) {
+                        $r = ($acc->previous_readings_first + 200) - (int)$this->$attribute;
+                        $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
+                    }
+                }
+
             }
 
-            if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
-            ) {
-                $r = ($acc->previous_readings_first + 200) - (int)$this->$attribute;
-                $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
-            }
+
         }
 
     }
@@ -96,17 +125,38 @@ class IndicationForm extends Model
         if (!$acc = WaterMetering::find()->where(['water_metering_second' => $this->number2])->one()) {
             $this->addError('meter2', 'Заповнiть номер засобу обліку води №2.');
         } else {
+            $dThis = new DateTime('first day of this month');
+            $indicationThisMonth = IndicationsAndCharges::find()
+                ->where(['account_number' => $acc->account_number])
+                ->andWhere(['month_year' => $dThis->format('Ym')])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
 
-            if ((int)$this->$attribute < $acc->previous_readings_second
-            ) {
-                $this->addError('meter2', 'Переданi показання меньше попереднiх.');
-            }
+            /** @var IndicationsAndCharges $indicationThisMonth */
+            if ($indicationThisMonth && $indicationThisMonth->current_readings_second > 0) {
+                if ((int)$this->$attribute < $indicationThisMonth->current_readings_second
+                ) {
+                    $this->addError('meter2', 'Переданi показання меньше попереднiх.');
+                }
 
 
-            if ((int)$this->$attribute >= ($acc->previous_readings_second + 200)
-            ) {
-                $r = ($acc->previous_readings_second + 200) - (int)$this->$attribute;
-                $this->addError('meter2', "Переданi показання бiльше попереднiх на $r кубiв.");
+                if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_second + 200)
+                ) {
+                    $r = ($indicationThisMonth->current_readings_second + 200) - (int)$this->$attribute;
+                    $this->addError('meter2', "Переданi показання бiльше попереднiх на $r кубiв.");
+                }
+            } else {
+                if ((int)$this->$attribute < $acc->previous_readings_second
+                ) {
+                    $this->addError('meter2', 'Переданi показання меньше попереднiх.');
+                }
+
+
+                if ((int)$this->$attribute >= ($acc->previous_readings_second + 200)
+                ) {
+                    $r = ($acc->previous_readings_second + 200) - (int)$this->$attribute;
+                    $this->addError('meter2', "Переданi показання бiльше попереднiх на $r кубiв.");
+                }
             }
 
 
@@ -118,17 +168,39 @@ class IndicationForm extends Model
         if (!$acc = WaterMetering::find()->where(['watering_number' => $this->number3])->one()) {
             $this->addError('meter3', 'Заповнiть номер засобу обліку води №3.');
         } else {
+            $dThis = new DateTime('first day of this month');
+            $indicationThisMonth = IndicationsAndCharges::find()
+                ->where(['account_number' => $acc->account_number])
+                ->andWhere(['month_year' => $dThis->format('Ym')])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
 
-            if ((int)$this->$attribute < $acc->previous_watering_readings
-            ) {
-                $this->addError('meter3', 'Переданi показання меньше попереднiх.');
+            /** @var IndicationsAndCharges $indicationThisMonth */
+            if ($indicationThisMonth && $indicationThisMonth->current_readings_watering > 0) {
+                if ((int)$this->$attribute < $indicationThisMonth->current_readings_watering
+                ) {
+                    $this->addError('meter3', 'Переданi показання меньше попереднiх.');
+                }
+
+                if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_watering + 200)
+                ) {
+                    $r = ($indicationThisMonth->current_readings_watering + 200) - (int)$this->$attribute;
+                    $this->addError('meter3', "Переданi показання бiльше попереднiх на $r кубiв.");
+                }
+
+            }else{
+                if ((int)$this->$attribute < $acc->previous_watering_readings
+                ) {
+                    $this->addError('meter3', 'Переданi показання меньше попереднiх.');
+                }
+
+                if ((int)$this->$attribute >= ($acc->previous_watering_readings + 200)
+                ) {
+                    $r = ($acc->previous_watering_readings + 200) - (int)$this->$attribute;
+                    $this->addError('meter3', "Переданi показання бiльше попереднiх на $r кубiв.");
+                }
             }
 
-            if ((int)$this->$attribute >= ($acc->previous_watering_readings + 200)
-            ) {
-                $r = ($acc->previous_watering_readings + 200) - (int)$this->$attribute;
-                $this->addError('meter3', "Переданi показання бiльше попереднiх на $r кубiв.");
-            }
 
         }
     }
