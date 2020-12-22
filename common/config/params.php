@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'noreply@severvoda.lg.ua',
+    'adminEmail' => 'abon.severvodokanal@gmail.com',
     'supportEmail' => 'noreply@severvoda.lg.ua',
     'senderEmail' => 'noreply@severvoda.lg.ua',
     'senderName' => 'КП "СЄВЄРОДОНЕЦЬКВОДОКАНАЛ"',
