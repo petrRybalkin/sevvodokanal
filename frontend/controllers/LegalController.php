@@ -66,16 +66,20 @@ class LegalController extends Controller
 
     public function actionMeter($num = false)
     {
-        $company = Company::find()->where(['num_contract' => $num])->all();
+        $company = Company::find()->where(['num_contract' => $num])
+            ->all();
         $model = new LegalForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             foreach (range(0, count($company) - 1) as $item) {
                 $acc = ArrayHelper::getValue($model, "acc_num_$item");
                 if ($acc !== null) {
                     $pr = "previous_readings_$item";
                     $date = date('Y-m-d');
-                    if ($model->$pr !== '') {
+
+                    if ($model->$pr !== null && $model->$pr !== '') {
+
                         $sql = "UPDATE company
                                 SET current_readings='{$model->$pr}', sinh=1, date_readings='{$date}'
                                 WHERE num_contract='{$num}' 
@@ -96,6 +100,8 @@ class LegalController extends Controller
                         if ($interval->days / 30 < 1) {
                             Yii::$app->session->setFlash('error', 'Наближаеться дати повірки  засобу обліку води, рекомендуемо звернутись до відділу збуту підприємства.');
                         }
+                    }else{
+                       continue;
                     }
                 }
             }
