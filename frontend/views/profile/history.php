@@ -10,6 +10,8 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Нарахування та передані показання - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
+
+$i = 0;
 ?>
 
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -112,19 +114,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <?php
                             $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
-                            if ($metering && $metering->water_metering_first): ?>
+                            if ($metering && $metering->water_metering_first):
+                                $i = $i+1;
+
+                                ?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
-                                    colspan="2">Лічильник №1
+                                    colspan="2">Лічильник № <?=$i?>
                                 </td>
                             <?php endif; ?>
-                            <?php if ($metering && $metering->water_metering_second): ?>
+                            <?php if ($metering && $metering->water_metering_second):  $i = $i+1;?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
-                                    colspan="2">Лічильник №2
+                                    colspan="2">Лічильник №<?=$i?>
                                 </td>
                             <?php endif; ?>
-                            <?php if ($metering && $metering->watering_number): ?>
+                            <?php if ($metering && $metering->watering_number):  $i = $i+1;?>
                                 <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
-                                    colspan="2">Лічильник №3
+                                    colspan="2">Лічильник №<?=$i?>
                                 </td>
                             <?php endif; ?>
                             <?php if ($metering):
