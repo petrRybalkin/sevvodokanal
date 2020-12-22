@@ -154,7 +154,7 @@ class LegalForm extends Model
             $this->addError($acc, 'Заповнiть номер засобу обліку води .');
         } else {
             if ((int)$this->$attribute < $company->previous_readings) {
-                $this->addError($field, "Поточні показання не можуть залишатися пустими або бути менше попередніх. 
+                $this->addError($field, "Поточні показання не можуть бути менше попередніх. 
                 Попередні показання = $company->previous_readings");
             }
 
