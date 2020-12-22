@@ -11,7 +11,7 @@
             <Fio><?= $fio?></Fio>
         </PayerInfo>
         <ServiceGroup>
-            <DebtService serviceCode="101" />
+            <DebtService serviceCode="101">
             <CompanyInfo>
                 <CompanyCode>Severvoda</CompanyCode>
             </CompanyInfo>
