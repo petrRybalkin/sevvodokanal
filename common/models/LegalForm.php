@@ -39,7 +39,7 @@ class LegalForm extends Model
     {
         return [
             [['num_contract'], 'required'],
-            [['verifyCode'], 'captcha',  'captchaAction' => 'legal/captcha'],
+            [['verifyCode'], 'captcha',  'captchaAction' => 'legal/captcha','message' => 'Невiрний код перевiрки'],
             [['num_contract'], 'exist', 'targetClass' => Company::class,
                 'targetAttribute' => 'num_contract',
                 'message' => 'Немає такого номеру договору 

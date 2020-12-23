@@ -35,10 +35,10 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей емейл вже зайнятий.'],
 
-            [['password','password_confirm'], 'required'],
+            [['password','password_confirm'], 'required', 'message' => 'Пароль не може бути пустим.'],
             [['password','password_confirm'], 'string', 'min' => 10],
 
-            ['password_confirm', 'compare','compareAttribute' => 'password'],
+            ['password_confirm', 'compare','compareAttribute' => 'password', 'message' => 'Пiдтвердження паролю не може бути пустим.'],
 
             ['phone', 'required'],
             ['phone', 'string', 'min' => 10],
@@ -54,7 +54,7 @@ class SignupForm extends Model
         return [
             'email'     => 'Email',
             'password'  => 'Пароль',
-            'password_confirm'  => 'Пiдтвердження пароля',
+            'password_confirm'  => 'Пiдтвердження паролю',
             'phone'     => 'Телефон',
         ];
     }
