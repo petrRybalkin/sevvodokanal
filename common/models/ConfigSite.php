@@ -56,7 +56,7 @@ class ConfigSite extends \yii\db\ActiveRecord
             'action' => 'Передача показаний',
             'name_header' => 'Название в шапке сайта',
             'name_footer' => 'Название в подвале сайта',
-            'address' => 'Адресс',
+            'address' => 'Адрес',
             'phone_priem' => 'Телефон приемной',
             'phone_disp' => 'Телефон диспетчера',
         ];
