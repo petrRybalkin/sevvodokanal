@@ -193,7 +193,9 @@ class ProfileController extends Controller
 //                }
             if ($model->meter1 && $indicationThisMonth->water) {
                 $wm = WaterMetering::find()
-                    ->where(['water_metering_first' => $indicationThisMonth->water->water_metering_first])
+                    ->where([
+                        'account_number' => $model->acc,
+                        'water_metering_first' => $indicationThisMonth->water->water_metering_first])
                     ->one();
 
                 $indicationThisMonth->updateAttributes([
@@ -204,7 +206,9 @@ class ProfileController extends Controller
 
             if ($model->meter2 && $indicationThisMonth->water) {
                 $wm = WaterMetering::find()
-                    ->where(['water_metering_second' => $indicationThisMonth->water->water_metering_second])
+                    ->where([
+                        'account_number' => $model->acc,
+                        'water_metering_second' => $indicationThisMonth->water->water_metering_second])
                     ->one();
 
                 $indicationThisMonth->updateAttributes([
@@ -215,7 +219,8 @@ class ProfileController extends Controller
             }
             if ($model->meter3 && $indicationThisMonth->water) {
                 $wm = WaterMetering::find()
-                    ->where(['watering_number' => $indicationThisMonth->water->watering_number])
+                    ->where([ 'account_number' =>$model->acc,
+                        'watering_number' => $indicationThisMonth->water->watering_number])
                     ->one();
                 $indicationThisMonth->updateAttributes([
                     'current_readings_watering' => (int)$model->meter3]);

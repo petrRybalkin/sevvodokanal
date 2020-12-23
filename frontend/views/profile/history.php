@@ -431,7 +431,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                 </tbody>
                             </table>
                         <?php else: ?>
-                            <p style="color:red;margin:0 15px;">Нема даних.</p>
+                            <p style="color:red;margin:0 15px;">Немає даних.</p>
                         <?php endif; ?>
                     </div>
                     <!--                    ПЛАНШЕТ-->
@@ -714,7 +714,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                 </tbody>
                             </table>
                         <?php else: ?>
-                            <p style="color:red;margin:0 15px;">Нема даних.</p>
+                            <p style="color:red;margin:0 15px;">Немає даних.</p>
                         <?php endif; ?>
                     </div>
                     <!--                    ТЕЛЕФОН-->
@@ -988,7 +988,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                 <?php endforeach; ?>
                                 <?php if (empty($indication)): ?>
                                     <tr>
-                                        <td class="px-1 py-2 whitespace-no-wrap text-center" colspan="12">Нема даних.
+                                        <td class="px-1 py-2 whitespace-no-wrap text-center" colspan="12">Немає даних.
                                         </td>
                                     </tr>
                                 <?php endif; ?>
@@ -996,7 +996,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
 
                             </table>
                         <?php else: ?>
-                            <p style="color:red;margin:0 15px;">Нема даних.</p>
+                            <p style="color:red;margin:0 15px;">Немає даних.</p>
                         <?php endif; ?>
                     </div>
                 </div>
