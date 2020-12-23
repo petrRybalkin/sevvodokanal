@@ -16,6 +16,7 @@ use yii\helpers\Html;
  * @property int|null $access_news
  * @property int|null $access_users
  * @property int|null $access_abonents
+ * @property int|null $access_settings
  * @property int|null $access_one_page
  */
 class Roles extends \yii\db\ActiveRecord
@@ -36,7 +37,7 @@ class Roles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['access_pages', 'access_news', 'access_users', 'access_abonents'], 'integer'],
+            [['access_pages', 'access_news', 'access_users', 'access_abonents','access_settings'], 'integer'],
             ['access_one_page', 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -55,6 +56,7 @@ class Roles extends \yii\db\ActiveRecord
             'access_users' => 'Редактирование пользователей',
             'access_abonents' => 'Редактирование абонентов',
             'access_one_page' => 'Редактирование одной страницы',
+            'access_settings' => 'Редактирование настроек'
         ];
     }
 
@@ -212,6 +214,38 @@ class Roles extends \yii\db\ActiveRecord
             $options['class'] = 'label label-' . $this->getStatusAbonentColor();
         }
         return Html::tag('span', $this->getStatusAbonentLabel(), $options);
+    }
+
+    /**
+     * @param string $default
+     * @param null $access_settings
+     * @return string
+     */
+    public function getStatusSettingsLabel($default = '-', $access_settings = null)
+    {
+        return ArrayHelper::getValue(self::statusList(), $access_settings ?: $this->access_settings, $default);
+    }
+
+    /**
+     * @param string $default
+     * @param null $access_settings
+     * @return string
+     */
+    public function getStatusSettingsColor($default = 'default', $access_settings = null)
+    {
+        return ArrayHelper::getValue(self::statusColorList(), $access_settings ?: $this->access_settings, $default);
+    }
+
+    /**
+     * @param array $options
+     * @return string
+     */
+    public function getStatusSettingsTag($options = [])
+    {
+        if (!array_key_exists('class', $options)) {
+            $options['class'] = 'label label-' . $this->getStatusSettingsColor();
+        }
+        return Html::tag('span', $this->getStatusSettingsLabel(), $options);
     }
 
     /**

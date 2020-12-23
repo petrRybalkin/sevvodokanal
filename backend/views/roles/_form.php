@@ -20,6 +20,7 @@ use common\models\Page;
     <?= $form->field($model, 'access_news')->checkbox() ?>
     <?= $form->field($model, 'access_users')->checkbox() ?>
     <?= $form->field($model, 'access_abonents')->checkbox() ?>
+    <?= $form->field($model, 'access_settings')->checkbox() ?>
 
     <h2>Права на редактирование определенной страницы:</h2>
     <?= $form->field($model, 'access_one_page')->radioList(Page::getPages()); ?>

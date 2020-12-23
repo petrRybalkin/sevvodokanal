@@ -63,6 +63,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->getStatusAbonentTag(), ['update', 'id' => $model->id]);
                 }
             ],
+            [
+                'attribute' => 'access_settings',
+                'filter' => Roles::statusList(),
+                'format' => 'raw',
+                'value' => function (Roles $model) {
+                    return Html::a($model->getStatusSettingsTag(), ['update', 'id' => $model->id]);
+                }
+            ],
 
             //['class' => 'yii\grid\ActionColumn'],
             [
