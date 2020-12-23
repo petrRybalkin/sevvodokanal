@@ -25,34 +25,45 @@ $settings = ConfigSite::getSettings(1);
         <div class="flex mr-5 items-center justify-between md:h-12 sm:h-18">
             <div class="md:block md:w-3/4 sm:w-4/4">
                 <div class="md:flex items-baseline justify-start">
-                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"> <!--м. Сєвєродонецк,вул. Богдана Лiщини, 13--><?= $settings->address ?></p>
+                    <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"> <?= $settings->address ?></p>
                     <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Приймальня: <?= $settings->phone_priem ?></p>
                     <p class="md:ml-4 sm:ml-1 px-3 py-2 rounded-md text-sm font-medium text-gray-100 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700">Диспетчерська: <?= $settings->phone_disp ?></p>
                 </div>
             </div>
             <!-- Profile dropdown -->
             <?php $client = true; if($client): ?>
-
                 <div class="relative profile menu group w-1/4 xs:hidden sm:hidden md:visible">
                     <div class="flex justify-end">
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Юридичнi особи', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        <div class="max-w-xs flex items-center text-sm text-white focus:outline-none focus:shadow-solid border-r">
+                            <?= Html::a('Юридичним особам', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </div>
-                <?php if(Yii::$app->user->isGuest): ?>
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                        <div class="max-w-xs flex items-center text-sm text-white focus:outline-none focus:shadow-solid " id="user-menu" aria-label="User menu" aria-haspopup="true">
+                            <?php if(Yii::$app->user->isGuest): ?>
+                            <?= Html::a('Фізичним особам', '#', ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                            <?php else: ?>
+                            <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300 dropdown-menu']) ?>
+                            <?php endif; ?>
                         </div>
-                        <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                            <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                        </div>
-                <?php else: ?>
-                    <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                        <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                     </div>
-                    <div class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
-                        <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
-                    </div>
-                <?php endif; ?>
+                    <!-- Profile dropdown panel, show/hide based on dropdown state.
+
+                      Entering: "transition ease-out duration-100"
+                        From: "transform opacity-0 scale-95"
+                        To: "transform opacity-100 scale-100"
+                      Leaving: "transition ease-in duration-75"
+                        From: "transform opacity-100 scale-100"
+                        To: "transform opacity-0 scale-95" -->
+
+                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
+                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                            <?php if(Yii::$app->user->isGuest): ?>
+                            <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                            <?= Html::a('Реєстрація', ['/site/signup'], ['class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                            <?php else: ?>
+                            <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                            <?= Html::a('Вийти', ['/site/logout'], ['data-method' => 'POST', 'class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             <?php endif; ?>
