@@ -197,8 +197,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
         }
         $readings = $query->andWhere(
             ['or',
-                ['not', [$field1 => null]],
-                ['not', [$field2 => null]]
+                ['not', [$field1 => 0]],
+                ['not', [$field2 => 0]]
             ]
         )->all();
 

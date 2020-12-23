@@ -156,12 +156,6 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <div class="panel-1 tab-content active py-2">
                         <?php
 
-//
-//                        $indication = IndicationsAndCharges::find()
-//                            ->where(['between', 'month_year', date('Y') . '01', date('Y') . '12'])
-//                            ->andWhere(['account_number' => $score->account_number])
-//                            ->all();
-
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -181,16 +175,14 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             colspan="2">Лічильник № <?= $i ?></td>
                                     <?php endif;
                                     ?>
-                                    <?php if ($readings_second): $i = $i + 1;
-                                        ?>
+                                    <?php if ($readings_second): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
-                                            colspan="2">Лічильник №<?= $i ?></td>
+                                            colspan="2">Лічильник № <?= $i ?></td>
                                     <?php endif;
                                     ?>
-                                    <?php if ($readings_water): $i = $i + 1;
-                                        ?>
+                                    <?php if ($readings_water): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
-                                            colspan="2">Лічильник №<?= $i ?></td>
+                                            colspan="2">Лічильник № <?= $i ?></td>
                                     <?php endif;
                                     ?>
                                     <!--                                    --><?php //if ($metering):
@@ -992,7 +984,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                 <?php endforeach; ?>
                                 <?php if (empty($indication)): ?>
                                     <tr>
-                                        <td class="px-1 py-2 whitespace-no-wrap text-center" colspan="12">Нема даних3.
+                                        <td class="px-1 py-2 whitespace-no-wrap text-center" colspan="12">Нема даних.
                                         </td>
                                     </tr>
                                 <?php endif; ?>
