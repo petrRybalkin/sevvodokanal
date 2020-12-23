@@ -88,7 +88,8 @@ class IndicationForm extends Model
                             $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                         }
                     } else {
-                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше1.');
+                        $r =$this->$attribute;
+                        $this->addError('meter1', "Переданi показання меньше переданих ранiше1.$r _$indicationThisMonth->current_readings_first  ");
                     }
                 }
                 if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)
