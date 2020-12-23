@@ -68,7 +68,7 @@ class IndicationForm extends Model
 
     public function validationMeterFirst($attribute, $params)
     {
-        if (!$acc = WaterMetering::find()->where(['water_metering_first' => $this->number1])->one()) {
+        if (!$acc = WaterMetering::find()->where(['account_number' => $this->acc,'water_metering_first' => $this->number1])->one()) {
             $this->addError('meter1', 'Заповнiть номер засобу обліку води №1.');
         } else {
             $dThis = new DateTime('first day of this month');
@@ -124,7 +124,7 @@ class IndicationForm extends Model
 
     public function validationMeterSecond($attribute, $params)
     {
-        if (!$acc = WaterMetering::find()->where(['water_metering_second' => $this->number2])->one()) {
+        if (!$acc = WaterMetering::find()->where(['account_number' => $this->acc,'water_metering_second' => $this->number2])->one()) {
             $this->addError('meter2', 'Заповнiть номер засобу обліку води №2.');
         } else {
             $dThis = new DateTime('first day of this month');
@@ -167,7 +167,7 @@ class IndicationForm extends Model
 
     public function validationMeterWatering($attribute, $params)
     {
-        if (!$acc = WaterMetering::find()->where(['watering_number' => $this->number3])->one()) {
+        if (!$acc = WaterMetering::find()->where(['account_number' => $this->acc,'watering_number' => $this->number3])->one()) {
             $this->addError('meter3', 'Заповнiть номер засобу обліку води №3.');
         } else {
             $dThis = new DateTime('first day of this month');

@@ -350,8 +350,13 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
                                                 <!--   Нарахування розраховується по формулі:-->
                                                 <!--  Поле nac “-” поле lgota-->
-                                                <!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
-                                                <?php if ($item->current_readings_first > 0 || $item->current_readings_second > 0 || $item->current_readings_watering > 0) {
+                                                <!--  в тек мес  (при передаче показаний я считаю начисления по формуле-->
+                                                <?php
+
+                                                if ($item->current_readings_first > 0
+                                                    || $item->current_readings_second > 0
+                                                    || $item->current_readings_watering > 0) {
+
                                                     $calcWaterCons = (($item->current_readings_first +
                                                                 $item->current_readings_second +
                                                                 $item->current_readings_watering -
@@ -362,9 +367,8 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                                 $item->current_readings_second -
                                                                 $item->previous_readings_first -
                                                                 $item->previous_readings_second) * $score->tariff_for_stocks);
-
                                                 } else {
-                                                    $calcWaterCons = $item->accruals - $item->privilege_unpaid;
+                                                    $calcWaterCons = $item->accruals;
                                                 } ?>
                                                 <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?>
                                             </td>
@@ -394,7 +398,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                 <!--      Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
                                                 <?php
 
-                                                if ($item->privilege_unpaid > 0) {
+                                                if ($item->privilege_unpaid !== 0) {
                                                     $lgota = $item->privilege_unpaid;
                                                 } else {
                                                     $lgota = Payment::getLgota($score->account_number, 2, $str, true)
