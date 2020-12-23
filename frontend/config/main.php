@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'language' => 'ru',
+    'language' => 'uk',
 //    'timeZone' => 'Europe/Kiev',
     //'sourceLanguage' => 'uk',
     'basePath' => dirname(__DIR__),
