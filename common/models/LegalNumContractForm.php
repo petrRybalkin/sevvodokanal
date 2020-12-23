@@ -16,7 +16,7 @@ class LegalNumContractForm extends Model
     public function rules()
     {
         return [
-            [['num_contract'], 'required'],
+            [['num_contract'], 'required','message' => 'Номер договору не може бути пустим.'],
             [['num_contract'], 'exist', 'targetClass' => Company::class,
                 'targetAttribute' => 'num_contract',
                 'message' => 'Немає такого номеру договору 

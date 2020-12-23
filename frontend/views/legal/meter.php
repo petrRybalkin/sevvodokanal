@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title = 'Передача показань юридичними особами(крок 2) - Особистий кабінет';
+/** @var \common\models\Company $company */
 ?>
 
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
@@ -18,15 +19,14 @@ $this->title = 'Передача показань юридичними особ�
             'class' => 'mt-8',
             'enableClientValidation' => true,
         ]);
-        //        $model = new LegalForm();
         ?>
         <div class="rounded-md shadow-sm" id="append">
             <div>
                 <?= $form->field($model, 'num_contract')
                     ->textInput([
-                        'value' => $num, 'tabindex' => '-1',
-                        'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
-                                border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
+                        'value' => $company->num_contract, 'tabindex' => '-1',
+                        'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border
+                                border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none
                                 focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
                         'readonly' => 'readonly'
                     ])->label('Номер договору ', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
@@ -34,49 +34,25 @@ $this->title = 'Передача показань юридичними особ�
             </div>
 
 
-            <?php
-            /** @var \common\models\Company $company */
-            /** @var \common\models\Company $item */
-            foreach ($company as $k => $item) :
-            $num = $k + 1;
-            ?>
-
             <div>
-                <?= $form->field($model, "acc_num_$k")
+                <?= $form->field($model, "acc_num")
                     ->textInput([
                         'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
                                 focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
-                        'readonly' => 'readonly', 'value' => $item->accounting_number
-                    ])->label("Номер засобу обліку води № $num", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
+                        'readonly' => 'readonly', 'value' => $company->accounting_number
+                    ])->label("Номер засобу обліку води № $company->accounting_number", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
-            <?php if($item->sinh > 0):?>
-                <div>
-                    <?= $form->field($model, "previous_readings_$k")
-                        ->textInput([
-                                'value' => $item->current_readings, 'disabled' => true,
-                                'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
-                                border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
-                                focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
-                        ])->label("Показання засобу обліку води № $num", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
-                    ?>
-                    <p style="color: red">Передати показання можна лише 1 раз на мiсяць.</p>
-                </div>
-
-            <?php else: ?>
-            
             <div>
-                <?= $form->field($model, "previous_readings_$k")
+                <?= $form->field($model, "current_readings")
                     ->textInput([
                         'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
                                 focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5',
-                    ])->label("Показання засобу обліку води № $num", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
+                    ])->label("Показання засобу обліку води № $company->accounting_number", ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                 ?>
             </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
 
             <div>
                 <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [

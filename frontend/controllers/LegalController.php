@@ -51,7 +51,7 @@ class LegalController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 //            if ($model->validate()) {
 //                if(Yii::$app->request->post('num_button')){
-            return $this->redirect(['/legal/meter', 'num' => $model->num_contract]);
+            return $this->redirect(['/legal/numbers', 'num' => $model->num_contract]);
 //                }
 //            }
 //            else {
@@ -64,49 +64,50 @@ class LegalController extends Controller
         ]);
     }
 
-    public function actionMeter($num = false)
+
+    public function actionNumbers($num)
     {
-        $company = Company::find()->where(['num_contract' => $num])
+        $model = Company::find()->where(['num_contract' => $num])
             ->all();
+        return $this->render('numbers', [
+            'model' => $model,
+            'num' => $num
+        ]);
+    }
+
+    public function actionMeter($num, $acc)
+    {
+        $company = Company::find()->where([
+            'num_contract' => $num,
+            'accounting_number' => $acc])
+            ->one();
+
         $model = new LegalForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $company = Company::find()
+                ->where(['num_contract' => $model->num_contract, 'accounting_number' => $model->acc_num])
+                ->one();
+            /** @var Company $company */
+            $company->current_readings = $model->current_readings;
 
-            foreach (range(0, count($company) - 1) as $item) {
-                $acc = ArrayHelper::getValue($model, "acc_num_$item");
-                if ($acc !== null) {
-                    $pr = "previous_readings_$item";
-                    $date = date('Y-m-d');
-
-                    if ($model->$pr !== null && $model->$pr !== '') {
-
-                        $sql = "UPDATE company
-                                SET current_readings='{$model->$pr}', sinh=1, date_readings='{$date}'
-                                WHERE num_contract='{$num}' 
-                                AND accounting_number='{$acc}'
-                                ";
-
-                        Yii::$app->db->createCommand($sql)->execute();
+            $company->date_readings = date('Y-m-d');
+            $company->sinh = 1;
+            if($company->save()){
+                Yii::$app->session->setFlash('success', 'Показання успiшно переданi.');
+            }
 
 //                дата наступної повірки” - “поточна дата”) < (“один місяць”)
-                        $ver_date = Company::find()->select('verification_date')
-                            ->where(['num_contract' => $num, 'accounting_number' => $acc])
-                            ->scalar();
 
-                        $datetime1 = date_create($ver_date);
-                        $datetime2 = date_create(date('Y-m-d'));
-                        $interval = date_diff($datetime1, $datetime2);
+            $datetime1 = date_create($company->verification_date);
+            $datetime2 = date_create(date('Y-m-d'));
+            $interval = date_diff($datetime1, $datetime2);
 
-                        if ($interval->days / 30 < 1) {
-                            Yii::$app->session->setFlash('error', 'Наближаеться дати повірки  засобу обліку води, рекомендуемо звернутись до відділу збуту підприємства.');
-                        }
-                    }else{
-                       continue;
-                    }
-                }
+            if ($interval->days / 30 < 1) {
+                Yii::$app->session->setFlash('error', 'Наближаеться дати повірки  засобу обліку води, рекомендуемо звернутись до відділу збуту підприємства.');
             }
-            Yii::$app->session->setFlash('success', 'Показання успiшно переданi.');
-            return $this->redirect(['legal/index']);
+
+            return $this->redirect(['legal/numbers', 'num' => $num]);
         }
 
         return $this->render('meter', [

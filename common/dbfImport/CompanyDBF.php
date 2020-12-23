@@ -71,7 +71,7 @@ class CompanyDBF extends BaseDBF
         $error = '';
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл -  $fileName");
-
+        Yii::$app->db->createCommand()->truncateTable('company')->execute();
         $i = 0;
 
         while ($item = $this->nextRecord()) {
@@ -84,21 +84,11 @@ class CompanyDBF extends BaseDBF
 
                 $this->checkDbConnection();
                 $arr = array_combine($this->tableFaild(), $item);
-
-                $query = Company::find()
-                    ->where(['num_contract' => $item['kod_p'], 'accounting_number' => $item['nomer']]);
-
-
-                if ($query->exists()) {
-                    $company = $query->one();
-                    $company->updateAttributes($arr);
-                } else {
                     $company = new Company();
                     $company->setAttributes($arr);
                     $company->setAttributes(['sinh' => 0]);
                     $company->setAttributes(['current_readings' => 0]);
                     $company->setAttributes(['date_readings' => null]);
-                }
 
                 if (!$company->save()) {
                     $error .= 'строка - ' . $i . Json::encode($company->getErrors()) . "\n";
