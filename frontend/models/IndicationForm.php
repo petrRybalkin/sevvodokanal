@@ -88,12 +88,13 @@ class IndicationForm extends Model
                             $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                         }
                     } else {
-                        $r =$this->$attribute;
-                        $this->addError('meter1', "Переданi показання меньше переданих ранiше1.$r _$indicationThisMonth->current_readings_first  ");
+                        $r = $this->$attribute;
+                        $a = $acc->account_number;
+                        $this->addError('meter1', "Переданi показання меньше переданих ранiше1.
+                        $a _ $r _$indicationThisMonth->current_readings_first  ");
                     }
                 }
-                if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)
-                ) {
+                if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)) {
                     $r = ($indicationThisMonth->current_readings_first + 200) - (int)$this->$attribute;
                     $this->addError('meter1', "Переданi показання бiльше попереднiх на $r кубiв.");
                 }
@@ -105,7 +106,7 @@ class IndicationForm extends Model
                             $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                         }
                     } else {
-                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше2.');
+                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
                     }
                     if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
                     ) {
