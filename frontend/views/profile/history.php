@@ -271,20 +271,20 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                 ?> </td>
                                             <?php if ($readings_first):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?:0?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?: 0 ?></td>
                                             <?php endif;
                                             ?>
                                             <?php if ($readings_second):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second?:0 ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?: 0 ?></td>
                                             <?php endif;
                                             ?>
                                             <?php if ($readings_water):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?:0 ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?: 0 ?></td>
                                             <?php endif;
                                             ?>
                                             <!--                                            --><?php //if ($metering) {
@@ -293,27 +293,42 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                     <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
                                                     <!--ееш один столбик для поливного сч   -->
                                                     <?php
-                                                    $on = $item->current_readings_first + $item->current_readings_second
-                                                        - $item->previous_readings_first - $item->previous_readings_second;
 
-                                                    if ($on == round($on)) {
-                                                        $ov = Yii::$app->formatter->asDecimal($on, 0);
-                                                    } else {
-                                                        $ov = Yii::$app->formatter->asDecimal($on, 3);
-                                                    }
+                                                    //                                                    $on = $item->current_readings_first + $item->current_readings_second
+                                                    //                                                        - $item->previous_readings_first - $item->previous_readings_second;
+                                                    //                                                    \yii\helpers\VarDumper::dump($on,10,1);
+
+                                                    //                                                    if ($on == round($on)) {
+                                                    //                                                        $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                    //                                                    } else {
+                                                    //                                                        $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                    //                                                    }
                                                     ?>
 
                                                     <?php
                                                     if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                        $on = $item->current_readings_first + $item->current_readings_second
+                                                            - $item->previous_readings_first - $item->previous_readings_second;
+                                                        if ($on == round($on)) {
+                                                            $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                        } else {
+                                                            $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                        }
                                                         echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
                                                             ? 0 : $ov;
                                                     } else {
-                                                        if ($item->water_consumption === round($item->water_consumption) || $item->water_consumption == null) {
-                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0), 0);
+//                                                        $on = $item->water_consumption;
+
+                                                        if ($item->water_consumption === round($item->water_consumption)
+                                                            || $item->water_consumption == null) {
+                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 0);
+                                                            echo $item->water_consumption ?: 0;
                                                         } else {
-                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0), 3);
+
+                                                            echo Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 3);
+//                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0), 3);
                                                         }
-                                                        echo $item->water_consumption?:0 ;
+
                                                     } ?>
                                                 </td>
                                             <?php endif;
@@ -324,7 +339,6 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                     <!--ееш один столбик для поливного сч-->
                                                     <?php
                                                     $on = $item->current_readings_watering - $item->previous_readings_watering;
-
                                                     if ($on == round($on)) {
                                                         $ov = Yii::$app->formatter->asDecimal($on, 0);
                                                     } else {
@@ -336,9 +350,9 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                     } else {
 
                                                         if ($item->watering_consumption == round($item->watering_consumption) || $item->watering_consumption == null) {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 0);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 0);
                                                         } else {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 3);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 3);
                                                         }
                                                         echo $iWC;
                                                     } ?>
@@ -353,23 +367,29 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                 <!--  в тек мес  (при передаче показаний я считаю начисления по формуле-->
                                                 <?php
 
-                                                if ($item->current_readings_first > 0
-                                                    || $item->current_readings_second > 0
-                                                    || $item->current_readings_watering > 0) {
+                                                if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                    if ($item->current_readings_first > 0
+                                                        || $item->current_readings_second > 0
+                                                        || $item->current_readings_watering > 0) {
 
-                                                    $calcWaterCons = (($item->current_readings_first +
-                                                                $item->current_readings_second +
-                                                                $item->current_readings_watering -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second -
-                                                                $item->previous_readings_watering) * $score->tariff_for_water) +
-                                                        (($item->current_readings_first +
-                                                                $item->current_readings_second -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second) * $score->tariff_for_stocks);
+                                                        $calcWaterCons = (($item->current_readings_first +
+                                                                    $item->current_readings_second +
+                                                                    $item->current_readings_watering -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second -
+                                                                    $item->previous_readings_watering) * $score->tariff_for_water) +
+                                                            (($item->current_readings_first +
+                                                                    $item->current_readings_second -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second) * $score->tariff_for_stocks);
+                                                    }else {
+                                                        $calcWaterCons = $item->accruals;
+                                                    }
                                                 } else {
                                                     $calcWaterCons = $item->accruals;
-                                                } ?>
+                                                }
+                                                ?>
+
                                                 <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -437,10 +457,10 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    ПЛАНШЕТ-->
                     <div class="panel-2 tab-content py-2">
                         <?php
-//                        $indication = IndicationsAndCharges::find()
-//                            ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
-//                            ->andWhere(['account_number' => $score->account_number])
-//                            ->all();
+                        //                        $indication = IndicationsAndCharges::find()
+                        //                            ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
+                        //                            ->andWhere(['account_number' => $score->account_number])
+                        //                            ->all();
 
 
                         if ($indication && $score):?>
@@ -558,53 +578,53 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                 ?> </td>
                                             <?php if ($readings_first):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?:0 ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?: 0 ?></td>
                                             <?php endif;
                                             ?>
                                             <?php if ($readings_second):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second?:0  ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second?:0  ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?: 0 ?></td>
                                             <?php endif;
                                             ?>
                                             <?php if ($readings_water):
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering?:0  ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering?:0  ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?: 0 ?></td>
                                             <?php endif;
                                             ?>
-<!--                                            --><?php //if ($metering) {
-                                                if ($metering->$readings_first || $metering->$readings_second):?>
-                                                    <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                                        <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
-                                                        <!--ееш один столбик для поливного сч   -->
-                                                        <?php
-                                                        $on = $item->current_readings_first + $item->current_readings_second
-                                                            - $item->previous_readings_first - $item->previous_readings_second;
+                                            <!--                                            --><?php //if ($metering) {
+                                            if ($metering->$readings_first || $metering->$readings_second):?>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center">
+                                                    <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
+                                                    <!--ееш один столбик для поливного сч   -->
+                                                    <?php
+                                                    $on = $item->current_readings_first + $item->current_readings_second
+                                                        - $item->previous_readings_first - $item->previous_readings_second;
 
-                                                        if ($on == round($on)) {
-                                                            $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                    if ($on == round($on)) {
+                                                        $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                    } else {
+                                                        $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                    }
+                                                    ?>
+
+                                                    <?php
+                                                    if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                        echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
+                                                            ? 0 : $ov;
+                                                    } else {
+                                                        if ($item->water_consumption === round($item->water_consumption) || $item->water_consumption == null) {
+                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 0);
                                                         } else {
-                                                            $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 3);
                                                         }
-                                                        ?>
-
-                                                        <?php
-                                                        if (strtotime($item->month_year) === strtotime(date('Ym'))) {
-                                                            echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0
-                                                                ? 0 : $ov;
-                                                        } else {
-                                                            if ($item->water_consumption === round($item->water_consumption) || $item->water_consumption == null) {
-                                                                $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0 ), 0);
-                                                            } else {
-                                                                $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0 ), 3);
-                                                            }
-                                                            echo $item->water_consumption?:0 ;
-                                                        } ?>
-                                                    </td>
-                                                <?php endif;
-//                                            } ?>
+                                                        echo $item->water_consumption ?: 0;
+                                                    } ?>
+                                                </td>
+                                            <?php endif;
+                                            //                                            } ?>
                                             <?php if ($readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                                     <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
@@ -623,9 +643,9 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                     } else {
 
                                                         if ($item->watering_consumption == round($item->watering_consumption) || $item->watering_consumption == null) {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 0);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 0);
                                                         } else {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 3);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 3);
                                                         }
                                                         echo $iWC;
                                                     } ?>
@@ -720,10 +740,10 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    ТЕЛЕФОН-->
                     <div class="panel-3 tab-content py-2">
                         <?php
-//                        $indication = IndicationsAndCharges::find()
-//                            ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
-//                            ->andWhere(['account_number' => $score->account_number])
-//                            ->all();
+                        //                        $indication = IndicationsAndCharges::find()
+                        //                            ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
+                        //                            ->andWhere(['account_number' => $score->account_number])
+                        //                            ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -738,7 +758,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                         rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн
                                     </td>
                                     <?php $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
-                                    if ($readings_first):  $i = $i + 1; ?>
+                                    if ($readings_first): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
                                     <?php endif; ?>
@@ -750,12 +770,12 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник №<?= $i ?></td>
                                     <?php endif; ?>
-<!--                                    --><?php //if ($metering):
-                                        if ($readings_first || $readings_second):?>
-                                            <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                                rowspan="2">Обсяг водо-<br>споживання,<br> м³
-                                            </td>
-                                        <?php endif; ?>
+                                    <!--                                    --><?php //if ($metering):
+                                    if ($readings_first || $readings_second):?>
+                                        <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                            rowspan="2">Обсяг водо-<br>споживання,<br> м³
+                                        </td>
+                                    <?php endif; ?>
                                     <?php if ($readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                             rowspan="2">Обсяг водо-<br>споживання <br>по поливу<br> м³
@@ -839,47 +859,47 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             <?php if ($readings_first):
 
                                                 ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first?:0 ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_first ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->current_readings_first ?: 0 ?></td>
                                             <?php endif; ?>
                                             <?php if ($readings_second): ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second?:0 ?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second?:0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_second ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_second ?: 0 ?></td>
                                             <?php endif; ?>
                                             <?php if ($readings_water): ?>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?:0?></td>
-                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?:0?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"> <?= $item->previous_readings_watering ?: 0 ?></td>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->current_readings_watering ?: 0 ?></td>
                                             <?php endif; ?>
-<!--                                            --><?php //if ($metering) {
-                                                if ($readings_first || $readings_second):?>
-                                                    <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                                        <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
-                                                        <!--ееш один столбик для поливного сч   -->
-                                                        <?php
-                                                        $on = $item->current_readings_first + $item->current_readings_second
-                                                            - $item->previous_readings_first - $item->previous_readings_second;
+                                            <!--                                            --><?php //if ($metering) {
+                                            if ($readings_first || $readings_second):?>
+                                                <td class="px-1 py-2 whitespace-no-wrap text-center">
+                                                    <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
+                                                    <!--ееш один столбик для поливного сч   -->
+                                                    <?php
+                                                    $on = $item->current_readings_first + $item->current_readings_second
+                                                        - $item->previous_readings_first - $item->previous_readings_second;
 
-                                                        if ($on == round($on)) {
-                                                            $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                    if ($on == round($on)) {
+                                                        $ov = Yii::$app->formatter->asDecimal($on, 0);
+                                                    } else {
+                                                        $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                    }
+                                                    ?>
+
+                                                    <?php
+                                                    if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                        echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0 ? 0 : $ov;
+                                                    } else {
+                                                        if ($item->water_consumption === round($item->water_consumption) || $item->water_consumption == null) {
+                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 0);
                                                         } else {
-                                                            $ov = Yii::$app->formatter->asDecimal($on, 3);
+                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 3);
                                                         }
-                                                        ?>
-
-                                                        <?php
-                                                        if (strtotime($item->month_year) === strtotime(date('Ym'))) {
-                                                            echo $item->current_readings_first + $item->current_readings_second + $item->current_readings_watering == 0 ? 0 : $ov;
-                                                        } else {
-                                                            if ($item->water_consumption === round($item->water_consumption) || $item->water_consumption == null) {
-                                                                $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0 ), 0);
-                                                            } else {
-                                                                $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0 ), 3);
-                                                            }
-                                                            echo $item->water_consumption?:0;
-                                                        } ?>
-                                                    </td>
-                                                <?php endif;
-//                                            } ?>
+                                                        echo $item->water_consumption ?: 0;
+                                                    } ?>
+                                                </td>
+                                            <?php endif;
+                                            //                                            } ?>
                                             <?php if ($readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                                     <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
@@ -898,9 +918,9 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                     } else {
 
                                                         if ($item->watering_consumption == round($item->watering_consumption) || $item->watering_consumption == null) {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 0);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 0);
                                                         } else {
-                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption?:0 ), 3);
+                                                            $iWC = Yii::$app->formatter->asDecimal(($item->watering_consumption ?: 0), 3);
                                                         }
                                                         echo $iWC;
                                                     } ?>
