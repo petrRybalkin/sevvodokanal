@@ -107,7 +107,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 //                \yii\helpers\VarDumper::dump(444444,10,1);exit;
 //                return $m->debt_end_month;
 //            }
-            if($m->current_readings_first >0 || $m->current_readings_second>0 || $m->current_readings_watering>0){
+            if ($m->current_readings_first > 0 || $m->current_readings_second > 0 || $m->current_readings_watering > 0) {
                 $calcWaterCons = (($m->current_readings_first +
                             $m->current_readings_second +
                             $m->current_readings_watering -
@@ -118,7 +118,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                             $m->current_readings_second -
                             $m->previous_readings_first -
                             $m->previous_readings_second) * $m->score->tariff_for_stocks);
-            }else{
+            } else {
                 $calcWaterCons = 0;
             }
 
@@ -136,8 +136,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 ? $m->privilege_unpaid
                 : Payment::getLgota($acc, 2, $str, true)['sumAll'];
 
-            $subs = Payment::getLgota($acc, 3,$str, true)
-                ? Payment::getLgota($acc, 3,$str, true)['sumAll']
+            $subs = Payment::getLgota($acc, 3, $str, true)
+                ? Payment::getLgota($acc, 3, $str, true)['sumAll']
                 : 0;
 
             //hsumma (за предыдущий месяц)+
@@ -154,7 +154,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 - $lgo
                 - $m->correction);
         } else {
-            $m =  IndicationsAndCharges::find()->where(['account_number' => $acc])
+            $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => $date])
                 ->one();
             return $m;
@@ -170,6 +170,41 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             ->one();
     }
 
+    public static function isReadingsExists($account_number, $year, $field)
+    {
 
+        switch ($field) {
+            case 'first':
+                $field1 = 'previous_readings_first';
+                $field2 = 'current_readings_first';
+                break;
+            case 'second':
+                $field1 = 'previous_readings_second';
+                $field2 = 'current_readings_second';
+                break;
+            case 'water':
+                $field1 = 'previous_readings_watering';
+                $field2 = 'current_readings_watering';
+                break;
+
+        }
+
+
+        $query = IndicationsAndCharges::find()
+            ->where(['account_number' => $account_number]);
+        if ($year) {
+            $query->andWhere(['between', 'month_year', $year . '01', $year . '12']);
+        }
+        $readings = $query->andWhere(
+            ['or',
+                ['not', [$field1 => 0]],
+                ['not', [$field2 => 0]]
+            ]
+        )->all();
+
+//        false = нет записей показаний
+//        true = есть записи показаний
+        return empty($readings) ? false : true;
+    }
 
 }

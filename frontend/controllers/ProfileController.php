@@ -327,28 +327,26 @@ class ProfileController extends Controller
      * @param $id
      * @return string
      */
-    public function actionHistory($id)
+    public function actionHistory($id, $year)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
-//        $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->all();
-//        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])->groupBy('month_year')->all();
-
 
         $query = IndicationsAndCharges::find()
-            ->where(['account_number' => $score->account_number])
-            ->groupBy('month_year');
-//        $countQuery = clone $query;
+            ->where(['account_number' => $score->account_number]);
+        if($year){
+            $query->andWhere(['between', 'month_year', $year.'01', $year.'12']);
+        }
+
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
 
-        $indication = $query->offset($pages->offset)
-            ->orderBy('month_year ASC')
+        $indication = $query
+            ->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
         return $this->render('history', [
             'indication' => $indication,
             'pages' => $pages,
-//            'metering' => $metering,
             'score' => $score,
         ]);
 
