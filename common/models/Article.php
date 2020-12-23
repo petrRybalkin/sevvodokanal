@@ -167,14 +167,14 @@ class Article extends \yii\db\ActiveRecord
 //        return parent::beforeSave($insert);
 //    }
 
-    protected function timestampToDate($timestamp, $format = 'Y-m-d H:i:s')
-    {
-        $tz = new DateTimeZone("Europe/Kiev");
-
-        $date = DateTime::createFromFormat('U', $timestamp)->setTimezone($tz)->format($format);
-
-        return $date;
-    }
+//    protected function timestampToDate($timestamp, $format = 'Y-m-d H:i:s')
+//    {
+//        $tz = new DateTimeZone("Europe/Kiev");
+//
+//        $date = DateTime::createFromFormat('U', $timestamp)->setTimezone($tz)->format($format);
+//
+//        return $date;
+//    }
 
     /**
      * {@inheritdoc}
