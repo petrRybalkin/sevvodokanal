@@ -132,7 +132,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                     : 0);
 
 
-            $lgo = $m->privilege_unpaid > 0
+            $lgo = $m->privilege_unpaid !== 0
                 ? $m->privilege_unpaid
                 : Payment::getLgota($acc, 2, $str, true)['sumAll'];
 
