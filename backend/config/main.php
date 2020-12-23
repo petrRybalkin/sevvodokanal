@@ -8,9 +8,8 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'language' => 'ua-UA',
+    'language' => 'ru',
 //    'sourceLanguage' => 'uk',
-//    'timeZone' => 'Europe/Kiev',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
