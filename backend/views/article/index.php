@@ -38,8 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->getStatusTag(), ['update', 'id' => $model->id]);
                 }
             ],
-            'create_utime',
-            'update_utime',
+            'create_utime:datetime',
+            'update_utime:datetime',
 
             //['class' => 'yii\grid\ActionColumn'],
             [
