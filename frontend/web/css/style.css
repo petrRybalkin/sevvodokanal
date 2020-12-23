@@ -1,6 +1,6 @@
 .group-hover\:block{display:none}
-.profile.group .group-hover\:block{z-index:9999}
-.group:hover .group-hover\:block {display:block}
+.profile.group .group-hover\:block, .origin-top-right{z-index:9999}
+.group:hover .group-hover\:block, .group:hover + .group-hover\:block{display:block}
 .article-view a,.page-view a{color:blue !important}
 
 .shadow-text{text-shadow:0 0 3px #333}
