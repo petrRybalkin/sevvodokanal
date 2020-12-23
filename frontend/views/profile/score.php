@@ -147,7 +147,9 @@ $d = IndicationsAndCharges::clientDebt($indication->account_number, date("Ym", s
 
                         $opl0 = Payment::getLgota($score->account_number, 0, null, true)
                             ? Payment::getLgota($score->account_number, 0, null, true)['sumAll']
-                            : 0
+                            : 0;
+
+
                         ?>
 
                         <?= Yii::$app->formatter->asDecimal($opl1 + $opl0, 2) ?>

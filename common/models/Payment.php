@@ -74,7 +74,8 @@ class Payment extends \yii\db\ActiveRecord
         } else {
 //          для счета  дату предыдущего мес
             $date = date('Y-m-01');
-            $datek =  date("Y-m-d", strtotime('first day of last month'));
+            $datew = new DateTime($date);
+            $datek =  $datew->modify('-1 month' )->format('Y-m-d');
             $p->andWhere(['between', 'payment_date', $datek,  $date]);// все оплаты за предыдущ мес
 
         }
