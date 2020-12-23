@@ -102,9 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2"><?= $vodomer->water_metering_first ?></dd>
                         </div>
                         <div class="bg-white px-2 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm leading-5 font-medium text-gray-500">Попередні показання засоба обліку
-                                води:
-                            </dt>
+                            <dt class="text-sm leading-5 font-medium text-gray-500">Показання засоба обліку води:</dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                                 <!--                                если в табл нач показ тек показ 0 то вывожу из водомеров, если не 0 то вывожу из нач показ. +-->
                                 <b>
