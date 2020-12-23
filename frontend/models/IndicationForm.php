@@ -75,7 +75,7 @@ class IndicationForm extends Model
             $indicationThisMonth = IndicationsAndCharges::find()
                 ->where(['account_number' => $acc->account_number])
                 ->andWhere(['month_year' => $dThis->format('Ym')])
-                ->orderBy(['id' => SORT_DESC])
+//                ->orderBy(['id' => SORT_DESC])
                 ->one();
 
 
@@ -88,7 +88,7 @@ class IndicationForm extends Model
                             $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                         }
                     } else {
-                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
+                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше1.');
                     }
                 }
                 if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)
@@ -104,7 +104,7 @@ class IndicationForm extends Model
                             $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
                         }
                     } else {
-                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше.');
+                        $this->addError('meter1', 'Переданi показання меньше переданих ранiше2.');
                     }
                     if ((int)$this->$attribute >= ($acc->previous_readings_first + 200)
                     ) {
