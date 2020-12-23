@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{update}',
                 'buttons' => [
                     'update' => function ($url, ConfigSite $model) {
-                        if(Yii::$app->user->identity->roleOption->access_users == 1){
+                        if(Yii::$app->user->identity->roleOption->access_settings == 1){
                             return Html::a('<span class="glyphicon glyphicon-plus">Обновить</span>', ['/config-site/update', 'id' => $model->id], [
                                 'title' => 'Update',
                             ]);
