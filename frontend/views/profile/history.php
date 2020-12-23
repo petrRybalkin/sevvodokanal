@@ -156,11 +156,12 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <div class="panel-1 tab-content active py-2">
                         <?php
 
+//
+//                        $indication = IndicationsAndCharges::find()
+//                            ->where(['between', 'month_year', date('Y') . '01', date('Y') . '12'])
+//                            ->andWhere(['account_number' => $score->account_number])
+//                            ->all();
 
-                        $indication = IndicationsAndCharges::find()
-                            ->where(['between', 'month_year', date('Y') . '01', date('Y') . '12'])
-                            ->andWhere(['account_number' => $score->account_number])
-                            ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -439,10 +440,11 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     </div>
                     <!--                    ПЛАНШЕТ-->
                     <div class="panel-2 tab-content py-2">
-                        <?php $indication = IndicationsAndCharges::find()
-                            ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
-                            ->andWhere(['account_number' => $score->account_number])
-                            ->all();
+                        <?php
+//                        $indication = IndicationsAndCharges::find()
+//                            ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
+//                            ->andWhere(['account_number' => $score->account_number])
+//                            ->all();
 
 
                         if ($indication && $score):?>
@@ -721,10 +723,11 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     </div>
                     <!--                    ТЕЛЕФОН-->
                     <div class="panel-3 tab-content py-2">
-                        <?php $indication = IndicationsAndCharges::find()
-                            ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
-                            ->andWhere(['account_number' => $score->account_number])
-                            ->all();
+                        <?php
+//                        $indication = IndicationsAndCharges::find()
+//                            ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
+//                            ->andWhere(['account_number' => $score->account_number])
+//                            ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
