@@ -52,20 +52,20 @@ use common\models\Admin;
                             //['label' => 'еще что-то с абонентами', 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 1]
                         ]
                     ],
-
-                    ['label' => 'Загрузка/выгрузка данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                    ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                    ['label' => 'Загрузить счета .DBF', 'url' => ['dbf-import/score'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                    ['label' => 'Загрузить платежи .DBF', 'url' => ['dbf-import/payment'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                    ['label' => 'Загрузить компании .DBF', 'url' => ['dbf-import/company'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                    ['label' => 'Лог', 'url' => ['files-log/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-
-                    ['label' => 'Довідник нарахувань та показань .DBF',
-                        'items' => [
-                            ['label' => 'Загрузить Довідник нарахувань та показань .DBF', 'url' => ['dbf-import/indications'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
-                            ['label' => 'Скачать покзания в dbf', 'url' => ['dbf-import/download'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2]
-                        ]
-                    ],
+//
+//                    ['label' => 'Загрузка/выгрузка данных', 'header' => true, 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                    ['label' => 'Загрузить показания водомеров .DBF', 'url' => ['dbf-import/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                    ['label' => 'Загрузить счета .DBF', 'url' => ['dbf-import/score'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                    ['label' => 'Загрузить платежи .DBF', 'url' => ['dbf-import/payment'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                    ['label' => 'Загрузить компании .DBF', 'url' => ['dbf-import/company'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                    ['label' => 'Лог', 'url' => ['files-log/index'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//
+//                    ['label' => 'Довідник нарахувань та показань .DBF',
+//                        'items' => [
+//                            ['label' => 'Загрузить Довідник нарахувань та показань .DBF', 'url' => ['dbf-import/indications'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2],
+//                            ['label' => 'Скачать покзания в dbf', 'url' => ['dbf-import/download'], 'iconStyle' => 'far', 'visible' => Yii::$app->user->identity->roleOption->access_abonents == 2]
+//                        ]
+//                    ],
 
 //                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
 //                    ['label' => 'Level1'],

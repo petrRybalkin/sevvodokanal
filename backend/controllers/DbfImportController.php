@@ -266,7 +266,9 @@ class DbfImportController extends Controller
                 return $this->redirect(Yii::$app->request->referrer);
             }
             set_time_limit(500);
-            $str = substr($item->month_year,0,4) .'-'.substr($item->month_year,4,6).'-01';
+            $str = substr($item->month_year, 0, 4) . '-' . substr($item->month_year, 4, 6) . '-01';
+
+            $d = (new \DateTime($item->water->date_previous_readings))->format('d.m.Y');
 
             $record = $table->appendRecord();
             $record->lic_schet = $item->account_number;
@@ -281,9 +283,7 @@ class DbfImportController extends Controller
             $record->ph1 = $item->previous_readings_first;
             $record->ph2 = $item->previous_readings_second;
             $record->pp = $item->previous_readings_watering;
-            $record->dpp = $item->water ?
-                Yii::$app->formatter->asDate($item->water->date_previous_readings,'php:Y.m.d'):
-                $item->month_year;
+            $record->dpp = $d;
             $table->writeRecord();
         }
         $table->close();
