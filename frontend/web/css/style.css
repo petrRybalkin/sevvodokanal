@@ -1,13 +1,13 @@
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     /* IE10+ CSS styles go here */
-    .bigmenu nav a,.bigmenu nav .relative.group{margin: 0 10px;}
+    .bigmenu nav a,.bigmenu nav .relative.group{margin:0 10px}
 }
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast:none) {
     /* IE10 IE11 */
-    .bigmenu nav a,.bigmenu nav .relative.group{margin: 0 10px;}
+    .bigmenu nav a,.bigmenu nav .relative.group{margin:0 10px}
 }
-_:-ms-fullscreen, :root .bigmenu > .flex > nav > a{margin: 0 10px;}
-_:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin: 0 10px;}
+_:-ms-fullscreen, :root .bigmenu > .flex > nav > a{margin:0 10px}
+_:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin:0 10px}
 
 .group-hover\:block{display:none}
 .profile.group .group-hover\:block, .origin-top-right{z-index:9999}
@@ -18,11 +18,14 @@ _:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin: 0 10px;
 .page-view ul{padding-left:20px}
 .page-view ul li{list-style:disc}
 .page-view table, .page-view table tr, .page-view table td,
-.article-view table, .article-view table tr, .article-view table td{border-width: 1px;border-color: #e2e8f0;}
+.article-view table, .article-view table tr, .article-view table td{border-width:1px;border-color:#e2e8f0}
+.contact-view table{width:100%}
+.contact-view table, .contact-view table tr, .contact-view table td{border-width:2px;border-color:transparent;padding:6px 0;vertical-align:top}
+
 #menu-toggle{display: none}
 .second-item.absolute{z-index: 35}
 .has-error input{border:1px solid red !important;}
-.help-block.help-block-error{color:red!important;font-style: italic}
+.help-block.help-block-error{color:red!important;font-style:italic}
 .field-contactform-verifycode input#contactform-verifycode,
 #legal-water-metering-form input#legalform-verifycode{border:1px solid #e2e8f0;border-radius:5px;padding:5px 10px}
 
@@ -32,16 +35,16 @@ ul.pagination li a{color:#a4a4a4;font-weight:bold !important}
 ul.pagination li a:hover{color:#5e5e5e}
 
 ul.sidebar.sidebar-profile{background:#fff;border-bottom:2px solid #ccc}
-ul.sidebar.sidebar-profile li{display: inline-block}
+ul.sidebar.sidebar-profile li{display:inline-block}
 .dropdown-menu-mobile ul.sidebar.sidebar-profile li{display:block}
 
 @media (min-width: 1024px) and (max-width: 1233px){
-    .md\:text-2xl {font-size: 1rem;}
-    .text-base {font-size: 0.85rem;}
+    .md\:text-2xl {font-size:1rem}
+    .text-base {font-size:0.85rem}
 }
 @media (min-width: 768px) and (max-width: 1023px){
-    .md\:text-2xl {font-size: 1rem}
-    .text-base {font-size: 0.85rem;}
+    .md\:text-2xl {font-size:1rem}
+    .text-base {font-size:0.85rem}
 }
 @media (min-width:768px){.profile.menu{display:inline-block !important}}
 @media (max-width:767px){.profile.menu{display:none}}
@@ -62,11 +65,5 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appe
 
 main{min-height: calc(100vh - 240px);}
 .footer-sevkanal{height:240px}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
+.tab-content {display:none}
+.tab-content.active {display:block}

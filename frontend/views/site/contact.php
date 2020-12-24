@@ -9,28 +9,48 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
+use common\models\ConfigSite;
+
+$settings = ConfigSite::getSettings(1);
 $this->title = 'Контактна iнформацiя';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-view">
+<div class="contact-view">
     <!--Title-->
     <div class="font-sans">
         <h2 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl"><?= Html::encode($this->title) ?></h2>
         <hr class="border-b border-gray-400">
     </div>
     <!--Post Content-->
-    <p class="mt-3">
-        <span style="background-color:transparent;font-size:12pt"><strong>Наша адреса:</strong> м. Северодонецк, вул. Богдана Лiщини, 13</span>
-    </p>
-    <p class="mt-3">
-        <span style="background-color:transparent;font-size:12pt"><strong>Графiк роботи:</strong> 8.00 до 17.00</span>
-    </p>
-    <p class="mt-3">
-        <span style="background-color:transparent;font-size:12pt"><strong>Приймальня:</strong> 4-01-33</span>
-    </p>
-    <p class="mt-3">
-        <span style="background-color:transparent;font-size:12pt"><strong>Диспетчерська:</strong> 4-32-91</span>
-    </p>
+    <table>
+        <tr class="mt-3">
+            <td><span style="background-color:transparent;font-size:12pt"><strong>Наша адреса:</strong></span></td>
+            <td><span style="background-color:transparent;font-size:12pt"> <?= $settings->address ?></span></td>
+        </tr>
+        <tr class="mt-3">
+            <td><span style="background-color:transparent;font-size:12pt"><strong>Графiк роботи:</strong></span></td>
+            <td>
+                <span style="background-color:transparent;font-size:12pt"> <strong>Пн.</strong> 8.00 до 17.00<br/>
+                     <strong>Вт.</strong> 8.00 до 17.00<br/>
+                     <strong>Ср.</strong> 8.00 до 17.00<br/>
+                     <strong>Чт.</strong> 8.00 до 17.00<br/>
+                     <strong>Пт.</strong> 8.00 до 16.00<br/>
+                     <strong>Сб.</strong> 8.00 до 15.00 (Абонвідділ) (без перерви)<br/>
+                     <strong>Нд.</strong> Вихідний день<br/>
+                     <strong>Перерва:</strong> 12.00 до 13.00
+                </span>
+            </td>
+        </tr>
+        <tr class="mt-3">
+            <td><span style="background-color:transparent;font-size:12pt"><strong>Приймальня:</strong></span></td>
+            <td><span style="background-color:transparent;font-size:12pt"> <?= $settings->phone_priem ?></span></td>
+        </tr>
+        <tr class="mt-3">
+            <td><span style="background-color:transparent;font-size:12pt"><strong>Диспетчерська:</strong></span></td>
+            <td><span style="background-color:transparent;font-size:12pt"> <?= $settings->phone_disp ?></span></td>
+        </tr>
+    </table>
+
     <hr class="border-b border-gray-400 mt-4">
 </div>
 
