@@ -1,3 +1,14 @@
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    .bigmenu nav a,.bigmenu nav .relative.group{margin: 0 10px;}
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    /* IE10 IE11 */
+    .bigmenu nav a,.bigmenu nav .relative.group{margin: 0 10px;}
+}
+_:-ms-fullscreen, :root .bigmenu > .flex > nav > a{margin: 0 10px;}
+_:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin: 0 10px;}
+
 .group-hover\:block{display:none}
 .profile.group .group-hover\:block, .origin-top-right{z-index:9999}
 .group:hover .group-hover\:block, .group:hover + .group-hover\:block{display:block}
