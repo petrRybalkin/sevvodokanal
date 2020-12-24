@@ -68,7 +68,10 @@ class IndicationForm extends Model
 
     public function validationMeterFirst($attribute, $params)
     {
-        if (!$acc = WaterMetering::find()->where(['account_number' => $this->acc,'water_metering_first' => $this->number1])->one()) {
+        if (!$acc = WaterMetering::find()->where([
+            'account_number' => $this->acc,
+            'water_metering_first' => $this->number1
+        ])->one()) {
             $this->addError('meter1', 'Заповнiть номер засобу обліку води №1.');
         } else {
             $dThis = new DateTime('first day of this month');
@@ -83,13 +86,13 @@ class IndicationForm extends Model
             if ($indicationThisMonth && $indicationThisMonth->current_readings_first > 0) {
 
                 if ((int)$this->$attribute < $indicationThisMonth->current_readings_first) {
-                    if ($acc->number_medium_cubes > 0) {
-                        if ((int)$this->$attribute < ($indicationThisMonth->current_readings_first - $acc->number_medium_cubes)) {
-                            $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
-                        }
-                    } else {
+//                    if ($acc->number_medium_cubes > 0) {
+//                        if ((int)$this->$attribute < ($indicationThisMonth->current_readings_first - $acc->number_medium_cubes)) {
+//                            $this->addError('meter1', 'Переданi показання меньше нарахованих середнiх кубiв.');
+//                        }
+//                    } else {
                         $this->addError('meter1', "Переданi показання меньше переданих ранiше. ");
-                    }
+//                    }
                 }
                 if ((int)$this->$attribute >= ($indicationThisMonth->current_readings_first + 200)) {
                     $r = ($indicationThisMonth->current_readings_first + 200) - (int)$this->$attribute;
