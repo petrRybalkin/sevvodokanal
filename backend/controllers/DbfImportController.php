@@ -248,7 +248,7 @@ class DbfImportController extends Controller
             ['ph1', "N", 6, 0],
             ['ph2', "N", 6, 0],
             ['pp', "N", 6, 0],
-            ['dpp', "D", 8],
+            ['dpp', "D", 10],
 
         ];
 
@@ -267,6 +267,7 @@ class DbfImportController extends Controller
             }
             set_time_limit(500);
             $str = substr($item->month_year,0,4) .'-'.substr($item->month_year,4,6).'-01';
+
             $record = $table->appendRecord();
             $record->lic_schet = $item->account_number;
             $record->regn = $item->score ? $item->score->act_number : 0;
@@ -280,7 +281,7 @@ class DbfImportController extends Controller
             $record->ph1 = $item->previous_readings_first;
             $record->ph2 = $item->previous_readings_second;
             $record->pp = $item->previous_readings_watering;
-            $record->dpp =  Yii::$app->formatter->asDate($str,'php:mY');
+            $record->dpp =  Yii::$app->formatter->asDate(($item->water ? $item->water->date_previous_readings:$item->month_year ),'php:Y.m.d');
             $table->writeRecord();
         }
         $table->close();
@@ -339,7 +340,7 @@ class DbfImportController extends Controller
             $record->datgosp = Yii::$app->formatter->asDate($item->verification_date, 'd.m.Y');
             $record->pred = $item->previous_readings;
             $record->tek = $item->current_readings?: 0;
-            $record->dpp = Yii::$app->formatter->asDate($item->date_readings?:date('d.m.Y'), 'd.m.Y');
+            $record->dpp = Yii::$app->formatter->asDate($item->date_readings, 'd.m.Y');
             $table->writeRecord();
         }
         $table->close();
