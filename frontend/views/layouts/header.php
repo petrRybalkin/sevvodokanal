@@ -39,9 +39,9 @@ $settings = ConfigSite::getSettings(1);
                         </div>
                         <div class="max-w-xs flex items-center text-sm text-white focus:outline-none focus:shadow-solid " id="user-menu" aria-label="User menu" aria-haspopup="true">
                             <?php if(Yii::$app->user->isGuest): ?>
-                            <?= Html::a('Фізичним особам', '#', ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                            <?= Html::a('Фізичним особам', '#', ['class'=>'dropdown-menu-lk block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                             <?php else: ?>
-                            <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300 dropdown-menu']) ?>
+                            <?= Html::a('Особистий кабінет', ['/profile/index'], ['class'=>'dropdown-menu-lk block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ $settings = ConfigSite::getSettings(1);
                         From: "transform opacity-100 scale-100"
                         To: "transform opacity-0 scale-95" -->
 
-                    <div class="origin-top-right absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
+                    <div class="origin-top-right-menu absolute right-0 pt-2 w-48 rounded-md shadow-lg group-hover:block">
                         <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                             <?php if(Yii::$app->user->isGuest): ?>
                             <?= Html::a('Увійти', ['/site/login'], ['class'=>'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100', 'role'=>'menuitem']) ?>
