@@ -119,34 +119,19 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <div class="bg-white">
                     <nav class="tabs flex flex-col sm:flex-row">
-                        <!--                        --><?php //$dates = date('Y'); ?>
-                        <!--                        <button data-target="panel-1" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500 active">-->
-                        <!--                            --><? //= date('Y'); //var_dump($indication); ?>
-                        <!--                        </button>-->
-                        <!--                        --><?php ////if($indication->month_year == date('Y', strtotime('-1 year'))): ?>
-                        <!--                        <button data-target="panel-2" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">-->
-                        <!--                            --><? //= date('Y', strtotime('-1 year')); ?>
-                        <!--                        </button>-->
-                        <!--                        --><?php ////endif; ?>
-                        <!--                        --><?php ////if($indication->month_year == date('Y', strtotime('-2 year'))): ?>
-                        <!--                        <button data-target="panel-3" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">-->
-                        <!--                            --><? //= date('Y', strtotime('-2 years')); ?>
-                        <!--                        </button>-->
-                        <?= Html::a(
-                            date('Y'),
-                            ['/profile/history', 'id' => $score->id, 'year' => date('Y')], [
-                            'data-target' => "panel-3", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
-                        ]) ?>
-                        <?= Html::a(
-                            date('Y', strtotime('-1 years')),
-                            ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-1 years'))], [
-                            'data-target' => "panel-3", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
-                        ]) ?>
-                        <?= Html::a(
-                            date('Y', strtotime('-2 years')),
-                            ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-2 years'))], [
-                            'data-target' => "panel-3", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
-                        ]) ?>
+                                                <?php $dates = date('Y'); ?>
+                                                <button data-target="panel-1" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500 active">
+                                                    <?= date('Y'); //var_dump($indication); ?>
+                                                </button>
+                                                <button data-target="panel-2" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                                                    <?= date('Y', strtotime('-1 year')); ?>
+                                                </button>
+                                                <button data-target="panel-3" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                                                    <?= date('Y', strtotime('-2 years')); ?>
+                                                </button>
+<!--                        --><?//= Html::a(date('Y'), ['/profile/history', 'id' => $score->id, 'year' => date('Y')], ['data-target' => "panel-1", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
+<!--                        --><?//= Html::a(date('Y', strtotime('-1 years')), ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-1 years'))], ['data-target' => "panel-2", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
+<!--                        --><?//= Html::a(date('Y', strtotime('-2 years')), ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-2 years'))], ['data-target' => "panel-3", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
                         <?php //endif; ?>
                     </nav>
                 </div>
@@ -155,7 +140,10 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--КОМП-->
                     <div class="panel-1 tab-content active py-2">
                         <?php
-
+                            $indication = IndicationsAndCharges::find()
+                            ->where(['between', 'month_year', date('Y') . '01', date('Y') . '12'])
+                            ->andWhere(['account_number' => $score->account_number])
+                            ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -457,12 +445,10 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    ПЛАНШЕТ-->
                     <div class="panel-2 tab-content py-2">
                         <?php
-                        //                        $indication = IndicationsAndCharges::find()
-                        //                            ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
-                        //                            ->andWhere(['account_number' => $score->account_number])
-                        //                            ->all();
-
-
+                                                $indication = IndicationsAndCharges::find()
+                                                    ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
+                                                    ->andWhere(['account_number' => $score->account_number])
+                                                    ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -740,10 +726,10 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    ТЕЛЕФОН-->
                     <div class="panel-3 tab-content py-2">
                         <?php
-                        //                        $indication = IndicationsAndCharges::find()
-                        //                            ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
-                        //                            ->andWhere(['account_number' => $score->account_number])
-                        //                            ->all();
+                                                $indication = IndicationsAndCharges::find()
+                                                    ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
+                                                    ->andWhere(['account_number' => $score->account_number])
+                                                    ->all();
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
