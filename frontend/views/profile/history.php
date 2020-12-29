@@ -119,20 +119,16 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <div class="bg-white">
                     <nav class="tabs flex flex-col sm:flex-row">
-                                                <?php $dates = date('Y'); ?>
-                                                <button data-target="panel-1" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500 active">
-                                                    <?= date('Y'); //var_dump($indication); ?>
-                                                </button>
-                                                <button data-target="panel-2" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-                                                    <?= date('Y', strtotime('-1 year')); ?>
-                                                </button>
-                                                <button data-target="panel-3" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-                                                    <?= date('Y', strtotime('-2 years')); ?>
-                                                </button>
-<!--                        --><?//= Html::a(date('Y'), ['/profile/history', 'id' => $score->id, 'year' => date('Y')], ['data-target' => "panel-1", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
-<!--                        --><?//= Html::a(date('Y', strtotime('-1 years')), ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-1 years'))], ['data-target' => "panel-2", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
-<!--                        --><?//= Html::a(date('Y', strtotime('-2 years')), ['/profile/history', 'id' => $score->id, 'year' => date('Y', strtotime('-2 years'))], ['data-target' => "panel-3", 'class' => "tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"]) ?>
-                        <?php //endif; ?>
+                        <?php $dates = date('Y'); ?>
+                        <button data-target="panel-1" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500 active">
+                            <?= date('Y'); ?>
+                        </button>
+                        <button data-target="panel-2" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                            <?= date('Y', strtotime('-1 year')); ?>
+                        </button>
+                        <button data-target="panel-3" class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+                            <?= date('Y', strtotime('-2 years')); ?>
+                        </button>
                     </nav>
                 </div>
 
