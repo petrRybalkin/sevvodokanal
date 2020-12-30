@@ -7,7 +7,7 @@ use backend\models\Roles;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Roles';
+$this->title = 'Права доступа (Роли)';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="roles-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Roles', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать новую', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
