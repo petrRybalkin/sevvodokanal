@@ -11,7 +11,7 @@ _:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin:0 10px}
 
 .group-hover\:block, .origin-top-right-menu{display:none}
 .profile.group .group-hover\:block, .origin-top-right-menu{z-index:9999}
-/*.group:hover .group-hover\:block, .group:hover + .group-hover\:block{display:block}*/
+.group:hover .group-hover\:block, .group:hover + .group-hover\:block{display:block}
 /*.dropdown-menu-lk:hover .group-hover\:block, .dropdown-menu-lk:hover + .group-hover\:block{display:block}*/
 .article-view a,.page-view a{color:blue !important}
 
