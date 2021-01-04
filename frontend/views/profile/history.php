@@ -56,45 +56,14 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
 
 
 <style>
-    table.iksweb {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-        height: auto;
-    }
-
-    table.iksweb, table.iksweb td, table.iksweb th {
-        border: 1px solid #595959;
-    }
-
-    table.iksweb td, table.iksweb th {
-        padding: 3px;
-        width: 30px;
-        height: 35px;
-    }
-
-    table.iksweb th {
-        background: #347c99;
-        color: #fff;
-        font-weight: normal;
-    }
-
-    table.history-table td {
-        border-right: 1px solid #e2e8f0;
-        /*max-width: 76px !important;*/
-    }
-
-    table.history-table thead td {
-        /*font-style: italic;*/
-        text-transform: inherit;
-        font-size: 0.65rem;
-    }
-
-    table.history-table thead td:not([colspan="2"]) {
-        /*-webkit-writing-mode: vertical-rl; writing-mode:tb-rl;*/
-        /*-webkit-transform: rotate(-90deg); transform: rotate(-90deg);*/
-        /*max-width: 76px !important;*/
-    }
+    table.iksweb{width:100%;border-collapse:collapse;border-spacing:0;height:auto}
+    table.iksweb,table.iksweb td,table.iksweb th {border:1px solid #595959}
+    table.iksweb td,table.iksweb th {padding:3px;width:30px;height:35px}
+    table.iksweb th {background:#347c99;color:#fff;font-weight:normal}
+    table.history-table td {border-right:1px solid #e2e8f0;/*max-width:76px !important*/}
+    table.history-table thead td {border-top-width:1px;border-top-color:#e2e8f0}
+    table.history-table thead td {/*font-style:italic*/text-transform:inherit;font-size:0.65rem}
+    table.history-table thead td:not([colspan="2"]){}
 </style>
 
 
@@ -145,20 +114,16 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                 <thead>
                                 <tr>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider border-red-400"
-                                        rowspan="2">Місяць, рік
-                                    </td>
+                                        rowspan="2">Місяць, рік</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Кіл. осіб
-                                    </td>
+                                        rowspan="2">Кіл. осіб</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн
-                                    </td>
+                                        rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн</td>
                                     <?php $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
                                     if ($readings_first): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
-                                    <?php endif;
-                                    ?>
+                                    <?php endif; ?>
                                     <?php if ($readings_second): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
@@ -172,65 +137,49 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                     <!--                                    --><?php //if ($metering):
                                     if ($readings_first || $readings_second):?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                            rowspan="2">Обсяг водо-<br>споживання,<br> м³
-                                        </td>
+                                            rowspan="2">Обсяг водо-<br>споживання,<br> м³</td>
                                     <?php endif; ?>
                                     <?php if ($readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                            rowspan="2">Обсяг водо-<br>споживання <br>по поливу<br> м³
-                                        </td>
+                                            rowspan="2">Обсяг водо-<br>споживання <br>по поливу<br> м³</td>
                                     <?php endif; ?>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Тариф, грн
-                                    </td>
+                                        rowspan="2">Тариф, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Нараховано, грн
-                                    </td>
+                                        rowspan="2">Нараховано, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Корекція, грн
-                                    </td>
+                                        rowspan="2">Корекція, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Сплачено, грн
-                                    </td>
+                                        rowspan="2">Сплачено, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Оплата<br>субсидій, грн
-                                    </td>
+                                        rowspan="2">Оплата<br>субсидій, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Оплата<br>пільг, грн
-                                    </td>
+                                        rowspan="2">Оплата<br>пільг, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                        rowspan="2">Сальдо на кінець<br>місяця, грн
-                                    </td>
+                                        rowspan="2">Сальдо на кінець<br>місяця, грн</td>
                                     <?php if ($metering): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-                                            rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³
-                                        </td>
+                                            rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³</td>
                                     <?php endif; ?>
                                 </tr>
                                 <tr>
                                     <?php if ($readings_first): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Попередні показання,<br>м3
-                                        </td>
+                                            Попередні показання,<br>м3</td>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Поточн. показання,<br>м3
-                                        </td>
+                                            Поточн. показання,<br>м3</td>
                                     <?php endif; ?>
                                     <?php if ($readings_second): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Попередні показання,<br>м3
-                                        </td>
+                                            Попередні показання,<br>м3</td>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Поточн. показання,<br>м3
-                                        </td>
+                                            Поточн. показання,<br>м3</td>
                                     <?php endif; ?>
                                     <?php if ($readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Попередні показання,<br>м3
-                                        </td>
+                                            Попередні показання,<br>м3</td>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            Поточн. показання,<br>м3
-                                        </td>
+                                            Поточн. показання,<br>м3</td>
                                     <?php endif; ?>
                                 </tr>
                                 </thead>
@@ -274,14 +223,12 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             <!--                                            --><?php //if ($metering) {
                                             if ($readings_first || $readings_second):?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                                    <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
+                                                    <!-- Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
                                                     <!--ееш один столбик для поливного сч   -->
                                                     <?php
-
                                                     //                                                    $on = $item->current_readings_first + $item->current_readings_second
                                                     //                                                        - $item->previous_readings_first - $item->previous_readings_second;
                                                     //                                                    \yii\helpers\VarDumper::dump($on,10,1);
-
                                                     //                                                    if ($on == round($on)) {
                                                     //                                                        $ov = Yii::$app->formatter->asDecimal($on, 0);
                                                     //                                                    } else {
@@ -302,13 +249,11 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                                             ? 0 : $ov;
                                                     } else {
 //                                                        $on = $item->water_consumption;
-
                                                         if ($item->water_consumption === round($item->water_consumption)
                                                             || $item->water_consumption == null) {
                                                             $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 0);
                                                             echo $item->water_consumption ?: 0;
                                                         } else {
-
                                                             echo Yii::$app->formatter->asDecimal(($item->water_consumption ?: 0), 3);
 //                                                            $item->water_consumption = Yii::$app->formatter->asDecimal(($item->water_consumption?:0), 3);
                                                         }
@@ -319,7 +264,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             //                                            } ?>
                                             <?php if ($readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
-                                                    <!--   Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
+                                                    <!-- Обсяг водоспоживання розраховується по формулі: (tp-pp)-->
                                                     <!--ееш один столбик для поливного сч-->
                                                     <?php
                                                     $on = $item->current_readings_watering - $item->previous_readings_watering;
@@ -348,7 +293,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
                                                 <!--   Нарахування розраховується по формулі:-->
                                                 <!--  Поле nac “-” поле lgota-->
-                                                <!--  в тек мес  (при передаче показаний я считаю начисления по формуле-->
+                                                <!--  в тек мес (при передаче показаний я считаю начисления по формуле-->
                                                 <?php
 
                                                 if (strtotime($item->month_year) === strtotime(date('Ym'))) {
