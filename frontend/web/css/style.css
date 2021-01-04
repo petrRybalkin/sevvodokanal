@@ -39,24 +39,15 @@ ul.sidebar.sidebar-profile{background:#fff;border-bottom:2px solid #ccc}
 ul.sidebar.sidebar-profile li{display:inline-block}
 .dropdown-menu-mobile ul.sidebar.sidebar-profile li{display:block}
 
-@media (min-width: 1024px) and (max-width: 1233px){
-    .md\:text-2xl {font-size:1rem}
-    .text-base {font-size:0.85rem}
-}
-@media (min-width: 768px) and (max-width: 1023px){
-    .md\:text-2xl {font-size:1rem}
-    .text-base {font-size:0.85rem}
-}
+@media (min-width: 1024px) and (max-width: 1233px){.md\:text-2xl {font-size:1rem}  .text-base {font-size:0.85rem}}
+@media (min-width: 768px) and (max-width: 1023px){.md\:text-2xl {font-size:1rem}  .text-base {font-size:0.85rem}}
 @media (min-width:768px){.profile.menu{display:inline-block !important}}
 @media (max-width:767px){.profile.menu{display:none}}
 input[type='number'] {-moz-appearance:textfield}
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance:none}
 /*.bg-white .bigmenu nav > a{margin:0 5px}*/
-
 /*.container.lk-sev{max-width:100% !important;}*/
-/*@media (max-width: 639px) {*/
-/*header.bg-white.shadow{display: none}*/
-/*}*/
+/*@media (max-width: 639px) {header.bg-white.shadow{display:none}}*/
 
 .accordion label:after {content:'+';position:absolute;right:1em;color:#000}
 .accordion input:checked + label:after {content:'-'}
@@ -66,5 +57,5 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appe
 
 main{min-height: calc(100vh - 240px);}
 .footer-sevkanal{height:240px}
-.tab-content {display:none}
-.tab-content.active {display:block}
+.tab-content{display:none}
+.tab-content.active{display:block}
