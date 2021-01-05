@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ->orderBy(['month_year' => SORT_DESC])->one();
 
     if ($ind) {
+
         if ($ind->month_year == $date->modify('-1 month')->format('Ym')) {
             $payThisMonth = Payment::getLgota($number->account_number, 1, $date->modify('-1 month')
                 ->format('Y-m-d'), true);
