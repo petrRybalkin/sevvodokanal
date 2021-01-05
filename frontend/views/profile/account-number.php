@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 // или (khv+kpv)*tarifv) если только вода)
                 $s = ($ind->water_consumption + $ind->watering_consumption) * $number->tariff_for_water;
             }
-
 // -(минус) оплата в текущем месяце.
             $debt = $s - $payThisMonth['sumAll'];
         } else {
