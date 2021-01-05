@@ -60,7 +60,7 @@ class Payment extends \yii\db\ActiveRecord
             ->where([
                 'account_number' => $account_number,
                 'pr' => $pr,
-            ])->groupBy('account_number');
+            ]);
 
         if(!$p){
             return null;
