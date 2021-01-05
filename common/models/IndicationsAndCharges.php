@@ -107,6 +107,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 //                \yii\helpers\VarDumper::dump(444444,10,1);exit;
 //                return $m->debt_end_month;
 //            }
+            \yii\helpers\VarDumper::dump($m,10,1);exit;
             if ($m->current_readings_first > 0 || $m->current_readings_second > 0 || $m->current_readings_watering > 0) {
                 $calcWaterCons = (($m->current_readings_first +
                             $m->current_readings_second +
