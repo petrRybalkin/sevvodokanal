@@ -522,7 +522,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                             <?php endif;
                                             ?>
                                             <!--                                            --><?php //if ($metering) {
-                                            if ($metering->$readings_first || $metering->$readings_second):?>
+                                            if ($readings_first || $readings_second):?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center">
                                                     <!--   Обсяг водоспоживання розраховується по формулі: (th1+th2+tp-ph1-ph2-pp)-->
                                                     <!--ееш один столбик для поливного сч   -->
