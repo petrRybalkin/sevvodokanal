@@ -332,15 +332,15 @@ class ProfileController extends Controller
      * @param $id
      * @return string
      */
-    public function actionHistory($id, $year)
+    public function actionHistory($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
 
         $query = IndicationsAndCharges::find()
             ->where(['account_number' => $score->account_number]);
-        if($year){
-            $query->andWhere(['between', 'month_year', $year.'01', $year.'12']);
-        }
+//        if($year){
+//            $query->andWhere(['between', 'month_year', $year.'01', $year.'12']);
+//        }
 
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 12]);
 
