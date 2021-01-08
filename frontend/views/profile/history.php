@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 $this->title = 'Нарахування та передані показання - Особистий кабінет';
 $this->params['breadcrumbs'][] = $this->title;
 
-$i = 0;
+
 
 $readings_first = IndicationsAndCharges::isReadingsExists(
     $score->account_number,
@@ -102,7 +102,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                 </div>
 
                 <div id="panels">
-                    <!--КОМП-->
+                    <!--таб 1-->
                     <div class="panel-1 tab-content active py-2">
                         <?php
                             $indication = IndicationsAndCharges::find()
@@ -120,6 +120,11 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                         rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн</td>
                                     <?php $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
+                                    $i = 0;
+
+
+
+
                                     if ($readings_first): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
@@ -383,7 +388,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                             <p style="color:red;margin:0 15px;">Немає даних.</p>
                         <?php endif; ?>
                     </div>
-                    <!--                    ПЛАНШЕТ-->
+                    <!--                    таб 2-->
                     <div class="panel-2 tab-content py-2">
                         <?php
                                                 $indication = IndicationsAndCharges::find()
@@ -404,7 +409,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                         rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн
                                     </td>
                                     <?php $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
-
+                                    $i = 0;
                                     if ($readings_first): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
@@ -664,7 +669,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                             <p style="color:red;margin:0 15px;">Немає даних.</p>
                         <?php endif; ?>
                     </div>
-                    <!--                    ТЕЛЕФОН-->
+                    <!--                    таб 3-->
                     <div class="panel-3 tab-content py-2">
                         <?php
                                                 $indication = IndicationsAndCharges::find()
@@ -685,6 +690,7 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                                         rowspan="2">Сальдо&nbsp;на початок<br>місяця, грн
                                     </td>
                                     <?php $metering = \common\models\WaterMetering::getWaterMeteringInAccNum($score->account_number);
+                                    $i = 0;
                                     if ($readings_first): $i = $i + 1; ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider gor"
                                             colspan="2">Лічильник № <?= $i ?></td>
