@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 use backend\models\AdminLog;
 use backend\models\FilesLog;
+use common\models\Payment;
 use common\models\WaterMetering;
 use Yii;
 use yii\helpers\Json;
@@ -120,12 +121,16 @@ class InfoDBF extends BaseDBF
         $str = $this->getRecordCount();
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
+
+//        Yii::$app->db->createCommand()->truncateTable('water_metering')->execute();
+
         $i = 0;
+        $isExists = [];
 
         while ($item = $this->nextRecord()) {
             try {
 
-                if($i % 2000 == 0){
+                if ($i % 2000 == 0) {
                     sleep(5);
                     $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
@@ -143,6 +148,7 @@ class InfoDBF extends BaseDBF
                     continue;
                 }
 
+                $isExists[] = $item['lic_schet'];
                 $i++;
 
             } catch (\yii\db\Exception $e) {
@@ -151,6 +157,17 @@ class InfoDBF extends BaseDBF
                 sleep(2);
             }
         }
+
+
+        $wm = WaterMetering::find()->select('account_number')->column();
+        $diff = array_diff($wm, $isExists);
+
+        if (!empty($diff)) {
+            foreach ($diff as $item) {
+                WaterMetering::deleteAll(['account_number' => $item]);
+            }
+        }
+
 
         $this->log($admin_id, $error !== '' ?
             "Запись файла $fileName окончена. Ошибки - " . $error :

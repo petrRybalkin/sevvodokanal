@@ -425,7 +425,7 @@ class ProfileController extends Controller
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff . ' грн.',//total_tarif
+                    Yii::$app->formatter->asDecimal($score->total_tariff, 3) . ' грн.',//total_tarif
                     $indication->water_consumption,//water
                     $indication->watering_consumption,//watering
                     Yii::$app->formatter->asDate($metering->verification_date, 'php:d.m.Y'),//verification_date
@@ -470,7 +470,7 @@ class ProfileController extends Controller
                     $score->name_of_the_tenant,//fio
                     $score->address,//address
                     $score->norm,//norm
-                    $score->total_tariff . ' грн.',//total_tarif
+                    Yii::$app->formatter->asDecimal($score->total_tariff, 3) . ' грн.',//total_tarif
                     $indication->privilege == 0 ? 'Нi' : "Так",//exist_lgota
                     date("d.m.Y", strtotime('first day of last month')),//date_debt
                     Yii::$app->formatter->asDecimal(($d ? $d->debt_begin_month : 0), 2) . ' грн.',//debt

@@ -4,6 +4,7 @@ namespace common\dbfImport;
 
 use common\models\IndicationsAndCharges;
 use common\models\ScoreMetering;
+use common\models\WaterMetering;
 use DateTime;
 use Yii;
 use yii\db\Command;
@@ -92,11 +93,12 @@ class ScoreDBF extends BaseDBF
         $this->log($admin_id, "Запись начата $str строк. Файл - $fileName");
 
         $i = 0;
+//        $isExists = [];
 
         while ($item = $this->nextRecord()) {
             try {
 
-                if($i % 2000 == 0){
+                if ($i % 2000 == 0) {
                     sleep(5);
                     $this->log($admin_id, "ok  $i - " . $item['lic_schet']);
                 }
@@ -109,7 +111,7 @@ class ScoreDBF extends BaseDBF
                 if ($query->exists()) {
                     $score = $query->one();
                     $score->updateAttributes($arr);
-                }else{
+                } else {
                     $score = new ScoreMetering();
                     $score->setAttributes($arr);
                 }
@@ -118,7 +120,7 @@ class ScoreDBF extends BaseDBF
                     $error .= 'строка - ' . $i . Json::encode($score->getErrors()) . "\n";
                     continue;
                 }
-
+//                $isExists[] = $item['lic_schet'];
                 $i++;
 
             } catch (\yii\db\Exception $e) {
@@ -127,6 +129,19 @@ class ScoreDBF extends BaseDBF
                 sleep(2);
             }
         }
+
+//
+//        $sm = ScoreMetering::find()->select('account_number')->column();
+//        $diff = array_diff($sm, $isExists);
+//
+//        if (!empty($diff)) {
+//            foreach ($diff as $item) {
+//                ScoreMetering::deleteAll(['account_number' => $item]);
+//                WaterMetering::deleteAll(['account_number' => $item]);
+//
+//            }
+//        }
+
 
         $this->log($admin_id, ($error !== ''
             ? "Запись файла $fileName окончена. Ошибки - " . $error
