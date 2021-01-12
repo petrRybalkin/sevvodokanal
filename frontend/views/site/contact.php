@@ -30,14 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <tr class="mt-3">
             <td><span style="background-color:transparent;font-size:12pt"><strong>Графiк роботи:</strong></span></td>
             <td>
-                <span style="background-color:transparent;font-size:12pt"> <strong>Пн.</strong> 8.00 до 17.00<br/>
-                     <strong>Вт.</strong> 8.00 до 17.00<br/>
-                     <strong>Ср.</strong> 8.00 до 17.00<br/>
-                     <strong>Чт.</strong> 8.00 до 17.00<br/>
-                     <strong>Пт.</strong> 8.00 до 16.00<br/>
-                     <strong>Сб.</strong> 8.00 до 15.00 (Абонвідділ) (без перерви)<br/>
-                     <strong>Нд.</strong> Вихідний день<br/>
-                     <strong>Перерва:</strong> 12.00 до 13.00
+                <span style="background-color:transparent;font-size:12pt">
+                    <?= $settings->schedule?>
                 </span>
             </td>
         </tr>

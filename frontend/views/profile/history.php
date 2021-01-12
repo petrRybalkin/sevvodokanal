@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         rowspan="2">Оплата<br>пільг, грн</td>
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                         rowspan="2">Сальдо на кінець<br>місяця, грн</td>
-                                    <?php if ($metering): ?>
+                                    <?php if ($readings_first || $readings_second || $readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                             rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³</td>
                                     <?php endif; ?>
@@ -379,7 +379,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>
                                                 <?= Yii::$app->formatter->asDecimal((is_double($debt) ? $debt : $debt->debt_end_month), 2) ?>
                                             </td>
-                                            <?php if ($metering): ?>
+                                            <?php if ($readings_first || $readings_second || $readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                                             <?php endif; ?>
                                         </tr>
@@ -475,7 +475,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                         rowspan="2">Сальдо на кінець<br>місяця, грн
                                     </td>
-                                    <?php if ($metering): ?>
+                                    <?php if ($readings_first || $readings_second || $readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                             rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³
                                         </td>
@@ -678,7 +678,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>
                                                 <?= Yii::$app->formatter->asDecimal((is_double($debt) ? $debt : $debt->debt_end_month), 2) ?>
                                             </td>
-                                            <?php if ($metering): ?>
+                                            <?php if ($readings_first || $readings_second || $readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                                             <?php endif; ?>
                                         </tr>
@@ -774,7 +774,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                         rowspan="2">Сальдо на кінець<br>місяця, грн
                                     </td>
-                                    <?php if ($metering): ?>
+                                    <?php if ($readings_first || $readings_second || $readings_water): ?>
                                         <td class="px-1 py-2 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                                             rowspan="2">Ознака&nbsp;<br>нарах. <br>середн.<br>&nbsp;кубів, м³
                                         </td>
@@ -972,7 +972,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>
                                                 <?= Yii::$app->formatter->asDecimal((is_double($debt) ? $debt : $debt->debt_end_month), 2) ?>
                                             </td>
-                                            <?php if ($metering): ?>
+                                            <?php if ($readings_first || $readings_second || $readings_water): ?>
                                                 <td class="px-1 py-2 whitespace-no-wrap text-center"><?= $item->medium_cubes ?></td>
                                             <?php endif; ?>
                                         </tr>

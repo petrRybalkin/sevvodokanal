@@ -13,11 +13,13 @@ use yii\helpers\Html;
  * @property string|null $name
  * @property string|null $title
  * @property string|null $value
+ * @property string|null $action_legal
  * @property string|null $address
  * @property string|null $name_header
  * @property string|null $name_footer
  * @property string|null $phone_priem
  * @property string|null $phone_disp
+ * @property string|null $schedule
  * @property int|null $action
  */
 class ConfigSite extends \yii\db\ActiveRecord
@@ -38,8 +40,8 @@ class ConfigSite extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'title', 'value', 'name_header', 'name_footer', 'address', 'phone_priem', 'phone_disp'], 'string'],
-            [['action'], 'integer'],
+            [['name', 'title', 'value', 'name_header', 'name_footer', 'address', 'phone_priem', 'phone_disp','schedule'], 'string'],
+            [['action', 'action_legal'], 'integer'],
         ];
     }
 
@@ -54,11 +56,13 @@ class ConfigSite extends \yii\db\ActiveRecord
             'title' => 'Title',
             'value' => 'Value',
             'action' => 'Передача показаний',
+            'action_legal' => 'Передача показаний юр лиц',
             'name_header' => 'Название в шапке сайта',
             'name_footer' => 'Название в подвале сайта',
             'address' => 'Адрес',
             'phone_priem' => 'Телефон приемной',
             'phone_disp' => 'Телефон диспетчера',
+            'schedule' => 'График работы',
         ];
     }
 

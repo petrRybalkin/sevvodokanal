@@ -1,8 +1,9 @@
 <?php
 
 
+use common\models\ConfigSite;
 use yii\helpers\Html;
-
+$settings = ConfigSite::getSettings(1);
 ?>
 
 
@@ -43,11 +44,17 @@ use yii\helpers\Html;
                 </dl>
             </div>
             <div class="mt-4">
-                <?php if (strtotime($item->date_readings) !== strtotime(date('Y-m-d'))):?>
+                <?php
+                if ($settings->action_legal == 1) {
+
+                    if (strtotime($item->date_readings) !== strtotime(date('Y-m-d'))):?>
                     <a type="button" href="<?= \yii\helpers\Url::to(['/legal/meter', 'num' => $num, 'acc' => $item->accounting_number]) ?>"
                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
                     >Передати показання</a>
                 <?php endif; ?>
+                <?php } else { ?>
+                <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
+                <?php } ?>
             </div>
         </div>
         <br>
