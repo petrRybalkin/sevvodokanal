@@ -36,6 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->getStatusTag());
                 }
             ],
+            [
+                'attribute' => 'action_legal',
+                'filter' => ConfigSite::statusList(),
+                'format' => 'raw',
+                'value' => function (ConfigSite $model) {
+                    return Html::a($model->getStatusTag());
+                }
+            ],
 
             //['class' => 'yii\grid\ActionColumn'],
             [
