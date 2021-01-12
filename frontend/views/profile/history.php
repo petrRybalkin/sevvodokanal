@@ -14,24 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-$readings_first = IndicationsAndCharges::isReadingsExists(
-    $score->account_number,
-    Yii::$app->request->get('year') ?: date('Y'),
-    'first');
-
-
-$readings_second = IndicationsAndCharges::isReadingsExists(
-    $score->account_number,
-    Yii::$app->request->get('year') ?: date('Y'),
-    'second');
-
-
-$readings_water = IndicationsAndCharges::isReadingsExists(
-    $score->account_number,
-    Yii::$app->request->get('year') ?: date('Y'),
-    'water');
-
-
 ?>
 
 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -109,6 +91,27 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                             ->where(['between', 'month_year', date('Y') . '01', date('Y') . '12'])
                             ->andWhere(['account_number' => $score->account_number])
                             ->all();
+
+
+
+                        $readings_first = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y'),
+                            'first');
+
+
+                        $readings_second = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y'),
+                            'second');
+
+
+                        $readings_water = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y'),
+                            'water');
+
+
                         if ($indication && $score):?>
                             <table class="min-w-full divide-y divide-gray-200 history-table">
                                 <thead>
@@ -391,7 +394,25 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    таб 2-->
                     <div class="panel-2 tab-content py-2">
                         <?php
-                                                $indication = IndicationsAndCharges::find()
+
+                        $readings_first = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-1 year')),
+                            'first');
+
+
+                        $readings_second = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-1 year')),
+                            'second');
+
+
+                        $readings_water = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-1 year')),
+                            'water');
+
+                        $indication = IndicationsAndCharges::find()
                                                     ->where(['between', 'month_year', date('Y', strtotime('-1 year')) . '01', date('Y', strtotime('-1 year')) . '12'])
                                                     ->andWhere(['account_number' => $score->account_number])
                                                     ->all();
@@ -672,7 +693,25 @@ $readings_water = IndicationsAndCharges::isReadingsExists(
                     <!--                    таб 3-->
                     <div class="panel-3 tab-content py-2">
                         <?php
-                                                $indication = IndicationsAndCharges::find()
+
+                        $readings_first = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-2 year')),
+                            'first');
+
+
+                        $readings_second = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-2 year')),
+                            'second');
+
+
+                        $readings_water = IndicationsAndCharges::isReadingsExists(
+                            $score->account_number,
+                            date('Y', strtotime('-2 year')),
+                            'water');
+
+                        $indication = IndicationsAndCharges::find()
                                                     ->where(['between', 'month_year', date('Y', strtotime('-2 year')) . '01', date('Y', strtotime('-2 year')) . '12'])
                                                     ->andWhere(['account_number' => $score->account_number])
                                                     ->all();
