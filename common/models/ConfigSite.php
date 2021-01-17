@@ -25,7 +25,9 @@ use yii\helpers\Html;
 class ConfigSite extends \yii\db\ActiveRecord
 {
     const STATUS_INACTIVE = 0;
+    const STATUS_LEGAL_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    const STATUS_LEGAL_ACTIVE = 1;
     /**
      * {@inheritdoc}
      */
@@ -112,6 +114,53 @@ class ConfigSite extends \yii\db\ActiveRecord
             $options['class'] = 'label label-' . $this->getStatusColor();
         }
         return Html::tag('span', $this->getStatusLabel(), $options);
+    }
+
+    public static function statusLegalList()
+    {
+        return [
+            self::STATUS_LEGAL_INACTIVE => 'Отключено',
+            self::STATUS_LEGAL_ACTIVE => 'Включено',
+        ];
+    }
+
+    public static function statusLegalColorList()
+    {
+        return [
+            self::STATUS_LEGAL_INACTIVE => 'danger',
+            self::STATUS_LEGAL_ACTIVE => 'success',
+        ];
+    }
+    /**
+     * @param string $default
+     * @param null $action_legal
+     * @return string
+     */
+    public function getStatusLegalLabel($default = '-', $action_legal = null)
+    {
+        return ArrayHelper::getValue(self::statusLegalList(), $action_legal ?: $this->action_legal, $default);
+    }
+
+    /**
+     * @param string $default
+     * @param null $action_legal
+     * @return string
+     */
+    public function getStatusLegalColor($default = 'default', $action_legal = null)
+    {
+        return ArrayHelper::getValue(self::statusLegalColorList(), $action_legal ?: $this->action_legal, $default);
+    }
+
+    /**
+     * @param array $options
+     * @return string
+     */
+    public function getStatusLegalTag($options = [])
+    {
+        if (!array_key_exists('class', $options)) {
+            $options['class'] = 'label label-' . $this->getStatusLegalColor();
+        }
+        return Html::tag('span', $this->getStatusLegalLabel(), $options);
     }
 
     public static function getSettings($id)

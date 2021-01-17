@@ -38,10 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'action_legal',
-                'filter' => ConfigSite::statusList(),
+                'filter' => ConfigSite::statusLegalList(),
                 'format' => 'raw',
                 'value' => function (ConfigSite $model) {
-                    return Html::a($model->getStatusTag());
+                    return Html::a($model->getStatusLegalTag());
                 }
             ],
 
