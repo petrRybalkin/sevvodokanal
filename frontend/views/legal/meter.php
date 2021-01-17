@@ -4,9 +4,13 @@
 use common\models\LegalForm;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
+use common\models\ConfigSite;
+
+/* @var $model \common\models\LegalForm */
 
 $this->title = 'Передача показань юридичними особами(крок 2) - Особистий кабінет';
 /** @var \common\models\Company $company */
+$settings = ConfigSite::getSettings(1);
 ?>
 
 <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
@@ -14,6 +18,7 @@ $this->title = 'Передача показань юридичними особ�
         <div>
             <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань</h2>
         </div>
+        <?php if($settings->action_legal == 1){ ?>
         <?php $form = ActiveForm::begin([
             'id' => 'legal-water-metering-form',
             'class' => 'mt-8',
@@ -74,5 +79,8 @@ $this->title = 'Передача показань юридичними особ�
 
 
         <?php ActiveForm::end(); ?>
+        <?php } else { ?>
+            <p style="color:red;text-align:center">Передачу показань засобів обліку води призупинено!</p>
+        <?php } ?>
     </div>
 </div>

@@ -3,8 +3,12 @@
 
 use common\models\LegalNumContractForm;
 use yii\bootstrap\ActiveForm;
+use common\models\ConfigSite;
+
+/* @var $model \common\models\LegalNumContractForm */
 
 $this->title = 'Передача показань юридичними особами(крок 1) - Особистий кабінет';
+$settings = ConfigSite::getSettings(1);
 ?>
 
 
@@ -27,6 +31,7 @@ $dateThis = (new DateTime())->format('d');
             <div>
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань</h2>
             </div>
+<?php if($settings->action_legal == 1){ ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'legal-water-metering-form',
                 'class' => 'mt-8',
@@ -60,6 +65,9 @@ $dateThis = (new DateTime())->format('d');
 
 
             <?php ActiveForm::end(); ?>
+<?php } else { ?>
+    <p style="color:red;text-align:center">Передачу показань засобів обліку води призупинено!</p>
+<?php } ?>
         </div>
     </div>
 
