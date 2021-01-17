@@ -22,7 +22,8 @@ _:-ms-fullscreen, :root .bigmenu > .flex > nav > .relative.group{margin:0 10px}
 .article-view table, .article-view table tr, .article-view table td{border-width:1px;border-color:#e2e8f0}
 .contact-view table{width:100%}
 .contact-view table, .contact-view table tr, .contact-view table td{border-width:2px;border-color:transparent;padding:6px 0;vertical-align:top}
-
+.contact-view table td table, .contact-view table td table tr,.contact-view table td table td{padding:0}
+.contact-view table td table tr td:first-child{width:30px}
 #menu-toggle{display: none}
 .second-item.absolute{z-index: 35}
 .has-error input{border:1px solid red !important;}
