@@ -17,9 +17,13 @@ class DbfJob extends BaseJob implements JobInterface
     public function execute($queue)
     {
         $parser = new $this->model ($this->file);
-
         if($parser->save($this->admin_id,$this->fileName)){
-            return true;
+
+            if(file_exists($this->file)){
+                unlink($this->file);
+            }
+
+                return true;
         } else {
             return false;
         }
