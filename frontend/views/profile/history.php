@@ -325,6 +325,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 } else {
                                                     $calcWaterCons = $item->accruals;
                                                 }
+
                                                 ?>
 
                                                 <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?>
@@ -611,21 +612,33 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <!--   Нарахування розраховується по формулі:-->
                                                 <!--  Поле nac “-” поле lgota-->
                                                 <!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
-                                                <?php if ($item->current_readings_first > 0 || $item->current_readings_second > 0 || $item->current_readings_watering > 0) {
-                                                    $calcWaterCons = (($item->current_readings_first +
-                                                                $item->current_readings_second +
-                                                                $item->current_readings_watering -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second -
-                                                                $item->previous_readings_watering) * $score->tariff_for_water) +
-                                                        (($item->current_readings_first +
-                                                                $item->current_readings_second -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second) * $score->tariff_for_stocks);
 
+                                                <?php
+
+                                                if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                    if ($item->current_readings_first > 0
+                                                        || $item->current_readings_second > 0
+                                                        || $item->current_readings_watering > 0) {
+
+                                                        $calcWaterCons = (($item->current_readings_first +
+                                                                    $item->current_readings_second +
+                                                                    $item->current_readings_watering -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second -
+                                                                    $item->previous_readings_watering) * $score->tariff_for_water) +
+                                                            (($item->current_readings_first +
+                                                                    $item->current_readings_second -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second) * $score->tariff_for_stocks);
+                                                    }else {
+                                                        $calcWaterCons = $item->accruals;
+                                                    }
                                                 } else {
-                                                    $calcWaterCons = $item->accruals - $item->privilege_unpaid;
-                                                } ?>
+                                                    $calcWaterCons = $item->accruals;
+                                                }
+
+
+                                                ?>
                                                 <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -905,21 +918,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <!--   Нарахування розраховується по формулі:-->
                                                 <!--  Поле nac “-” поле lgota-->
                                                 <!--                                    в тек мес  (при передаче показаний я считаю начисления по формуле-->
-                                                <?php if ($item->current_readings_first > 0 || $item->current_readings_second > 0 || $item->current_readings_watering > 0) {
-                                                    $calcWaterCons = (($item->current_readings_first +
-                                                                $item->current_readings_second +
-                                                                $item->current_readings_watering -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second -
-                                                                $item->previous_readings_watering) * $score->tariff_for_water) +
-                                                        (($item->current_readings_first +
-                                                                $item->current_readings_second -
-                                                                $item->previous_readings_first -
-                                                                $item->previous_readings_second) * $score->tariff_for_stocks);
+                                                <?php
 
+                                                if (strtotime($item->month_year) === strtotime(date('Ym'))) {
+                                                    if ($item->current_readings_first > 0
+                                                        || $item->current_readings_second > 0
+                                                        || $item->current_readings_watering > 0) {
+
+                                                        $calcWaterCons = (($item->current_readings_first +
+                                                                    $item->current_readings_second +
+                                                                    $item->current_readings_watering -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second -
+                                                                    $item->previous_readings_watering) * $score->tariff_for_water) +
+                                                            (($item->current_readings_first +
+                                                                    $item->current_readings_second -
+                                                                    $item->previous_readings_first -
+                                                                    $item->previous_readings_second) * $score->tariff_for_stocks);
+                                                    }else {
+                                                        $calcWaterCons = $item->accruals;
+                                                    }
                                                 } else {
-                                                    $calcWaterCons = $item->accruals - $item->privilege_unpaid;
-                                                } ?>
+                                                    $calcWaterCons = $item->accruals;
+                                                }
+
+
+                                                ?>
                                                 <?= Yii::$app->formatter->asDecimal($calcWaterCons, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
