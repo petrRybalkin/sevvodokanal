@@ -142,16 +142,14 @@ if ($vodomers): ?>
     </div>
     <br>
 
-    <?php
-
-    if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym')) || $vodomers->in_site == 0):  ?>
+    <?php if($settings->action == 1): ?>
     <div class="flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань
                     лічильника</h2>
             </div>
-            <?php if($settings->action == 1){ ?>
+            <?php if(strtotime(Yii::$app->formatter->asDate($vodomers->date_previous_readings,'php:Ym')) !== strtotime(date('Ym')) || $vodomers->in_site == 0):  ?>
 
             <?php $form = ActiveForm::begin([
                 'id' => 'water-metering-form',
@@ -170,7 +168,7 @@ if ($vodomers): ?>
                     ?>
                     <div>
                         <?= $form->field($model, 'number1')
-                            ->textInput(['value' => $vodomers['water_metering_first'] ? $vodomers['water_metering_first'] : '',
+                            ->textInput(['value' => $vodomers['water_metering_first'] ?: '',
                                 'type' => 'number','disabled' => true,
                                 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border 
                                 border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none 
@@ -188,9 +186,7 @@ if ($vodomers): ?>
                             ->label('Показники лiчильника №1', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                         <?= $form->field($model, 'number1')
-                            ->hiddenInput(['value'=>$vodomers['water_metering_first']
-                                ? $vodomers['water_metering_first']
-                                : ''])
+                            ->hiddenInput(['value'=> $vodomers['water_metering_first'] ?: ''])
                         ->label(false)?>
                     </div>
                 <?php endif;
@@ -211,9 +207,7 @@ if ($vodomers): ?>
                             ->label('Показники лiчильника №2', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                         <?= $form->field($model, 'number2')
-                            ->hiddenInput(['value'=>$vodomers['water_metering_second']
-                                ? $vodomers['water_metering_second']
-                                : ''])
+                            ->hiddenInput(['value'=> $vodomers['water_metering_second'] ?: ''])
                             ->label(false)?>
                     </div>
                 <?php endif;
@@ -221,7 +215,7 @@ if ($vodomers): ?>
                     ?>
                     <div>
                         <?= $form->field($model, 'number3')
-                            ->textInput(['value' => $vodomers['watering_number'] ? $vodomers['watering_number'] : '', 'disabled' => true,'type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
+                            ->textInput(['value' => $vodomers['watering_number'] ?: '', 'disabled' => true,'type' => 'number', 'class' => 'appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5'])
                             ->label('Номер засобу обліку води №3', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                     </div>
@@ -232,9 +226,7 @@ if ($vodomers): ?>
                             ->label('Показники лiчильника №3', ['class' => 'block text-grey-darker text-sm font-bold mb-2'])
                         ?>
                         <?= $form->field($model, 'number3')
-                            ->hiddenInput(['value'=>$vodomers['watering_number']
-                                ? $vodomers['watering_number']
-                                : ''])
+                            ->hiddenInput(['value'=> $vodomers['watering_number'] ?: ''])
                             ->label(false)?>
                     </div>
                 <?php endif; ?>
@@ -248,16 +240,14 @@ if ($vodomers): ?>
                 </button>
             </div>
             <?php ActiveForm::end(); ?>
-            <?php } else { ?>
-                <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
-            <?php } ?>
+            <?php else: ?>
+                <p style="color: red">Передати показники засобiв облiку води можна тiльки 1 раз на мiсяць.</p>
+            <?php endif; ?>
         </div>
     </div>
 
     <?php else: ?>
-        <p style="color: red">
-            Передати показники засобiв облiку води можна тiльки 1 раз на мiсяць.
-        </p>
+        <p style="color:red;text-align:center">Проводяться технічні роботи.<br/>Передача показань тимчасово неможлива!</p>
     <?php endif; ?>
 
 <?php else: ?>
