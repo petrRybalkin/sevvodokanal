@@ -10,6 +10,7 @@ use yii\grid\GridView;
 
 $this->title = 'Лог Администратора';
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->setTimeZone('Europe/Kiev');
 ?>
 <div class="admin-log-index">
 
