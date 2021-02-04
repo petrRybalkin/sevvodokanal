@@ -365,7 +365,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
 
                                                 ?>
-                                                <?= $str ?>
                                                 <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -677,7 +676,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
 
                                                 ?>
-                                                <?= $str ?>
                                                 <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -983,7 +981,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
 
                                                 ?>
-                                                <?= $str ?>
                                                 <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
