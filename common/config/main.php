@@ -2,7 +2,7 @@
 
 Yii::setAlias('@runtimeFront', dirname(dirname(__DIR__)) . '/frontend/runtime/');
 Yii::setAlias('@runtimeBack', dirname(dirname(__DIR__)) . '/backend/runtime/');
-
+date_default_timezone_set('Europe/Kiev');
 
 return [
     'timeZone' => 'Europe/Kiev',
