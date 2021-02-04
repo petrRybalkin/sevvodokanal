@@ -100,13 +100,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     {
         /** @var IndicationsAndCharges $m */
         if (strtotime($date) == strtotime(date('Ym'))) {
-            print_r($acc);
-            print_r($date);
-            print_r(date('Ym'));
-            exit;
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
                 ->one();
+            if (!$m) {
+                return 0;
+            }
 //            if ($m->synchronization > 0) {
 //                \yii\helpers\VarDumper::dump(444444,10,1);exit;
 //                return $m->debt_end_month;
