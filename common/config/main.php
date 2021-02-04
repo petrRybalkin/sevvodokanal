@@ -5,6 +5,7 @@ Yii::setAlias('@runtimeBack', dirname(dirname(__DIR__)) . '/backend/runtime/');
 
 
 return [
+    'timeZone' => 'Europe/Kiev',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
