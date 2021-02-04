@@ -35,7 +35,7 @@ $settings = ConfigSite::getSettings(1);
                 <div class="relative profile menu group w-1/4 xs:hidden sm:hidden md:visible">
                     <div class="flex justify-end">
                         <div class="max-w-xs flex items-center text-sm text-white focus:outline-none focus:shadow-solid border-r">
-                            <?= Html::a('Юридичним особам', ['/legal/index'], ['class'=>'block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
+                            <?= Html::a('Юридичним особам', ['/legal/index'], ['class'=>'ur-faces block px-4 py-2 text-sm text-gray-100 hover:text-gray-300']) ?>
                         </div>
                         <div class="max-w-xs flex items-center text-sm text-white focus:outline-none focus:shadow-solid " id="user-menu" aria-label="User menu" aria-haspopup="true">
                             <?php if(Yii::$app->user->isGuest): ?>

@@ -59,4 +59,7 @@ $(document).ready(function(){
     $('.profile.group a.dropdown-menu-lk').mouseover(function(){$('.profile.group .origin-top-right-menu').css({"display":"block"});});
     $('.profile.group .origin-top-right-menu').mouseover(function(){$(this).css({"display":"block"});});
     $('.profile.group .origin-top-right-menu').mouseout(function(){$(this).css({"display":"none"});});
+    $('.profile.group a.ur-faces').mouseout(function(){$('.profile.group .origin-top-right-menu').css({"display":"none"});});
+    $('.profile.group a.ur-faces').mouseover(function(){$('.profile.group .origin-top-right-menu').css({"display":"none"});});
+
 });
