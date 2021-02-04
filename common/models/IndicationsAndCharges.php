@@ -100,6 +100,10 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
     {
         /** @var IndicationsAndCharges $m */
         if (strtotime($date) == strtotime(date('Ym'))) {
+            print_r($acc);
+            print_r($date);
+            print_r(date('Ym'));
+            exit;
             $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
                 ->andWhere(['month_year' => date('Ym')])
                 ->one();
