@@ -29,7 +29,7 @@ $dateThis = (int)(new DateTime())->format('d');
             <div>
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань</h2>
             </div>
-<?php if($dateThis < 4 && $settings->action_legal == 1){ ?>
+<?php if($dateThis < 11 && $settings->action_legal == 1){ ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'legal-water-metering-form',
                 'class' => 'mt-8',
