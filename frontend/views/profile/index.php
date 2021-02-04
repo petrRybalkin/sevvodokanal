@@ -111,7 +111,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $form = ActiveForm::begin([
                         'id' => 'add-account-form',
                         'class' => 'mt-8',
-                        'onsubmit'=>"alert('submit!');return false",
                         'enableAjaxValidation' => true,
                         'enableClientValidation' => true
                     ]); ?>
