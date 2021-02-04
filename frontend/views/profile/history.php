@@ -356,7 +356,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <!--      Оплата пільг (дані беруться з довідника оплати):  поля з ознакою “2”-->
                                                 <?php
 
-                                                if ($item->privilege_unpaid !== 0) {
+                                                if ($item->privilege_unpaid > 0) {
                                                     $lgota = $item->privilege_unpaid;
                                                 } else {
                                                     $lgota = Payment::getLgota($score->account_number, 2, $str, true)
@@ -365,6 +365,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
 
                                                 ?>
+                                                <?= $str ?>
                                                 <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
@@ -982,6 +983,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
 
                                                 ?>
+                                                <?= $str ?>
                                                 <?= Yii::$app->formatter->asDecimal($lgota ?: 0, 2) ?>
                                             </td>
                                             <td class="px-1 py-2 whitespace-no-wrap text-center">
