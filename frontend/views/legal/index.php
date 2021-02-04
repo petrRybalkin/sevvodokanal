@@ -9,6 +9,7 @@ use common\models\ConfigSite;
 
 $this->title = 'Передача показань юридичними особами(крок 1) - Особистий кабінет';
 $settings = ConfigSite::getSettings(1);
+$dateThis = (int)(new DateTime())->format('d');
 ?>
 
 
@@ -23,15 +24,12 @@ $settings = ConfigSite::getSettings(1);
             </p>
         </div>
     </div>
-<?php
-$dateThis = (new DateTime())->format('d');
-//if ((int)$dateThis < 11): ?>
     <div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <div>
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">Передача показань</h2>
             </div>
-<?php if($settings->action_legal == 1){ ?>
+<?php if($dateThis < 4 && $settings->action_legal == 1){ ?>
             <?php $form = ActiveForm::begin([
                 'id' => 'legal-water-metering-form',
                 'class' => 'mt-8',
