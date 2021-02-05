@@ -66,6 +66,7 @@ class Admin extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['role_id', 'integer'],
+            ['password', 'string'],
         ];
     }
 
