@@ -515,8 +515,9 @@ class ProfileController extends Controller
     public function actionPayment($id)
     {
         $score = ScoreMetering::find()->where(['id' => $id])->one();
-        $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])
-            ->andWhere(['month_year' => date("Ym", strtotime('first day of last month'))])->one();
+        $indication = IndicationsAndCharges::find()
+            ->where(['account_number' => $score->account_number])
+            ->orderBy(['month_year' => SORT_DESC])->one();
 
         $xml =
             '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>

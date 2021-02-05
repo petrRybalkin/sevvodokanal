@@ -9,8 +9,8 @@ $this->params['breadcrumbs'][] = $this->title;
 $date = new DateTime('now');
 $debt = IndicationsAndCharges::debtBeginMonth(
     $indication->account_number,
-//    $indication->month_year
-    $date->format('Ym')
+    $indication->month_year
+//    $date->format('Ym')
 );
 if ($debt && $debt->debt_end_month > 0) {
     $sum = Yii::$app->formatter->asDecimal($debt->debt_end_month,2);
