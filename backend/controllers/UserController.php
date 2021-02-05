@@ -132,6 +132,12 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (!$model->validatePassword($model->password)) {
+                $model->setPassword($model->password);
+                $model->updateAttributes([
+                    'password_hash' => $model->password_hash,
+                ]);
+            }
             AdminLog::addAdminAction( null, "Редактирование  администратора $model->username");
             return $this->redirect(['index', 'id' => $model->id]);
         }
