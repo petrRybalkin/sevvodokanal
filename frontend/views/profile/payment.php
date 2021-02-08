@@ -13,7 +13,8 @@ $debt = IndicationsAndCharges::debtBeginMonth(
 //    $date->format('Ym')
 );
 if ($debt && $debt->debt_end_month > 0) {
-    $sum = Yii::$app->formatter->asDecimal($debt->debt_end_month,2);
+    $debt = is_float($debt) ? $debt : $debt->debt_end_month;
+    $sum = Yii::$app->formatter->asDecimal($debt,2);
 } else {
     $sum = 100;
 }
