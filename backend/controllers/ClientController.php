@@ -93,10 +93,18 @@ class ClientController extends Controller
     public function actionDeleteNumber($id,$score_id)
     {
         $n = ClientMap::find()->where(['client_id' => $id, 'score_id' => $score_id])->one();
+        /** @var User $client */
+        $client = $n->client;
         if (!$n->delete()) {
             Yii::$app->session->setFlash('error', 'Не вдалося видалити рахунок.');
+        } else {
+            $message = "Рахунок {$score_id} видалено. Абонент №{$id}";
+            if ($client) {
+                $message .= " ({$client->email})";
+            }
+            AdminLog::addAdminAction(null, $message);
+            Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         }
-        Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         return $this->redirect(['score', 'id' => $id]);
     }
 
