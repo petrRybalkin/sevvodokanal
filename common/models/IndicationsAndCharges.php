@@ -128,20 +128,16 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
             $str = substr($m->month_year, 0, 4) . '-' . substr($m->month_year, 4, 6) . '-01';
 
-            $splacheno = (Payment::getLgota($acc, 1, $str, true)
-                    ? Payment::getLgota($acc, 1, $str, true)['sumAll'] : 0) +
-                (Payment::getLgota($acc, 0, $str, true)
-                    ? Payment::getLgota($acc, 0, $str, true)['sumAll']
-                    : 0);
+            $lgotas = Payment::getLgotas($acc, $str, true);
 
+            $splacheno = ($lgotas[1] ? $lgotas[1]['sumAll'] : 0) +
+                ($lgotas[0] ? $lgotas[0]['sumAll'] : 0);
 
             $lgo = $m->privilege_unpaid !== 0
                 ? $m->privilege_unpaid
-                : Payment::getLgota($acc, 2, $str, true)['sumAll'];
+                : $lgotas[2]['sumAll'];
 
-            $subs = Payment::getLgota($acc, 3, $str, true)
-                ? Payment::getLgota($acc, 3, $str, true)['sumAll']
-                : 0;
+            $subs = $lgotas[3] ? $lgotas[3]['sumAll'] : 0;
 
             //hsumma (за предыдущий месяц)+
             //((th1+th2+tp-ph1-ph2-pp)*tarifv)+((th1+th2-ph1-ph2)*tarifst)
@@ -156,12 +152,12 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
                 - $subs
                 - $lgo
                 - $m->correction);
-        } else {
-            $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
-                ->andWhere(['month_year' => $date])
-                ->one();
-            return $m;
         }
+
+        $m = IndicationsAndCharges::find()->where(['account_number' => $acc])
+            ->andWhere(['month_year' => $date])
+            ->one();
+        return $m;
 
 
     }

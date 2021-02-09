@@ -53,6 +53,16 @@ class Payment extends \yii\db\ActiveRecord
     }
 
 
+    public static function getLgotas($account_number, $date = null, $asArray = false)
+    {
+        return [
+            static::getLgota($account_number, 0, $date, $asArray),
+            static::getLgota($account_number, 1, $date, $asArray),
+            static::getLgota($account_number, 2, $date, $asArray),
+            static::getLgota($account_number, 3, $date, $asArray),
+        ];
+    }
+
     public static function getLgota($account_number, $pr, $date = null, $asArray = false)
     {
         $p = Payment::find()
@@ -82,9 +92,9 @@ class Payment extends \yii\db\ActiveRecord
 
         if($asArray){
            return  $p->asArray()->one();
-        }else{
-            return $p->one();
         }
+
+        return $p->one();
     }
 
 }
