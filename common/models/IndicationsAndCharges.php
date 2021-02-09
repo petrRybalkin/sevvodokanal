@@ -131,14 +131,14 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
             $lgotas = Payment::getLgotas($acc, $str, true);
 
-            $splacheno = ArrayHelper::getValue($lgotas, '1.sumAll', 0) +
-                ArrayHelper::getValue($lgotas, '0.sumAll', 0);
+            $splacheno = (ArrayHelper::getValue($lgotas, '1.sumAll', 0) ?: 0) +
+                (ArrayHelper::getValue($lgotas, '0.sumAll', 0) ?: 0);
 
             $lgo = (int) $m->privilege_unpaid > 0
                 ? $m->privilege_unpaid
-                : ArrayHelper::getValue($lgotas, '2.sumAll', 0);
+                : (ArrayHelper::getValue($lgotas, '2.sumAll', 0) ?: 0);
 
-            $subs = ArrayHelper::getValue($lgotas, '3.sumAll', 0);
+            $subs = (ArrayHelper::getValue($lgotas, '3.sumAll', 0) ?: 0);
 
             //hsumma (за предыдущий месяц)+
             //((th1+th2+tp-ph1-ph2-pp)*tarifv)+((th1+th2-ph1-ph2)*tarifst)
@@ -146,8 +146,6 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             //-субсидия текущего месяца
             //-льгота текущего месяца
             //-коррекция текущего месяца.
-            print_r(ArrayHelper::getValue($lgotas, '3.sumAll', '1111'));
-            print_r('<br>');
             print_r($m->debt_begin_month);
             print_r(' + ');
             print_r($calcWaterCons);
