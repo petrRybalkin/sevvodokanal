@@ -298,6 +298,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getNameForLog()
     {
-        return "Абонент №{$$this->id} ({$this->email})";
+        return "Абонент №{$this->id} ({$this->email})";
     }
 }
