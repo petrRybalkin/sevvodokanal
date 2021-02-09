@@ -95,13 +95,12 @@ class ClientController extends Controller
         $n = ClientMap::find()->where(['client_id' => $id, 'score_id' => $score_id])->one();
         /** @var User $client */
         $client = $n->client;
+        /** @var ScoreMetering $score */
+        $score = $n->score;
         if (!$n->delete()) {
             Yii::$app->session->setFlash('error', 'Не вдалося видалити рахунок.');
         } else {
-            $message = "Рахунок {$score_id} видалено. Абонент №{$id}";
-            if ($client) {
-                $message .= " ({$client->email})";
-            }
+            $message = "Рахунок {$score->account_number} видалено. Абонент №{$id} ({$client->email})";
             AdminLog::addAdminAction(null, $message);
             Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         }
