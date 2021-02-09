@@ -134,7 +134,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             $splacheno = ArrayHelper::getValue($lgotas, '1.sumAll', 0) +
                 ArrayHelper::getValue($lgotas, '0.sumAll', 0);
 
-            $lgo = $m->privilege_unpaid !== 0
+            $lgo = (int) $m->privilege_unpaid > 0
                 ? $m->privilege_unpaid
                 : ArrayHelper::getValue($lgotas, '2.sumAll', 0);
 
