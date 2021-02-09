@@ -56,10 +56,10 @@ class Payment extends \yii\db\ActiveRecord
     public static function getLgotas($account_number, $date = null, $asArray = false)
     {
         return [
-            static::getLgota($account_number, 0, $date, $asArray),
-            static::getLgota($account_number, 1, $date, $asArray),
-            static::getLgota($account_number, 2, $date, $asArray),
-            static::getLgota($account_number, 3, $date, $asArray),
+            '0' => static::getLgota($account_number, 0, $date, $asArray),
+            '1' => static::getLgota($account_number, 1, $date, $asArray),
+            '2' => static::getLgota($account_number, 2, $date, $asArray),
+            '3' => static::getLgota($account_number, 3, $date, $asArray),
         ];
     }
 
