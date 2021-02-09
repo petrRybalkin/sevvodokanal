@@ -295,4 +295,9 @@ class User extends ActiveRecord implements IdentityInterface
         return \common\models\ScoreMetering::find()->where(['id' => $r])->all();
 
     }
+
+    public function getNameForLog()
+    {
+        return "Абонент №{$$this->id} ({$this->email})";
+    }
 }

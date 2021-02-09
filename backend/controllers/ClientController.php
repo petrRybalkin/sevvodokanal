@@ -100,7 +100,8 @@ class ClientController extends Controller
         if (!$n->delete()) {
             Yii::$app->session->setFlash('error', 'Не вдалося видалити рахунок.');
         } else {
-            $message = "Рахунок {$score->account_number} видалено. Абонент №{$id} ({$client->email})";
+            $name = $client->getNameForLog();
+            $message = "Рахунок {$score->account_number} видалено. {$name}";
             AdminLog::addAdminAction(null, $message);
             Yii::$app->session->setFlash('success', 'Рахунок видалено.');
         }
@@ -151,7 +152,8 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AdminLog::addAdminAction(null, "Редактирование абонента $model->username");
+            $name = $model->getNameForLog();
+            AdminLog::addAdminAction(null, "Редактирование абонента. {$name}");
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -174,7 +176,8 @@ class ClientController extends Controller
 
         ClientMap::deleteAll(['client_id' => $id]);
 
-        AdminLog::addAdminAction(null, "Удаление абонента $model->username");
+        $name = $model->getNameForLog();
+        AdminLog::addAdminAction(null, "Удаление абонента. {$name}");
         return $this->redirect(['index']);
     }
 
