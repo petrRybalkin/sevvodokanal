@@ -146,9 +146,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             //-субсидия текущего месяца
             //-льгота текущего месяца
             //-коррекция текущего месяца.
-            print_r(ArrayHelper::getValue($lgotas, '2.sumAll', '1111'));
-            print_r('<br>');
-            print_r($m->privilege_unpaid);
+            print_r(ArrayHelper::getValue($lgotas, '3.sumAll', '1111'));
             print_r('<br>');
             print_r($m->debt_begin_month);
             print_r(' + ');
