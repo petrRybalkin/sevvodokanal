@@ -145,6 +145,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             //-субсидия текущего месяца
             //-льгота текущего месяца
             //-коррекция текущего месяца.
+            print_r($lgotas);
+            print_r('<br>');
             print_r($m->debt_begin_month);
             print_r(' + ');
             print_r($calcWaterCons);
@@ -156,6 +158,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             print_r($lgo);
             print_r(' - ');
             print_r($m->correction);
+            print_r(' = ');
 
             return ($m->debt_begin_month
                 + $calcWaterCons
