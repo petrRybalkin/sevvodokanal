@@ -148,6 +148,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             //-коррекция текущего месяца.
             print_r(ArrayHelper::getValue($lgotas, '2.sumAll', '1111'));
             print_r('<br>');
+            print_r($m->privilege_unpaid);
+            print_r('<br>');
             print_r($m->debt_begin_month);
             print_r(' + ');
             print_r($calcWaterCons);
