@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "indications_and_charges".
@@ -130,14 +131,14 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
 
             $lgotas = Payment::getLgotas($acc, $str, true);
 
-            $splacheno = ($lgotas[1] ? $lgotas[1]['sumAll'] : 0) +
-                ($lgotas[0] ? $lgotas[0]['sumAll'] : 0);
+            $splacheno = ArrayHelper::getValue($lgotas, '1.sumAll', 0) +
+                ArrayHelper::getValue($lgotas, '0.sumAll', 0);
 
             $lgo = $m->privilege_unpaid !== 0
                 ? $m->privilege_unpaid
-                : $lgotas[2]['sumAll'];
+                : ArrayHelper::getValue($lgotas, '2.sumAll', 0);
 
-            $subs = $lgotas[3] ? $lgotas[3]['sumAll'] : 0;
+            $subs = ArrayHelper::getValue($lgotas, '3.sumAll', 0);
 
             //hsumma (за предыдущий месяц)+
             //((th1+th2+tp-ph1-ph2-pp)*tarifv)+((th1+th2-ph1-ph2)*tarifst)
@@ -155,7 +156,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             print_r(' - ');
             print_r($subs);
             print_r(' - ');
-            print_r($lgo . "({$m->privilege_unpaid})");
+            print_r($lgo);
             print_r(' - ');
             print_r($m->correction);
             print_r(' = ');
