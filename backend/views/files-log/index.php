@@ -46,7 +46,7 @@ $dataProvider->pagination->pageSize = 100;
             [
                 'attribute' => 'created_at',
                 'value' => function (FilesLog $model) {
-                    return Yii::$app->formatter->asDate($model->created_at, 'php: d.m.Y H:i:s');
+                    return Yii::$app->formatter->asDate($model->created_at . ' -2 hours', 'php: d.m.Y H:i:s');
                 }
             ],
 
