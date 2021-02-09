@@ -129,6 +129,8 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             $str = substr($m->month_year, 0, 4) . '-' . substr($m->month_year, 4, 6) . '-01';
 
             $lgotas = Payment::getLgotas($acc, $str, true);
+            print_r($str);
+            print_r($lgotas);
 
             $splacheno = ($lgotas[1] ? $lgotas[1]['sumAll'] : 0) +
                 ($lgotas[0] ? $lgotas[0]['sumAll'] : 0);
