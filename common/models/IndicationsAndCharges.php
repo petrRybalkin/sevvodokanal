@@ -155,7 +155,7 @@ class IndicationsAndCharges extends \yii\db\ActiveRecord
             print_r(' - ');
             print_r($subs);
             print_r(' - ');
-            print_r($lgo);
+            print_r($lgo . "({$m->privilege_unpaid})");
             print_r(' - ');
             print_r($m->correction);
             print_r(' = ');
