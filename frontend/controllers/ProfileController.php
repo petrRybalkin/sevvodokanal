@@ -61,6 +61,7 @@ class ProfileController extends Controller
     public function actionIndex()
     {
         $model = new ScoreForm();
+        //if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
         if ($model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->post('add-score-button')) {
                 $clientMap = ClientMap::find()->where(['client_id' => Yii::$app->user->getId()]);
