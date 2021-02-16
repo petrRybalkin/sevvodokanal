@@ -24,6 +24,22 @@ AppAsset::register($this);
     <?= $form->field($model,'address')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model,'phone_priem')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model,'phone_disp')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model,'phone_abon')->widget(Widget::className(), [
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 100,
+            'plugins' => [
+                'clips',
+                'fullscreen',
+            ],
+            'clips' => [
+                ['Lorem ipsum...', 'Lorem...'],
+                ['red', '<span class="label-red">red</span>'],
+                ['green', '<span class="label-green">green</span>'],
+                ['blue', '<span class="label-blue">blue</span>'],
+            ],
+        ],
+    ]);?>
     <?= $form->field($model,'schedule')->widget(Widget::className(), [
         'settings' => [
             'lang' => 'ru',

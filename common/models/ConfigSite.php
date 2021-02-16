@@ -19,6 +19,7 @@ use yii\helpers\Html;
  * @property string|null $name_footer
  * @property string|null $phone_priem
  * @property string|null $phone_disp
+ * @property string|null $phone_abon
  * @property string|null $schedule
  * @property int|null $action
  */
@@ -42,7 +43,7 @@ class ConfigSite extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'title', 'value', 'name_header', 'name_footer', 'address', 'phone_priem', 'phone_disp','schedule'], 'string'],
+            [['name', 'title', 'value', 'name_header', 'name_footer', 'address', 'phone_priem', 'phone_disp', 'phone_abon', 'schedule'], 'string'],
             [['action', 'action_legal'], 'integer'],
         ];
     }
@@ -64,6 +65,7 @@ class ConfigSite extends \yii\db\ActiveRecord
             'address' => 'Адрес',
             'phone_priem' => 'Телефон приемной',
             'phone_disp' => 'Телефон диспетчера',
+            'phone_abon' => 'Телефон абон. отдела',
             'schedule' => 'График работы',
         ];
     }

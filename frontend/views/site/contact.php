@@ -43,13 +43,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><span style="background-color:transparent;font-size:12pt"><strong>Диспетчерська:</strong></span></td>
             <td><span style="background-color:transparent;font-size:12pt"> <?= $settings->phone_disp ?></span></td>
         </tr>
+        <tr class="mt-3">
+            <td><span style="background-color:transparent;font-size:12pt"><strong>Абонентській відділ:</strong></span></td>
+            <td><span style="background-color:transparent;font-size:12pt"> <?= $settings->phone_abon ?></span></td>
+        </tr>
     </table>
 
     <hr class="border-b border-gray-400 mt-4">
 </div>
 
 <?php $client = true; if($client): ?>
-<div class="min-h-screen flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
+<div class="min-h-0 flex justify-center bg-gray-50 py-2 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         <div>
             <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
