@@ -41,8 +41,10 @@ class SignupForm extends Model
             ['password_confirm', 'compare','compareAttribute' => 'password', 'message' => 'Пiдтвердження паролю не може бути пустим.'],
 
             ['phone', 'required'],
-            ['phone', 'string', 'min' => 10],
+            ['phone', 'string'],
+           // ['phone', 'string', 'min' => 10],
             ['phone', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Цей телефон вже зайнятий.'],
+            ['phone', 'validateGsm'],
         ];
     }
 
@@ -88,6 +90,14 @@ class SignupForm extends Model
         if ($this->password != $this->password_confirm) {
             $message = Yii::t('app', 'Значення полів "Пароль" і "Пiдтвердження пароля» не збігаються.');
             $this->addError('password', $message);
+        }
+    }
+
+    function validateGsm($attribute, $params)
+    {
+        if (!preg_match('/^[+][0-9]{10,13}$/', $this->$attribute)) {
+            $message = 'Номер повинен бути в форматі + XXXXXXXXXX не менш 10 і не більше 13 цифр';
+            $this->addError($attribute, $message);
         }
     }
 
