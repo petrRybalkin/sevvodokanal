@@ -95,7 +95,7 @@ class SignupForm extends Model
 
     function validateGsm($attribute, $params)
     {
-        if (!preg_match('/^[+][0-9]{10,13}$/', $this->$attribute)) {
+        if (!preg_match('/^[+]?[0-9]{10,13}$/', $this->$attribute)) {
             $message = 'Номер повинен бути в форматі + XXXXXXXXXX не менш 10 і не більше 13 цифр';
             $this->addError($attribute, $message);
         }
