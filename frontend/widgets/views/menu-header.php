@@ -17,7 +17,7 @@ use common\models\Page;
                     <?php } else { ?>
                         <div class="relative group">
         <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
-                            <?php if($page->id == 25 || $page->id == 24) { ?>
+                            <?php if((empty(Page::getChild($page->id)) && $page->id !== 24) || (empty(Page::getChild($page->id)) && $page->id !== 25)) { ?>
                             <a href="<?= Url::to(['/page/'.$page->id]) ?>" class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150">
                                 <button type="button" class="text-gray-500 inline-flex items-center space-x-2 text-base leading-6 font-medium hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150">
                                     <span><?= $page->title ?></span>
@@ -28,6 +28,7 @@ use common\models\Page;
                                 </button>
                             </a>
                             <?php } else { ?>
+                            <a href="#" class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150">
                                 <button type="button" class="text-gray-500 inline-flex items-center space-x-2 text-base leading-6 font-medium hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150">
                                     <span><?= $page->title ?></span>
                                     <!-- Item active: "text-gray-600", Item inactive: "text-gray-400" -->
@@ -35,6 +36,7 @@ use common\models\Page;
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                     </svg>
                                 </button>
+                            </a>
                             <?php } ?>
 
                             <!--

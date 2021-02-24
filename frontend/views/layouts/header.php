@@ -9,6 +9,7 @@ use common\widgets\Alert;
 use yii\helpers\Url;
 use common\models\Page;
 use frontend\widgets\MenuSiteWidget;
+use frontend\widgets\MobileMenuSiteWidget;
 use common\models\User;
 use common\models\ConfigSite;
 
@@ -126,7 +127,7 @@ $settings = ConfigSite::getSettings(1);
                     </div>
                     <div>
                         <nav class="grid row-gap-8">
-                            <?= MenuSiteWidget::widget(); ?>
+                            <?= MobileMenuSiteWidget::widget(); ?>
                         </nav>
                     </div>
                 </div>

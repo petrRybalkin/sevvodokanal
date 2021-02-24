@@ -11,9 +11,11 @@ class MobileMenuSiteWidget extends Widget
 {
     public function run()
     {
-        $pages = Page::getMenus()->all();
+        $model = new Page();
+        $pages = Page::getParents()->all();
         return $this->render('mobile-menu-header', [
             'pages' => $pages,
+            'model' => $model,
         ]);
     }
 }
