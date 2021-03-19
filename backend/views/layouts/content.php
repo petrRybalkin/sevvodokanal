@@ -21,7 +21,13 @@ use yii\bootstrap4\Breadcrumbs;
 <!--                </div>--><!-- /.col -->
                 <div class="col-sm-12">
                     <?//= \common\widgets\Alert::widget();?>
-                    <?= \lavrentiev\widgets\toastr\NotificationFlash::widget() ?>
+                    <?// \lavrentiev\widgets\toastr\NotificationFlash::widget() ?>
+                    <?php if (Yii::$app->session->hasFlash('error')): ?>
+                        <?= \hail812\adminlte3\widgets\Alert::widget([
+                            'type' => 'warning',
+                            'body' => Yii::$app->session->getFlash('error'),
+                        ]) ?>
+                    <?php endif;?>
                     <?php
                     echo Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
