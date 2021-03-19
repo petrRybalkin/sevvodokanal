@@ -307,8 +307,8 @@ class DbfImportController extends Controller
         $model = Company::find()
             ->where(['sinh' => 1]);
 
-        if(!$model->all()){
-            Yii::$app->session->setFlash('error', "Ошибка, не получается создать базу данных\n") ;
+        if(!$model->count()){
+            Yii::$app->session->setFlash('error', "Нет данных для формирования\n") ;
             return $this->redirect(Yii::$app->request->referrer);
         }
         $def = [
