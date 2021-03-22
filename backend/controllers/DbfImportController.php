@@ -339,7 +339,7 @@ class DbfImportController extends Controller
             $record = $table->appendRecord();
             $record->kod_p = $item->num_contract;
             $record->nomer = $item->accounting_number;
-            $record->datgosp = Yii::$app->formatter->asDate($item->verification_date, 'd.m.Y');
+            $record->datgosp = Yii::$app->formatter->asDate($item->verification_date, 'php:d.m.Y');
             $record->pred = $item->previous_readings;
             $record->tek = $item->current_readings?: 0;
             $record->dpp = Yii::$app->formatter->asDate($item->date_readings, 'php:d.m.Y');
