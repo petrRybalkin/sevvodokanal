@@ -38,8 +38,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->getStatusTag(), ['update', 'id' => $model->id]);
                 }
             ],
-            'create_utime:datetime',
-            'update_utime:datetime',
+            [
+                'label' => 'Создано',
+                'attribute' => 'create_utime',
+                'value' => function ($data) {
+                    $dateTime = new DateTime($data->create_utime);
+                    $intlFormatter = new IntlDateFormatter('uk_UA', IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM);
+                    $intlFormatter->getPattern();
+
+                    return $intlFormatter->format($dateTime);
+                },
+            ],
+            [
+                'label' => 'Обновлено',
+                'attribute' => 'update_utime',
+                'value' => function ($data) {
+                    $dateTime = new DateTime($data->update_utime);
+                    $intlFormatter = new IntlDateFormatter('uk_UA', IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM);
+                    $intlFormatter->getPattern();
+
+                    return $intlFormatter->format($dateTime);
+                },
+            ],
 
             //['class' => 'yii\grid\ActionColumn'],
             [
