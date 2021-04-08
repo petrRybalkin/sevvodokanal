@@ -58,17 +58,17 @@ class ConfigSiteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->action == 1) {
-
-                IndicationsAndCharges::updateAll([
-                    'synchronization' => 0
-                ], ['synchronization' => 1]);
-
-                Company::updateAll([
-                    'sinh' => 0
-                ], ['sinh' => 1]);
-
-            }
+//            if ($model->action == 1) {
+//
+//                IndicationsAndCharges::updateAll([
+//                    'synchronization' => 0
+//                ], ['synchronization' => 1]);
+//
+//                Company::updateAll([
+//                    'sinh' => 0
+//                ], ['sinh' => 1]);
+//
+//            }
 
             $model->save();
             return $this->redirect(['index', 'id' => $model->id]);
