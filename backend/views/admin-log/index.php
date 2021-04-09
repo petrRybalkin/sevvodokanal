@@ -36,7 +36,8 @@ Yii::$app->setTimeZone('Europe/Kiev');
                 'attribute' => 'created_at',
 //                'format' => 'raw',
                 'value' => function (AdminLog $model) {
-                    return Yii::$app->formatter->asDate($model->created_at . ' -2 hours', 'php: d.m.Y H:i:s');
+                    $dateTime = new DateTime($model->created_at);
+                    return $dateTime->format('d.m.Y H:i:s');
                 }
             ],
 
