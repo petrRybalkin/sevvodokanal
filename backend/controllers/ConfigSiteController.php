@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use common\models\Company;
 use common\models\IndicationsAndCharges;
 use Yii;
@@ -57,7 +58,7 @@ class ConfigSiteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 //            if ($model->action == 1) {
 //
 //                IndicationsAndCharges::updateAll([
@@ -70,7 +71,7 @@ class ConfigSiteController extends Controller
 //
 //            }
 
-            $model->save();
+            AdminLog::addAdminAction($model->id, "Изменение настроек сайта");
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
