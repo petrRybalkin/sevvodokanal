@@ -20,6 +20,7 @@ use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\web\NotFoundHttpException;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -135,12 +136,22 @@ class ProfileController extends Controller
 
     }
 
+    private function checkAccessToScore($id) {
+        if (!ClientMap::find()->where([
+            'client_id' => Yii::$app->user->getId(),
+            'score_id' => $id,
+        ])->exists()) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     /**
      * @param $id
      * @return string
      */
     public function actionAccountNumber($id)
     {
+        $this->checkAccessToScore($id);
         $number = ScoreMetering::find()->where(['id' => $id])->one();
         return $this->render('account-number', [
             'number' => $number
@@ -154,6 +165,7 @@ class ProfileController extends Controller
      */
     public function actionWaterMetering($id)
     {
+        $this->checkAccessToScore($id);
         $number = ScoreMetering::find()->where(['id' => $id])->one();
         $model = new IndicationForm();
 
@@ -309,6 +321,7 @@ class ProfileController extends Controller
      */
     public function actionScore($id)
     {
+        $this->checkAccessToScore($id);
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
 
@@ -335,6 +348,7 @@ class ProfileController extends Controller
      */
     public function actionHistory($id)
     {
+        $this->checkAccessToScore($id);
         $score = ScoreMetering::find()->where(['id' => $id])->one();
 
         $query = IndicationsAndCharges::find()
@@ -365,6 +379,7 @@ class ProfileController extends Controller
      */
     public function actionWord($id)
     {
+        $this->checkAccessToScore($id);
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $metering = WaterMetering::find()->where(['account_number' => $score->account_number])->orderBy(['id' => SORT_DESC])->one();
         $indication = IndicationsAndCharges::find()->where(['account_number' => $score->account_number])
@@ -515,6 +530,7 @@ class ProfileController extends Controller
      */
     public function actionPayment($id)
     {
+        $this->checkAccessToScore($id);
         $score = ScoreMetering::find()->where(['id' => $id])->one();
         $indication = IndicationsAndCharges::find()
             ->where(['account_number' => $score->account_number])
