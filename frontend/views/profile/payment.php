@@ -18,7 +18,7 @@ if ($debt && $debt > 0) {
 } else {
     $sum = 100;
 }
-$sum = str_replace([' ', ','], ['', '.'], $sum);
+$sum = str_replace([' ', ',', ' '], ['', '.', ''], $sum);
 ?>
 
 
